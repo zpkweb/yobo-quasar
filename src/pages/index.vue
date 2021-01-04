@@ -129,7 +129,7 @@
         <div class="gallary-title text-center">您的线上画廊</div>
         <div class="gallary-desc text-center">为您精选的系列作品</div>
         <div class="row">
-          <div class="col-3 relative-position text-center">
+          <!-- <div class="col-3 relative-position text-center">
             <div class="line absolute"></div>
             <q-img src="img/index/painting1.png" width="230px"></q-img>
             <div class="desc bottom text-right">
@@ -137,6 +137,7 @@
               <div class="name">Margaret Ashman</div>
             </div>
           </div>
+
           <div class="col-3 relative-position text-center">
             <div class="line-bottom absolute"></div>
             <div class="desc text-right">
@@ -161,13 +162,26 @@
             </div>
             <q-img src="img/index/painting4.png" width="230px"></q-img>
           </div>
+           -->
+           <div class="col-3 relative-position text-center"
+            v-for="item in $store.state.home.gallerySeller.list"
+            :key="item.sellerId"
+           >
+           commodityPhotos
+            <div class="line absolute"></div>
+            <q-img v-if="item.commodityPhotos.length" :src="item.commodityPhotos[0].src" width="230px"></q-img>
+            <div class="desc bottom text-right">
+              <div v-if="item.commodityPhotos.length" class="name">{{item.commodityPhotos[0].name}}</div>
+              <div class="place">{{item.firstname}}{{item.lastname}}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="new text-center">
       <div class="new-title text-dark">最新上线的艺术作品</div>
       <div class="row new-items">
-        <div class="col-3 relative-position">
+        <!-- <div class="col-3 relative-position">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
             <q-img src="img/index/new1.png" width="255px"></q-img>
@@ -218,6 +232,21 @@
             </div>
           </div>
           <div class="name absolute text-left">Lucky me</div>
+        </div> -->
+
+
+        <div class="col-3 relative-position" v-for="item in $store.state.home.latestCommodity.list" :key="item.commodityId">
+          <div class="bg absolute"></div>
+          <div class="new-item relative-position">
+            <q-img v-if="item.photos.length" :src="item.photos[0].src" width="230px"></q-img>
+            <div class="new-desc text-left bg-white">
+              <q-breadcrumbs separator="|" gutter="sm">
+                <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.techniques[0].name} • ${item.themes[0].name}`" class="text-dark ddd" />
+                <q-breadcrumbs-el  :label="`${item.width}cmx${item.height}cm`" class="text-dark" />
+              </q-breadcrumbs>
+            </div>
+          </div>
+          <div class="name absolute text-left">Lucky me</div>
         </div>
       </div>
     </div>
@@ -229,7 +258,7 @@
             <div class="num absolute">20万+</div>
           </div>
           <div class="row">
-            <div
+            <!-- <div
               class="col-4 sort-item relative-position"
               v-for="i in [1, 2, 3, 4, 5, 6]"
               :key="i"
@@ -243,6 +272,25 @@
               >
                 <div class="tab absolute-bottom text-center">
                   <div>花草自然</div>
+                  <q-img src="img/index/next.png" width="20px"></q-img>
+                </div>
+                <div class="absolute-full bg"></div>
+              </q-img>
+            </div> -->
+            <div
+              class="col-4 sort-item relative-position"
+              v-for="item in $store.state.home.lookWorld"
+              :key="item.id"
+            >
+              <div class="line1 absolute"></div>
+              <div class="line2 absolute"></div>
+              <q-img
+                src="img/index/1.png"
+                width="210px"
+                class="relative-position"
+              >
+                <div class="tab absolute-bottom text-center">
+                  <div>{{item.name}}</div>
                   <q-img src="img/index/next.png" width="20px"></q-img>
                 </div>
                 <div class="absolute-full bg"></div>
@@ -296,7 +344,7 @@
             @mouseleave="autoplay = true"
             infinite
           >
-            <q-carousel-slide
+            <!-- <q-carousel-slide
               v-for="ite in ['a', 'b', 'c', 'd']"
               :name="ite"
               class="row"
@@ -316,6 +364,27 @@
                   今天我们收到了我们的艺术品。我们很满意！你们对于装框的建议非常实用，感谢你们的帮助！
                 </div>
               </div>
+            </q-carousel-slide> -->
+            <q-carousel-slide
+              v-for="item in $store.state.home.commentCommodity"
+              :name="item.title"
+              class="row"
+              :key="item.id"
+            >
+              <div class="col-6 image">
+                <q-img :src="item.src" width="210px"></q-img>
+              </div>
+              <div class="col-6">
+                <div class="row star">
+                  <div class="col-2" v-for="i of item.star" :key="i">
+                    <q-img src="img/index/star.png" width="20px"></q-img>
+                  </div>
+                </div>
+                <div class="col-12 buyer">{{item.title}}</div>
+                <div class="col-12 content">
+                  {{item.desc}}
+                </div>
+              </div>
             </q-carousel-slide>
           </q-carousel>
         </div>
@@ -329,10 +398,15 @@
       </div>
 
       <div class="row hot-artist justify-between">
-        <div class="col-2" v-for="i in [1, 2, 3, 4, 5]" :key="i">
+        <!-- <div class="col-2" v-for="i in [1, 2, 3, 4, 5]" :key="i">
           <div class="image"></div>
           <div class="name">JEFF FERST</div>
           <div class="country">墨西哥-画家</div>
+        </div> -->
+        <div class="col-2" v-for="item in $store.state.home.hotSaleSeller.list" :key="item.sellerId">
+          <img :src="item.user.avatar" width="180px" />
+          <div class="name">{{item.firstname}}{{item.lastname}}</div>
+          <div class="country">{{item.country}}-{{item.typeName}}</div>
         </div>
       </div>
     </div>

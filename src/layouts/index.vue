@@ -22,7 +22,6 @@
                   v-for="(item, index) in langOptions"
                   :key="index"
                   @click="changeLang(item)"
-                  v-ripple
                 >
                   {{ item.label }}
                 </div>
