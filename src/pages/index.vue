@@ -78,6 +78,7 @@
         /> -->
         <q-carousel-slide
           v-for="(item, index) in $store.state.home.banner"
+          :key="index"
           :name="index+1"
           :img-src="item.src"
         />
@@ -164,16 +165,28 @@
           </div>
            -->
            <div class="col-3 relative-position text-center"
-            v-for="item in $store.state.home.gallerySeller.list"
+            v-for="(item, index) in $store.state.home.gallerySeller.list"
             :key="item.sellerId"
            >
-           commodityPhotos
-            <div class="line absolute"></div>
-            <q-img v-if="item.commodityPhotos.length" :src="item.commodityPhotos[0].src" width="230px"></q-img>
-            <div class="desc bottom text-right">
-              <div v-if="item.commodityPhotos.length" class="name">{{item.commodityPhotos[0].name}}</div>
-              <div class="place">{{item.firstname}}{{item.lastname}}</div>
-            </div>
+           <template v-if="index%2 == 0">
+             <div class="line absolute"></div>
+              <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+              <div class="desc bottom text-right">
+                <div class="place">{{item.firstname}}{{item.lastname}}</div>
+                <div class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</div>
+              </div>
+           </template>
+           <template v-else>
+
+              <div class="line-bottom absolute"></div>
+              <div class="desc bottom text-right">
+                <div class="place">{{item.firstname}}{{item.lastname}}</div>
+                <div class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</div>
+              </div>
+
+              <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+           </template>
+
           </div>
         </div>
       </div>
@@ -235,14 +248,14 @@
         </div> -->
 
 
-        <div class="col-3 relative-position" v-for="item in $store.state.home.latestCommodity.list" :key="item.commodityId">
+        <div class="col-3 relative-position" v-for="(item,index) in $store.state.home.latestCommodity.list" :key="item.commodityId">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
-            <q-img v-if="item.photos.length" :src="item.photos[0].src" width="230px"></q-img>
+            <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="230px"></q-img>
             <div class="new-desc text-left bg-white">
               <q-breadcrumbs separator="|" gutter="sm">
                 <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.techniques[0].name} • ${item.themes[0].name}`" class="text-dark ddd" />
-                <q-breadcrumbs-el  :label="`${item.width}cmx${item.height}cm`" class="text-dark" />
+                <q-breadcrumbs-el  :label="`${item.width}cm X ${item.height}cm`" class="text-dark" />
               </q-breadcrumbs>
             </div>
           </div>
@@ -366,10 +379,10 @@
               </div>
             </q-carousel-slide> -->
             <q-carousel-slide
-              v-for="item in $store.state.home.commentCommodity"
+              v-for="(item, index) in $store.state.home.commentCommodity"
+              :key="index"
               :name="item.title"
               class="row"
-              :key="item.id"
             >
               <div class="col-6 image">
                 <q-img :src="item.src" width="210px"></q-img>
