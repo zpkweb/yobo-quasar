@@ -513,7 +513,7 @@ export default {
         line-height: 13px;
         font-size: 16px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        padding-bottom: 40px;
+        padding-bottom: 10px;
         font-weight: bolder !important;
       }
     }
