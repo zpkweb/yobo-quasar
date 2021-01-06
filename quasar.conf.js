@@ -103,7 +103,11 @@ module.exports = configure(function (ctx) {
     framework: {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'zh-hans', // Quasar language pack
-      config: {},
+      config: {
+        notify: {
+
+        }
+      },
 
       // Possible values for "importStrategy":
       // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives
@@ -121,7 +125,8 @@ module.exports = configure(function (ctx) {
       plugins: [
         'Cookies',
         'LocalStorage',
-        'SessionStorage'
+        'SessionStorage',
+        'Notify'
       ]
     },
 

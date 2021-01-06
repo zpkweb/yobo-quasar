@@ -46,9 +46,20 @@
               @click="icon2 = true"
             />
           </q-breadcrumbs>
+
           <div class="username btn" v-if="userInfo" @click="goMine">
             {{ userInfo.name }}
           </div>
+          <div class="dropdown2">
+            <div class="dropdowncontent2 absolute">
+              <div class="items">
+                <div class="item" @click="logout">
+                  登出
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="search btn text-center" @click="icon4 = true">
             <q-img
               src="img/index/search.png"
@@ -197,34 +208,34 @@
               >注册</span
             >
           </div>
-          <div class="msg" ref="msg">
+          <!-- <div class="msg" ref="msg">
             <q-img src="img/index/exclamation.png" width="14px"></q-img>
             {{ msg }}
-          </div>
-          <input
+          </div> -->
+          <!-- <input
             type="text"
             placeholder="您的全名"
             class="input"
             v-model="name"
             ref="name"
-          />
+          /> -->
           <div class="msg" ref="msg2">
             <q-img src="img/index/exclamation.png" width="14px"></q-img>
             {{ msg2 }}
           </div>
           <input
             type="text"
-            placeholder="请输入邮箱"
+            placeholder="请输入用户名/邮箱/手机"
             class="input"
-            v-model="email"
-            ref="email"
+            v-model="name"
+            ref="name"
           />
           <div class="msg" ref="msg3">
             <q-img src="img/index/exclamation.png" width="14px"></q-img>
             {{ msg3 }}
           </div>
           <input
-            type="text"
+            type="password"
             placeholder="请输入密码"
             class="input"
             v-model="password"
@@ -310,7 +321,7 @@
             {{ registerMsg3 }}
           </div>
           <input
-            type="text"
+            type="password"
             placeholder="请输入密码"
             class="input"
             v-model="password"
@@ -618,7 +629,8 @@ export default {
         label: 'Français',
       }
       ],
-      userInfo: utils.getGlobalUserInfo(),
+      // userInfo: utils.getGlobalUserInfo(),
+
       step: 1,
       right: false,
       icon1: false,
@@ -678,7 +690,21 @@ export default {
       locale: currentRoute.params.lang
     })
   },
-
+  computed: {
+    userInfo () {
+      // let userInfo = this.$q.localStorage.getItem('user.info')
+      // if(!userInfo) {
+      //   userInfo = this.$store.state.user.info;
+      // }
+      return this.$store.state.user.info
+    }
+  },
+  mounted() {
+    const userInfo = this.$q.localStorage.getItem('user.info');
+    if(userInfo) {
+      this.$store.commit('user/setUser', userInfo);
+    }
+  },
   methods: {
     changeLang(locale) {
       this.lang = locale.value;
@@ -701,9 +727,9 @@ export default {
       this.$router.push("/mine");
     },
     async register() {
+
       if (this.name === "") {
         this.registerMsg1 = "用户名不能为空";
-        console.log("this.$refs.registerMsg1", this.$refs.registerMsg1);
         this.$refs.registerMsg1.classList.add("block");
       }
       if (this.email === "") {
@@ -716,45 +742,91 @@ export default {
       }
 
       if (this.name !== "" && this.email !== "" && this.password !== "") {
-        let res = await ApiUser.register(
-          this.name,
-          this.email,
-          this.phone,
-          this.password
-        );
-        console.log(res);
-        if (res.data.code === 10201) {
-          alert("用户已存在,请直接登录");
-        } else {
+        // let res = await ApiUser.register(
+        //   this.name,
+        //   this.email,
+        //   this.phone,
+        //   this.password
+        // );
+        // console.log(res);
+        // if (res.data.code === 10201) {
+        //   alert("用户已存在,请直接登录");
+        // } else {
+        //   this.icon2 = false;
+        //   this.icon6 = true;
+        // }
+
+        const register = await this.$store.dispatch('user/register', {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        })
+        console.log(register);
+
+        if (register.success) {
+          // alert("用户已存在,请直接登录");
           this.icon2 = false;
           this.icon6 = true;
+          this.$q.localStorage.set('user.info', register.data)
+          await this.$store.commit('user/setUser', register.data);
+        } else {
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: register.message,
+            color: 'negative',
+          })
         }
       }
     },
     async login() {
+      console.log("this.$refs", this.$refs);
+
+      // if (this.name === "") {
+      //   this.msg = "用户名不能为空";
+      //   this.$refs.msg.classList.add("block");
+      // }
       if (this.name === "") {
-        this.registerMsg1 = "用户名不能为空";
-        this.$refs.registerMsg1.classList.add("block");
-      }
-      if (this.email === "") {
-        this.registerMsg2 = "邮箱不能为空";
-        this.$refs.registerMsg2.classList.add("block");
+        this.msg2 = "用户名/邮箱/手机不能为空";
+        this.$refs.msg2.classList.add("block");
+      }else{
+        this.msg2 = "";
+        this.$refs.msg2.classList.remove("block");
       }
       if (this.password === "") {
-        this.registerMsg3 = "密码不能为空";
-        this.$refs.registerMsg3.classList.add("block");
+        this.msg3 = "密码不能为空";
+        this.$refs.msg3.classList.add("block");
+      }else{
+        this.msg3 = "";
+        this.$refs.msg3.classList.remove("block");
       }
-      if (this.name !== "" && this.email !== "" && this.password !== "") {
-        let res = await ApiUser.login(this.email, this.phone, this.password);
-        if (res.data.code === 10204) {
-          alert("密码不正确，请重新输入密码");
+      if (this.name && this.password !== "") {
+        const user = await this.$store.dispatch('user/login', {
+          name: this.name,
+          password: this.password
+        })
+        console.log(user);
+
+
+        // let res = await ApiUser.login(this.email, this.phone, this.password);
+        if (user.success) {
+          // utils.setToken(res.data.data.token);
+          // utils.setUserId(res.data.data.userId);
+          // utils.setGlobalUserInfo(res.data.data);
+          // this.userInfo = utils.getGlobalUserInfo();
+          this.icon1 = false;
+          this.$q.localStorage.set('user.info', user.data)
+          await this.$store.commit('user/setUser', user.data);
+        }else{
+          // alert("密码不正确，请重新输入密码");
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: user.message,
+            color: 'negative',
+          })
         }
-        console.log(res);
-        utils.setToken(res.data.data.token);
-        utils.setUserId(res.data.data.userId);
-        utils.setGlobalUserInfo(res.data.data);
-        this.userInfo = utils.getGlobalUserInfo();
-        this.icon1 = false;
+
       }
     },
 
@@ -799,6 +871,10 @@ export default {
       );
       console.log(res);
     },
+    async logout() {
+      await this.$store.commit('user/setUser', null);
+      await this.$q.localStorage.remove('user.info');
+    }
   },
 };
 </script>
@@ -842,11 +918,18 @@ export default {
   margin: 0 auto;
   width: 1220px;
   padding: 0 20px;
+
   .username {
     display: inline-block;
     font-size: 18px;
     margin: 0 12px 0 15px;
   }
+
+  .username:hover + .dropdown2 {
+    display: inline-block;
+  }
+
+
   .logo {
     margin-right: 30px;
   }
@@ -1078,6 +1161,55 @@ export default {
     }
   }
 }
+
+
+
+
+.dropdown2 {
+  display: none;
+  &:hover {
+    display: block;
+  }
+  .dropdowncontent2 {
+
+    background: transparent;
+    right: 93px;
+    top: 67px;
+    z-index: 1000;
+
+    .items {
+      box-shadow: 0px 3px 7px 0px rgba(21, 44, 43, 0.4);
+      .after {
+        cursor: pointer;
+        position: absolute;
+        display: inline-block;
+        top: -10px;
+        left: 142px;
+        width: 0;
+        height: 0px;
+        content: "";
+        border-style: solid;
+        border-width: 10px;
+        border-color: #fff #fff transparent transparent;
+        transform: rotate(-45deg);
+        box-shadow: 2px -2px 2px rgba(21, 44, 43, 0.1);
+      }
+    }
+    .item {
+      padding: 0 20px;
+      width: 190px;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 48px;
+      background-color: #fff;
+      cursor: pointer;
+      &:hover {
+        background-color: #d6d7c5;
+      }
+    }
+  }
+}
+
 .cart:hover + .dropdown3 {
   display: block;
 }
@@ -1160,6 +1292,7 @@ export default {
     }
   }
 }
+
 .card2 {
   padding: 40px 80px 40px 120px;
   max-width: none;

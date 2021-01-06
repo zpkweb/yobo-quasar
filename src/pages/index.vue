@@ -47,7 +47,7 @@
             <div>来自世界各地的优秀艺术家</div>
           </div>
           <div class="text-white slide">
-            {{ slide }}<span class="line">/</span><span class="all">5</span>
+            {{ slide }}<span class="line">/</span><span class="all">{{ $store.state.home.banner.length }}</span>
           </div>
         </div>
       </div>
