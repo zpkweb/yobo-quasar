@@ -28,7 +28,8 @@ module.exports = configure(function (ctx) {
       'composition-api',
       'i18n',
       'axios',
-      'quasar-lang-pack'
+      'quasar-lang-pack',
+      'element-ui'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

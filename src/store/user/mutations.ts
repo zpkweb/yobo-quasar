@@ -6,6 +6,11 @@ const mutation: MutationTree<IndexStateInterface> = {
     console.log("setuser", state, payload)
     state.info = payload
 
+  },
+  changeUserInfo(state, payload) {
+    for(let item of payload) {
+      state.info[item] = payload[item];
+    }
   }
 }
 

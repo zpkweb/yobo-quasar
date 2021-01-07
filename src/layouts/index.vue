@@ -733,7 +733,7 @@ export default {
       this.icon5 = true;
     },
     goMine() {
-      this.$router.push("/mine");
+      this.$router.push(`/${this.$i18n.locale}/mine`);
     },
     async register() {
 
@@ -1220,7 +1220,7 @@ export default {
 .dropdown2 {
   display: none;
   &:hover {
-    display: block;
+    display: inline-block;
   }
   .dropdowncontent2 {
 
