@@ -15,10 +15,7 @@ const actions: ActionTree<IndexStateInterface, StateInterface> = {
   async login ({ commit }, payload) {
     console.log("user actions login", payload)
 
-    return await axios.post('/api/user/login', {
-      name: payload.name,
-      password: payload.password
-    }).then(response => {
+    return await axios.post('/api/user/login', payload).then(response => {
       console.log("response", response.data)
       return response.data;
       // setAxiosHeaders(response.data.token)
@@ -44,6 +41,25 @@ const actions: ActionTree<IndexStateInterface, StateInterface> = {
       identity: "ordinary",
       phone: ""
     }).then(response => {
+      console.log("response", response.data)
+      return response.data;
+      // setAxiosHeaders(response.data.token)
+    }).catch((err) => {
+      console.log("catch", err)
+    })
+
+  },
+  /**
+   * 申请艺术家
+   *
+   * @param {*} { commit }
+   * @param {*} payload
+   * @return {*}
+   */
+  async applyArtist ({ commit }, payload) {
+    console.log("user actions applyArtist", payload)
+
+    return await axios.post('/api/user/seller/apply', payload).then(response => {
       console.log("response", response.data)
       return response.data;
       // setAxiosHeaders(response.data.token)

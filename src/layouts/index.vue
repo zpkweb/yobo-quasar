@@ -31,7 +31,7 @@
 
         </div>
         <div class="col-grow">
-          <div class="artist-register btn" @click="icon3 = true">
+          <div class="artist-register btn" @click="icon3 = true" v-if="!isApplyArtist">
             成为艺术家
           </div>
           <q-breadcrumbs separator="|" class="separator" v-if="!userInfo">
@@ -47,12 +47,15 @@
             />
           </q-breadcrumbs>
 
-          <div class="username btn" v-if="userInfo" @click="goMine">
+          <div class="username btn" v-if="userInfo" >
             {{ userInfo.name }}
           </div>
           <div class="dropdown2">
             <div class="dropdowncontent2 absolute">
               <div class="items">
+                <div class="item" @click="goMine">
+                  个人中心
+                </div>
                 <div class="item" @click="logout">
                   登出
                 </div>
@@ -373,7 +376,7 @@
             class="input"
             v-model="lastname"
           />
-          <input type="text" placeholder="邮箱" class="input" v-model="email" />
+          <input type="text" placeholder="邮箱" class="input" v-model="artistEmail" />
           <input type="text" placeholder="电话" class="input" v-model="phone" />
           <select
             class="select"
@@ -531,7 +534,7 @@
             class="input"
             v-model="website"
           />
-          <div class="text-white text-center register">申请</div>
+          <div class="text-white text-center register" @click="sellerRegister">申请</div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -649,7 +652,7 @@ export default {
       password: "",
       firstname: "",
       lastname: "",
-      email: "",
+      // artistEmail: this.$store.state.user.info ? this.$store.state.user.info.email : "",
       country: "",
       language: "",
       findUs: "",
@@ -697,6 +700,12 @@ export default {
       //   userInfo = this.$store.state.user.info;
       // }
       return this.$store.state.user.info
+    },
+    artistEmail() {
+      return this.$store.state.user.info ? this.$store.state.user.info.email : ""
+    },
+    isApplyArtist() {
+      return this.$store.state.user.info ? this.$store.state.user.info.isApplyArtist : false
     }
   },
   mounted() {
@@ -849,27 +858,70 @@ export default {
     },
     async setNewPassword() {},
     async sellerRegister() {
-      let res = await ApiUser.sellerRegister(
-        this.firstname,
-        this.lastname,
-        this.email,
-        this.phone,
-        this.country,
-        this.language,
-        this.findUs,
-        this.isFullTime,
-        this.onlineSell,
-        this.sold,
-        this.channel,
-        this.gallery,
-        this.medium,
-        this.galleryInfo,
-        this.recommend,
-        this.prize,
-        this.website,
-        this.profile
-      );
-      console.log(res);
+      // let res = await ApiUser.sellerRegister(
+      //   this.firstname,
+      //   this.lastname,
+      //   this.email,
+      //   this.phone,
+      //   this.country,
+      //   this.language,
+      //   this.findUs,
+      //   this.isFullTime,
+      //   this.onlineSell,
+      //   this.sold,
+      //   this.channel,
+      //   this.gallery,
+      //   this.medium,
+      //   this.galleryInfo,
+      //   this.recommend,
+      //   this.prize,
+      //   this.website,
+      //   this.profile
+      // );
+      // console.log(res);
+      const applyArtist = await this.$store.dispatch('user/applyArtist', {
+        userId: this.$store.state.user.info ? this.$store.state.user.info.userId : '',
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.artistEmail,
+        phone: this.phone,
+        country: this.country,
+        language: this.language,
+        findUs: this.findUs,
+        isFullTime: this.isFullTime,
+        onlineSell: this.onlineSell,
+        sold: this.sold,
+        channel: this.channel,
+        gallery: this.gallery,
+        medium: this.medium,
+        galleryInfo: this.galleryInfo,
+        recommend: this.recommend,
+        prize: this.prize,
+        website: this.website,
+        profile: this.profile
+      })
+      console.log("applyArtist", applyArtist);
+      if (applyArtist.success) {
+        this.icon3 = false;
+        // await this.$store.commit('user/setUser', applyArtist.data);
+        // this.$q.localStorage.set('user.info', applyArtist.data)
+        this.$store.commit('user/changeUserInfo', {
+          isApplyArtist: true
+        })
+        let storageUserInfo = this.$q.localStorage.get('user.info');
+        if(storageUserInfo){
+          storageUserInfo.isApplyArtist = true;
+        }
+        this.$q.localStorage.set('user.info', storageUserInfo)
+      }else{
+        // alert("密码不正确，请重新输入密码");
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: applyArtist.message,
+          color: 'negative',
+        })
+      }
     },
     async logout() {
       await this.$store.commit('user/setUser', null);
