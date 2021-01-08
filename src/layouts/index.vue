@@ -687,11 +687,9 @@ export default {
     },
   },
 
-  async preFetch({ store, currentRoute }) {
+  preFetch({ store, currentRoute }) {
     store.commit("setLang", currentRoute.params.lang)
-    return await store.dispatch('home/setHome', {
-      locale: currentRoute.params.lang
-    })
+
   },
   computed: {
     userInfo () {

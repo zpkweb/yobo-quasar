@@ -1,4 +1,4 @@
-export interface IndexStateInterface {
+export interface HomeStateInterface {
   banner: any;
   commentCommodity: any;
   gallerySeller: any;
@@ -7,7 +7,7 @@ export interface IndexStateInterface {
   lookWorld: any;
 }
 
-function state (): IndexStateInterface {
+function state (): HomeStateInterface {
   return {
     banner: null,
     commentCommodity: null,

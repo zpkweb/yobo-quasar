@@ -2,13 +2,18 @@ import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
 
 import home from './home';
+import { HomeStateInterface } from './home/state';
 import user from './user';
-import { IndexStateInterface } from './home/state';
+import { UserStateInterface } from './user/state';
+import artist from './artist';
+import { ArtistStateInterface } from './artist/state';
 
 
 export interface StateInterface {
   lang: any;
-  home?: IndexStateInterface;
+  home?: HomeStateInterface;
+  user?: UserStateInterface;
+  artist?: ArtistStateInterface;
 }
 
 export default store(function ({ Vue }) {
@@ -25,7 +30,8 @@ export default store(function ({ Vue }) {
     },
     modules: {
       home,
-      user
+      user,
+      artist
     },
 
     // enable strict mode (adds overhead!)

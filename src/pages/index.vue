@@ -5,16 +5,20 @@
         <div class="col-3">
           <div class="menu text-white text-bold">
             <div class="menu-item">
-              <div class="menu-title menu-title1">{{$t('home.artist')}}</div>
+              <div class="menu-title menu-title1" @click="goArtists">{{$t('home.artist')}}</div>
               <q-breadcrumbs class="menu-el" separator="|" gutter="md">
                 <q-breadcrumbs-el
                   :label="$t('home.painter')"
                   class="text-white btn"
-                  @click="goArtists"
+                  @click="goArtists({
+                    tag: 0
+                  })"
                 />
-                <q-breadcrumbs-el :label="$t('home.sculptor')" class="text-white" />
-                <q-breadcrumbs-el :label="$t('home.country')" class="text-white" />
-                <q-breadcrumbs-el :label="$t('home.lastName')" class="text-white" />
+                <q-breadcrumbs-el :label="$t('home.sculptor')" class="text-white" @click="goArtists({
+                    tag: 1
+                  })" />
+                <q-breadcrumbs-el :label="$t('home.country')" class="text-white" @click="goArtists" />
+                <q-breadcrumbs-el :label="$t('home.surname')" class="text-white" @click="goArtists" />
               </q-breadcrumbs>
             </div>
             <div class="menu-item">
@@ -447,12 +451,15 @@ export default {
       hotartist: "a",
     };
   },
-  preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
+  async preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
     console.log("index preFetch", currentRoute.params.lang, previousRoute, urlPath, publicPath)
     // return store.dispatch('home/setHome', {
     //   locale: 'zh-cn'
     // })
     // return store.dispatch('fetchItem', currentRoute.params.id)
+    return await store.dispatch('home/setHome', {
+      locale: currentRoute.params.lang
+    })
   },
   methods: {
     Top() {
@@ -464,8 +471,13 @@ export default {
     toTop() {
       document.documentElement.scrollTop = 0;
     },
-    goArtists() {
-      this.$router.push(`/${this.$i18n.locale}/artists`);
+    goArtists(data) {
+      if(data && Object.keys(data).length) {
+        this.$router.push(`/${this.$i18n.locale}/artists?${this.$qs.stringify(data)}`);
+      }else{
+        this.$router.push(`/${this.$i18n.locale}/artists`);
+      }
+
     },
     goArtworks() {
       this.$router.push(`/${this.$i18n.locale}/artworks`);

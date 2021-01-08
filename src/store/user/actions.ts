@@ -1,10 +1,10 @@
 import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
-import { IndexStateInterface } from './state'
+import { UserStateInterface } from './state'
 import axios from 'axios'
 
 
-const actions: ActionTree<IndexStateInterface, StateInterface> = {
+const actions: ActionTree<UserStateInterface, StateInterface> = {
   /**
    * 登录
    *

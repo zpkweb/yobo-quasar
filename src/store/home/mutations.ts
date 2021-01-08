@@ -1,7 +1,7 @@
 import { MutationTree } from 'vuex'
-import { IndexStateInterface } from './state'
+import { HomeStateInterface } from './state'
 
-const mutation: MutationTree<IndexStateInterface> = {
+const mutation: MutationTree<HomeStateInterface> = {
   setHome (state, payload) {
 
     state.banner = payload['banner']
