@@ -1,6 +1,6 @@
 <template>
   <q-layout @scroll="Top">
-    <div class="carousel1 relative-position">
+    <!-- <div class="carousel1 relative-position">
       <div class="content absolute-full row">
         <div class="col-3">
           <div class="menu text-white text-bold">
@@ -62,7 +62,7 @@
         @mouseenter="autoplay = false"
         @mouseleave="autoplay = true"
         v-if="$store.state.home"
-      >
+      > -->
         <!-- <q-carousel-slide :name="1" img-src="http://localhost:7001/images/banner/1.png" />
         <q-carousel-slide
           :name="2"
@@ -76,7 +76,7 @@
           :name="4"
           img-src="http://localhost:7001/images/banner/4.jpg"
         /> -->
-        <q-carousel-slide
+        <!-- <q-carousel-slide
           v-for="(item, index) in $store.state.home.banner"
           :key="index"
           :name="index+1"
@@ -129,7 +129,7 @@
       <div class="gallary">
         <div class="gallary-title text-center">您的线上画廊</div>
         <div class="gallary-desc text-center">为您精选的系列作品</div>
-        <div class="row">
+        <div class="row"> -->
           <!-- <div class="col-3 relative-position text-center">
             <div class="line absolute"></div>
             <q-img src="img/index/painting1.png" width="230px"></q-img>
@@ -164,7 +164,7 @@
             <q-img src="img/index/painting4.png" width="230px"></q-img>
           </div>
            -->
-           <div class="col-3 relative-position text-center"
+           <!-- <div class="col-3 relative-position text-center"
             v-for="(item, index) in $store.state.home.gallerySeller.list"
             :key="item.sellerId"
            >
@@ -193,7 +193,7 @@
     </div>
     <div class="new text-center">
       <div class="new-title text-dark">最新上线的艺术作品</div>
-      <div class="row new-items">
+      <div class="row new-items"> -->
         <!-- <div class="col-3 relative-position">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
@@ -248,7 +248,7 @@
         </div> -->
 
 
-        <div class="col-3 relative-position" v-for="(item,index) in $store.state.home.latestCommodity.list" :key="item.commodityId">
+        <!-- <div class="col-3 relative-position" v-for="(item,index) in $store.state.home.latestCommodity.list" :key="item.commodityId">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
             <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="230px"></q-img>
@@ -270,7 +270,7 @@
             <div>通过画作看世界</div>
             <div class="num absolute">20万+</div>
           </div>
-          <div class="row">
+          <div class="row"> -->
             <!-- <div
               class="col-4 sort-item relative-position"
               v-for="i in [1, 2, 3, 4, 5, 6]"
@@ -290,7 +290,7 @@
                 <div class="absolute-full bg"></div>
               </q-img>
             </div> -->
-            <div
+            <!-- <div
               class="col-4 sort-item relative-position"
               v-for="item in $store.state.home.lookWorld"
               :key="item.id"
@@ -356,7 +356,7 @@
             @mouseenter="autoplay = false"
             @mouseleave="autoplay = true"
             infinite
-          >
+          > -->
             <!-- <q-carousel-slide
               v-for="ite in ['a', 'b', 'c', 'd']"
               :name="ite"
@@ -378,7 +378,7 @@
                 </div>
               </div>
             </q-carousel-slide> -->
-            <q-carousel-slide
+            <!-- <q-carousel-slide
               v-for="(item, index) in $store.state.home.commentCommodity"
               :key="index"
               :name="item.title"
@@ -410,13 +410,13 @@
         <q-img src="img/index/more.png" class="col" width="22px"></q-img>
       </div>
 
-      <div class="row hot-artist justify-between">
+      <div class="row hot-artist justify-between"> -->
         <!-- <div class="col-2" v-for="i in [1, 2, 3, 4, 5]" :key="i">
           <div class="image"></div>
           <div class="name">JEFF FERST</div>
           <div class="country">墨西哥-画家</div>
         </div> -->
-        <div class="col-2" v-for="item in $store.state.home.hotSaleSeller.list" :key="item.sellerId">
+        <!-- <div class="col-2" v-for="item in $store.state.home.hotSaleSeller.list" :key="item.sellerId">
           <img :src="item.user.avatar" width="180px" />
           <div class="name">{{item.firstname}}{{item.lastname}}</div>
           <div class="country">{{item.country}}-{{item.typeName}}</div>
@@ -432,46 +432,46 @@
         width="50px"
         @click="toTop"
       ></q-img>
-    </div>
+    </div> -->
   </q-layout>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      slide: 1,
-      autoplay: true,
-      slides: "a",
-      ratingModel: 3,
-      hotartist: "a",
-    };
-  },
-  preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
-    console.log("index preFetch", currentRoute.params.lang, previousRoute, urlPath, publicPath)
-    // return store.dispatch('home/setHome', {
-    //   locale: 'zh-cn'
-    // })
-    // return store.dispatch('fetchItem', currentRoute.params.id)
-  },
-  methods: {
-    Top() {
-      // console.log(document.documentElement.scrollTop);
-      document.documentElement.scrollTop >= 600
-        ? this.$refs.top.classList.remove("none")
-        : this.$refs.top.classList.add("none");
-    },
-    toTop() {
-      document.documentElement.scrollTop = 0;
-    },
-    goArtists() {
-      this.$router.push("/artists");
-    },
-    goArtworks() {
-      this.$router.push("/artworks");
-    },
-  },
-};
+// export default {
+//   data() {
+//     return {
+//       slide: 1,
+//       autoplay: true,
+//       slides: "a",
+//       ratingModel: 3,
+//       hotartist: "a",
+//     };
+//   },
+//   preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
+//     console.log("index preFetch", currentRoute.params.lang, previousRoute, urlPath, publicPath)
+//     // return store.dispatch('home/setHome', {
+//     //   locale: 'zh-cn'
+//     // })
+//     // return store.dispatch('fetchItem', currentRoute.params.id)
+//   },
+//   methods: {
+//     Top() {
+//       // console.log(document.documentElement.scrollTop);
+//       document.documentElement.scrollTop >= 600
+//         ? this.$refs.top.classList.remove("none")
+//         : this.$refs.top.classList.add("none");
+//     },
+//     toTop() {
+//       document.documentElement.scrollTop = 0;
+//     },
+//     goArtists() {
+//       this.$router.push("/artists");
+//     },
+//     goArtworks() {
+//       this.$router.push("/artworks");
+//     },
+//   },
+// };
 </script>
 
 

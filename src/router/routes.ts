@@ -21,6 +21,7 @@ const routes: RouteConfig[] = [
       { path: 'evaluate', name: 'Evaluate', component: () => import('pages/evaluate.vue') },
       { path: 'newaddress', name: 'NewAddress', component: () => import('pages/newaddress.vue') },
       { path: 'commodity', name: 'commodity', component: () => import('pages/commodity.vue') },
+      { path: 'share', name: 'share', component: () => import('pages/share.vue') },
     ]
   },
 

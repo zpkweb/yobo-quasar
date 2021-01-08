@@ -120,6 +120,8 @@
           <div>浅绿色树脂光泽版130cmx180cm</div>
           <div>油画帆布</div>
         </div>
+        <div class="soldout">已售</div>
+        <div class="off">已下架</div>
         <div class="prise"><span class="symbol">¥</span>7，000</div>
         <q-select
           borderless
@@ -129,7 +131,7 @@
         />
         <div class="title2">相框选择材质</div>
         <div class="row text-center frames">
-          <div class="col-4" v-for="i in 7" :key="i">
+          <div class="btn col-4" v-for="i in 7" :key="i">
             <div class="frame"></div>
             <div class="color">浅木色 ¥800</div>
           </div>
@@ -140,39 +142,149 @@
         </div>
         <div class="title2">相框选择大小</div>
         <div class="row">
-          <div class="size col-4">大</div>
-          <div class="size col-4">中</div>
-          <div class="size col-4">小</div>
+          <div class="size btn col-4">小</div>
+          <div class="size btn col-4">中</div>
+          <div class="size btn col-4">大</div>
         </div>
         <div class="row text-center items-end advantages">
-          <div class="col-4">
-            <q-img src="img/send.png" width="35px" class="image"></q-img>
+          <div class="col-4 item2">
+            <q-img src="img/send.png" width="30px" class="image"></q-img>
             <div>全球免费送货</div>
           </div>
-          <div class="col-4">
+          <div class="col-4 item2">
             <q-img src="img/change.png" width="35px" class="image"></q-img>
             <div>免费换货</div>
           </div>
-          <div class="col-4">
-            <q-img src="img/pay.png" width="35px" class="image"></q-img>
+          <div class="col-4 item2">
+            <q-img src="img/pay.png" width="30px" class="image"></q-img>
             <div>安全支付</div>
           </div>
         </div>
-        <div>
-          <div>¥7，000</div>
-          <div>点击购买</div>
-          <div>出价</div>
-          <div>对于购买此画有任何疑问？</div>
+        <!-- <div class="buy text-center relative-position">
+          <div class="prise prise2"><span class="symbol">¥</span> 7，000</div>
+          <div class="buynow text-white btn">点击购买</div>
+          <div class="makeoffer text-white btn" @click="openOfferPage">
+            出价
+          </div>
+          <div class="row contactus">
+            <div class="contact col-grow btn">
+              <q-img src="img/contact.png" width="20px"></q-img>
+            </div>
+            <div class="askquestion col text-left btn">
+              <div>对于购买此画有任何疑问？</div>
+              <div>与永宝专业客服在线交流</div>
+            </div>
+          </div>
+          <div class="offer relative-position absolute closepage" ref="offerPage">
+            <q-img
+              src="img/close.png"
+              width="20px"
+              class="offer-close absolute btn"
+              @click="closeOfferPage"
+            ></q-img>
+            <div class="offer-title text-left">就此作品向艺术家出价</div>
+            <div class="newprise bg-white text-left">
+              <span class="symbol2">¥</span><span class="sub btn">－</span
+              ><span class="num btn">{{ prise }}</span
+              ><span class="add btn">＋</span>
+            </div>
+            <div class="email-outer bg-white">
+              <input
+                type="text"
+                v-model="email"
+                placeholder="您的电子邮件地址"
+                class="email"
+              />
+            </div>
+            <div class="msg-outer bg-white">
+              <textarea
+                placeholder="您的出价是多少呢？您也可以写下您的其他问题，留下微信或电话号码。我们的工作人员会很快联系您的"
+                class="msg"
+                v-model="msg"
+              ></textarea>
+            </div>
+          </div>
+        </div> -->
+        <div class="sold relative-position">
+          <div class="sold-title">您心仪的作品已被售出？</div>
+          <div>
+            好消息！这位艺术家接受艺术品订制！您可以提供给我们之前的作品细节并选择尺寸，我们会和该艺术家协商订制作品价格！
+          </div>
+          <div class="btn sold-btn text-white text-center" @click="openOfferPage">
+            同这位艺术家定制作品
+          </div>
+          <div class="row contactus">
+            <div class="contact col-grow btn">
+              <q-img src="img/contact.png" width="20px"></q-img>
+            </div>
+            <div class="askquestion col text-left btn">
+              <div>对于购买此画有任何疑问？</div>
+              <div>与永宝专业客服在线交流</div>
+            </div>
+          </div>
+          <div class="offer relative-position absolute closepage" ref="offerPage">
+            <q-img
+              src="img/close.png"
+              width="20px"
+              class="offer-close absolute btn"
+              @click="closeOfferPage"
+            ></q-img>
+            <div class="offer-title text-left">就此作品向艺术家出价</div>
+            <div class="newprise bg-white text-left">
+              <span class="symbol2">¥</span><span class="sub btn">－</span
+              ><span class="num btn">{{ prise }}</span
+              ><span class="add btn">＋</span>
+            </div>
+            <div class="email-outer bg-white">
+              <input
+                type="text"
+                v-model="email"
+                placeholder="您的电子邮件地址"
+                class="email"
+              />
+            </div>
+            <div class="msg-outer bg-white">
+              <textarea
+                placeholder="您的出价是多少呢？您也可以写下您的其他问题，留下微信或电话号码。我们的工作人员会很快联系您的"
+                class="msg"
+                v-model="msg"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="follow relative-position" ref="follow">
+          <q-img
+            src="img/close.png"
+            width="20px"
+            class="close absolute btn"
+            @click="close"
+          ></q-img>
+          <div class="row">
+            <div class="erweima">
+              <q-img src="img/erweima.png" width="55px"></q-img>
+            </div>
+            <div class="follow-us col-grow">
+              <div>扫码下载永宝APP</div>
+              <div>即时接受艺术品及订阅信息</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="paints">
       <div class="container text-center">
-        <div class="others">Karin Vermeer的其他作品</div>
+        <div class="relative-position">
+          <div class="title">Karin Vermeer的其他作品</div>
+          <div class="more absolute btn">更多</div>
+        </div>
         <div class="row">
           <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
+            </div>
+            <div class="text text-left">
+              <div>丙烯酸 • 亚麻</div>
+              <div>100x100cm</div>
             </div>
           </div>
         </div>
@@ -180,23 +292,38 @@
     </div>
     <div class="similar-paints paints">
       <div class="container text-center">
-        <div class="title">类似艺术作品</div>
+        <div class="relative-position">
+          <div class="title">类似艺术作品</div>
+          <div class="more absolute">更多</div>
+        </div>
         <div class="row">
           <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
             </div>
+            <div class="text text-left">
+              <div>丙烯酸 • 亚麻</div>
+              <div>100x100cm</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-     <div class="paints history">
+    <div class="paints history">
       <div class="container text-center">
-        <div class="title">您最近浏览的作品</div>
+        <div class="relative-position">
+          <div class="title">您最近浏览的作品</div>
+          <div class="more absolute btn">更多</div>
+        </div>
+
         <div class="row">
           <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
+            </div>
+            <div class="text text-left">
+              <div>丙烯酸 • 亚麻</div>
+              <div>100x100cm</div>
             </div>
           </div>
         </div>
@@ -212,7 +339,23 @@ export default {
       slide: 1,
       options: ["CNY", "USD", "JPY", "EUR"],
       currency: "CNY",
+      prise: "7000",
+      email: "",
+      msg: "",
     };
+  },
+  methods: {
+    close() {
+      this.$refs.follow.classList.add("closepage");
+    },
+    closeOfferPage() {
+      this.$refs.offerPage.classList.add("closepage");
+      this.$refs.offerPage.classList.remove("openpage");
+    },
+    openOfferPage() {
+      this.$refs.offerPage.classList.remove("closepage");
+      this.$refs.offerPage.classList.add("openpage");
+    },
   },
 };
 </script>
@@ -222,7 +365,9 @@ export default {
   width: 1200px;
   margin: 0 auto;
   color: rgb(21, 44, 43);
-
+  .btn {
+    cursor: pointer;
+  }
   .button {
     z-index: 1000;
     left: 604px;
@@ -301,7 +446,6 @@ export default {
   }
   .name {
     font-size: 24px;
-    margin-top: 10px;
   }
   .year,
   .painter,
@@ -334,6 +478,12 @@ export default {
       font-size: 24px;
       margin: 10px 0;
     }
+    .soldout,
+    .off {
+      color: rgb(173, 175, 139);
+      font-size: 44px;
+      font-weight: 600;
+    }
     .currency {
       display: inline-block;
       font-size: 18px;
@@ -342,9 +492,9 @@ export default {
     .prise {
       display: inline-block;
       margin-right: 20px;
-      font-size: 38px;
+      font-size: 42px;
       .symbol {
-        font-size: 12px;
+        font-size: 14px;
       }
     }
     .title2 {
@@ -376,7 +526,7 @@ export default {
     .size {
       width: 100px;
       height: 35px;
-      margin: 5px;
+      margin: 10px 8px 5px 0;
       border: 1px solid rgba(21, 44, 43, 0.1);
       line-height: 35px;
       text-align: center;
@@ -387,27 +537,193 @@ export default {
     }
     .advantages {
       font-size: 12px;
+      margin-bottom: 45px;
+      letter-spacing: 2px;
+      .item2 {
+        padding-right: 30px;
+      }
     }
     .image {
       margin-bottom: 10px;
+    }
+    .buy {
+      border: 1px solid rgba(21, 44, 43, 0.1);
+      padding: 25px 0;
+      width: 340px;
+      margin-bottom: 25px;
+      .prise2 {
+        margin-bottom: 20px;
+      }
+      .buynow,
+      .makeoffer {
+        background-color: #152c2b;
+        font-size: 18px;
+        font-weight: bolder;
+        width: 284px;
+        height: 38px;
+        line-height: 38px;
+        margin: 0 auto 20px;
+      }
+      .contactus {
+        width: 180px;
+        margin: 0 auto;
+        .contact {
+          margin-top: 6px;
+        }
+        .askquestion {
+          font-size: 12px;
+          font-family: "Heiti SC";
+          font-weight: 600;
+          padding-left: 10px;
+        }
+      }
+    }
+    .offer {
+      background-color: #d6d7c5;
+      padding: 50px 29px 25px;
+      top: 160px;
+      z-index: 100;
+      left: 0;
+      .offer-close {
+        left: 290px;
+        top: 28px;
+      }
+      .offer-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .newprise {
+        padding: 5px 10px;
+        margin-bottom: 20px;
+        .num {
+          font-size: 16px;
+          padding: 0 10px;
+        }
+        .symbol2 {
+          padding-right: 10px;
+        }
+        .add,
+        .sub {
+          border: 1px solid rgba(21, 44, 43, 0.1);
+          font-size: 12px;
+        }
+      }
+      .email-outer {
+        margin-bottom: 20px;
+        .email {
+          width: 280px;
+          border: none;
+          outline: none;
+          padding: 5px 10px;
+          font-size: 14px;
+        }
+      }
+
+      .msg-outer {
+        margin-bottom: 27px;
+        .msg {
+          width: 280px;
+          height: 165px;
+          resize: none;
+          padding-left: 10px;
+          font-size: 14px;
+          border: none;
+          outline: none;
+          padding-top: 10px;
+        }
+      }
+    }
+    .sold {
+      border: 1px solid rgba(21, 44, 43, 0.1);
+      padding: 35px;
+      width: 340px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      .sold-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .contactus {
+        width: 180px;
+        margin: 0 auto;
+        .contact {
+          margin-top: 6px;
+        }
+        .askquestion {
+          font-size: 12px;
+          font-family: "Heiti SC";
+          font-weight: 600;
+          padding-left: 10px;
+        }
+      }
+      .sold-btn {
+        width: 285px;
+        height: 40px;
+        line-height: 40px;
+        background-color: #152c2b;
+        font-size: 18px;
+        font-weight: bolder;
+        margin: 20px auto;
+      }
+    }
+    .closepage {
+      display: none;
+    }
+    .openpage {
+      display: block;
+    }
+
+    .follow {
+      border: 1px solid rgba(21, 44, 43, 0.1);
+      width: 340px;
+      padding: 20px 35px;
+      .close {
+        top: 20px;
+        left: 300px;
+      }
+      .follow-us {
+        padding: 2px 0 0 14px;
+        font-size: 16px;
+      }
     }
   }
 }
 .paints {
   background-color: #232323;
   padding: 60px 0;
-  .others {
+  .title {
     font-size: 34px;
-    color: rgb(173, 175, 139);
     font-weight: normal;
+    color: rgb(173, 175, 139);
+  }
+  .more {
+    color: rgb(173, 175, 139);
+    left: 1156px;
+    top: 15px;
+    font-size: 14px;
+    font-family: "Heiti SC";
+    font-weight: 600;
+  }
+  .text {
+    color: rgb(173, 175, 139);
+    width: 216px;
+    margin: 10px auto 0;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
   }
 }
 .similar-paints {
   background-color: #ffffff;
-  .title {
-    font-size: 34px;
-    font-weight: normal;
+  .title,
+  .text,
+  .more {
+    color: rgb(21, 44, 43);
   }
+}
+.history {
+  background-color: #152c2b;
 }
 .paint {
   box-sizing: content-box;
@@ -423,30 +739,19 @@ export default {
     background: url("/img/paint1.png") center center no-repeat;
   }
 }
-.history{
-  background-color: #152c2b;
-  .title{
-     font-size: 34px;
-    color: rgb(173, 175, 139);
-    font-weight: normal;
-  }
-}
 </style>
 
 
 
 
-.Karin_Vermeer的其他作品 {
-  font-size: 34px;
+
+.已下架 {
+  font-size: 44px;
   font-family: "STFangsong";
   color: rgb(173, 175, 139);
   line-height: 1.2;
-  text-align: center;
-  -moz-transform: matrix( 1,0,0,1.00090695374523,0,0);
-  -webkit-transform: matrix( 1,0,0,1.00090695374523,0,0);
-  -ms-transform: matrix( 1,0,0,1.00090695374523,0,0);
   position: absolute;
-  left: 765.285px;
-  top: 1879.587px;
-  z-index: 81;
+  left: 1165.328px;
+  top: 221.635px;
+  z-index: 45;
 }
