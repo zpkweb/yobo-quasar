@@ -465,10 +465,10 @@ export default {
       document.documentElement.scrollTop = 0;
     },
     goArtists() {
-      this.$router.push("/artists");
+      this.$router.push(`/${this.$i18n.locale}/artists`);
     },
     goArtworks() {
-      this.$router.push("/artworks");
+      this.$router.push(`/${this.$i18n.locale}/artworks`);
     },
   },
 };

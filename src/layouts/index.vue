@@ -720,7 +720,7 @@ export default {
     },
 
     goIndex() {
-      this.$router.push("/");
+      this.$router.push(`/${this.$i18n.locale}`);
     },
     goPage2() {
       this.mode = "page2";
