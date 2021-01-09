@@ -3,8 +3,8 @@
     <div class="banner relative-position">
       <q-img src="img/artworks/banner.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
-        <div class="text-bold">画家｜荷兰</div>
-        <div class="title">Karin Vermeer</div>
+        <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
+        <div class="title">{{portrait.firstname}} {{portrait.lastname}}</div>
         <div class="number">
           <span>知名艺术家</span>
           <span>国际风险敞口</span>
@@ -23,17 +23,21 @@
     </div>
     <div class="desc row">
       <div class="col-4">
-        <q-img src="img/artist/zp.png" width="340px"></q-img>
+        <!-- <q-img src="img/artist/zp.png" width="340px"></q-img> -->
+        <q-img :src="portrait.user ? portrait.user.avatar : ''"></q-img>
       </div>
       <div class="col-8 text-right resume">
-        <div class="resume1">ARTIST</div>
+        <!-- <div class="resume1">ARTIST</div>
         <div class="resume2">
           我结合了数字和有形，所以我将两个世界结合在一起.
         </div>
         <div class="resume3">
           Karin Vermeer是一位独立艺术家，自2002年以来一直在鹿特丹生活和工作<br />
           她的作品是通过将照片和绘画进行数字组合和编辑为新的原创艺术作品而创作的<br />威猛(Vermeer)擅长于通过覆盖和融合四到五个不同种族和血统的不同面孔来创建新的不存在的人物而创建的肖像<br />打印数字图像并添加涂料以获得最终的结果，尝试使数字图像再次变得有形
-        </div>
+        </div> -->
+        <p>
+          {{ portrait.metadata.profile }}
+        </p>
         <div class="resume4">
           <q-img src="img/artist/weibo.png" width="32px" class="image"></q-img>
           <q-img src="img/artist/wechat.png" width="32px" class="image"></q-img>
@@ -116,7 +120,13 @@ export default {
     return await store.dispatch("artist/seller", {
       sellerId: artistId
     });
-  }
+  },
+  computed: {
+    portrait() {
+      return this.$store.state.artist.portrait;
+    },
+
+  },
 };
 </script>
 
