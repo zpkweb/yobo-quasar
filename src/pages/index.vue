@@ -5,7 +5,7 @@
         <div class="col-3">
           <div class="menu text-white text-bold">
             <div class="menu-item">
-              <div class="menu-title menu-title1" @click="goArtists">{{$t('home.artist')}}</div>
+              <div class="menu-title menu-title1" @click="goArtists()">{{$t('home.artist')}}</div>
               <q-breadcrumbs class="menu-el" separator="|" gutter="md">
                 <q-breadcrumbs-el
                   :label="$t('home.painter')"
@@ -14,11 +14,11 @@
                     tag: 0
                   })"
                 />
-                <q-breadcrumbs-el :label="$t('home.sculptor')" class="text-white" @click="goArtists({
+                <q-breadcrumbs-el :label="$t('home.sculptor')" class="text-white btn" @click="goArtists({
                     tag: 1
                   })" />
-                <q-breadcrumbs-el :label="$t('home.country')" class="text-white" @click="goArtists" />
-                <q-breadcrumbs-el :label="$t('home.surname')" class="text-white" @click="goArtists" />
+                <q-breadcrumbs-el :label="$t('home.country')" class="text-white btn" @click="goArtists()" />
+                <q-breadcrumbs-el :label="$t('home.surname')" class="text-white btn" @click="goArtists()" />
               </q-breadcrumbs>
             </div>
             <div class="menu-item">
@@ -441,6 +441,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 export default {
   data() {
     return {
@@ -472,11 +473,13 @@ export default {
       document.documentElement.scrollTop = 0;
     },
     goArtists(data) {
-      if(data && Object.keys(data).length) {
-        this.$router.push(`/${this.$i18n.locale}/artists?${this.$qs.stringify(data)}`);
-      }else{
-        this.$router.push(`/${this.$i18n.locale}/artists`);
+      const querys = {
+        tag: "",
+        country: "",
+        surname: ""
       }
+      console.log(querys, data, Object.assign(querys, data))
+      this.$router.push(`/${this.$i18n.locale}/artists?${qs.stringify(Object.assign(querys, data))}`);
 
     },
     goArtworks() {
