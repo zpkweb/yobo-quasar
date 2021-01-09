@@ -4,7 +4,7 @@
       <q-img src="img/artist.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <div class="title">画家</div>
-        <div class="number">7,442件符合您搜索条件的画家</div>
+        <div class="number">{{artistTotal}}件符合您搜索条件的画家</div>
       </div>
     </div>
     <div class="container">
@@ -16,9 +16,7 @@
               class="btn"
               v-for="(item, index) in tags"
               :key="index"
-              :to="`/${$i18n.locale}/artists?${$qs.stringify(
-                Object.assign({}, $route.query, { tag: item.value })
-              )}`"
+              :to="{ query: Object.assign({}, $route.query, { tag: item.value }) }"
               >{{ item.label }}</q-route-tab
             >
           </q-tabs>
@@ -30,9 +28,7 @@
               class="btn"
               v-for="(item, index) in countrys"
               :key="index"
-              :to="`/${$i18n.locale}/artists?${$qs.stringify(
-                Object.assign({}, $route.query, { country: item.value })
-              )}`"
+              :to="{ query: Object.assign({}, $route.query, { country: item.value }) }"
               >{{ item.label }}</q-route-tab
             >
           </q-tabs>
@@ -44,9 +40,7 @@
               class="tab-surname"
               v-for="(item, index) in surnames"
               :key="index"
-              :to="`/${$i18n.locale}/artists?${$qs.stringify(
-                Object.assign({}, $route.query, { surname: item })
-              )}`"
+              :to="{ query: Object.assign({}, $route.query, { surname: item }) }"
               >{{ item || '不限' }}</q-route-tab
             >
           </q-tabs>
@@ -72,10 +66,11 @@
         <div class="btn">最新上传</div>
       </div>
       <div class="artists row" v-if="artistList">
-        <div
+        <q-item
           class="artist col-3"
           v-for="(item, index) of artistList"
           :key="index"
+          :to="`artist/${item.sellerId}`"
         >
           <div class="image">
             <!-- <q-img src="img/artists/artist.png" width="194px"></q-img> -->
@@ -86,7 +81,7 @@
           </div>
           <div class="text-left">{{ item.user ? item.user.name : "" }}</div>
           <div class="text-left">{{ item.country }} {{ item.typeName }}</div>
-        </div>
+        </q-item>
       </div>
       <div class="text-center none" v-else>
         <q-img
@@ -119,7 +114,7 @@
         layout="prev, pager, next"
         :page-size="pageSize"
         :current-page="currentPage"
-        :total="total"
+        :total="artistTotal"
         @current-change="changeCurrentPage"
         style="margin-top: 20px; text-align: center"
       >
@@ -132,7 +127,7 @@
 export default {
   data() {
     return {
-      surname: this.$store.state.artist.search.surname,
+      surname: this.$route.query.surname,
       surnames: [
         "",
         "A",
@@ -161,7 +156,7 @@ export default {
         "Y",
         "Z",
       ],
-      tag: this.$store.state.artist.search.tag,
+      tag: this.$route.query.tag,
       tags: [
         {
           label: "不限",
@@ -180,7 +175,7 @@ export default {
           value: "2",
         },
       ],
-      country: this.$store.state.artist.search.country,
+      country: this.$route.query.country,
       countrys: [
         {
           label: "不限",
@@ -208,19 +203,13 @@ export default {
 
       newPage: "",
       maxPage: 10,
-      pageSize: this.$store.state.artist.pagination.pageSize,
-      currentPage: this.$store.state.artist.pagination.currentPage,
-      total: this.$store.state.artist.pagination.total,
+      pageSize: this.$route.query.pageSize,
+      currentPage: this.$route.query.currentPage
     };
   },
   async preFetch({
     store,
     currentRoute,
-    previousRoute,
-    redirect,
-    ssrContext,
-    urlPath,
-    publicPath,
   }) {
     console.log("artists preFetch", store.state.artist, currentRoute);
     const { lang } = currentRoute.params;
@@ -235,8 +224,8 @@ export default {
 
     return await store.dispatch("artist/sellerSearch", {
       type: tag || "",
-      // country: country,
-      // firstname: surname,
+      country: country || "",
+      firstname: surname || "",
       locale: lang,
       currentPage: currentPage || store.state.artist.pagination.currentPage,
       pageSize: pageSize || store.state.artist.pagination.pageSize,
@@ -255,25 +244,16 @@ export default {
     this.country = this.$route.query.country || ""
   },
   methods: {
-    async search() {
-      // const searchData = await this.$axios.$get('/api/admin/user/seller/search', {
-      //   params: {
-      //     ...this.userSearch,
-      //     currentPage: this.currentPage,
-      //     pageSize: this.pageSize
-      //   }
-      // })
-      // this.total = searchData.data.total
-      // this.user = searchData.data.list
-      return await store.dispatch("artist/sellerSearch", {
-        type: currentRoute.query.tag,
-        // country: currentRoute.query.country,
-        // firstname: currentRoute.query.surname,
-        locale: currentRoute.params.lang,
-        currentPage: this.currentPage,
-        pageSize: this.pageSize,
-      });
-    },
+    // async search() {
+    //   return await this.$store.dispatch("artist/sellerSearch", {
+    //     type: this.tag,
+    //     // country: this.country,
+    //     // firstname: this.surname,
+    //     locale: this.$route.params.lang,
+    //     currentPage: this.currentPage,
+    //     pageSize: this.pageSize,
+    //   });
+    // },
     show() {
       this.text = "收起选项";
     },
@@ -289,8 +269,11 @@ export default {
     //     : this.current;
     // },
     changeCurrentPage(val) {
-      this.currentPage = val;
-      this.search();
+      // this.currentPage = val;
+      // this.search();
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, { currentPage: val })
+      })
     },
   },
 };

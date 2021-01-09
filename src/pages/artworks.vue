@@ -4,57 +4,99 @@
       <q-img src="img/artworks/banner.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <div class="title">油画</div>
-        <div class="number">7,442件符合您搜索条件的艺术品</div>
+        <div class="number">{{artworkTotal}}件符合您搜索条件的艺术品</div>
       </div>
     </div>
     <div class="container">
       <div class="tags">
         <div class="tag">
           <div class="text-dark">形状</div>
-          <div>不限</div>
+          <!-- <div>不限</div>
           <div>横版</div>
           <div>竖版</div>
           <div>方形</div>
-          <div>自定义</div>
+          <div>自定义</div> -->
+
+          <q-tabs class="options-tabs text-teal">
+            <q-route-tab
+              class="btn"
+              v-for="(item, index) in shapes"
+              :key="index"
+              :to="{ query: Object.assign({}, $route.query, { shape: item.value }) }"
+              >{{ item.label }}</q-route-tab
+            >
+          </q-tabs>
         </div>
         <div class="tag">
           <div class="text-dark">价格</div>
-          <div>不限</div>
+          <!-- <div>不限</div>
           <div>低于6000</div>
           <div>6000-20000</div>
           <div>20000-40000</div>
           <div>高于40000</div>
-          <div>自定义</div>
+          <div>自定义</div> -->
+          <q-tabs class="options-tabs text-teal">
+            <q-route-tab
+              class="btn"
+              v-for="(item, index) in prices"
+              :key="index"
+              :to="{ query: Object.assign({}, $route.query, { price: item.value, pricemin: item.price.min, pricemax: item.price.max }) }"
+              >{{ item.label }}</q-route-tab
+            >
+          </q-tabs>
           <div>
-            <input type="text" class="input" v-model="lowPrise" />-<input
+            <input type="text" class="input" v-model="pricemin" />-<input
               type="text"
               class="input"
-              v-model="highPrise"
+              v-model="pricemax"
             />
           </div>
-          <div class="text-dark btn" @click="myPrise">确定</div>
+          <!-- <div class="text-dark btn" @click="myPrise">确定</div> -->
+          <q-tabs>
+            <q-route-tab :to="{ query: Object.assign({}, $route.query, { price: '4', pricemin, pricemax}) }">确定</q-route-tab>
+          </q-tabs>
         </div>
         <div class="tag">
           <div class="text-dark">颜色</div>
-          <div>
+          <!-- <div>
             <div
               class="color"
               :style="{ backgroundColor: color }"
               v-for="color in colors"
               :key="color"
             ></div>
-          </div>
+          </div> -->
+          <q-tabs class="options-tabs text-teal">
+            <q-route-tab
+              class="color"
+              v-for="(item, index) in colors"
+              :key="index"
+              :to="{ query: Object.assign({}, $route.query, { color: item }) }"
+              >
+                <span class="color-box" :style="{ backgroundColor: '#'+item }">{{ item ? "" : "不限"}}</span>
+              </q-route-tab
+            >
+          </q-tabs>
         </div>
         <div class="tag">
           <div class="text-dark">主题</div>
-          <div
+          <!-- <div
             v-for="theme in themes"
             :key="theme"
             @click="addTag(theme)"
             class="btn"
           >
             {{ theme }}
-          </div>
+          </div> -->
+          <q-tabs class="options-tabs text-teal">
+            <q-route-tab
+              class="btn"
+              v-for="(item, index) in themes"
+              :key="index"
+              :to="{ query: Object.assign({}, $route.query, { theme: item.value }) }"
+              >{{ item.label }}</q-route-tab
+            >
+          </q-tabs>
         </div>
       </div>
       <q-expansion-item
@@ -88,23 +130,60 @@
         ></q-img>
         <div>暂无数据，请您重新搜索，我们会尽快完善！</div>
       </div> -->
-      <div class="artworks">
+      <!-- <div class="artworks">
         <vue-waterfall-easy
           :imgsArr="imgsArr"
           @scrollReachBottom="getData"
           maxCols="4"
         ></vue-waterfall-easy>
+      </div> -->
+      <div class="q-pa-md">
+
+        <!-- <q-btn class="q-mb-md" color="primary" label="Regenerate layout" @click="generateCells" /> -->
+
+        <div class="column example-container" :style="`height: ${(Math.floor(pageSize/3))*250 }px`">
+          <div class="flex-break hidden"></div>
+          <div class="flex-break"></div>
+          <div class="flex-break"></div>
+          <div class="example-cell" v-for="(item, index) in artworkList" :key="index">
+            <q-img :src="item.photos.length ? item.photos[0].src : ''" style="min-height: 80px"></q-img>
+            <p>{{item.name}}</p>
+
+          </div>
+
+        </div>
+
       </div>
+
+
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        :current-page="currentPage"
+        :total="artworkTotal"
+        @current-change="changeCurrentPage"
+        style="margin-top: 20px; text-align: center"
+      >
+      </el-pagination>
+
+
     </div>
   </q-layout>
 </template>
 
 <script>
-import vueWaterfallEasy from "vue-waterfall-easy";
+// import vueWaterfallEasy from "vue-waterfall-easy";
+
+const generateCells = () => Array(24).fill(null).map((_, cell) => (
+  Array(2 + Math.ceil(3 * Math.random())).fill(null).map((_, text) => `Cell ${cell + 1} - ${text + 1}`)
+))
+
 export default {
-  name: "app",
+  // name: "app",
   data() {
     return {
+      cells: generateCells(),
       imgsArr: [
         { src: "/img/artworks/1.png", href: "#" },
         { src: "/img/artworks/3.png", href: "#" },
@@ -139,39 +218,185 @@ export default {
       ],
 
       tags: ["新闻摄影", "概念艺术"],
+      shape: this.$route.query.shape,
+      shapes: [
+        {
+          label: "不限",
+          value: "",
+        },
+        {
+          label: "横版",
+          value: "0",
+        },
+        {
+          label: "竖版",
+          value: "1",
+        },
+        {
+          label: "方形",
+          value: "2",
+        },
+      ],
+      price: this.$route.query.price,
+      pricemin: this.$route.query.price == "4" ? this.$route.query.pricemin : "",
+      pricemax: this.$route.query.price == "4" ? this.$route.query.pricemax : "",
+      prices: [
+        {
+          label: "不限",
+          value: "",
+          price: {
+            min: "",
+            max: "",
+          },
+        },
+        {
+          label: "低于6000",
+          value: "0",
+          price: {
+            min: "",
+            max: "6000",
+          },
+        },
+        {
+          label: "6000-20000",
+          value: "1",
+          price: {
+            min: "6000",
+            max: "20000",
+          },
+        },
+        {
+          label: "20000-40000",
+          value: "2",
+          price: {
+            min: "20000",
+            max: "40000",
+          },
+        },
+        {
+          label: "高于40000",
+          value: "3",
+          price: {
+            min: "40000",
+            max: "",
+          },
+        },
+        {
+          label: "自定义",
+          value: "4",
+          price: {
+            min: this.$route.query.pricemin,
+            max: this.$route.query.pricemax,
+          },
+        },
+      ],
+      color: this.$route.query.color,
       colors: [
-        "pink",
-        "yellow",
-        "green",
-        "orange",
-        "blue",
-        "purple",
-        "#abcffc",
-        "red",
-        "gray",
+        "",
+        // "pink",
+        "ffc0cb",
+        // "yellow",
+        "feff00",
+        // "green",
+        "048004",
+        // "orange",
+        "ffa500",
+        // "blue",
+        "1601ff",
+        // "purple",
+        "800180",
+        "abcffc",
+        // "red",
+        "ff0102",
+        // "gray",
+        "808080",
       ],
+      theme: this.$route.query.theme,
       themes: [
-        "不限",
-        "风景画",
-        "动物",
-        "城市",
-        "抽象",
-        "新闻摄影",
-        "旅游",
-        "概念艺术",
+        {
+          label: "不限",
+          value: "",
+        },
+        {
+          label: "风景画",
+          value: "风景画",
+        },
+        {
+          label: "动物",
+          value: "动物",
+        },
+        {
+          label: "城市",
+          value: "城市",
+        },
+        {
+          label: "抽象",
+          value: "抽象",
+        },
+
+        // "不限",
+        // "风景画",
+        // "动物",
+        // "城市",
+        // "抽象",
+        // "新闻摄影",
+        // "旅游",
+        // "概念艺术",
       ],
-      current: 1,
+      // current: 1,
       text: "展开选项",
       maxPage: 10,
       newPage: "",
       lowPrise: "",
       highPrise: "",
+      pageSize: Number(this.$route.query.pageSize) || this.$store.state.artwork.pagination.pageSize,
+      currentPage: Number(this.$route.query.currentPage)
     };
   },
-  components: {
-    vueWaterfallEasy,
+  async preFetch({
+    store,
+    currentRoute,
+  }) {
+    console.log("artworks preFetch", store.state.artwork, currentRoute);
+    const { lang } = currentRoute.params;
+    const { shape, pricemin, pricemax, color, theme, currentPage, pageSize } = currentRoute.query;
+    if (shape || pricemin || pricemax || color || theme) {
+      store.commit("artwork/setSearch", {
+        shape: shape || "",
+        pricemin: pricemin || "",
+        pricemax: pricemax || "",
+        color: color || "",
+        theme: theme || ""
+      });
+    }
+
+    return await store.dispatch("artwork/commoditySearch", {
+      shape: shape || "",
+      pricemin: pricemin || "",
+      firstname: pricemax || "",
+      color: color || "",
+      theme: theme || "",
+      locale: lang,
+      currentPage: currentPage || store.state.artwork.pagination.currentPage,
+      pageSize: pageSize || store.state.artwork.pagination.pageSize,
+    });
   },
+  computed: {
+    artworkList() {
+      return this.$store.state.artwork.searchData;
+    },
+    artworkTotal() {
+      return this.$store.state.artwork.pagination.total;
+    },
+  },
+  // components: {
+  //   vueWaterfallEasy,
+  // },
   methods: {
+    generateCells () {
+      this.cells = generateCells();
+      console.log(this.cells)
+    },
     addTag(theme) {
       if (this.tags.find((e) => e === theme) === undefined) {
         this.tags.push(theme);
@@ -189,20 +414,19 @@ export default {
     hide() {
       this.text = "展开选项";
     },
-    nextPage() {
-      this.current < this.maxPage ? (this.current += 1) : this.current;
-    },
-    toNewPage() {
-      parseInt(this.newPage) > 0 && parseInt(this.newPage) <= this.maxPage
-        ? (this.current = parseInt(this.newPage))
-        : this.current;
-    },
-    myPrise() {
-      console.log(typeof this.lowPrise);
-      if (this.lowPrise <= this.highPrise) {
-        this.tags.push(`${this.lowPrise}-${this.highPrise}`);
-      }
-    },
+    // nextPage() {
+    //   this.current < this.maxPage ? (this.current += 1) : this.current;
+    // },
+    // toNewPage() {
+    //   parseInt(this.newPage) > 0 && parseInt(this.newPage) <= this.maxPage
+    //     ? (this.current = parseInt(this.newPage))
+    //     : this.current;
+    // },
+    // myPrise() {
+    //   if (this.lowPrise <= this.highPrise) {
+    //     this.tags.push(`${this.lowPrise}-${this.highPrise}`);
+    //   }
+    // },
     getData() {
       this.imgsArr.push([
         { src: "./m/1.png", href: "#" },
@@ -213,6 +437,14 @@ export default {
         { src: "./m/2.png", href: "#" },
       ]);
       this.group++;
+    },
+
+    changeCurrentPage(val) {
+      // this.currentPage = val;
+      // this.search();
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, { currentPage: val })
+      })
     },
   },
 };
@@ -265,13 +497,21 @@ export default {
     }
     .tag .color {
       display: inline-block;
-      width: 24px;
-      height: 24px;
+      // width: 24px;
+      // height: 24px;
       border-radius: 5px;
       vertical-align: middle;
       margin-left: 0;
-      &:hover {
-        border: 3px solid #152c2b;
+
+
+      .color-box{
+        display: inline-block;
+        width: 100%;
+        height: 40px;
+        // border: 3px solid transparent;
+        // &:hover {
+        //   border: 3px solid #152c2b;
+        // }
       }
     }
   }
@@ -462,4 +702,31 @@ export default {
   a.img-inner-box[data-v-ded6b974] {
   box-shadow: none !important;
 }
+</style>
+
+<style lang="sass" scoped>
+.flex-break
+  flex: 1 0 100% !important
+  width: 0 !important
+
+$x: 3
+
+@for $i from 1 through ($x - 1)
+  .example-container > div:nth-child(#{$x}n + #{$i})
+    order: #{$i}
+
+.example-container > div:nth-child(#{$x}n)
+  order: #{$x}
+
+.example-container
+
+  .example-cell
+    width: 33.33%
+    padding: 1px
+
+    > div
+      padding: 4px 8px
+      box-shadow: inset 0 0 0 2px $grey-6
+.my-custom-image
+  filter: blur(1px) sepia()
 </style>

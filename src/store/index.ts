@@ -7,13 +7,15 @@ import user from './user';
 import { UserStateInterface } from './user/state';
 import artist from './artist';
 import { ArtistStateInterface } from './artist/state';
-
+import artwork from './artwork';
+import { ArtworkStateInterface } from './artwork/state';
 
 export interface StateInterface {
   lang: any;
   home?: HomeStateInterface;
   user?: UserStateInterface;
   artist?: ArtistStateInterface;
+  artwork?: ArtworkStateInterface;
 }
 
 export default store(function ({ Vue }) {
@@ -31,7 +33,8 @@ export default store(function ({ Vue }) {
     modules: {
       home,
       user,
-      artist
+      artist,
+      artwork
     },
 
     // enable strict mode (adds overhead!)

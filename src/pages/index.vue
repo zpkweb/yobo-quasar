@@ -5,7 +5,7 @@
         <div class="col-3">
           <div class="menu text-white text-bold">
             <div class="menu-item">
-              <div class="menu-title menu-title1" @click="goArtists()">{{$t('home.artist')}}</div>
+              <div class="menu-title menu-title1 btn" @click="goArtists()">{{$t('home.artist')}}</div>
               <q-breadcrumbs class="menu-el" separator="|" gutter="md">
                 <q-breadcrumbs-el
                   :label="$t('home.painter')"
@@ -22,17 +22,17 @@
               </q-breadcrumbs>
             </div>
             <div class="menu-item">
-              <div class="menu-title">{{$t('home.artwork')}}</div>
+              <div class="menu-title btn" @click="goArtworks()">{{$t('home.artwork')}}</div>
               <q-breadcrumbs class="menu-el" separator="|" gutter="md">
                 <q-breadcrumbs-el
                   :label="$t('home.painting')"
                   class="text-white btn"
-                  @click="goArtworks"
+                  @click="goArtworks()"
                 />
-                <q-breadcrumbs-el :label="$t('home.sculpture')" class="text-white" />
-                <q-breadcrumbs-el :label="$t('home.Engraving')" class="text-white" />
-                <q-breadcrumbs-el :label="$t('home.traditionalChinesePainting')" class="text-white" />
-                <q-breadcrumbs-el :label="$t('home.lacquerware')" class="text-white" />
+                <q-breadcrumbs-el :label="$t('home.sculpture')" class="text-white btn" @click="goArtworks()" />
+                <q-breadcrumbs-el :label="$t('home.Engraving')" class="text-white btn" @click="goArtworks()" />
+                <q-breadcrumbs-el :label="$t('home.traditionalChinesePainting')" class="text-white btn" @click="goArtworks()" />
+                <q-breadcrumbs-el :label="$t('home.lacquerware')" class="text-white btn" @click="goArtworks()" />
               </q-breadcrumbs>
             </div>
             <div class="menu-item">
@@ -441,7 +441,6 @@
 </template>
 
 <script>
-import qs from 'qs'
 export default {
   data() {
     return {
@@ -473,17 +472,21 @@ export default {
       document.documentElement.scrollTop = 0;
     },
     goArtists(data) {
-      const querys = {
+      this.$router.push(`/${this.$i18n.locale}/artists?${this.$qs.stringify(Object.assign({
         tag: "",
         country: "",
         surname: ""
-      }
-      console.log(querys, data, Object.assign(querys, data))
-      this.$router.push(`/${this.$i18n.locale}/artists?${qs.stringify(Object.assign(querys, data))}`);
-
+      }, data))}`);
     },
-    goArtworks() {
-      this.$router.push(`/${this.$i18n.locale}/artworks`);
+    goArtworks(data) {
+      this.$router.push(`/${this.$i18n.locale}/artworks?${this.$qs.stringify(Object.assign({
+        shape: "",
+        price: "",
+        pricemin: "",
+        pricemax: "",
+        color: "",
+        theme: ""
+      }, data))}`);
     },
   },
 };

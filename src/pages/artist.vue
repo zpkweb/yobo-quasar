@@ -110,6 +110,13 @@ export default {
       tags: ["杂志封面", "原始结构的波帕特肖像画", "波帕特肖像画"],
     };
   },
+  async preFetch({ store, currentRoute }) {
+    console.log("artist preFetch", store.state.artist, currentRoute);
+    const { lang, artistId } = currentRoute.params;
+    return await store.dispatch("artist/seller", {
+      sellerId: artistId
+    });
+  }
 };
 </script>
 

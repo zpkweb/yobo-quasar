@@ -7,7 +7,6 @@ import axios from 'axios'
 const actions: ActionTree<ArtistStateInterface, StateInterface> = {
   async sellerSearch ({ commit }, payload) {
     console.log("home actions sellerSearch", payload)
-
     return await axios.get('/api/seller/search', {
       params: payload
     }).then(response => {
@@ -15,6 +14,18 @@ const actions: ActionTree<ArtistStateInterface, StateInterface> = {
       const { total, currentPage, pageSize, list } = response.data.data;
       commit('setSearchData', list)
       commit('setPagination', { total, currentPage, pageSize })
+    }).catch((err) => {
+      console.log("catch", err)
+    })
+
+  },
+  async seller ({ commit }, payload) {
+    console.log("home actions seller", payload)
+    return await axios.get('/api/seller', {
+      params: payload
+    }).then(response => {
+      console.log("response seller", response.data)
+      commit('setPortrait', response.data.data)
     }).catch((err) => {
       console.log("catch", err)
     })

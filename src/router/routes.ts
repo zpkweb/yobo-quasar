@@ -11,7 +11,7 @@ const routes: RouteConfig[] = [
     children: [
       { path: '', name: 'Index', component: () => import('pages/index.vue') },
       { path: 'artworks', name: 'Artworks', component: () => import('pages/artworks.vue') },
-      { path: 'artist', name: 'Artist', component: () => import('pages/artist.vue') },
+      { path: 'artist/:artistId', name: 'Artist', component: () => import('pages/artist.vue') },
       { path: 'artists', name: 'Artists', component: () => import('pages/artists.vue') },
       { path: 'mine', name: 'Mine', component: () => import('pages/mine.vue') },
       { path: 'wishlist', name: 'Wishlist', component: () => import('pages/wishlist.vue') },
