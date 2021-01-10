@@ -168,9 +168,10 @@
             <q-img src="img/index/painting4.png" width="230px"></q-img>
           </div>
            -->
-           <div class="col-3 relative-position text-center"
+           <router-link class="col-3 relative-position text-center"
             v-for="(item, index) in $store.state.home.gallerySeller.list"
             :key="item.sellerId"
+            :to="`${$i18n.locale}/artist/${item.sellerId}`"
            >
            <template v-if="index%2 == 0">
              <div class="line absolute"></div>
@@ -191,7 +192,7 @@
               <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
            </template>
 
-          </div>
+          </router-link>
         </div>
       </div>
     </div>

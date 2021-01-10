@@ -30,7 +30,8 @@ module.exports = configure(function (ctx) {
       'axios',
       'quasar-lang-pack',
       'element-ui',
-      'qs'
+      'qs',
+      'router'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

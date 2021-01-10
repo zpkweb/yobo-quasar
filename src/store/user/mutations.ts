@@ -2,7 +2,7 @@ import { MutationTree } from 'vuex'
 import { UserStateInterface } from './state'
 
 const mutation: MutationTree<UserStateInterface> = {
-  setUser (state, payload) {
+  setUserInfo (state, payload) {
     console.log("setuser", state, payload)
     state.info = payload
 

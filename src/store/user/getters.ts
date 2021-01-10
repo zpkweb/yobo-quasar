@@ -3,8 +3,9 @@ import { StateInterface } from '../index'
 import { UserStateInterface } from './state'
 
 const getters: GetterTree<UserStateInterface, StateInterface> = {
-  someAction (/* context */) {
+  isLoginIn (state) {
     // your code
+    return state.info
   }
 }
 

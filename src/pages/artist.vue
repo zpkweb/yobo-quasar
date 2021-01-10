@@ -14,14 +14,12 @@
     </div>
     <div class="title2-container">
       <div class="title2">
-        <div class="active">个人信息</div>
-        <div>所有作品</div>
-        <div>最新售出艺术品</div>
-        <div>工作室</div>
-        <div>履历表</div>
+        <q-tabs no-caps class="text-white ">
+          <q-route-tab class="active"  v-for="item in navs" :key="item.value" :to="{ hash: `#${item.value}` }" >{{item.label}}</q-route-tab>
+        </q-tabs>
       </div>
     </div>
-    <div class="desc row">
+    <div id="info" class="desc row">
       <div class="col-4">
         <!-- <q-img src="img/artist/zp.png" width="340px"></q-img> -->
         <q-img :src="portrait.user ? portrait.user.avatar : ''"></q-img>
@@ -48,7 +46,7 @@
         </div>
       </div>
     </div>
-    <div class="artworks-container">
+    <div id="artworks" class="artworks-container">
       <div class="artworks">
         <div v-for="tag in tags" :key="tag">
           <div class="row title">
@@ -66,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div class="sold">
+    <div id="sold" class="sold">
       <div class="title text-center">最新出售的艺术品</div>
       <div class="row">
         <div class="col-3 text-center" v-for="i of 4" :key="i">
@@ -76,8 +74,8 @@
         </div>
       </div>
     </div>
-    <div class="video"></div>
-    <div class="credentials">
+    <div id="studio" class="video"></div>
+    <div id="resume" class="credentials">
       <div class="title text-center">我的履历</div>
       <div class="title2 text-right">
         <div>奖项</div>
@@ -111,6 +109,22 @@
 export default {
   data() {
     return {
+      navs: [{
+        label: "个人信息",
+        value: "info",
+      }, {
+        label: "所有作品",
+        value: "artworks",
+      }, {
+        label: "最新售出艺术品",
+        value: "sold",
+      }, {
+        label: "工作室",
+        value: "studio",
+      }, {
+        label: "履历表",
+        value: "resume",
+      }],
       tags: ["杂志封面", "原始结构的波帕特肖像画", "波帕特肖像画"],
     };
   },
