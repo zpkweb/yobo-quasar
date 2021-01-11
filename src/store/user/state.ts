@@ -1,8 +1,8 @@
-export interface IndexStateInterface {
+export interface UserStateInterface {
   info: any;
 }
 
-function state (): IndexStateInterface {
+function state (): UserStateInterface {
   return {
     info: null
   }

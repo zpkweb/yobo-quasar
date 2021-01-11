@@ -36,9 +36,10 @@
           </div>
           <q-breadcrumbs separator="|" class="separator" v-if="!userInfo">
             <q-breadcrumbs-el
-              label="登陆"
+              label="登录"
               class="login text-black btn"
               @click="icon1 = true"
+
             />
             <q-breadcrumbs-el
               label="注册"
@@ -71,10 +72,10 @@
             ></q-img>
           </div>
 
-          <div class="cart btn text-center">
+          <!-- <div class="cart btn text-center">
             <q-img src="img/index/cart.png" class="image" width="17px"></q-img>
             <div class="num absolute btn text-white text-center">2</div>
-          </div>
+          </div> -->
 
           <div class="dropdown3">
             <div class="dropdowncontent3 absolute">
@@ -95,6 +96,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -191,11 +193,11 @@
         </div>
       </div>
     </div>
-    <!-- 登陆 -->
+    <!-- 登录 -->
     <q-dialog v-model="icon1" transition-hide="fade" transition-show="fade">
       <q-card class="card">
         <q-card-section class="row items-center q-pb-none">
-          <div class="title">登陆</div>
+          <div class="title">登录</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -243,11 +245,12 @@
             class="input"
             v-model="password"
             ref="password"
+            v-touch-repeat.enter="login"
           />
           <div class="row">
             <div class="text-left col-6">
               <input type="checkbox" class="check" />
-              <div class="checkbox2">保持登陆</div>
+              <div class="checkbox2">保持登录</div>
             </div>
             <div class="text-right col-6 btn" @click="getPassword">
               忘记密码
@@ -258,14 +261,14 @@
             @click="login"
             ref="login"
           >
-            登陆
+            登录
           </div>
           <div class="checkbox1">
-            登陆即代表同意 <span class="xy btn">《永宝协议》</span>及
+            登录即代表同意 <span class="xy btn">《永宝协议》</span>及
             <span class="ys btn">《永宝隐私政策》</span>
           </div>
           <div class="text-center">
-            <div class="title2">第三方账号登陆</div>
+            <div class="title2">第三方账号登录</div>
             <div>
               <q-img src="img/index/qq-1.png" width="26px" class="img"></q-img>
               <q-img
@@ -296,7 +299,7 @@
                 icon1 = true;
                 icon2 = false;
               "
-              >登陆</span
+              >登录</span
             >
           </div>
           <div class="msg" ref="registerMsg1">
@@ -338,7 +341,7 @@
             注册
           </div>
           <input type="checkbox" class="check" />
-          <div class="checkbox2">保持登陆</div>
+          <div class="checkbox2">保持登录</div>
           <div class="text-center">
             <div class="title2">第三方账号注册</div>
             <div>
@@ -687,15 +690,17 @@ export default {
     },
   },
 
-  async preFetch({ store, currentRoute }) {
+  preFetch({ store, currentRoute, redirect }) {
     store.commit("setLang", currentRoute.params.lang)
-    return await store.dispatch('home/setHome', {
-      locale: currentRoute.params.lang
-    })
+
+    console.log("store.state.user.info", store.state.user.info)
+    // if (!store.state.user.info) {
+    //   redirect({ path: '/' })
+    // }
   },
   computed: {
     userInfo () {
-      // let userInfo = this.$q.localStorage.getItem('user.info')
+      // let userInfo = this.$q.cookies.get('user.info')
       // if(!userInfo) {
       //   userInfo = this.$store.state.user.info;
       // }
@@ -708,10 +713,17 @@ export default {
       return this.$store.state.user.info ? this.$store.state.user.info.isApplyArtist : false
     }
   },
+  created() {
+    console.log("created")
+  },
   mounted() {
-    const userInfo = this.$q.localStorage.getItem('user.info');
+    console.log("mounted")
+    const userInfo = this.$q.cookies.get('user.info');
+    console.log("userInfo",userInfo)
     if(userInfo) {
-      this.$store.commit('user/setUser', userInfo);
+      this.$store.commit('user/setUserInfo', userInfo);
+    }else{
+      this.$router.push('/')
     }
   },
   methods: {
@@ -776,8 +788,8 @@ export default {
           // alert("用户已存在,请直接登录");
           this.icon2 = false;
           this.icon6 = true;
-          this.$q.localStorage.set('user.info', register.data)
-          await this.$store.commit('user/setUser', register.data);
+          this.$q.cookies.set('user.info', register.data)
+          await this.$store.commit('user/setUserInfo', register.data);
         } else {
           this.$q.notify({
             position: 'top',
@@ -824,8 +836,9 @@ export default {
           // utils.setGlobalUserInfo(res.data.data);
           // this.userInfo = utils.getGlobalUserInfo();
           this.icon1 = false;
-          this.$q.localStorage.set('user.info', user.data)
-          await this.$store.commit('user/setUser', user.data);
+          this.$q.cookies.set('user.info', user.data)
+          await this.$store.commit('user/setUserInfo', user.data);
+
         }else{
           // alert("密码不正确，请重新输入密码");
           this.$q.notify({
@@ -838,7 +851,12 @@ export default {
 
       }
     },
-
+    logout() {
+      this.$store.commit('user/setUserInfo', null);
+      this.$q.cookies.remove('user.info');
+      this.$q.cookies.remove('cookie_name')
+      this.$router.push('/')
+    },
     async setNewPassword() {
       let res = await ApiUser.setNewPassword(
         this.userId,
@@ -903,16 +921,16 @@ export default {
       console.log("applyArtist", applyArtist);
       if (applyArtist.success) {
         this.icon3 = false;
-        // await this.$store.commit('user/setUser', applyArtist.data);
-        // this.$q.localStorage.set('user.info', applyArtist.data)
+        // await this.$store.commit('user/setUserInfo', applyArtist.data);
+        // this.$q.cookies.set('user.info', applyArtist.data)
         this.$store.commit('user/changeUserInfo', {
           isApplyArtist: true
         })
-        let storageUserInfo = this.$q.localStorage.get('user.info');
+        let storageUserInfo = this.$q.cookies.get('user.info');
         if(storageUserInfo){
           storageUserInfo.isApplyArtist = true;
         }
-        this.$q.localStorage.set('user.info', storageUserInfo)
+        this.$q.cookies.set('user.info', storageUserInfo)
       }else{
         // alert("密码不正确，请重新输入密码");
         this.$q.notify({
@@ -922,10 +940,6 @@ export default {
           color: 'negative',
         })
       }
-    },
-    async logout() {
-      await this.$store.commit('user/setUser', null);
-      await this.$q.localStorage.remove('user.info');
     }
   },
 };
@@ -935,16 +949,20 @@ export default {
   margin: 0;
   padding: 0;
 }
+a {
+  text-decoration: none;
+}
 .app {
   min-width: 1200px;
   font-family: "STFangsong";
 }
-</style>
-
-<style lang="scss" scoped>
 .btn {
   cursor: pointer;
 }
+</style>
+
+<style lang="scss" scoped>
+
 .app {
   display: flex;
   flex-direction: column;

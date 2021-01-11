@@ -3,8 +3,8 @@
     <div class="banner relative-position">
       <q-img src="img/artworks/banner.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
-        <div class="text-bold">画家｜荷兰</div>
-        <div class="title">Karin Vermeer</div>
+        <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
+        <div class="title">{{portrait.firstname}} {{portrait.lastname}}</div>
         <div class="number">
           <span>知名艺术家</span>
           <span>国际风险敞口</span>
@@ -14,26 +14,28 @@
     </div>
     <div class="title2-container">
       <div class="title2">
-        <div class="active">个人信息</div>
-        <div>所有作品</div>
-        <div>最新售出艺术品</div>
-        <div>工作室</div>
-        <div>履历表</div>
+        <q-tabs no-caps class="text-white ">
+          <q-route-tab class="active"  v-for="item in navs" :key="item.value" :to="{ hash: `#${item.value}` }" >{{item.label}}</q-route-tab>
+        </q-tabs>
       </div>
     </div>
-    <div class="desc row">
+    <div id="info" class="desc row">
       <div class="col-4">
-        <q-img src="img/artist/zp.png" width="340px"></q-img>
+        <!-- <q-img src="img/artist/zp.png" width="340px"></q-img> -->
+        <q-img :src="portrait.user ? portrait.user.avatar : ''"></q-img>
       </div>
       <div class="col-8 text-right resume">
-        <div class="resume1">ARTIST</div>
+        <!-- <div class="resume1">ARTIST</div>
         <div class="resume2">
           我结合了数字和有形，所以我将两个世界结合在一起.
         </div>
         <div class="resume3">
           Karin Vermeer是一位独立艺术家，自2002年以来一直在鹿特丹生活和工作<br />
           她的作品是通过将照片和绘画进行数字组合和编辑为新的原创艺术作品而创作的<br />威猛(Vermeer)擅长于通过覆盖和融合四到五个不同种族和血统的不同面孔来创建新的不存在的人物而创建的肖像<br />打印数字图像并添加涂料以获得最终的结果，尝试使数字图像再次变得有形
-        </div>
+        </div> -->
+        <p>
+          {{ portrait.metadata.profile }}
+        </p>
         <div class="resume4">
           <q-img src="img/artist/weibo.png" width="32px" class="image"></q-img>
           <q-img src="img/artist/wechat.png" width="32px" class="image"></q-img>
@@ -44,7 +46,7 @@
         </div>
       </div>
     </div>
-    <div class="artworks-container">
+    <div id="artworks" class="artworks-container">
       <div class="artworks">
         <div v-for="tag in tags" :key="tag">
           <div class="row title">
@@ -62,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div class="sold">
+    <div id="sold" class="sold">
       <div class="title text-center">最新出售的艺术品</div>
       <div class="row">
         <div class="col-3 text-center" v-for="i of 4" :key="i">
@@ -72,8 +74,8 @@
         </div>
       </div>
     </div>
-    <div class="video"></div>
-    <div class="credentials">
+    <div id="studio" class="video"></div>
+    <div id="resume" class="credentials">
       <div class="title text-center">我的履历</div>
       <div class="title2 text-right">
         <div>奖项</div>
@@ -107,8 +109,37 @@
 export default {
   data() {
     return {
+      navs: [{
+        label: "个人信息",
+        value: "info",
+      }, {
+        label: "所有作品",
+        value: "artworks",
+      }, {
+        label: "最新售出艺术品",
+        value: "sold",
+      }, {
+        label: "工作室",
+        value: "studio",
+      }, {
+        label: "履历表",
+        value: "resume",
+      }],
       tags: ["杂志封面", "原始结构的波帕特肖像画", "波帕特肖像画"],
     };
+  },
+  async preFetch({ store, currentRoute }) {
+    console.log("artist preFetch", store.state.artist, currentRoute);
+    const { lang, artistId } = currentRoute.params;
+    return await store.dispatch("artist/seller", {
+      sellerId: artistId
+    });
+  },
+  computed: {
+    portrait() {
+      return this.$store.state.artist.portrait;
+    },
+
   },
 };
 </script>

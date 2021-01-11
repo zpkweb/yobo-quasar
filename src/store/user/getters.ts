@@ -1,10 +1,11 @@
 import { GetterTree } from 'vuex'
 import { StateInterface } from '../index'
-import { IndexStateInterface } from './state'
+import { UserStateInterface } from './state'
 
-const getters: GetterTree<IndexStateInterface, StateInterface> = {
-  someAction (/* context */) {
+const getters: GetterTree<UserStateInterface, StateInterface> = {
+  isLoginIn (state) {
     // your code
+    return state.info
   }
 }
 

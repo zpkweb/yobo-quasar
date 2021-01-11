@@ -29,7 +29,9 @@ module.exports = configure(function (ctx) {
       'i18n',
       'axios',
       'quasar-lang-pack',
-      'element-ui'
+      'element-ui',
+      'qs',
+      'router'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

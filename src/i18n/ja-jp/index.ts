@@ -4,7 +4,7 @@ export default {
     painter: "画家",
     sculptor: "彫刻家",
     country: "国籍",
-    lastName: "姓の文字",
+    surname: "姓の文字",
     artwork: "アートワーク",
     painting: "ペインティング",
     sculpture: "彫刻",

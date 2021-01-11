@@ -1,10 +1,10 @@
 import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
-import { IndexStateInterface } from './state'
+import { HomeStateInterface } from './state'
 import axios from 'axios'
 
 
-const actions: ActionTree<IndexStateInterface, StateInterface> = {
+const actions: ActionTree<HomeStateInterface, StateInterface> = {
   async setHome ({ commit }, payload) {
     console.log("home actions sethome", payload)
     // const data:any = await axios.get('/api/home', {

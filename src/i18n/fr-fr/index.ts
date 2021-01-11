@@ -4,7 +4,7 @@ export default {
     painter: "peintre",
     sculptor: "sculpteur",
     country: "Pays de citoyenneté",
-    lastName: "Lettres de nom",
+    surname: "Lettres de nom",
     artwork: "ouvrages d'art",
     painting: "La peinture",
     sculpture: "sculpture",

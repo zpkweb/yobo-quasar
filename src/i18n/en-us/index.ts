@@ -4,7 +4,7 @@ export default {
     painter: "painter",
     sculptor: "sculptor",
     country: "Country of Citizenship",
-    lastName: "Last name letters",
+    surname: "Last name letters",
     artwork: "artwork",
     painting: "painting",
     sculpture: "sculpture",
