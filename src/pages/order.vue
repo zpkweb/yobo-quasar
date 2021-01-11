@@ -92,16 +92,16 @@ export default {
   },
   methods: {
     goWishlist() {
-      this.$router.push("/wishlist");
+      this.$router.push(`/${this.$i18n.locale}/wishlist`);
     },
     goMine() {
-      this.$router.push("/mine");
+      this.$router.push(`/${this.$i18n.locale}/mine`);
     },
     goLike() {
-      this.$router.push("/like");
+      this.$router.push(`/${this.$i18n.locale}/like`);
     },
     goOrder() {
-      this.$router.push("/order");
+      this.$router.push(`/${this.$i18n.locale}/order`);
     },
   },
 };

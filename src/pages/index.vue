@@ -47,7 +47,7 @@
             <div>来自世界各地的优秀艺术家</div>
           </div>
           <div class="text-white slide">
-            {{ slide }}<span class="line">/</span><span class="all">5</span>
+            {{ slide }}<span class="line">/</span><span class="all">{{ $store.state.home.banner.length }}</span>
           </div>
         </div>
       </div>
@@ -437,6 +437,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 // export default {
 //   data() {
 //     return {
@@ -472,6 +473,43 @@
 //     },
 //   },
 // };
+=======
+export default {
+  data() {
+    return {
+      slide: 1,
+      autoplay: true,
+      slides: "a",
+      ratingModel: 3,
+      hotartist: "a",
+    };
+  },
+  preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
+    console.log("index preFetch", currentRoute.params.lang, previousRoute, urlPath, publicPath)
+    // return store.dispatch('home/setHome', {
+    //   locale: 'zh-cn'
+    // })
+    // return store.dispatch('fetchItem', currentRoute.params.id)
+  },
+  methods: {
+    Top() {
+      // console.log(document.documentElement.scrollTop);
+      document.documentElement.scrollTop >= 600
+        ? this.$refs.top.classList.remove("none")
+        : this.$refs.top.classList.add("none");
+    },
+    toTop() {
+      document.documentElement.scrollTop = 0;
+    },
+    goArtists() {
+      this.$router.push(`/${this.$i18n.locale}/artists`);
+    },
+    goArtworks() {
+      this.$router.push(`/${this.$i18n.locale}/artworks`);
+    },
+  },
+};
+>>>>>>> a4687f8c1b0d5eecdf38aa05bb4e4609f98325a0
 </script>
 
 

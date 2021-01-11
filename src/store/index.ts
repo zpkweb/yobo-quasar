@@ -2,6 +2,7 @@ import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
 
 import home from './home';
+import user from './user';
 import { IndexStateInterface } from './home/state';
 
 
@@ -23,7 +24,8 @@ export default store(function ({ Vue }) {
       }
     },
     modules: {
-      home
+      home,
+      user
     },
 
     // enable strict mode (adds overhead!)

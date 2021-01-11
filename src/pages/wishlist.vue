@@ -74,17 +74,17 @@
 export default {
   methods: {
     goWishlist() {
-      this.$router.push("/wishlist");
+      this.$router.push(`/${this.$i18n.locale}/wishlist`);
     },
     goMine() {
-      this.$router.push("/mine");
+      this.$router.push(`/${this.$i18n.locale}/mine`);
     },
-    goLike(){
-      this.$router.push("/like")
+    goLike() {
+      this.$router.push(`/${this.$i18n.locale}/like`);
     },
-    goOrder(){
-      this.$router.push("order")
-    }
+    goOrder() {
+      this.$router.push(`/${this.$i18n.locale}/order`);
+    },
   },
 };
 </script>
