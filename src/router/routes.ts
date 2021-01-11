@@ -6,11 +6,11 @@ const routes: RouteConfig[] = [
     redirect: '/zh-cn'
   },
   {
-    path: '/:lang',
+    path: '/:locale',
     component: () => import('layouts/index.vue'),
     children: [
       { path: '', name: 'Index', component: () => import('pages/index.vue') },
-      { path: 'artworks', name: 'Artworks', component: () => import('pages/artworks.vue') },
+      // { path: 'artworks', name: 'Artworks', component: () => import('pages/artworks.vue') },
       { path: 'artist/:artistId', name: 'Artist', component: () => import('pages/artist.vue') },
       { path: 'artists', name: 'Artists', component: () => import('pages/artists.vue') },
       // { path: 'mine', name: 'Mine', component: () => import('pages/mine.vue') },
@@ -36,7 +36,13 @@ const routes: RouteConfig[] = [
       { path: 'pay', name: 'Pay', component: () => import('pages/pay.vue') },
       { path: 'evaluate', name: 'Evaluate', component: () => import('pages/evaluate.vue') },
       { path: 'newaddress', name: 'NewAddress', component: () => import('pages/newaddress.vue') },
-      { path: 'commodity', name: 'commodity', component: () => import('pages/commodity.vue') },
+      { path: 'artwork', component: () => import('pages/artwork/index.vue'), children: [{
+        path: '',
+        component: () => import('pages/artwork/list.vue')
+      }, {
+        path: ':artworkId',
+        component: () => import('pages/artwork/commodity.vue')
+      }] },
       { path: 'share', name: 'share', component: () => import('pages/share.vue') },
 
     ]

@@ -2,6 +2,7 @@ export interface ArtworkStateInterface {
   search: ArtworkSearchStateInterface;
   searchData: any;
   pagination: ArtworkPaginationStateInterface;
+  data: any;
 }
 export interface ArtworkSearchStateInterface {
   shape: string;
@@ -30,7 +31,8 @@ function state (): ArtworkStateInterface {
       total: 0,
       currentPage: 1,
       pageSize: 9
-    }
+    },
+    data: null
   }
 }
 

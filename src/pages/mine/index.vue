@@ -20,7 +20,7 @@
           </q-tabs>
 
           <div class="line"></div>
-          <div class="title">下午好 葫芦娃</div>
+          <div class="title">下午好 {{userName}}</div>
           <div class="time">您自2020/8/5起成为了永宝 艺术收藏家</div>
         </div>
       </div>
@@ -41,10 +41,12 @@ export default {
       }, {
         label: "我最喜爱的艺术家",
         value: "like"
-      }, {
-        label: "购买记录",
-        value: "order"
-      }]
+      },
+      // {
+      //   label: "购买记录",
+      //   value: "order"
+      // }
+      ]
     }
   },
   async preFetch({ store, currentRoute }) {
@@ -56,6 +58,12 @@ export default {
     //   currentPage: currentPage || store.state.artist.pagination.currentPage,
     //   pageSize: pageSize || store.state.artist.pagination.pageSize,
     // });
+  },
+  computed: {
+    userName() {
+      const name = this.$store.state.user.info ? this.$store.state.user.info.name : '';
+      return name;
+    }
   },
   methods: {
     goWishlist() {

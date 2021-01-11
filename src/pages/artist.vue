@@ -130,7 +130,7 @@ export default {
   },
   async preFetch({ store, currentRoute }) {
     console.log("artist preFetch", store.state.artist, currentRoute);
-    const { lang, artistId } = currentRoute.params;
+    const { locale, artistId } = currentRoute.params;
     return await store.dispatch("artist/seller", {
       sellerId: artistId
     });

@@ -691,7 +691,7 @@ export default {
   },
 
   preFetch({ store, currentRoute, redirect }) {
-    store.commit("setLang", currentRoute.params.lang)
+    store.commit("setLang", currentRoute.params.locale)
 
     console.log("store.state.user.info", store.state.user.info)
     // if (!store.state.user.info) {
@@ -715,9 +715,6 @@ export default {
   },
   created() {
     console.log("created")
-  },
-  mounted() {
-    console.log("mounted")
     const userInfo = this.$q.cookies.get('user.info');
     console.log("userInfo",userInfo)
     if(userInfo) {
@@ -725,6 +722,10 @@ export default {
     }else{
       this.$router.push('/')
     }
+  },
+  mounted() {
+    console.log("mounted")
+
   },
   methods: {
     changeLang(locale) {
@@ -852,9 +853,9 @@ export default {
       }
     },
     logout() {
+      console.log("logout")
       this.$store.commit('user/setUserInfo', null);
       this.$q.cookies.remove('user.info');
-      this.$q.cookies.remove('cookie_name')
       this.$router.push('/')
     },
     async setNewPassword() {
@@ -1243,7 +1244,7 @@ a {
   .dropdowncontent2 {
 
     background: transparent;
-    right: 93px;
+    right: 63px;
     top: 67px;
     z-index: 1000;
 

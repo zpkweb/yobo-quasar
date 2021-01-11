@@ -14,7 +14,6 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    */
   async login ({ commit }, payload) {
     console.log("user actions login", payload)
-
     return await axios.post('/api/user/login', payload).then(response => {
       console.log("response", response.data)
       return response.data;
@@ -22,7 +21,6 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     }).catch((err) => {
       console.log("catch", err)
     })
-
   },
   /**
    * 注册
@@ -33,7 +31,6 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    */
   async register ({ commit }, payload) {
     console.log("user actions register", payload)
-
     return await axios.post('/api/user/register', {
       name: payload.name,
       email: payload.email,
@@ -47,7 +44,6 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     }).catch((err) => {
       console.log("catch", err)
     })
-
   },
   /**
    * 申请艺术家
@@ -58,7 +54,6 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    */
   async applyArtist ({ commit }, payload) {
     console.log("user actions applyArtist", payload)
-
     return await axios.post('/api/user/seller/apply', payload).then(response => {
       console.log("response", response.data)
       return response.data;
@@ -66,8 +61,53 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     }).catch((err) => {
       console.log("catch", err)
     })
+  },
+  /**
+   * 我最喜爱的艺术家
+   *
+   * @param {*} { commit }
+   * @param {*} payload
+   */
+  async getMyLike( { commit },  payload) {
+    console.log("user actions myLike", payload)
+    return await axios.get('/api/my/seller', {params: payload}).then(response => {
+      console.log("response", response.data)
+      return response.data;
+    }).catch((err) => {
+      console.log("catch", err)
+    })
+  },
+  /**
+   * 我的最爱
+   *
+   * @param {*} { commit }
+   * @param {*} payload
+   */
+  async getMyWishlist( { commit },  payload) {
+    console.log("user actions myLike", payload)
+    return await axios.get('/api/my/commodity', { params: payload }).then(response => {
+      console.log("response", response.data)
+      return response.data;
+    }).catch((err) => {
+      console.log("catch", err)
+    })
+  },
 
-  }
+  /**
+   * 我的浏览历史
+   *
+   * @param {*} { commit }
+   * @param {*} payload
+   */
+  async getMyBrowsingHistory( { commit },  payload) {
+    console.log("user actions myBrowsingHistory", payload)
+    return await axios.get('/api/my/browsingHistory', { params: payload }).then(response => {
+      console.log("response", response.data)
+      return response.data;
+    }).catch((err) => {
+      console.log("catch", err)
+    })
+  },
 }
 
 export default actions

@@ -24,6 +24,25 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 ### 目录
 ```
+yobo页面
+
+  首页
+    登录弹窗
+    注册弹窗
+    成为艺术家弹窗
+  个人中心
+    我的账户
+    我的最爱
+    我最爱的艺术家
+  艺术家
+    艺术家搜索
+    艺术家主页
+  艺术品
+    艺术品搜索
+    艺术品购买
+```
+
+```
 .
 ├── README.md
 ├── babel.config.js

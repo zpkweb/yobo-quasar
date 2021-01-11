@@ -212,7 +212,7 @@ export default {
     currentRoute,
   }) {
     console.log("artists preFetch", store.state.artist, currentRoute);
-    const { lang } = currentRoute.params;
+    const { locale } = currentRoute.params;
     const { tag, country, surname, currentPage, pageSize } = currentRoute.query;
     if (tag || country || surname) {
       store.commit("artist/setSearch", {
@@ -226,7 +226,7 @@ export default {
       type: tag || "",
       country: country || "",
       firstname: surname || "",
-      locale: lang,
+      locale,
       currentPage: currentPage || store.state.artist.pagination.currentPage,
       pageSize: pageSize || store.state.artist.pagination.pageSize,
     });
@@ -249,7 +249,7 @@ export default {
     //     type: this.tag,
     //     // country: this.country,
     //     // firstname: this.surname,
-    //     locale: this.$route.params.lang,
+    //     locale: this.$route.params.locale,
     //     currentPage: this.currentPage,
     //     pageSize: this.pageSize,
     //   });

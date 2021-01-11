@@ -20,6 +20,9 @@ const mutation: MutationTree<ArtworkStateInterface> = {
     state.pagination.total = payload.total;
     state.pagination.currentPage = payload.currentPage;
     state.pagination.pageSize = payload.pageSize;
+  },
+  setData (state, payload) {
+    state.data = payload;
   }
 }
 

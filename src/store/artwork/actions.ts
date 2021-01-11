@@ -5,8 +5,15 @@ import axios from 'axios'
 
 
 const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
-  async commoditySearch ({ commit }, payload) {
-    console.log("home actions commoditySearch", payload)
+  /**
+   * 艺术品搜索
+   *
+   * @param {*} { commit }
+   * @param {*} payload
+   * @return {*}
+   */
+  async getArtworkSearch ({ commit }, payload) {
+    console.log("home actions getArtworkSearch", payload)
 
     return await axios.get('/api/commodity/search', {
       params: payload
@@ -18,8 +25,23 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     }).catch((err) => {
       console.log("catch", err)
     })
+  },
+  async getArtwork ({ commit }, payload) {
+    console.log("home actions getArtwork", payload)
+    return await axios.get('/api/buy', {
+      params: {
+        locale: payload.locale,
+        commodityId: payload.artworkId
+      }
+    }).then(response => {
+      console.log("response", response.data)
+      const { data } = response.data;
+      commit('setData', data)
+    }).catch((err) => {
+      console.log("catch", err)
+    })
 
-  }
+  },
 }
 
 export default actions

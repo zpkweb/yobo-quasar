@@ -452,13 +452,14 @@ export default {
     };
   },
   async preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
-    console.log("index preFetch", currentRoute.params.lang, previousRoute, urlPath, publicPath)
+    console.log("index preFetch", currentRoute.params.locale, previousRoute, urlPath, publicPath)
     // return store.dispatch('home/setHome', {
     //   locale: 'zh-cn'
     // })
     // return store.dispatch('fetchItem', currentRoute.params.id)
+    const { locale } = currentRoute.params;
     return await store.dispatch('home/setHome', {
-      locale: currentRoute.params.lang
+      locale
     })
   },
   methods: {
@@ -479,7 +480,7 @@ export default {
       }, data))}`);
     },
     goArtworks(data) {
-      this.$router.push(`/${this.$i18n.locale}/artworks?${this.$qs.stringify(Object.assign({
+      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign({
         shape: "",
         price: "",
         pricemin: "",

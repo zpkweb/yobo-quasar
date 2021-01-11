@@ -14,19 +14,8 @@ function cookies(ssrContext) {
 
 
 export default ({ router, ssrContext, store }) => {
-  // ...
-  // if (!isAuthorized && !urlPath.startsWith('/login')) {
-  // if (!isAuthorized) {
-  //   redirect({ path: '/' })
-  //   return
-  // }
-  // ...
-
 
   router.beforeEach((to, from, next) => {
-    // if (to.matched.some(record => record.meta.requireAuth) && !store.getters['user/isLoginIn']) {
-      console.log("to.matched.some(record => record.meta.requireAuth)",to.matched, to.matched.some(record => record.meta.requireAuth))
-      console.log("Cookies.get('user.info')']", cookies(ssrContext).get('user.info'))
       if (to.matched.some(record => record.meta.requireAuth) && !cookies(ssrContext).get('user.info')) {
         console.log(111)
         store.commit('user/setUserInfo', null)

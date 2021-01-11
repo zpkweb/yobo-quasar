@@ -145,16 +145,12 @@
           <div class="flex-break hidden"></div>
           <div class="flex-break"></div>
           <div class="flex-break"></div>
-          <div class="example-cell" v-for="(item, index) in artworkList" :key="index">
+          <router-link :to="`artwork/${item.commodityId}`" class="example-cell" v-for="(item, index) in artworkList" :key="index">
             <q-img :src="item.photos.length ? item.photos[0].src : ''" style="min-height: 80px"></q-img>
             <p>{{item.name}}</p>
-
-          </div>
-
+          </router-link>
         </div>
-
       </div>
-
 
       <el-pagination
         background
