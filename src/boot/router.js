@@ -17,11 +17,9 @@ export default ({ router, ssrContext, store }) => {
 
   router.beforeEach((to, from, next) => {
       if (to.matched.some(record => record.meta.requireAuth) && !cookies(ssrContext).get('user.info')) {
-        console.log(111)
         store.commit('user/setUserInfo', null)
       next({ path: '/' })
     } else {
-      console.log(222)
       next()
     }
   })

@@ -5,7 +5,6 @@ const mutation: MutationTree<ArtworkStateInterface> = {
 
   setSearch (state, payload) {
     const { shape, pricemin, pricemax, color, theme } = payload;
-    console.log(shape,pricemin,pricemax,color, theme)
     state.search.shape = shape;
     state.search.pricemin = pricemin;
     state.search.pricemax = pricemax;

@@ -13,13 +13,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @return {*}
    */
   async login ({ commit }, payload) {
-    console.log("user actions login", payload)
     return await axios.post('/api/user/login', payload).then(response => {
-      console.log("response", response.data)
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
-      console.log("catch", err)
     })
   },
   /**
@@ -30,7 +27,6 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @return {*}
    */
   async register ({ commit }, payload) {
-    console.log("user actions register", payload)
     return await axios.post('/api/user/register', {
       name: payload.name,
       email: payload.email,
@@ -38,11 +34,9 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
       identity: "ordinary",
       phone: ""
     }).then(response => {
-      console.log("response", response.data)
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
-      console.log("catch", err)
     })
   },
   /**
@@ -53,13 +47,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @return {*}
    */
   async applyArtist ({ commit }, payload) {
-    console.log("user actions applyArtist", payload)
     return await axios.post('/api/user/seller/apply', payload).then(response => {
-      console.log("response", response.data)
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
-      console.log("catch", err)
     })
   },
   /**
@@ -69,12 +60,9 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} payload
    */
   async getMyLike( { commit },  payload) {
-    console.log("user actions myLike", payload)
     return await axios.get('/api/my/seller', {params: payload}).then(response => {
-      console.log("response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("catch", err)
     })
   },
   /**
@@ -84,12 +72,9 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} payload
    */
   async getMyWishlist( { commit },  payload) {
-    console.log("user actions myLike", payload)
     return await axios.get('/api/my/commodity', { params: payload }).then(response => {
-      console.log("response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("catch", err)
     })
   },
 
@@ -100,12 +85,9 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} payload
    */
   async getMyBrowsingHistory( { commit },  payload) {
-    console.log("user actions myBrowsingHistory", payload)
     return await axios.get('/api/my/browsingHistory', { params: payload }).then(response => {
-      console.log("response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("catch", err)
     })
   },
 }

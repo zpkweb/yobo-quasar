@@ -693,7 +693,6 @@ export default {
   preFetch({ store, currentRoute, redirect }) {
     store.commit("setLang", currentRoute.params.locale)
 
-    console.log("store.state.user.info", store.state.user.info)
     // if (!store.state.user.info) {
     //   redirect({ path: '/' })
     // }
@@ -714,18 +713,12 @@ export default {
     }
   },
   created() {
-    console.log("created")
     const userInfo = this.$q.cookies.get('user.info');
-    console.log("userInfo",userInfo)
     if(userInfo) {
       this.$store.commit('user/setUserInfo', userInfo);
     }else{
       this.$router.push('/')
     }
-  },
-  mounted() {
-    console.log("mounted")
-
   },
   methods: {
     changeLang(locale) {
@@ -770,7 +763,6 @@ export default {
         //   this.phone,
         //   this.password
         // );
-        // console.log(res);
         // if (res.data.code === 10201) {
         //   alert("用户已存在,请直接登录");
         // } else {
@@ -783,7 +775,6 @@ export default {
           email: this.email,
           password: this.password,
         })
-        console.log(register);
 
         if (register.success) {
           // alert("用户已存在,请直接登录");
@@ -802,7 +793,6 @@ export default {
       }
     },
     async login() {
-      console.log("this.$refs", this.$refs);
 
       // if (this.name === "") {
       //   this.msg = "用户名不能为空";
@@ -827,7 +817,6 @@ export default {
           name: this.name,
           password: this.password
         })
-        console.log(user);
 
 
         // let res = await ApiUser.login(this.email, this.phone, this.password);
@@ -853,7 +842,6 @@ export default {
       }
     },
     logout() {
-      console.log("logout")
       this.$store.commit('user/setUserInfo', null);
       this.$q.cookies.remove('user.info');
       this.$router.push('/')
@@ -865,12 +853,10 @@ export default {
         this.phone,
         this.password
       );
-      console.log(res);
     },
 
     async getVerifyCode() {
       let res = await ApiUser.getVerifyCode(this.email);
-      console.log(res);
     },
     async sendVerifyCode() {
       // let res;
@@ -897,7 +883,6 @@ export default {
       //   this.website,
       //   this.profile
       // );
-      // console.log(res);
       const applyArtist = await this.$store.dispatch('user/applyArtist', {
         userId: this.$store.state.user.info ? this.$store.state.user.info.userId : '',
         firstname: this.firstname,
@@ -919,7 +904,6 @@ export default {
         website: this.website,
         profile: this.profile
       })
-      console.log("applyArtist", applyArtist);
       if (applyArtist.success) {
         this.icon3 = false;
         // await this.$store.commit('user/setUserInfo', applyArtist.data);

@@ -211,7 +211,6 @@ export default {
     store,
     currentRoute,
   }) {
-    console.log("artists preFetch", store.state.artist, currentRoute);
     const { locale } = currentRoute.params;
     const { tag, country, surname, currentPage, pageSize } = currentRoute.query;
     if (tag || country || surname) {
@@ -240,7 +239,6 @@ export default {
     },
   },
   mounted() {
-    console.log("mounted", this.$route);
     this.country = this.$route.query.country || ""
   },
   methods: {

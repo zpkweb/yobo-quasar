@@ -353,7 +353,6 @@ export default {
     store,
     currentRoute,
   }) {
-    console.log("artworks preFetch", store.state.artwork, currentRoute);
     const { locale } = currentRoute.params;
     const { shape, pricemin, pricemax, color, theme, currentPage, pageSize } = currentRoute.query;
     if (shape || pricemin || pricemax || color || theme) {
@@ -391,7 +390,6 @@ export default {
   methods: {
     generateCells () {
       this.cells = generateCells();
-      console.log(this.cells)
     },
     addTag(theme) {
       if (this.tags.find((e) => e === theme) === undefined) {

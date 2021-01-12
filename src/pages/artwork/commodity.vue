@@ -414,7 +414,6 @@ export default {
   },
   async preFetch({ store, currentRoute }) {
     // getArtwork
-    console.log("commodity", currentRoute)
     const { locale, artworkId } = currentRoute.params;
     return await store.dispatch('artwork/getArtwork', {
       locale,

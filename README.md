@@ -14,6 +14,12 @@ yarn dev
 
 ### Build the app for production
 
+前端部署：（监听端口: 8080）
+创建yobo-quasar目录，把文件解压到yobo-quasar。
+进入yobo-quasar/dist/ssr,执行：npm install。
+执行命令：pm2 start
+
+
 ```bash
 yarn build
 ```

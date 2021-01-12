@@ -6,7 +6,7 @@ module.exports = {
       // instances: 'max', // Or a number of instances
       script: './dist/ssr/index.js',
       args: 'start',
-      port: '8080',
+      port: '8088',
     }
   ]
 }

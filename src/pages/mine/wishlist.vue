@@ -107,9 +107,7 @@ export default {
       this.$store.commit("user/setMyBrowsingHistory", myBrowsingHistory.data);
     }
   },
-  created() {
-    console.log("create wishlist");
-  },
+
   computed: {
     myWishlist() {
       return this.$store.state.user.wishlist;

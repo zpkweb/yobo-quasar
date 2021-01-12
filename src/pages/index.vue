@@ -51,7 +51,7 @@
             <div>来自世界各地的优秀艺术家</div>
           </div>
           <div class="text-white slide">
-            {{ slide }}<span class="line">/</span><span class="all">{{ $store.state.home.banner.length }}</span>
+            {{ slide }}<span class="line">/</span><span class="all" v-if="home && home.banner">{{  home.banner.length }}</span>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
         transition-next="slide-left"
         @mouseenter="autoplay = false"
         @mouseleave="autoplay = true"
-        v-if="$store.state.home"
+        v-if="home"
       >
         <!-- <q-carousel-slide :name="1" img-src="http://localhost:7001/images/banner/1.png" />
         <q-carousel-slide
@@ -81,7 +81,7 @@
           img-src="http://localhost:7001/images/banner/4.jpg"
         /> -->
         <q-carousel-slide
-          v-for="(item, index) in $store.state.home.banner"
+          v-for="(item, index) in home.banner"
           :key="index"
           :name="index+1"
           :img-src="item.src"
@@ -167,8 +167,12 @@
             <q-img src="img/index/painting4.png" width="230px"></q-img>
           </div>
            -->
+           <template v-if="home && home.gallerySeller">
+
+
            <router-link class="col-3 relative-position text-center"
-            v-for="(item, index) in $store.state.home.gallerySeller.list"
+
+            v-for="(item, index) in home.gallerySeller.list"
             :key="item.sellerId"
             :to="`${$i18n.locale}/artist/${item.sellerId}`"
            >
@@ -192,6 +196,7 @@
            </template>
 
           </router-link>
+        </template>
         </div>
       </div>
     </div>
@@ -251,8 +256,10 @@
           <div class="name absolute text-left">Lucky me</div>
         </div> -->
 
+        <template v-if="home && home.latestCommodity">
 
-        <router-link :to="`${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in $store.state.home.latestCommodity.list" :key="item.commodityId">
+
+        <router-link  :to="`${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity.list" :key="item.commodityId">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
             <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="230px"></q-img>
@@ -265,6 +272,7 @@
           </div>
           <div class="name absolute text-left">Lucky me</div>
         </router-link>
+        </template>
       </div>
     </div>
     <div class="sort-container">
@@ -296,7 +304,8 @@
             </div> -->
             <router-link
               class="col-4 sort-item relative-position"
-              v-for="item in $store.state.home.lookWorld"
+              v-if="home && home.lookWorld"
+              v-for="item in home.lookWorld"
               :key="item.id"
               :to="{ path: `${$i18n.locale}/artwork`, query: {
                 theme: item.name
@@ -386,7 +395,8 @@
               </div>
             </q-carousel-slide> -->
             <q-carousel-slide
-              v-for="(item, index) in $store.state.home.commentCommodity"
+              v-if="home && home.commentCommodity"
+              v-for="(item, index) in home.commentCommodity"
               :key="index"
               :name="item.title"
               class="row"
@@ -423,11 +433,15 @@
           <div class="name">JEFF FERST</div>
           <div class="country">墨西哥-画家</div>
         </div> -->
-        <div class="col-2" v-for="item in $store.state.home.hotSaleSeller.list" :key="item.sellerId">
+        <template v-if="home && home.hotSaleSeller">
+
+
+        <div class="col-2"  v-for="item in home.hotSaleSeller.list" :key="item.sellerId">
           <img :src="item.user.avatar" width="180px" />
           <div class="name">{{item.firstname}}{{item.lastname}}</div>
           <div class="country">{{item.country}}-{{item.typeName}}</div>
         </div>
+        </template>
       </div>
     </div>
     <div class="to-top none" ref="top">
@@ -455,7 +469,6 @@ export default {
     };
   },
   async preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
-    console.log("index preFetch", currentRoute.params.locale, previousRoute, urlPath, publicPath)
     // return store.dispatch('home/setHome', {
     //   locale: 'zh-cn'
     // })
@@ -465,9 +478,13 @@ export default {
       locale
     })
   },
+  computed: {
+    home() {
+      return this.$store.state.home ? this.$store.state.home : '';
+    }
+  },
   methods: {
     Top() {
-      // console.log(document.documentElement.scrollTop);
       document.documentElement.scrollTop >= 600
         ? this.$refs.top.classList.remove("none")
         : this.$refs.top.classList.add("none");

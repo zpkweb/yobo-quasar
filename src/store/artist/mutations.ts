@@ -7,7 +7,6 @@ const mutation: MutationTree<ArtistStateInterface> = {
   },
   setSearch (state, payload) {
     const { tag, country, surname } = payload;
-    console.log(tag,country,surname)
     state.search.tag = tag;
     state.search.country = country;
     state.search.surname = surname;

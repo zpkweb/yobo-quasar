@@ -65,9 +65,7 @@ export default {
       this.$store.commit("user/setMyLike", myLike.data);
     }
   },
-  created() {
-    console.log("create like");
-  },
+
   computed: {
     myLike() {
       return this.$store.state.user.like;
