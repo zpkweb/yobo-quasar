@@ -71,12 +71,16 @@
           <div class="title">作品简介</div>
           <div class="row">
             <div class="col-6">
-              <q-img src="img/image1.png" width="350px"></q-img>
+              <!-- <q-img src="img/image1.png" width="350px"></q-img> -->
+              <q-img :src="artwork.commodity.photos ? artwork.commodity.photos[0].src : ''" width="350px"></q-img>
             </div>
             <div class="col-6 left2">
-              <div class="name">Aqua small resin gloss edition</div>
-              <div class="year">2019</div>
-              <div class="painter">Karin Vermeer 荷兰</div>
+              <!-- <div class="name">Aqua small resin gloss edition</div> -->
+              <div class="name">{{ artwork.commodity.name }}</div>
+              <!-- <div class="year">2019</div> -->
+              <div class="year">{{ artwork.commodity.createdDate }}</div>
+              <!-- <div class="painter">Karin Vermeer 荷兰</div> -->
+              <div class="painter">{{ artwork.commodity.seller.firstname }}{{ artwork.commodity.seller.lastname }} {{ artwork.commodity.country}}</div>
               <div class="row">
                 <div class="col-6 item">
                   <div class="title2">手法</div>
@@ -90,7 +94,8 @@
                 </div>
                 <div class="col-6 item">
                   <div class="title2">尺寸</div>
-                  <div class="contant">40cmX40cm</div>
+                  <!-- <div class="contant">40cmX40cm</div> -->
+                  <div class="contant">{{ artwork.commodity.width }}cmX{{ artwork.commodity.height }}cm</div>
                 </div>
                 <div class="col-6 item">
                   <div class="title2">邮费</div>
@@ -104,18 +109,23 @@
           <div class="title">作者简介</div>
           <div class="row">
             <div class="col-4">
-              <q-img src="img/painter.png" width="210px"></q-img>
+              <!-- <q-img src="img/painter.png" width="210px"></q-img> -->
+              <q-img :src="artwork.seller.user.avatar" width="210px"></q-img>
             </div>
             <div class="col-8">
               <div class="row painter">
                 <div class="col">浅绿色树脂光泽板</div>
-                <div class="col-grow">进入Karin Vermeer的主页</div>
+                <router-link :to="`/${$i18n.locale}/artist/${ artwork.seller.sellerId }`" class="col-grow">进入{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}的主页</router-link>
               </div>
-              <div class="content2">
+              <!-- <div class="content2">
                 我的工作是将不同的图片和颜料混合在一起，在计算机和画布上创建一个新的图像。
-              </div>
-              <div class="content2">
+              </div> -->
+
+              <!-- <div class="content2">
                 我最喜欢的主题是女性脸,我用人和旧墙的照片，垃圾海报和其他各种有趣的主题来重新创造一个新的形象。当数码部分准备好后，我打印图像并开始在上面画画。我创造了厚厚的结构和许多层的油漆和凝胶
+              </div> -->
+              <div class="content2">
+                {{ artwork.seller.metadata.profile }}
               </div>
             </div>
           </div>
@@ -128,11 +138,13 @@
         </div>
         <div class="soldout">已售</div>
         <div class="off">已下架</div>
-        <div class="prise"><span class="symbol">¥</span>7，000</div>
+        <!-- <div class="prise"><span class="symbol">¥</span>7，000</div> -->
+        <div class="prise">{{ price }}</div>
         <q-select
           borderless
           v-model="currency"
-          :options="options"
+          :options="priceOptions"
+          emit-value
           class="currency"
         />
         <div class="title2">相框选择材质</div>
@@ -238,7 +250,7 @@
             <div class="offer-title text-left">就此作品向艺术家出价</div>
             <div class="newprise bg-white text-left">
               <span class="symbol2">¥</span><span class="sub btn">－</span
-              ><span class="num btn">{{ prise }}</span
+              ><span class="num btn">{{ price }}</span
               ><span class="add btn">＋</span>
             </div>
             <div class="email-outer bg-white">
@@ -280,17 +292,27 @@
     <div class="paints">
       <div class="container text-center">
         <div class="relative-position">
-          <div class="title">Karin Vermeer的其他作品</div>
+          <div class="title">{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}的其他作品</div>
           <div class="more absolute btn">更多</div>
         </div>
         <div class="row">
-          <div class="col-3" v-for="i in 4" :key="i">
+          <!-- <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
             </div>
             <div class="text text-left">
               <div>丙烯酸 • 亚麻</div>
               <div>100x100cm</div>
+            </div>
+          </div> -->
+          <div class="col-3" v-if="artwork.seller.commoditys.length" v-for="(item, index) in artwork.seller.commoditys" :key="'sellerCommodity'+index">
+            <div class="paint">
+              <!-- <div class="image"></div> -->
+              <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
+            </div>
+            <div class="text text-left">
+              <div>丙烯酸 • 亚麻</div>
+              <div>{{item.width}}x{{item.height}}cm</div>
             </div>
           </div>
         </div>
@@ -303,13 +325,23 @@
           <div class="more absolute">更多</div>
         </div>
         <div class="row">
-          <div class="col-3" v-for="i in 4" :key="i">
+          <!-- <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
             </div>
             <div class="text text-left">
               <div>丙烯酸 • 亚麻</div>
               <div>100x100cm</div>
+            </div>
+          </div> -->
+          <div class="col-3" v-if="artwork.commoditySimilar.length" v-for="(item, index) in artwork.commoditySimilar" :key="'commoditySimilar'+index">
+            <div class="paint">
+              <!-- <div class="image"></div> -->
+              <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
+            </div>
+            <div class="text text-left">
+              <div>丙烯酸 • 亚麻</div>
+              <div>{{item.width}}x{{item.height}}cm</div>
             </div>
           </div>
         </div>
@@ -323,13 +355,22 @@
         </div>
 
         <div class="row">
-          <div class="col-3" v-for="i in 4" :key="i">
+          <!-- <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
             </div>
             <div class="text text-left">
               <div>丙烯酸 • 亚麻</div>
               <div>100x100cm</div>
+            </div>
+          </div> -->
+          <div v-if="artwork.browsingHistory.length" class="col-3" v-for="(item, index) in artwork.browsingHistory" :key="'browsingHistory'+index">
+            <div class="paint">
+              <div class="image"></div>
+            </div>
+            <div class="text text-left">
+              <div>丙烯酸 • 亚麻</div>
+              <div>{{item.width}}x{{item.height}}cm</div>
             </div>
           </div>
         </div>
@@ -343,6 +384,27 @@ export default {
   data() {
     return {
       slide: 0,
+      defaultPriceOptions: [{
+        label: "CNY",
+        value: "CNY",
+        locale: "zh-cn",
+        price: ""
+      }, {
+        label: "USD",
+        value: "USD",
+        locale: "en-us",
+        price: ""
+      }, {
+        label: "JPY",
+        value: "JPY",
+        locale: "ja-jp",
+        price: ""
+      }, {
+        label: "EUR",
+        value: "EUR",
+        locale: "fr-fr",
+        price: ""
+      }],
       options: ["CNY", "USD", "JPY", "EUR"],
       currency: "CNY",
       prise: "7000",
@@ -362,6 +424,20 @@ export default {
   computed: {
     artwork() {
       return this.$store.state.artwork.data;
+    },
+    priceOptions() {
+      return this.defaultPriceOptions.map((item) => {
+        return Object.assign(item, {
+          price: this.$store.state.artwork.data.commodity.price[item.locale]
+        });
+      })
+    },
+    price() {
+      for(let item in this.priceOptions) {
+        if(this.priceOptions[item].label == this.currency) {
+          return this.priceOptions[item].price;
+        }
+      }
     }
   },
   methods: {

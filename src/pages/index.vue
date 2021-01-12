@@ -252,7 +252,7 @@
         </div> -->
 
 
-        <div class="col-3 relative-position" v-for="(item,index) in $store.state.home.latestCommodity.list" :key="item.commodityId">
+        <router-link :to="`${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in $store.state.home.latestCommodity.list" :key="item.commodityId">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
             <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="230px"></q-img>
@@ -264,7 +264,7 @@
             </div>
           </div>
           <div class="name absolute text-left">Lucky me</div>
-        </div>
+        </router-link>
       </div>
     </div>
     <div class="sort-container">
@@ -294,10 +294,13 @@
                 <div class="absolute-full bg"></div>
               </q-img>
             </div> -->
-            <div
+            <router-link
               class="col-4 sort-item relative-position"
               v-for="item in $store.state.home.lookWorld"
               :key="item.id"
+              :to="{ path: `${$i18n.locale}/artwork`, query: {
+                theme: item.name
+              } }"
             >
               <div class="line1 absolute"></div>
               <div class="line2 absolute"></div>
@@ -312,7 +315,7 @@
                 </div>
                 <div class="absolute-full bg"></div>
               </q-img>
-            </div>
+            </router-link>
           </div>
         </div>
         <div class="col right">
