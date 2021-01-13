@@ -11,15 +11,7 @@ const mutation: MutationTree<UserStateInterface> = {
       state.info[item] = payload[item];
     }
   },
-  setMyWishlist (state, payload) {
-    state.wishlist = payload
-  },
-  setMyLike (state, payload) {
-    state.like = payload
-  },
-  setMyBrowsingHistory (state, payload) {
-    state.browsingHistory = payload
-  },
+
 }
 
 export default mutation

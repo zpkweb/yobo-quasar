@@ -53,43 +53,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     }).catch((err) => {
     })
   },
-  /**
-   * 我最喜爱的艺术家
-   *
-   * @param {*} { commit }
-   * @param {*} payload
-   */
-  async getMyLike({ commit }, payload) {
-    return await axiosInstance.get('/api/my/seller', { params: payload }).then(response => {
-      return response.data;
-    }).catch((err) => {
-    })
-  },
-  /**
-   * 我的最爱
-   *
-   * @param {*} { commit }
-   * @param {*} payload
-   */
-  async getMyWishlist({ commit }, payload) {
-    return await axiosInstance.get('/api/my/commodity', { params: payload }).then(response => {
-      return response.data;
-    }).catch((err) => {
-    })
-  },
 
-  /**
-   * 我的浏览历史
-   *
-   * @param {*} { commit }
-   * @param {*} payload
-   */
-  async getMyBrowsingHistory({ commit }, payload) {
-    return await axiosInstance.get('/api/my/browsingHistory', { params: payload }).then(response => {
-      return response.data;
-    }).catch((err) => {
-    })
-  },
 }
 
 export default actions

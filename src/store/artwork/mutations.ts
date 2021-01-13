@@ -22,7 +22,9 @@ const mutation: MutationTree<ArtworkStateInterface> = {
   },
   setData (state, payload) {
     state.data = payload;
-  }
+  },
+
+
 }
 
 export default mutation

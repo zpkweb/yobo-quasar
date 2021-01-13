@@ -3,13 +3,16 @@
     <div class="banner relative-position">
       <q-img src="img/artworks/banner.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
-        <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
+        <template v-if="portrait">
+          <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
         <div class="title">{{portrait.firstname}} {{portrait.lastname}}</div>
         <div class="number">
           <span>知名艺术家</span>
           <span>国际风险敞口</span>
           <span>艺博会参与者</span>
         </div>
+        </template>
+
       </div>
     </div>
     <div class="title2-container">
@@ -20,7 +23,7 @@
       </div>
     </div>
     <div id="info" class="desc row">
-      <div class="col-4">
+      <div class="col-4" v-if="portrait">
         <!-- <q-img src="img/artist/zp.png" width="340px"></q-img> -->
         <q-img :src="portrait.user ? portrait.user.avatar : ''"></q-img>
       </div>
@@ -33,7 +36,7 @@
           Karin Vermeer是一位独立艺术家，自2002年以来一直在鹿特丹生活和工作<br />
           她的作品是通过将照片和绘画进行数字组合和编辑为新的原创艺术作品而创作的<br />威猛(Vermeer)擅长于通过覆盖和融合四到五个不同种族和血统的不同面孔来创建新的不存在的人物而创建的肖像<br />打印数字图像并添加涂料以获得最终的结果，尝试使数字图像再次变得有形
         </div> -->
-        <p>
+        <p  v-if="portrait">
           {{ portrait.metadata.profile }}
         </p>
         <div class="resume4">
@@ -42,7 +45,7 @@
           <q-img src="img/artist/qq.png" width="32px" class="image"></q-img>
           <q-img src="img/artist/txwb.png" width="32px" class="image"></q-img>
           <q-img src="img/artist/mail.png" width="32px" class="image"></q-img>
-          <div class="btn text-white">+关注艺术家</div>
+          <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? "已关注" : "+关注艺术家"}}</div>
         </div>
       </div>
     </div>
@@ -126,20 +129,78 @@ export default {
         value: "resume",
       }],
       tags: ["杂志封面", "原始结构的波帕特肖像画", "波帕特肖像画"],
+      hasMyArtist: false
     };
   },
   async preFetch({ store, currentRoute }) {
     const { locale, artistId } = currentRoute.params;
-    return await store.dispatch("artist/seller", {
+    await store.dispatch("artist/artist", {
       sellerId: artistId
     });
+
   },
   computed: {
     portrait() {
       return this.$store.state.artist.portrait;
-    },
-
+    }
   },
+  async mounted() {
+    const hasMyArtistData = await this.$store.dispatch("my/hasMyArtist", {
+      userId: this.$store.state.user.info.userId,
+      artistId: this.$route.params.artistId
+    });
+    this.hasMyArtist = hasMyArtistData.success;
+  },
+  methods: {
+    async myArtist(has) {
+      if(has) {
+        const delMyArtist = await this.$store.dispatch("my/delMyArtist", {
+          userId: this.$store.state.user.info.userId,
+          artistId: this.$route.params.artistId
+        })
+        if(delMyArtist.success) {
+          this.hasMyArtist = false;
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: "取消关注",
+            color: 'negative',
+          })
+        }else{
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: data.msg,
+            color: 'negative',
+          })
+        }
+
+      }else{
+        const addMyArtist = await this.$store.dispatch("my/addMyArtist", {
+          userId: this.$store.state.user.info.userId,
+          artistId: this.$route.params.artistId
+        })
+
+        if(addMyArtist.success) {
+          this.hasMyArtist = true;
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: "关注成功",
+            color: 'positive',
+          })
+        }else{
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: data.msg,
+            color: 'negative',
+          })
+        }
+      }
+
+    }
+  }
 };
 </script>
 

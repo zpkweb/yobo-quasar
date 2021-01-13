@@ -35,25 +35,25 @@
           <div class="btn buy text-white text-center">购买</div>
         </div>
       </div> -->
-
       <template v-if="myWishlist && myWishlist.length">
-        <div class="row item" v-for="i in myWishlist" :key="'style1-'+i">
-        <div class="col-3 image"></div>
+        <div class="row item" v-for="(item, index) in myWishlist" :key="'style1-'+index">
+        <!-- <div class="col-3 image"></div> -->
+        <q-img v-if="item.photos.length" :src="item.photos[0].src" width="212px"></q-img>
         <div class="col-4 desc">
-          <div class="title">LOVE IS ON THE RISE</div>
-          <div class="name">Katy Tackes</div>
-          <div class="size">15x11 in - 2019</div>
+          <div class="title">{{item.name}}</div>
+          <div class="name">{{item.seller.firstname}} {{item.seller.lastname}}</div>
+          <div class="size">{{item.commodity.width}}x{{item.commodity.height}} in - 2019</div>
         </div>
         <div class="col-3 prise">
           <div>价格</div>
-          <div class="num">304，000</div>
+          <div class="num">{{item.price[$i18n.locale]}}</div>
         </div>
         <div class="col-2 row items-center">
           <div class="btn buy text-white text-center">购买</div>
         </div>
       </div>
       </template>
-      <div>
+      <div v-else>
         暂无数据
       </div>
     </div>
@@ -72,12 +72,12 @@
           </div> -->
           <div v-if="myBrowsingHistory && myBrowsingHistory.length" class="item text-center col-3" v-for="(item, index) in myBrowsingHistory" :key="'style3-'+index">
             <div class="image">
-              <q-img src="img/mine/history1.png" height="200px" contain></q-img>
+              <q-img v-if="item.photos.length" :src="item.photos[0].src" width="212px"></q-img>
             </div>
             <div class="text-left">丙烯酸 • 亚麻</div>
-            <div class="text-left">100x100cm</div>
+            <div class="text-left">{{item.width}}x{{item.height}}cm</div>
           </div>
-          <div>
+          <div v-else>
             暂无数据
           </div>
         </div>
@@ -89,31 +89,33 @@
 <script>
 export default {
   async mounted() {
-    const { lang } = this.$route.params;
+    console.log("this.$route", this.$route)
+    const { locale } = this.$route.params;
     const { userId } = this.$store.state.user.info;
-    const myWishlist = await this.$store.dispatch("user/getMyWishlist", {
+    const myWishlist = await this.$store.dispatch("my/getMyWishlist", {
       userId,
-      lang,
+      locale,
     });
+    console.log("myWishlist", myWishlist)
     if (myWishlist.success) {
-      this.$store.commit("user/setMyWishlist", myWishlist.data);
+      this.$store.commit("my/setMyWishlist", myWishlist.data);
     }
 
-    const myBrowsingHistory = await this.$store.dispatch("user/getMyBrowsingHistory", {
+    const myBrowsingHistory = await this.$store.dispatch("my/getMyBrowsingHistory", {
       userId,
-      lang,
+      locale,
     });
     if (myBrowsingHistory.success) {
-      this.$store.commit("user/setMyBrowsingHistory", myBrowsingHistory.data);
+      this.$store.commit("my/setMyBrowsingHistory", myBrowsingHistory.data);
     }
   },
 
   computed: {
     myWishlist() {
-      return this.$store.state.user.wishlist;
+      return this.$store.state.my.wishlist;
     },
     myBrowsingHistory() {
-      return this.$store.state.user.browsingHistory;
+      return this.$store.state.my.browsingHistory;
     },
   },
 };

@@ -21,7 +21,7 @@ import axios from 'axios'
 // 请注意，如果我们不在这里设置任何配置，我们不需要
 // 一个命名的导出，因为我们可以`import axios from 'axios'`
 const axiosInstance = axios.create({
-  baseURL: process.env.api
+  baseURL: process.env.API
 })
 
 // 在Vue文件中通过this.$axios来使用

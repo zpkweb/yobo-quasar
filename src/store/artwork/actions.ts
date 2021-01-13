@@ -36,6 +36,7 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     })
 
   },
+
 }
 
 export default actions

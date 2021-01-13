@@ -16,15 +16,15 @@ const actions: ActionTree<ArtistStateInterface, StateInterface> = {
     })
 
   },
-  async seller ({ commit }, payload) {
+  async artist ({ commit }, payload) {
     return await axiosInstance.get('/api/seller', {
       params: payload
     }).then(response => {
       commit('setPortrait', response.data.data)
     }).catch((err) => {
     })
+  },
 
-  }
 }
 
 export default actions

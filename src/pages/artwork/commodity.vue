@@ -8,8 +8,11 @@
               <div class="image"></div>
             </div>
             <div class="heart">
-              <div class="image image2"></div>
+              <div class="btn image" :class="hasMyArtwork ? 'image1' : 'image2'" @click="myArtwork(hasMyArtwork)">
+                <!-- {{hasMyArtwork ? '已喜欢' : '喜欢'}} -->
+              </div>
             </div>
+
           </div>
           <div class="q-pa-md carousel1">
             <q-carousel
@@ -410,15 +413,30 @@ export default {
       prise: "7000",
       email: "",
       msg: "",
+      hasMyArtwork: false
     };
   },
   async preFetch({ store, currentRoute }) {
     // getArtwork
     const { locale, artworkId } = currentRoute.params;
-    return await store.dispatch('artwork/getArtwork', {
+    await store.dispatch('artwork/getArtwork', {
       locale,
       artworkId
     })
+  },
+  async mounted() {
+    const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
+      userId: this.$store.state.user.info.userId,
+      artworkId: this.$route.params.artworkId
+    });
+    this.hasMyArtwork = hasMyArtworkData.success;
+
+    const myBrowsingHistory = await this.$store.dispatch("my/addMyBrowsingHistory", {
+      userId: this.$store.state.user.info.userId,
+      artworkId: this.$route.params.artworkId
+    });
+
+
   },
   computed: {
     artwork() {
@@ -451,6 +469,56 @@ export default {
       this.$refs.offerPage.classList.remove("closepage");
       this.$refs.offerPage.classList.add("openpage");
     },
+    async myArtwork(has) {
+      if(has) {
+        const delMyArtwork =await this.$store.dispatch("my/delMyArtwork", {
+          userId: this.$store.state.user.info.userId,
+          artworkId: this.$route.params.artworkId
+        })
+        if(delMyArtwork.success){
+          this.hasMyArtwork = false;
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: "取消喜欢",
+            color: 'negative',
+          })
+
+        }else{
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: data.msg,
+            color: 'negative',
+          })
+        }
+
+      }else{
+
+        const addMyArtwork =await this.$store.dispatch("my/addMyArtwork", {
+          userId: this.$store.state.user.info.userId,
+          artworkId: this.$route.params.artworkId
+        })
+        if(addMyArtwork.success) {
+          this.hasMyArtwork = true;
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: "喜欢成功",
+            color: 'positive',
+          })
+        }else{
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: data.msg,
+            color: 'negative',
+          })
+        }
+
+      }
+
+    }
   },
 };
 </script>
@@ -477,6 +545,10 @@ export default {
       background: url("/img/share.png") center center no-repeat;
       background-color: rgba(255, 255, 255, 0.7);
       margin-left: 10px;
+    }
+    .image1 {
+      background: url("/img/heart.png") center center no-repeat;
+      background-color: red;
     }
     .image2 {
       background: url("/img/heart.png") center center no-repeat;

@@ -32,7 +32,7 @@ function state (): ArtworkStateInterface {
       currentPage: 1,
       pageSize: 9
     },
-    data: null
+    data: null,
   }
 }
 
