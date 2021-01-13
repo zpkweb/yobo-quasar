@@ -96,8 +96,8 @@ module.exports = configure(function (ctx) {
 
       proxy: {
         '/api': {
-          // target: 'http://localhost:7001',
-          target: 'http://39.105.190.188:7001/',
+          target: process.env.api ? 'http://39.105.190.188:7001/' : 'http://localhost:7001' ,
+          // target: 'http://39.105.190.188:7001/',
           changeOrigin: true
         }
       }

@@ -307,14 +307,14 @@
               v-if="home && home.lookWorld"
               v-for="item in home.lookWorld"
               :key="item.id"
-              :to="{ path: `${$i18n.locale}/artwork`, query: {
+              :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign(artwork, {
                 theme: item.name
-              } }"
+              }) }"
             >
               <div class="line1 absolute"></div>
               <div class="line2 absolute"></div>
               <q-img
-                src="img/index/1.png"
+                :src="item.img"
                 width="210px"
                 class="relative-position"
               >
@@ -348,7 +348,7 @@
     </div>
     <div class="contact-container">
       <div class="row contact text-white">
-        <div class="col left">
+        <div class="col">
           <div class="title">让永宝帮您找到心仪的作品</div>
           <div class="line"></div>
           <div class="text">
@@ -372,6 +372,7 @@
             @mouseenter="autoplay = false"
             @mouseleave="autoplay = true"
             infinite
+            v-if="false"
           >
             <!-- <q-carousel-slide
               v-for="ite in ['a', 'b', 'c', 'd']"
@@ -466,6 +467,14 @@ export default {
       slides: "a",
       ratingModel: 3,
       hotartist: "a",
+      artwork: {
+        shape: "",
+        price: "",
+        pricemin: "",
+        pricemax: "",
+        color: "",
+        theme: ""
+      }
     };
   },
   async preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
@@ -500,14 +509,7 @@ export default {
       }, data))}`);
     },
     goArtworks(data) {
-      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign({
-        shape: "",
-        price: "",
-        pricemin: "",
-        pricemax: "",
-        color: "",
-        theme: ""
-      }, data))}`);
+      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign(this.artwork, data))}`);
     },
   },
 };
