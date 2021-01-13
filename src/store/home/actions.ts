@@ -1,12 +1,12 @@
 import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
 import { HomeStateInterface } from './state'
-import axios from 'axios'
+import { axiosInstance } from 'src/boot/axios'
 
 
 const actions: ActionTree<HomeStateInterface, StateInterface> = {
   async setHome ({ commit }, payload) {
-    await axios.get('/api/home', {
+    await axiosInstance.get('/api/home', {
       params: {
         locale: payload.locale
       }

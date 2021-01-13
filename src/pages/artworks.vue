@@ -181,6 +181,8 @@ const generateCells = () => Array(24).fill(null).map((_, cell) => (
 
 export default {
   // name: "app",
+
+
   data() {
     return {
       cells: generateCells(),

@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
 import { UserStateInterface } from './state'
-import axios from 'axios'
+import { axiosInstance } from 'src/boot/axios'
 
 
 const actions: ActionTree<UserStateInterface, StateInterface> = {
@@ -12,8 +12,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} payload
    * @return {*}
    */
-  async login ({ commit }, payload) {
-    return await axios.post('/api/user/login', payload).then(response => {
+  async login({ commit }, payload) {
+    return await axiosInstance.post('/api/user/login', payload).then(response => {
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
@@ -26,8 +26,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} payload
    * @return {*}
    */
-  async register ({ commit }, payload) {
-    return await axios.post('/api/user/register', {
+  async register({ commit }, payload) {
+    return await axiosInstance.post('/api/user/register', {
       name: payload.name,
       email: payload.email,
       password: payload.password,
@@ -46,8 +46,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} payload
    * @return {*}
    */
-  async applyArtist ({ commit }, payload) {
-    return await axios.post('/api/user/seller/apply', payload).then(response => {
+  async applyArtist({ commit }, payload) {
+    return await axiosInstance.post('/api/user/seller/apply', payload).then(response => {
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
@@ -59,8 +59,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} { commit }
    * @param {*} payload
    */
-  async getMyLike( { commit },  payload) {
-    return await axios.get('/api/my/seller', {params: payload}).then(response => {
+  async getMyLike({ commit }, payload) {
+    return await axiosInstance.get('/api/my/seller', { params: payload }).then(response => {
       return response.data;
     }).catch((err) => {
     })
@@ -71,8 +71,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} { commit }
    * @param {*} payload
    */
-  async getMyWishlist( { commit },  payload) {
-    return await axios.get('/api/my/commodity', { params: payload }).then(response => {
+  async getMyWishlist({ commit }, payload) {
+    return await axiosInstance.get('/api/my/commodity', { params: payload }).then(response => {
       return response.data;
     }).catch((err) => {
     })
@@ -84,8 +84,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    * @param {*} { commit }
    * @param {*} payload
    */
-  async getMyBrowsingHistory( { commit },  payload) {
-    return await axios.get('/api/my/browsingHistory', { params: payload }).then(response => {
+  async getMyBrowsingHistory({ commit }, payload) {
+    return await axiosInstance.get('/api/my/browsingHistory', { params: payload }).then(response => {
       return response.data;
     }).catch((err) => {
     })

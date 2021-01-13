@@ -1,7 +1,7 @@
 import { ActionTree } from 'vuex'
 import { StateInterface } from '../index'
 import { ArtworkStateInterface } from './state'
-import axios from 'axios'
+import { axiosInstance } from 'src/boot/axios'
 
 
 const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
@@ -13,8 +13,8 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
    * @return {*}
    */
   async getArtworkSearch ({ commit }, payload) {
-
-    return await axios.get('/api/commodity/search', {
+    console.log("getArtworkSearch", payload, process.env.api, process.env.API)
+    return await axiosInstance.get('/api/commodity/search', {
       params: payload
     }).then(response => {
       const { total, currentPage, pageSize, list } = response.data.data;
@@ -24,7 +24,7 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     })
   },
   async getArtwork ({ commit }, payload) {
-    return await axios.get('/api/buy', {
+    return await axiosInstance.get('/api/buy', {
       params: {
         locale: payload.locale,
         commodityId: payload.artworkId

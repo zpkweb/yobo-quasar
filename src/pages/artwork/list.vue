@@ -364,7 +364,6 @@ export default {
         theme: theme || ""
       });
     }
-
     return await store.dispatch("artwork/getArtworkSearch", {
       shape: shape || "",
       pricemin: pricemin || "",

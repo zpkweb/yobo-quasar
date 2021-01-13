@@ -8,8 +8,9 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { configure } = require('quasar/wrappers')
-
+console.log("quasar process.env.api", process.env.api)
 module.exports = configure(function (ctx) {
+  console.log("ctx", ctx, process.env.api)
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: {
@@ -27,7 +28,7 @@ module.exports = configure(function (ctx) {
     boot: [
       'composition-api',
       'i18n',
-      'axios',
+      // 'axios',
       'quasar-lang-pack',
       'element-ui',
       'qs',
@@ -55,6 +56,9 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
+      env: {
+        API: process.env.api ? 'http://39.105.190.188:7001/' : 'http://localhost:7001'
+      },
       devtool: 'source-map',
       vueRouterMode: 'hash', // available values: 'hash', 'history'
 

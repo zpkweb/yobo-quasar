@@ -170,32 +170,39 @@
            <template v-if="home && home.gallerySeller">
 
 
-           <router-link class="col-3 relative-position text-center"
+           <div class="col-3 relative-position text-center"
 
             v-for="(item, index) in home.gallerySeller.list"
             :key="item.sellerId"
-            :to="`${$i18n.locale}/artist/${item.sellerId}`"
+
            >
            <template v-if="index%2 == 0">
              <div class="line absolute"></div>
-              <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+             <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
+                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+             </router-link>
+
               <div class="desc bottom text-right">
-                <div class="place">{{item.firstname}}{{item.lastname}}</div>
-                <div class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</div>
+                <router-link :to="`${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}}{{item.lastname}}</router-link>
+                <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</router-link>
               </div>
            </template>
            <template v-else>
 
               <div class="line-bottom absolute"></div>
               <div class="desc bottom text-right">
-                <div class="place">{{item.firstname}}{{item.lastname}}</div>
-                <div class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</div>
+                <router-link :to="`${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}}{{item.lastname}}</router-link>
+
+                <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</router-link>
               </div>
 
-              <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+
+              <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
+                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+             </router-link>
            </template>
 
-          </router-link>
+          </div>
         </template>
         </div>
       </div>
@@ -331,16 +338,32 @@
           <div class="title">按价格浏览</div>
           <div class="row text-center text-white">
             <div class="col-6">
-              <div class="prise">低于¥<span>6000</span></div>
+              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+                price: 0,
+                pricemin: '',
+                pricemax: 6000
+              }) }" class="prise">低于¥<span>6000</span></router-link>
             </div>
             <div class="col-6">
-              <div class="prise">¥ <span>6000-</span>¥<span>20000</span></div>
+              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+                price: 1,
+                pricemin: 6000,
+                pricemax: 20000
+              }) }" class="prise">¥ <span>6000-</span>¥<span>20000</span></router-link>
             </div>
             <div class="col-6">
-              <div class="prise">¥<span>20000-</span>¥<span>40000</span></div>
+              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+                price: 2,
+                pricemin: 20000,
+                pricemax: 40000
+              }) }" class="prise">¥<span>20000-</span>¥<span>40000</span></router-link>
             </div>
             <div class="col-6">
-              <div class="prise">高于¥<span>40000</span></div>
+              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+                price: 3,
+                pricemin: 40000,
+                pricemax: ''
+              }) }" class="prise">高于¥<span>40000</span></router-link>
             </div>
           </div>
         </div>
@@ -437,11 +460,11 @@
         <template v-if="home && home.hotSaleSeller">
 
 
-        <div class="col-2"  v-for="item in home.hotSaleSeller.list" :key="item.sellerId">
+        <router-link :to="`${$i18n.locale}/artist/${item.sellerId}`" class="col-2"  v-for="item in home.hotSaleSeller.list" :key="item.sellerId">
           <img :src="item.user.avatar" width="180px" />
           <div class="name">{{item.firstname}}{{item.lastname}}</div>
           <div class="country">{{item.country}}-{{item.typeName}}</div>
-        </div>
+        </router-link>
         </template>
       </div>
     </div>
@@ -640,6 +663,7 @@ export default {
       white-space: nowrap;
     }
     .place {
+      display: block;
       font-family: "FangSong";
       letter-spacing: 1px;
       color: #000;
@@ -768,6 +792,8 @@ export default {
       }
     }
     .prise {
+      display: inline-block;
+      width: 200px;
       font-weight: 500;
       margin: 0 10px 80px 0;
       padding: 39px 0;
