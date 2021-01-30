@@ -14,6 +14,7 @@ import { MyStateInterface } from './my/state';
 
 export interface StateInterface {
   lang: any;
+  langOptions: any;
   home?: HomeStateInterface;
   user?: UserStateInterface;
   artist?: ArtistStateInterface;
@@ -26,11 +27,35 @@ export default store(function ({ Vue }) {
 
   const Store = new Vuex.Store<StateInterface>({
     state: {
-      lang: 'zh-cn'
+      lang: { value: "zh", label: "中文", locale: 'zh-cn' },
+      langOptions: [
+        { value: "zh", label: "中文", locale: 'zh-cn' },
+        { value: "en", label: "English", locale: 'en-us' },
+        {
+        value: 'ja',
+        label: 'にほんご',
+        locale: 'ja-jp'
+      },
+      // {
+      //   value: 'fr',
+      //   label: 'Français',
+      // }
+      {
+        value: 'es',
+        label: 'Español',
+        locale: 'es-es'
+      }
+      ],
     },
     mutations: {
       setLang (state, lang) {
-        state.lang = lang
+        let locale:any = { value: "zh", label: "中文", locale: 'zh-cn' };
+        for(let item in state.langOptions) {
+          if(state.langOptions[item].locale == lang) {
+            locale = state.langOptions[item].locale;
+          }
+        }
+        state.lang.locale = locale
       }
     },
     modules: {

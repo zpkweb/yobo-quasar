@@ -17,9 +17,10 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     return await axiosInstance.get('/api/commodity/search', {
       params: payload
     }).then(response => {
-      const { total, currentPage, pageSize, list } = response.data.data;
-      commit('setSearchData', list)
-      commit('setPagination', { total, currentPage, pageSize })
+      // const { total, currentPage, pageSize, list } = response.data.data;
+      // commit('setSearchData', list)
+      // commit('setPagination', { total, currentPage, pageSize })
+      return response.data;
     }).catch((err) => {
     })
   },
@@ -34,8 +35,15 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
       commit('setData', data)
     }).catch((err) => {
     })
-
   },
+  async getArtworkShape({ commit }, payload) {
+    return await axiosInstance.get('/api/artwork/options')
+    .then(response => {
+      const { data } = response.data;
+      commit('setOptins', data)
+    }).catch((err) => {
+    })
+  }
 
 }
 

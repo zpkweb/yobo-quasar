@@ -6,13 +6,13 @@ import { axiosInstance } from 'src/boot/axios'
 
 const actions: ActionTree<ArtistStateInterface, StateInterface> = {
   async sellerSearch ({ commit }, payload) {
+    console.log("sellerSearch", payload)
     return await axiosInstance.get('/api/seller/search', {
       params: payload
     }).then(response => {
-      const { total, currentPage, pageSize, list } = response.data.data;
-      commit('setSearchData', list)
-      commit('setPagination', { total, currentPage, pageSize })
+      return response.data;
     }).catch((err) => {
+      console.log("sellerSearch", err)
     })
 
   },

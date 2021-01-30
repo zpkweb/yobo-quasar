@@ -45,48 +45,8 @@
             </div>
           </div>
         </div>
-        <div class="col-9">
-          <div class="title text-bold text-white text-center">
-            <div>为您精选</div>
-            <div>来自世界各地的优秀艺术家</div>
-          </div>
-          <div class="text-white slide">
-            {{ slide }}<span class="line">/</span><span class="all" v-if="home && home.banner">{{  home.banner.length }}</span>
-          </div>
-        </div>
       </div>
-      <q-carousel
-        height="510px"
-        animated
-        v-model="slide"
-        infinite
-        :autoplay="autoplay"
-        transition-prev="slide-right"
-        transition-next="slide-left"
-        @mouseenter="autoplay = false"
-        @mouseleave="autoplay = true"
-        v-if="home"
-      >
-        <!-- <q-carousel-slide :name="1" img-src="http://localhost:7001/images/banner/1.png" />
-        <q-carousel-slide
-          :name="2"
-          img-src="http://localhost:7001/images/banner/2.jpg"
-        />
-        <q-carousel-slide
-          :name="3"
-          img-src="http://localhost:7001/images/banner/3.jpg"
-        />
-        <q-carousel-slide
-          :name="4"
-          img-src="http://localhost:7001/images/banner/4.jpg"
-        /> -->
-        <q-carousel-slide
-          v-for="(item, index) in home.banner"
-          :key="index"
-          :name="index+1"
-          :img-src="item.src"
-        />
-      </q-carousel>
+      <Carousel v-if="home" :slide="slide" :data="home.banner"></Carousel>
     </div>
     <div class="advantage text-center">
       <div class="title">我们的优势</div>
@@ -173,32 +133,32 @@
            <div class="col-3 relative-position text-center"
 
             v-for="(item, index) in home.gallerySeller.list"
-            :key="item.sellerId"
+            :key="`gallerySeller-${item.sellerId}`"
 
            >
            <template v-if="index%2 == 0">
              <div class="line absolute"></div>
-             <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
-                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+             <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" v-if="item.commoditys && item.commoditys.length" >
+                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px" height="300px"></q-img>
              </router-link>
 
-              <div class="desc bottom text-right">
-                <router-link :to="`${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}}{{item.lastname}}</router-link>
-                <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</router-link>
+              <div class="desc bottom text-right odd">
+                <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
+                <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityName}}</router-link>
               </div>
            </template>
            <template v-else>
 
               <div class="line-bottom absolute"></div>
-              <div class="desc bottom text-right">
-                <router-link :to="`${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}}{{item.lastname}}</router-link>
+              <div class="desc top text-right even">
+                <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
 
-                <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityPhotos.length ? item.commodityPhotos[0].name : '艺术品名称'}}</router-link>
+                <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityName}}</router-link>
               </div>
 
 
-              <router-link :to="`${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
-                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px"></q-img>
+              <router-link v-if="item.commoditys && item.commoditys.length" :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
+                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px" height="300px"></q-img>
              </router-link>
            </template>
 
@@ -266,10 +226,10 @@
         <template v-if="home && home.latestCommodity">
 
 
-        <router-link  :to="`${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity.list" :key="item.commodityId">
+        <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity.list" :key="`artwork-${item.commodityId}`">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
-            <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="230px"></q-img>
+            <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="255px" height="255px"></q-img>
             <div class="new-desc text-left bg-white">
               <q-breadcrumbs separator="|" gutter="sm">
                 <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.techniques[0].name} • ${item.themes[0].name}`" class="text-dark ddd" />
@@ -277,7 +237,7 @@
               </q-breadcrumbs>
             </div>
           </div>
-          <div class="name absolute text-left">Lucky me</div>
+          <div class="name absolute text-left">{{item.name}}</div>
         </router-link>
         </template>
       </div>
@@ -313,8 +273,8 @@
               class="col-4 sort-item relative-position"
               v-if="home && home.lookWorld"
               v-for="item in home.lookWorld"
-              :key="item.id"
-              :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign(artwork, {
+              :key="`lookWorld-${item.id}`"
+              :to="{ path: `artwork`, query: Object.assign({}, artwork, {
                 theme: item.name
               }) }"
             >
@@ -323,6 +283,7 @@
               <q-img
                 :src="item.img"
                 width="210px"
+                height="185px"
                 class="relative-position"
               >
                 <div class="tab absolute-bottom text-center">
@@ -332,6 +293,7 @@
                 <div class="absolute-full bg"></div>
               </q-img>
             </router-link>
+
           </div>
         </div>
         <div class="col right">
@@ -384,7 +346,7 @@
             直接联系
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-6" v-if="false">
           <q-carousel
             v-model="slides"
             animated
@@ -392,10 +354,7 @@
             height="280px"
             class="text-white rounded-borders carousel2"
             :autoplay="autoplay"
-            @mouseenter="autoplay = false"
-            @mouseleave="autoplay = true"
-            infinite
-            v-if="false"
+
           >
             <!-- <q-carousel-slide
               v-for="ite in ['a', 'b', 'c', 'd']"
@@ -421,7 +380,7 @@
             <q-carousel-slide
               v-if="home && home.commentCommodity"
               v-for="(item, index) in home.commentCommodity"
-              :key="index"
+              :key="`carousel-${index}`"
               :name="item.title"
               class="row"
             >
@@ -430,7 +389,7 @@
               </div>
               <div class="col-6">
                 <div class="row star">
-                  <div class="col-2" v-for="i of item.star" :key="i">
+                  <div class="col-2" v-for="i of item.star" :key="`star-${i}`">
                     <q-img src="img/index/star.png" width="20px"></q-img>
                   </div>
                 </div>
@@ -446,7 +405,7 @@
     </div>
     <div class="hot-artists text-center relative-position">
       <div class="title">我们热卖的艺术家</div>
-      <div class="more absolute row">
+      <div @click="goArtists()" class="more absolute row">
         <div class="col-grow text">更多</div>
         <q-img src="img/index/more.png" class="col" width="22px"></q-img>
       </div>
@@ -460,9 +419,9 @@
         <template v-if="home && home.hotSaleSeller">
 
 
-        <router-link :to="`${$i18n.locale}/artist/${item.sellerId}`" class="col-2"  v-for="item in home.hotSaleSeller.list" :key="item.sellerId">
-          <img :src="item.user.avatar" width="180px" />
-          <div class="name">{{item.firstname}}{{item.lastname}}</div>
+        <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="col-2"  v-for="item in home.hotSaleSeller.list" :key="`artist-${item.sellerId}`">
+          <img class="image" :src="item.user.avatar" width="180px" />
+          <div class="name">{{item.firstname}} {{item.lastname}}</div>
           <div class="country">{{item.country}}-{{item.typeName}}</div>
         </router-link>
         </template>
@@ -482,10 +441,14 @@
 </template>
 
 <script>
+import Carousel from 'src/components/carousel.vue';
 export default {
+  components:{
+    Carousel
+  },
   data() {
     return {
-      slide: 1,
+      slide: '1',
       autoplay: true,
       slides: "a",
       ratingModel: 3,
@@ -496,7 +459,9 @@ export default {
         pricemin: "",
         pricemax: "",
         color: "",
-        theme: ""
+        theme: "",
+        category: "",
+        technique: ""
       }
     };
   },
@@ -525,14 +490,14 @@ export default {
       document.documentElement.scrollTop = 0;
     },
     goArtists(data) {
-      this.$router.push(`/${this.$i18n.locale}/artists?${this.$qs.stringify(Object.assign({
+      this.$router.push(`/${this.$i18n.locale}/artists?${this.$qs.stringify(Object.assign({},{
         tag: "",
         country: "",
         surname: ""
       }, data))}`);
     },
     goArtworks(data) {
-      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign(this.artwork, data))}`);
+      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign({}, this.artwork, data))}`);
     },
   },
 };
@@ -655,11 +620,13 @@ export default {
     }
     .desc {
       margin: 0 auto;
-      padding: 0 40px 28px 0;
-      white-space: nowrap;
     }
     .bottom {
       padding: 28px 40px 15px 0;
+      white-space: nowrap;
+    }
+    .top {
+      padding: 0 40px 15px 0;
       white-space: nowrap;
     }
     .place {
@@ -793,12 +760,13 @@ export default {
     }
     .prise {
       display: inline-block;
-      width: 200px;
+      width: 240px;
       font-weight: 500;
-      margin: 0 10px 80px 0;
+      margin: 0 10px 90px 0;
       padding: 39px 0;
       font-size: 12px;
       font-weight: bold;
+      color: #fff;
       background-image: linear-gradient(
         180deg,
         rgb(0, 0, 0) 0%,
@@ -886,15 +854,17 @@ export default {
   }
   .name {
     font-size: 18px;
+    color: #333;
   }
   .country{
     font-size: 12px;
     font-family: "Heiti SC";
+    color: #333;
   }
   .image {
     margin-bottom: 30px;
-    background: url("/img/index/hotartist1.png") no-repeat;
-    background-size: contain;
+    // background: url("/img/index/hotartist1.png") no-repeat;
+    // background-size: contain;
     border-radius: 50%;
     width: 180px;
     height: 180px;

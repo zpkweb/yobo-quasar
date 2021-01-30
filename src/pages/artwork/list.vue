@@ -4,7 +4,7 @@
       <q-img src="img/artworks/banner.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <div class="title">油画</div>
-        <div class="number">{{artworkTotal}}件符合您搜索条件的艺术品</div>
+        <div class="number">{{ artworkTotal }}件符合您搜索条件的艺术品</div>
       </div>
     </div>
     <div class="container">
@@ -16,31 +16,32 @@
           <div>竖版</div>
           <div>方形</div>
           <div>自定义</div> -->
-
-          <q-tabs class="options-tabs text-teal">
+          <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
               v-for="(item, index) in shapes"
               :key="index"
-              :to="{ query: Object.assign({}, $route.query, { shape: item.value }) }"
+              :to="{
+                query: Object.assign({}, $route.query, { shape: item.value }),
+              }"
               >{{ item.label }}</q-route-tab
             >
           </q-tabs>
         </div>
         <div class="tag">
           <div class="text-dark">价格</div>
-          <!-- <div>不限</div>
-          <div>低于6000</div>
-          <div>6000-20000</div>
-          <div>20000-40000</div>
-          <div>高于40000</div>
-          <div>自定义</div> -->
-          <q-tabs class="options-tabs text-teal">
+          <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
               v-for="(item, index) in prices"
               :key="index"
-              :to="{ query: Object.assign({}, $route.query, { price: item.value, pricemin: item.price.min, pricemax: item.price.max }) }"
+              :to="{
+                query: Object.assign({}, $route.query, {
+                  price: item.value,
+                  pricemin: item.price.min,
+                  pricemax: item.price.max,
+                }),
+              }"
               >{{ item.label }}</q-route-tab
             >
           </q-tabs>
@@ -51,66 +52,93 @@
               v-model="pricemax"
             />
           </div>
-          <!-- <div class="text-dark btn" @click="myPrise">确定</div> -->
           <q-tabs>
-            <q-route-tab :to="{ query: Object.assign({}, $route.query, { price: '4', pricemin, pricemax}) }">确定</q-route-tab>
+            <span @click="customPrice" class="customPrice">确定</span>
           </q-tabs>
         </div>
         <div class="tag">
           <div class="text-dark">颜色</div>
-          <!-- <div>
-            <div
-              class="color"
-              :style="{ backgroundColor: color }"
-              v-for="color in colors"
-              :key="color"
-            ></div>
-          </div> -->
-          <q-tabs class="options-tabs text-teal">
+          <q-tabs dense inline-label class="options-tabs text-grey-8">
             <q-route-tab
               class="color"
               v-for="(item, index) in colors"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { color: item }) }"
+            >
+              <span
+                class="color-box"
+                :style="{ backgroundColor: '#' + item }"
+                >{{ item ? "" : "不限" }}</span
               >
-                <span class="color-box" :style="{ backgroundColor: '#'+item }">{{ item ? "" : "不限"}}</span>
-              </q-route-tab
-            >
+            </q-route-tab>
           </q-tabs>
         </div>
-        <div class="tag">
-          <div class="text-dark">主题</div>
-          <!-- <div
-            v-for="theme in themes"
-            :key="theme"
-            @click="addTag(theme)"
-            class="btn"
-          >
-            {{ theme }}
-          </div> -->
-          <q-tabs class="options-tabs text-teal">
-            <q-route-tab
-              class="btn"
-              v-for="(item, index) in themes"
-              :key="index"
-              :to="{ query: Object.assign({}, $route.query, { theme: item.value }) }"
-              >{{ item.label }}</q-route-tab
-            >
-          </q-tabs>
-        </div>
+        <template v-if="expandOptions">
+          <div class="tag">
+            <div class="text-dark">主题</div>
+            <q-tabs class="options-tabs text-grey-8">
+              <q-route-tab
+                class="btn"
+                v-for="(item, index) in themes"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, { theme: item.value }),
+                }"
+                >{{ item.label }}</q-route-tab
+              >
+            </q-tabs>
+          </div>
+          <div class="tag">
+            <div class="text-dark">类别</div>
+            <q-tabs class="options-tabs text-grey-8">
+              <q-route-tab
+                class="btn"
+                v-for="(item, index) in categorys"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    category: item.value,
+                  }),
+                }"
+                >{{ item.label }}</q-route-tab
+              >
+            </q-tabs>
+          </div>
+          <div class="tag">
+            <div class="text-dark">手法</div>
+            <q-tabs class="options-tabs text-grey-8">
+              <q-route-tab
+                class="btn"
+                v-for="(item, index) in techniques"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    technique: item.value,
+                  }),
+                }"
+                >{{ item.label }}</q-route-tab
+              >
+            </q-tabs>
+          </div>
+        </template>
       </div>
       <q-expansion-item
         dense
-        :label="text"
+        :label="`${expandOptions ? '收起选项' : '展开选项'}`"
         class="text-center title2 relative-position"
-        @show="show"
-        @hide="hide"
+        @show="optionsShow"
+        @hide="optionsHide"
       >
         <div class="text-left selected relative-position">
           <div>您已选择：</div>
-          <div class="tag" v-for="tag in tags" :key="tag">
-            <span>{{ tag }}</span>
-            <span @click="deleteTag(tag)" class="btn">×</span>
+          <div
+            class="tag"
+            v-for="(item, index) in search"
+            :key="`search-${index}`"
+            v-if="item.value"
+          >
+            <span>{{ item.value }}</span>
+            <span @click="deleteTag(item)" class="btn">×</span>
           </div>
           <div class="clear absolute-right btn" @click="deleteAllTags">
             清空所有
@@ -118,9 +146,39 @@
         </div>
       </q-expansion-item>
       <div class="sort-by text-right">
-        <div class="btn">价格</div>
+        <!-- <div class="btn"></div>
         <div class="btn">最热</div>
-        <div class="btn">最新上传</div>
+        <div class="btn">最新上传</div> -->
+        <router-link
+          :to="{
+            query: Object.assign({}, $route.query, {
+              hots: false,
+              news: false,
+            }),
+          }"
+          class="tabs"
+          >默认排序</router-link
+        >
+        <router-link
+          :to="{
+            query: Object.assign({}, $route.query, {
+              hots: hots ? false : true,
+            }),
+          }"
+          class="tabs"
+          :class="{ active: hots }"
+          >最热</router-link
+        >
+        <router-link
+          :to="{
+            query: Object.assign({}, $route.query, {
+              news: news ? false : true,
+            }),
+          }"
+          class="tabs"
+          :class="{ active: news }"
+          >最新上传</router-link
+        >
       </div>
       <!-- <div class="text-center none">
         <q-img
@@ -138,104 +196,108 @@
         ></vue-waterfall-easy>
       </div> -->
       <div class="q-pa-md">
-
         <!-- <q-btn class="q-mb-md" color="primary" label="Regenerate layout" @click="generateCells" /> -->
 
-        <div class="column example-container" :style="`height: ${(Math.floor(pageSize/3))*250 }px`">
+        <div
+          class="column example-container"
+          :style="`height: ${Math.floor(pageSize / 4) * 300}px`"
+        >
           <div class="flex-break hidden"></div>
           <div class="flex-break"></div>
           <div class="flex-break"></div>
-          <router-link :to="`artwork/${item.commodityId}`" class="example-cell" v-for="(item, index) in artworkList" :key="index">
-            <q-img :src="item.photos.length ? item.photos[0].src : ''" style="min-height: 80px"></q-img>
-            <p>{{item.name}}</p>
+          <div class="flex-break"></div>
+          <router-link
+            :to="`artwork/${item.commodityId}`"
+            class="example-cell"
+            v-for="(item, index) in artworkList"
+            :key="index"
+          >
+            <q-img
+              :src="item.photos.length ? item.photos[0].src : ''"
+              style="min-height: 80px; max-height: 300px"
+            >
+              <p class="name">{{ item.name }}</p>
+            </q-img>
           </router-link>
         </div>
       </div>
 
-      <el-pagination
+      <!-- <el-pagination
         background
         layout="prev, pager, next"
         :page-size="pageSize"
         :current-page="currentPage"
         :total="artworkTotal"
         @current-change="changeCurrentPage"
-        style="margin-top: 20px; text-align: center"
+        style="margin: 20px 0; text-align: center"
       >
-      </el-pagination>
-
-
+      </el-pagination> -->
+      <div class="q-pa-lg flex flex-center">
+        <q-pagination
+          v-model="currentPage"
+          color="teal-10"
+          :max="pageTotal"
+          :max-pages="4"
+          :boundary-numbers="true"
+        >
+        </q-pagination>
+        <div class="next btn" @click="nextPage">下一页</div>
+        <div class="all">共{{ pageTotal }}页</div>
+        <div>
+          到
+          <input type="text" class="input" v-model="newPage" />
+          页
+        </div>
+        <div class="btn button" @click="toNewPage">确定</div>
+      </div>
     </div>
   </q-layout>
 </template>
 
 <script>
-// import vueWaterfallEasy from "vue-waterfall-easy";
-
-const generateCells = () => Array(24).fill(null).map((_, cell) => (
-  Array(2 + Math.ceil(3 * Math.random())).fill(null).map((_, text) => `Cell ${cell + 1} - ${text + 1}`)
-))
-
 export default {
   // name: "app",
+  watch: {
+    $route: "changeQueryData",
+    currentPage: function() {
+      this.changeCurrentPage(this.currentPage)
+    }
+  },
   data() {
     return {
-      cells: generateCells(),
-      imgsArr: [
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/3.png", href: "#" },
-        { src: "/img/artworks/5.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/2.png", href: "#" },
-        { src: "/img/artworks/4.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/3.png", href: "#" },
-        { src: "/img/artworks/5.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/2.png", href: "#" },
-        { src: "/img/artworks/4.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/3.png", href: "#" },
-        { src: "/img/artworks/5.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/2.png", href: "#" },
-        { src: "/img/artworks/4.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/3.png", href: "#" },
-        { src: "/img/artworks/5.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/2.png", href: "#" },
-        { src: "/img/artworks/4.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/3.png", href: "#" },
-        { src: "/img/artworks/5.png", href: "#" },
-        { src: "/img/artworks/1.png", href: "#" },
-        { src: "/img/artworks/2.png", href: "#" },
-        { src: "/img/artworks/4.png", href: "#" },
-      ],
-
       tags: ["新闻摄影", "概念艺术"],
-      shape: this.$route.query.shape,
-      shapes: [
-        {
-          label: "不限",
-          value: "",
+      search: {
+        shape: {
+          label: "shape",
+          value: this.$route.query.shape || "",
         },
-        {
-          label: "横版",
-          value: "0",
+        price: {
+          label: "price",
+          value: this.$route.query.price || "",
         },
-        {
-          label: "竖版",
-          value: "1",
+
+        color: {
+          label: "color",
+          value: this.$route.query.color || "",
         },
-        {
-          label: "方形",
-          value: "2",
+        theme: {
+          label: "theme",
+          value: this.$route.query.theme || "",
         },
-      ],
-      price: this.$route.query.price,
-      pricemin: this.$route.query.price == "4" ? this.$route.query.pricemin : "",
-      pricemax: this.$route.query.price == "4" ? this.$route.query.pricemax : "",
+        category: {
+          label: "category",
+          value: this.$route.query.category || "",
+        },
+        technique: {
+          label: "technique",
+          value: this.$route.query.technique || "",
+        },
+      },
+      pricemin:
+        this.$route.query.price == "自定义" ? this.$route.query.pricemin : "",
+      pricemax:
+        this.$route.query.price == "自定义" ? this.$route.query.pricemax : "",
+
       prices: [
         {
           label: "不限",
@@ -247,7 +309,7 @@ export default {
         },
         {
           label: "低于6000",
-          value: "0",
+          value: "低于6000",
           price: {
             min: "",
             max: "6000",
@@ -255,7 +317,7 @@ export default {
         },
         {
           label: "6000-20000",
-          value: "1",
+          value: "6000-20000",
           price: {
             min: "6000",
             max: "20000",
@@ -263,7 +325,7 @@ export default {
         },
         {
           label: "20000-40000",
-          value: "2",
+          value: "20000-40000",
           price: {
             min: "20000",
             max: "40000",
@@ -271,7 +333,7 @@ export default {
         },
         {
           label: "高于40000",
-          value: "3",
+          value: "高于40000",
           price: {
             min: "40000",
             max: "",
@@ -279,14 +341,13 @@ export default {
         },
         {
           label: "自定义",
-          value: "4",
+          value: "自定义",
           price: {
             min: this.$route.query.pricemin,
             max: this.$route.query.pricemax,
           },
         },
       ],
-      color: this.$route.query.color,
       colors: [
         "",
         // "pink",
@@ -307,87 +368,138 @@ export default {
         // "gray",
         "808080",
       ],
-      theme: this.$route.query.theme,
-      themes: [
-        {
-          label: "不限",
-          value: "",
-        },
-        {
-          label: "风景画",
-          value: "风景画",
-        },
-        {
-          label: "动物",
-          value: "动物",
-        },
-        {
-          label: "城市",
-          value: "城市",
-        },
-        {
-          label: "抽象",
-          value: "抽象",
-        },
-
-        // "不限",
-        // "风景画",
-        // "动物",
-        // "城市",
-        // "抽象",
-        // "新闻摄影",
-        // "旅游",
-        // "概念艺术",
-      ],
-      // current: 1,
-      text: "展开选项",
-      maxPage: 10,
+      expandOptions: false,
       newPage: "",
-      lowPrise: "",
-      highPrise: "",
-      pageSize: Number(this.$route.query.pageSize) || this.$store.state.artwork.pagination.pageSize,
-      currentPage: Number(this.$route.query.currentPage)
+      pageSize: parseInt(this.$route.query.pageSize) || 10,
+      currentPage: parseInt(this.$route.query.currentPage) || 1,
+      total: 0,
     };
   },
-  async preFetch({
-    store,
-    currentRoute,
-  }) {
+  async preFetch({ store, currentRoute }) {
     const { locale } = currentRoute.params;
-    const { shape, pricemin, pricemax, color, theme, currentPage, pageSize } = currentRoute.query;
-    if (shape || pricemin || pricemax || color || theme) {
+    const {
+      shape,
+      pricemin,
+      pricemax,
+      color,
+      theme,
+      hots,
+      news,
+      currentPage,
+      pageSize,
+    } = currentRoute.query;
+    // 获取艺术品选项
+    await store.dispatch("artwork/getArtworkShape");
+
+    if (shape || pricemin || pricemax || color || theme || hots || news) {
       store.commit("artwork/setSearch", {
         shape: shape || "",
         pricemin: pricemin || "",
         pricemax: pricemax || "",
         color: color || "",
-        theme: theme || ""
+        theme: theme || "",
+        hots: hots || "",
+        news: news || "",
       });
     }
-    return await store.dispatch("artwork/getArtworkSearch", {
+    const artworkSearch = await store.dispatch("artwork/getArtworkSearch", {
       shape: shape || "",
       pricemin: pricemin || "",
       firstname: pricemax || "",
       color: color || "",
       theme: theme || "",
+      hots: hots || "",
+      news: news || "",
       locale,
-      currentPage: currentPage || store.state.artwork.pagination.currentPage,
-      pageSize: pageSize || store.state.artwork.pagination.pageSize,
+      currentPage: currentPage || 1,
+      pageSize: pageSize || 10,
     });
+    if(artworkSearch.success){
+      const { total, currentPage, pageSize, list } = artworkSearch.data;
+      store.commit('artwork/setSearchData', list)
+      store.commit('artwork/setPagination', { total, currentPage, pageSize })
+    }
+  },
+  created() {
+    console.log("created");
+  },
+  mounted() {
+    console.log("mounted");
   },
   computed: {
+    shapes() {
+      return [
+        {
+          value: "",
+          label: "不限",
+        },
+        ...this.$store.state.artwork.options.shape.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    themes() {
+      return [
+        {
+          value: "",
+          label: "不限",
+        },
+        ...this.$store.state.artwork.options.theme.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    categorys() {
+      return [
+        {
+          value: "",
+          label: "不限",
+        },
+        ...this.$store.state.artwork.options.category.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    techniques() {
+      return [
+        {
+          value: "",
+          label: "不限",
+        },
+        ...this.$store.state.artwork.options.technique.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
     artworkList() {
       return this.$store.state.artwork.searchData;
     },
     artworkTotal() {
       return this.$store.state.artwork.pagination.total;
     },
+    pageTotal() {
+      return Math.ceil(
+        this.$store.state.artwork.pagination.total /
+          this.$store.state.artwork.pagination.pageSize
+      );
+    },
+    hots() {
+      return this.$route.query.hots && this.$route.query.hots !== "false";
+    },
+    news() {
+      return this.$route.query.news && this.$route.query.news !== "false";
+    },
   },
-  // components: {
-  //   vueWaterfallEasy,
-  // },
   methods: {
-    generateCells () {
+    generateCells() {
       this.cells = generateCells();
     },
     addTag(theme) {
@@ -395,49 +507,79 @@ export default {
         this.tags.push(theme);
       }
     },
-    deleteTag(tag) {
-      this.tags.splice(this.tags.indexOf(tag), 1);
+    deleteTag(item) {
+      let searchData = {};
+      this.search[item.label] = "";
+      searchData[item.label] = "";
+      if (item.label == "price") {
+        this.pricemin = "";
+        searchData.pricemin = "";
+        this.pricemax = "";
+        searchData.pricemax = "";
+      }
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, searchData),
+      });
+      // this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign({}, this.artwork, data))}`);
     },
     deleteAllTags() {
-      this.tags = [];
+      const { pageSize, currentPage, ...searchData} = this.$route.query;
+      console.log("searchData", searchData)
+      for(let item in searchData) {
+        searchData[item] = '';
+      }
+      this.$router.push({
+        query: Object.assign({}, this.$route.query, searchData),
+      });
     },
-    show() {
-      this.text = "收起选项";
+    optionsShow() {
+      this.expandOptions = true;
     },
-    hide() {
-      this.text = "展开选项";
+    optionsHide() {
+      this.expandOptions = false;
     },
-    // nextPage() {
-    //   this.current < this.maxPage ? (this.current += 1) : this.current;
-    // },
-    // toNewPage() {
-    //   parseInt(this.newPage) > 0 && parseInt(this.newPage) <= this.maxPage
-    //     ? (this.current = parseInt(this.newPage))
-    //     : this.current;
-    // },
-    // myPrise() {
-    //   if (this.lowPrise <= this.highPrise) {
-    //     this.tags.push(`${this.lowPrise}-${this.highPrise}`);
-    //   }
-    // },
-    getData() {
-      this.imgsArr.push([
-        { src: "./m/1.png", href: "#" },
-        { src: "./m/1.png", href: "#" },
-        { src: "./m/1.png", href: "#" },
-        { src: "./m/1.png", href: "#" },
-        { src: "./m/1.png", href: "#" },
-        { src: "./m/2.png", href: "#" },
-      ]);
-      this.group++;
+    nextPage() {
+      console.log("pageTotal", this.currentPage, this.pageTotal)
+      if (this.currentPage < this.pageTotal) {
+        this.currentPage = this.currentPage + 1;
+      }
+    },
+    toNewPage() {
+      if (
+        parseInt(this.newPage) > 0 &&
+        parseInt(this.newPage) <= this.pageTotal
+      ) {
+        this.currentPage = parseInt(this.newPage);
+      }
     },
 
     changeCurrentPage(val) {
-      // this.currentPage = val;
-      // this.search();
       this.$router.push({
-        query: Object.assign({}, this.$route.query, { currentPage: val })
-      })
+        query: Object.assign({}, this.$route.query, { currentPage: val }),
+      });
+    },
+    customPrice() {
+      if(this.pricemin || this.pricemax) {
+        this.prices[this.prices.length - 1].price.min = this.pricemin;
+        this.prices[this.prices.length - 1].price.max = this.pricemax;
+
+        this.$router.push({
+          query: Object.assign({}, this.$route.query, {
+            price: "自定义",
+            pricemin: this.pricemin,
+            pricemax: this.pricemax,
+          }),
+        });
+      }
+
+    },
+    changeQueryData() {
+      const query = this.$route.query;
+      for (let item in query) {
+        if (this.search[item]) {
+          this.search[item].value = query[item];
+        }
+      }
     },
   },
 };
@@ -472,8 +614,8 @@ export default {
     width: 1100px;
     margin: 0 auto;
     margin-bottom: 30px;
-    padding: 60px 0 60px 0;
     border-bottom: 1px solid rgba(#a1a190, 0.2);
+    padding-bottom: 60px;
     .tag {
       div {
         display: inline-block;
@@ -486,6 +628,7 @@ export default {
     .input {
       width: 80px;
       outline: 0;
+      padding: 3px 10px;
       border: 1px solid #a1a190;
     }
     .tag .color {
@@ -496,11 +639,10 @@ export default {
       vertical-align: middle;
       margin-left: 0;
 
-
-      .color-box{
+      .color-box {
         display: inline-block;
-        width: 100%;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         // border: 3px solid transparent;
         // &:hover {
         //   border: 3px solid #152c2b;
@@ -511,9 +653,13 @@ export default {
   .sort-by {
     padding: 10px 10px 20px 0;
     border-bottom: 1px solid rgba(#a1a190, 0.2);
-    div {
+    .tabs {
       display: inline-block;
       padding-left: 20px;
+      color: #333;
+    }
+    .active {
+      color: #f00;
     }
   }
   .none {
@@ -659,7 +805,7 @@ export default {
   .input {
     width: 80px;
     outline: 0;
-    padding: 3px 0;
+    padding: 3px 10px;
     margin: 0 8px;
   }
   .button {
@@ -672,6 +818,33 @@ export default {
   }
 }
 .artworks {
+}
+
+.q-pagination::v-deep {
+    .q-btn-item {
+      margin: 6px;
+      border-radius: 0;
+      box-shadow: none;
+      background-color: #e0e0e0;
+      font-size: 14px;
+      padding: 0 10px;
+      font-weight: bolder;
+    }
+    .text-teal-10 {
+      color: rgb(21, 44, 43) !important;
+    }
+    .bg-teal-10 {
+      background-color: #152c2b !important;
+    }
+    .q-btn__wrapper:before {
+      box-shadow: none;
+    }
+  }
+
+.customPrice{
+  display: inline-block;
+  cursor: pointer;
+  color: #333;
 }
 </style>
 
@@ -695,14 +868,16 @@ export default {
   a.img-inner-box[data-v-ded6b974] {
   box-shadow: none !important;
 }
+
+
 </style>
 
 <style lang="sass" scoped>
+$x: 4
 .flex-break
   flex: 1 0 100% !important
   width: 0 !important
 
-$x: 3
 
 @for $i from 1 through ($x - 1)
   .example-container > div:nth-child(#{$x}n + #{$i})
@@ -714,12 +889,28 @@ $x: 3
 .example-container
 
   .example-cell
-    width: 33.33%
-    padding: 1px
-
+    position: relative
+    width: 25%
+    padding: 10px
+    .name
+      display: none
+      position: absolute
+      left: 0
+      bottom: 0
+      width: 100%
+      height: 40px
+      margin: 0
+      line-height: 40px
+      text-align: center
+      color: #fff
+      background-color: rgba(0, 0, 0, .5)
     > div
       padding: 4px 8px
       box-shadow: inset 0 0 0 2px $grey-6
+
+  .example-cell:hover
+    .name
+      display: block
 .my-custom-image
   filter: blur(1px) sepia()
 </style>

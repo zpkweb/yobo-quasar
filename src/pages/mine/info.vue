@@ -2,47 +2,56 @@
   <div class="container2 row">
       <div class="msgs col-6">
         <div class="title2">您的送货地址在哪里</div>
-        <div class="name">
-          <input type="text" placeholder="名" class="firstname" />
-          <input type="text" placeholder="姓氏" class="lastname" />
+        <div class="name" v-if="userInfo">
+          <!-- <template v-if="userInfo.seller">
+            <q-input :dense="true" square outlined v-model="userInfo.firstname" placeholder="请输入名" />
+            <q-input :dense="true" square outlined v-model="userInfo.lastname" placeholder="请输入姓氏" />
+          </template>
+          <template v-else>
+            <q-input :dense="true" square outlined v-model="address.name" placeholder="请输入姓名" />
+          </template> -->
+          <q-input :dense="true" square outlined v-model="address.name" placeholder="请输入姓名" />
         </div>
-        <el-cascader
+        <q-input class="item" :dense="true" square outlined v-model="address.phone" placeholder="请输入手机号" />
+        <q-input class="item" :dense="true" square outlined v-model="address.country" placeholder="请输入国家" />
+        <q-input class="item" :dense="true" square outlined v-model="address.city" placeholder="请输入省市" />
+        <q-input class="item" :dense="true" square outlined v-model="address.detail" placeholder="请输入详细地址" />
+        <!-- <el-cascader
           v-model="value"
           :options="options"
           class="item"
-        ></el-cascader>
-        <input type="text" placeholder="详细地址" class="item" />
-        <el-select
+        ></el-cascader> -->
+        <!-- <el-select
           class="item item1"
           v-model="subscribe"
           placeholder="是否订阅我们的刊物"
         >
           <el-option label="是" value="1"> </el-option>
           <el-option label="否" value="0"> </el-option>
-        </el-select>
-        <el-select
+        </el-select> -->
+        <!-- <el-select
           class="item"
           v-model="invoice"
           placeholder="发票地址与收货地址是否相同"
         >
           <el-option label="是" value="1"> </el-option>
           <el-option label="否" value="0"> </el-option>
-        </el-select>
+        </el-select> -->
 
         <div class="title2">您的联系方式是什么？</div>
         <input
           type="text"
-          v-model="mail"
+          v-model="user.email"
           placeholder="您的邮箱地址"
           class="item"
         />
         <input
           type="text"
-          v-model="phone"
+          v-model="user.phone"
           placeholder="联系电话号码"
           class="item"
         />
-        <div class="title2">您是否需要开具发票？</div>
+        <!-- <div class="title2">您是否需要开具发票？</div>
         <div class="invoice">
           <el-radio v-model="radio1" label="1" border class="item radio"
             >无需发票</el-radio
@@ -59,8 +68,8 @@
           <el-radio v-model="radio1" label="5" border class="item radio"
             >增值税专用发票</el-radio
           >
-        </div>
-        <div class="new text-white text-center btn">更新</div>
+        </div> -->
+        <div class="new text-white text-center btn" @click="update">更新</div>
       </div>
 
       <div class="notices col-6">
@@ -76,13 +85,13 @@
           <div>• 我们将通过此联系方式向你发送电子收据和订单的最新状态</div>
           <div>• 请核实你输入的电话号码是否正确，下单后将无法修改</div>
         </div>
-        <div class="notice3">
+        <!-- <div class="notice3">
           <div class="title">请注意以下几点</div>
           <div>• 选择此选项，发票抬头为“个人”。</div>
           <div>
             你的订单发货后，我们会向你发送电子发票。此外我们还会向您发送电子收据
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 </template>
@@ -143,13 +152,92 @@ export default {
           ],
         },
       ],
+      user: {
+        email: '',
+        phone: ''
+      },
+      address: {
+        name: '',
+        phone: '',
+        country: '',
+        city: '',
+        detail: ''
+      }
     };
   },
+  created() {
+    console.log("mine info created")
+  },
+  mounted() {
+    console.log("mine info mounted")
+    setTimeout(() => {
+
+      if(this.$store.state.seller){
+        this.address.name = this.$store.state.user.info.firstname + ' ' + this.$store.state.user.info.lastname
+      }else{
+        this.address.name = this.$store.state.user.info.name
+      }
+      this.user.email = this.$store.state.user.info.email;
+      this.user.phone = this.$store.state.user.info.phone;
+
+      this.address.name = this.$store.state.user.info.address[0].name;
+      this.address.phone = this.$store.state.user.info.address[0].phone;
+      this.address.country = this.$store.state.user.info.address[0].country;
+      this.address.city = this.$store.state.user.info.address[0].city;
+      this.address.detail = this.$store.state.user.info.address[0].address;
+
+    }, 300)
+
+  },
   computed: {
+
     userInfo() {
       return this.$store.state.user.info;
     }
-  }
+  },
+  methods: {
+    async update() {
+      const updateUserAddress = await this.$store.dispatch('user/updateUserAddress', {
+        ...this.address,
+        userId: this.$store.state.user.info.userId,
+      })
+      console.log("updateUserAddress", updateUserAddress)
+      if(!updateUserAddress.success) {
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: "送货地址，更新失败",
+          color: 'negative',
+        })
+      }
+      const updateUser =await this.$store.dispatch('user/updateUser', {
+        ...this.user,
+        userId: this.$store.state.user.info.userId,
+      })
+      if(!updateUser.success) {
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: "联系方式，更新失败",
+          color: 'negative',
+        })
+      }
+
+      // 修改store
+      this.$store.commit('user/setUserInfoItem', {
+        email: this.user.email,
+        phone: this.user.phone
+      })
+
+      this.$q.notify({
+        position: 'top',
+        timeout: 1500,
+        message: "更新成功",
+        color: 'positive',
+      })
+
+    }
+  },
 };
 </script>
 

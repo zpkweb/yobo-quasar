@@ -11,7 +11,7 @@
       <div class="options">
         <div class="option">
           <div class="title">标签</div>
-          <q-tabs class="options-tabs text-teal">
+          <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
               v-for="(item, index) in tags"
@@ -23,7 +23,7 @@
         </div>
         <div class="option">
           <div class="title text-dark">国籍</div>
-          <q-tabs class="options-tabs text-teal">
+          <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
               v-for="(item, index) in countrys"
@@ -35,7 +35,7 @@
         </div>
         <div class="option">
           <div class="title title-surname text-dark">姓氏</div>
-          <q-tabs class="options-tabs options-tabs-surname text-teal" dense inline-label>
+          <q-tabs class="options-tabs options-tabs-surname text-grey-8" dense inline-label>
             <q-route-tab
               class="tab-surname"
               v-for="(item, index) in surnames"
@@ -46,10 +46,10 @@
           </q-tabs>
         </div>
       </div>
-      <q-expansion-item
+      <!-- <q-expansion-item
         dense
         :label="text"
-        class="text-center title2 relative-position"
+        class="text-center title2 relative-position hide"
         @show="show"
         @hide="hide"
       >
@@ -59,13 +59,13 @@
           <div class="option">新闻摄影 <span class="btn">×</span></div>
           <div class="clear absolute-right btn">清空所有</div>
         </div>
-      </q-expansion-item>
+      </q-expansion-item> -->
       <div class="sort-by text-right">
-        <div class="btn">默认排序</div>
-        <div class="btn">最热</div>
-        <div class="btn">最新上传</div>
+        <router-link :to="{ query: Object.assign({}, $route.query, { hots: false, news: false }) }" class="tabs">默认排序</router-link>
+        <router-link :to="{ query: Object.assign({}, $route.query, { hots: hots ? false : true }) }" class="tabs" :class="{ active: hots }">最热</router-link>
+        <router-link :to="{ query: Object.assign({}, $route.query, { news: news ? false : true }) }" class="tabs" :class="{ active: news }">最新上传</router-link>
       </div>
-      <div class="artists row" v-if="artistList">
+      <div class="artists " v-if="artistList">
         <q-item
           class="artist col-3"
           v-for="(item, index) of artistList"
@@ -76,10 +76,12 @@
             <!-- <q-img src="img/artists/artist.png" width="194px"></q-img> -->
             <q-img
               :src="item.user ? item.user.avatar : ''"
-              width="194px"
+              width="231px"
+              height="231px"
             ></q-img>
+
           </div>
-          <div class="text-left">{{ item.user ? item.user.name : "" }}</div>
+          <div class=" text-left">{{ item.firstname }} {{ item.lastname }}</div>
           <div class="text-left">{{ item.country }} {{ item.typeName }}</div>
         </q-item>
       </div>
@@ -109,16 +111,25 @@
         </div>
         <div class="btn button" @click="toNewPage">确定</div>
       </div> -->
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :page-size="pageSize"
-        :current-page="currentPage"
-        :total="artistTotal"
-        @current-change="changeCurrentPage"
-        style="margin-top: 20px; text-align: center"
-      >
-      </el-pagination>
+      <div class="q-pa-lg flex flex-center">
+        <q-pagination
+          v-model="currentPage"
+          color="teal-10"
+          :max="pageTotal"
+          :max-pages="4"
+          :boundary-numbers="true"
+        >
+        </q-pagination>
+        <div class="next btn" @click="nextPage">下一页</div>
+        <div class="all">共{{ pageTotal }}页</div>
+        <div>
+          到
+          <input type="text" class="input" v-model="newPage" />
+          页
+        </div>
+        <div class="btn button" @click="toNewPage">确定</div>
+      </div>
+
     </div>
   </q-layout>
 </template>
@@ -127,6 +138,7 @@
 export default {
   data() {
     return {
+      // current: 2,
       surname: this.$route.query.surname,
       surnames: [
         "",
@@ -200,35 +212,38 @@ export default {
       ],
       text: "展开选项",
       // current: 1,
-
+      // hots: false,
+      // news: false,
       newPage: "",
-      maxPage: 10,
-      pageSize: this.$route.query.pageSize,
-      currentPage: this.$route.query.currentPage
+      pageSize: parseInt(this.$route.query.pageSize) || 10,
+      currentPage: parseInt(this.$route.query.currentPage) || 1,
+      total: 0
     };
   },
   async preFetch({
     store,
     currentRoute,
   }) {
+    console.log("currentRoute.query", currentRoute.query)
     const { locale } = currentRoute.params;
-    const { tag, country, surname, currentPage, pageSize } = currentRoute.query;
-    if (tag || country || surname) {
-      store.commit("artist/setSearch", {
-        tag: tag || "",
-        country: country || "",
-        surname: surname || "",
-      });
-    }
-
-    return await store.dispatch("artist/sellerSearch", {
-      type: tag || "",
-      country: country || "",
-      firstname: surname || "",
+    const {  currentPage, pageSize, ...serach } = currentRoute.query;
+    store.commit("artist/setSearch", serach);
+    const sellerSearch = await store.dispatch("artist/sellerSearch", {
+      ...serach,
       locale,
-      currentPage: currentPage || store.state.artist.pagination.currentPage,
-      pageSize: pageSize || store.state.artist.pagination.pageSize,
+      currentPage: parseInt(currentPage) || 1,
+      pageSize: parseInt(pageSize) || 10,
     });
+    if(sellerSearch.success){
+      const { total, currentPage, pageSize, list } = sellerSearch.data;
+      store.commit('artist/setSearchData', list)
+      store.commit('artist/setPagination', { total, currentPage, pageSize })
+    }
+  },
+  watch: {
+    currentPage: function() {
+      this.changeCurrentPage(this.currentPage)
+    }
   },
   computed: {
     artistList() {
@@ -237,42 +252,40 @@ export default {
     artistTotal() {
       return this.$store.state.artist.pagination.total;
     },
+    pageTotal() {
+      return Math.ceil(this.$store.state.artist.pagination.total/this.$store.state.artist.pagination.pageSize);
+    },
+    hots() {
+      return (this.$route.query.hots && this.$route.query.hots !== 'false')
+    },
+    news() {
+      return (this.$route.query.news && this.$route.query.news !== 'false')
+    }
   },
-  mounted() {
-    this.country = this.$route.query.country || ""
-  },
+
   methods: {
-    // async search() {
-    //   return await this.$store.dispatch("artist/sellerSearch", {
-    //     type: this.tag,
-    //     // country: this.country,
-    //     // firstname: this.surname,
-    //     locale: this.$route.params.locale,
-    //     currentPage: this.currentPage,
-    //     pageSize: this.pageSize,
-    //   });
-    // },
+
     show() {
       this.text = "收起选项";
     },
     hide() {
       this.text = "展开选项";
     },
-    // nextPage() {
-    //   this.current < this.maxPage ? (this.current += 1) : this.current;
-    // },
-    // toNewPage() {
-    //   parseInt(this.newPage) > 0 && parseInt(this.newPage) <= this.maxPage
-    //     ? (this.current = parseInt(this.newPage))
-    //     : this.current;
-    // },
+    nextPage() {
+      if(this.currentPage < this.pageTotal){
+        this.currentPage = this.currentPage+1
+      }
+    },
+    toNewPage() {
+      if(parseInt(this.newPage) > 0 && parseInt(this.newPage) <= this.pageTotal) {
+        this.currentPage = parseInt(this.newPage)
+      }
+    },
     changeCurrentPage(val) {
-      // this.currentPage = val;
-      // this.search();
       this.$router.push({
         query: Object.assign({}, this.$route.query, { currentPage: val })
       })
-    },
+    }
   },
 };
 </script>
@@ -311,8 +324,8 @@ export default {
     width: 1100px;
     margin: 0 auto;
     margin-bottom: 30px;
-    padding: 60px 0 60px 0;
-    border-bottom: 1px solid rgba(#a1a190, 0.2);
+    padding: 60px 0 0 0;
+    // border-bottom: 1px solid rgba(#a1a190, 0.2);
     .option {
       div {
         display: inline-block;
@@ -341,23 +354,38 @@ export default {
   .sort-by {
     padding: 10px 30px 8px 0;
     border-bottom: 1px solid rgba(#a1a190, 0.2);
-    div {
+    .tabs {
       display: inline-block;
       padding-left: 20px;
+      color: #333;
+    }
+    .active {
+      color: #f00;
     }
   }
   .artists {
+
     font-size: 16px;
     color: rgb(21, 44, 43);
     line-height: 1.2;
     font-weight: bolder;
     letter-spacing: 2px;
+    overflow: hidden;
+    .artist {
+      display: block;
+      width: 25%;
+      float: left;
+      margin: 20px 0;
+    }
     .image {
-      margin: 30px 0 10px 0;
-      width: 206px;
+      position: relative;
+      margin: 10px 0 10px 0;
+      width: 100%;
       padding: 6px;
       background-color: #152c2b;
+
     }
+
   }
   .none {
     display: none;
@@ -422,7 +450,7 @@ export default {
   .input {
     width: 80px;
     outline: 0;
-    padding: 3px 0;
+    padding: 3px 10px;
     margin: 0 8px;
   }
   .button {

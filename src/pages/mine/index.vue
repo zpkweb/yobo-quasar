@@ -20,8 +20,8 @@
           </q-tabs>
 
           <div class="line"></div>
-          <div class="title">下午好 {{userName}}</div>
-          <div class="time">您自2020/8/5起成为了永宝 艺术收藏家</div>
+          <div class="title">下午好 {{ userInfo ? userInfo.name : '' }}</div>
+          <div class="time">您自{{ userInfo ? userInfo.createdDate.substr(0,10) : '' }}起成为了永宝 {{ userInfo ? userInfo.seller ? "艺术家" : "艺术收藏家" : ''}}</div>
         </div>
       </div>
     </div>
@@ -60,9 +60,8 @@ export default {
     // });
   },
   computed: {
-    userName() {
-      const name = this.$store.state.user.info ? this.$store.state.user.info.name : '';
-      return name;
+    userInfo() {
+      return this.$store.state.user.info;
     }
   },
   methods: {

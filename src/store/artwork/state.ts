@@ -3,6 +3,7 @@ export interface ArtworkStateInterface {
   searchData: any;
   pagination: ArtworkPaginationStateInterface;
   data: any;
+  options: OptionsStateInterface;
 }
 export interface ArtworkSearchStateInterface {
   shape: string;
@@ -10,11 +11,22 @@ export interface ArtworkSearchStateInterface {
   pricemax: string;
   color: string;
   theme: string;
+  category: string;
+  technique: string;
+  hots: boolean;
+  news: boolean;
 }
 export interface ArtworkPaginationStateInterface {
   total: number,
   currentPage: number,
   pageSize: number
+}
+
+export interface OptionsStateInterface {
+  shape: any;
+  theme: any;
+  category: any;
+  technique: any;
 }
 
 function state (): ArtworkStateInterface {
@@ -24,7 +36,11 @@ function state (): ArtworkStateInterface {
       pricemin: '',
       pricemax: '',
       color: '',
-      theme: ''
+      theme: '',
+      category: '',
+      technique: '',
+      hots: false,
+      news: false
     },
     searchData: null,
     pagination: {
@@ -33,6 +49,12 @@ function state (): ArtworkStateInterface {
       pageSize: 9
     },
     data: null,
+    options: {
+      shape: null,
+      theme: null,
+      category: null,
+      technique: null
+    }
   }
 }
 

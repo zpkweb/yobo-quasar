@@ -23,6 +23,21 @@ const mutation: MutationTree<ArtworkStateInterface> = {
   setData (state, payload) {
     state.data = payload;
   },
+  setOptins(state, payload) {
+    state.options = payload;
+  },
+  setOptionsShape(state, payload) {
+    state.options.shape = payload;
+  },
+  setOptionsTheme(state, payload) {
+    state.options.theme = payload;
+  },
+  setOptionsCategory(state, payload) {
+    state.options.category = payload;
+  },
+  setOptionsTechnique(state, payload) {
+    state.options.technique = payload;
+  }
 
 
 }

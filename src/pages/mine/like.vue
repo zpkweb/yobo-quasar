@@ -31,7 +31,7 @@
         :key="'like1-' + index"
       >
         <!-- <div class="col-3 image"></div> -->
-        <q-img v-if="item.user" :src="item.user.avatar" width="212px"></q-img>
+        <q-img v-if="item.user" :src="item.user.avatar" class="image" width="212px"></q-img>
         <div class="col-4 desc">
           <div class="title">{{item.seller.firstname}} {{item.seller.lastname}}</div>
           <div>已上传2000副作品</div>
@@ -140,13 +140,9 @@ export default {
     border-top: 1px solid rgba(21, 44, 43, 0.1);
     padding: 20px 0;
     .image {
-      background: url("/img/mine/like1.png") center center no-repeat;
-      background-size: contain;
+      margin-right: 20px;
     }
-    .image2 {
-      background: url("/img/mine/like2.png") center center no-repeat;
-      background-size: contain;
-    }
+
     .follow {
       background-color: #152c2b;
       padding: 5px 0;

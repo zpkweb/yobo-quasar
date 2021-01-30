@@ -54,6 +54,66 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     })
   },
 
+  async getUserInfo({ commit }, payload) {
+    return await axiosInstance.get('/api/user/info', { params: payload }).then(response => {
+      console.log("getUserInfo", response.data.data)
+      commit('setUserInfo', response.data.data)
+      // return response.data;
+    }).catch((err) => {
+    })
+  },
+
+  /**
+   * 更新用户信息
+   *
+   * @param {*} { commit }
+   * @param {*} payload
+   * @return {*}
+   */
+  async updateUser({ commit }, payload) {
+    return await axiosInstance.post('/api/user/update', payload)
+    .then( response => {
+      return response.data;
+    }).catch((err) => {
+
+    })
+  },
+  /**
+   * 更新用户信息
+   *
+   * @param {*} { commit }
+   * @param {*} payload
+   * @return {*}
+   */
+  async updateUserAddress({ commit }, payload) {
+    return await axiosInstance.post('/api/user/address/update', payload)
+    .then( response => {
+      return response.data;
+    }).catch((err) => {
+
+    })
+  },
+
+  async codeSend({ commit }, payload) {
+    // /password/retrieve/code/send
+    return await axiosInstance.post('/api/user/password/retrieve/code/send', payload)
+    .then( response => {
+      return response.data;
+    }).catch((err) => {
+
+    })
+  },
+  async codeVerify({ commit }, payload) {
+    console.log("codeVerify", payload)
+    return await axiosInstance.post('/api/user/password/retrieve/code/verify', payload)
+    .then( response => {
+      return response.data;
+    }).catch((err) => {
+
+    })
+  }
+
+
 }
 
 export default actions

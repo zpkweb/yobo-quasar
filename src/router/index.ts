@@ -10,19 +10,19 @@ import routes from './routes'
  */
 
 
-export default route<Store<StateInterface>>(function ({  Vue }) {
+export default route<Store<StateInterface>>(function ({ Vue }) {
   Vue.use(VueRouter)
 
   const Router = new VueRouter({
     // scrollBehavior: () => ({ x: 0, y: 0 }),
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
       if (to.hash) {
         return {
           selector: to.hash
         }
-      }else if(savedPosition){
+      } else if (savedPosition) {
         return savedPosition
-      }else{
+      } else {
         return { x: 0, y: 0 }
       }
     },
@@ -37,9 +37,9 @@ export default route<Store<StateInterface>>(function ({  Vue }) {
 
 
 
-  const routerPush:any = VueRouter.prototype.push
-  VueRouter.prototype.push = function push(location:any) {
-  return routerPush.call(this, location).catch((error:any) => error)
-}
+  const routerPush: any = VueRouter.prototype.push
+  VueRouter.prototype.push = function push(location: any) {
+    return routerPush.call(this, location).catch((error: any) => error)
+  }
   return Router
 })

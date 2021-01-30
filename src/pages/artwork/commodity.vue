@@ -4,11 +4,11 @@
       <div class="col-8">
         <div class="carousel relative-position">
           <div class="button absolute">
-            <div class="share">
+            <!-- <div class="share">
               <div class="image"></div>
-            </div>
+            </div> -->
             <div class="heart">
-              <div class="btn image" :class="hasMyArtwork ? 'image1' : 'image2'" @click="myArtwork(hasMyArtwork)">
+              <div class="btn image" :class="hasMyArtwork ? 'image1' : 'image2'" @click="myArtwork">
                 <!-- {{hasMyArtwork ? '已喜欢' : '喜欢'}} -->
               </div>
             </div>
@@ -24,42 +24,6 @@
               arrows
               control-type="unelevated"
             >
-              <!-- <q-carousel-slide
-                :name="1"
-                img-src="https://cdn.quasar.dev/img/mountains.jpg"
-              />
-              <q-carousel-slide
-                :name="2"
-                img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-              />
-              <q-carousel-slide
-                :name="3"
-                img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-              />
-              <q-carousel-slide
-                :name="4"
-                img-src="https://cdn.quasar.dev/img/quasar.jpg"
-              />
-              <q-carousel-slide
-                :name="5"
-                img-src="https://cdn.quasar.dev/img/mountains.jpg"
-              />
-              <q-carousel-slide
-                :name="6"
-                img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-              />
-              <q-carousel-slide
-                :name="7"
-                img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-              />
-              <q-carousel-slide
-                :name="8"
-                img-src="https://cdn.quasar.dev/img/quasar.jpg"
-              />
-              <q-carousel-slide
-                :name="9"
-                img-src="https://cdn.quasar.dev/img/mountains.jpg"
-              /> -->
               <q-carousel-slide
                 v-for="(item, index) in artwork.commodity.photos"
                 :key="index"
@@ -81,19 +45,20 @@
               <!-- <div class="name">Aqua small resin gloss edition</div> -->
               <div class="name">{{ artwork.commodity.name }}</div>
               <!-- <div class="year">2019</div> -->
-              <div class="year">{{ artwork.commodity.createdDate }}</div>
+              <div class="year">{{ artwork.commodity.createdDate.substr(0, 4) }}</div>
               <!-- <div class="painter">Karin Vermeer 荷兰</div> -->
-              <div class="painter">{{ artwork.commodity.seller.firstname }}{{ artwork.commodity.seller.lastname }} {{ artwork.commodity.country}}</div>
+              <div class="painter">{{ artwork.commodity.seller.firstname }} {{ artwork.commodity.seller.lastname }} {{ artwork.commodity.seller.country}}</div>
               <div class="row">
                 <div class="col-6 item">
                   <div class="title2">手法</div>
                   <div class="content">
-                    丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布
+                    <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
+                    {{ artwork.commodity.techniques[0].name}}
                   </div>
                 </div>
                 <div class="col-6 item">
                   <div class="title2">其他细节</div>
-                  <div class="contant">可直接挂上墙 可加费添加外框</div>
+                  <div class="contant">可直接挂上墙 可免费添加外框</div>
                 </div>
                 <div class="col-6 item">
                   <div class="title2">尺寸</div>
@@ -117,7 +82,7 @@
             </div>
             <div class="col-8">
               <div class="row painter">
-                <div class="col">浅绿色树脂光泽板</div>
+                <div class="col">{{ artwork.commodity.name }}</div>
                 <router-link :to="`/${$i18n.locale}/artist/${ artwork.seller.sellerId }`" class="col-grow">进入{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}的主页</router-link>
               </div>
               <!-- <div class="content2">
@@ -136,13 +101,24 @@
       </div>
       <div class="col-4 left">
         <div class="title-left">
-          <div>浅绿色树脂光泽版130cmx180cm</div>
-          <div>油画帆布</div>
+          <div>{{ artwork.commodity.name }} {{ artwork.commodity.width }}cmX{{ artwork.commodity.height }}cm</div>
+          <div>{{ artwork.commodity.techniques[0].name }}</div>
         </div>
-        <div class="soldout">已售</div>
-        <div class="off">已下架</div>
+
+
+
         <!-- <div class="prise"><span class="symbol">¥</span>7，000</div> -->
-        <div class="prise">{{ price }}</div>
+
+        <div class="soldout" v-if="artwork.commodity.state == 2">
+          已售
+        </div>
+        <div class="off" v-else-if="artwork.commodity.state == 3">
+          已下架
+        </div>
+        <div class="prise" v-else>{{ price }}</div>
+
+        <!-- <div class="soldout">已售</div>
+        <div class="off">已下架</div> -->
         <q-select
           borderless
           v-model="currency"
@@ -152,9 +128,10 @@
         />
         <div class="title2">相框选择材质</div>
         <div class="row text-center frames">
-          <div class="btn col-4" v-for="i in 7" :key="i">
-            <div class="frame"></div>
-            <div class="color">浅木色 ¥800</div>
+          <div class="btn col-4" v-for="(item, index) in photoFrames" :key="index" >
+            <!-- <div class="frame"></div> -->
+            <q-img :src="`img/photoFrame/photoFrame-${index+1}.png`" class="frame" :class="{ active: photoFrame == index }" @click="photoFrame = index" />
+            <div class="color">{{item.label}} ¥{{item.price}}</div>
           </div>
           <div class="col-4">
             <div class="frame custom"></div>
@@ -163,9 +140,9 @@
         </div>
         <div class="title2">相框选择大小</div>
         <div class="row">
-          <div class="size btn col-4">小</div>
-          <div class="size btn col-4">中</div>
-          <div class="size btn col-4">大</div>
+          <div class="size btn col-4" :class="{ active: photoFrameSize == 'small' }" @click="photoFrameSize = 'small'">小</div>
+          <div class="size btn col-4" :class="{ active: photoFrameSize == 'middle' }" @click="photoFrameSize = 'middle'">中</div>
+          <div class="size btn col-4" :class="{ active: photoFrameSize == 'large' }" @click="photoFrameSize = 'large'">大</div>
         </div>
         <div class="row text-center items-end advantages">
           <div class="col-4 item2">
@@ -296,9 +273,9 @@
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}的其他作品</div>
-          <div class="more absolute btn">更多</div>
+          <router-link :to="`/${$i18n.locale}/artist/${artwork.seller.sellerId}#artworks`" class="more absolute btn">更多</router-link>
         </div>
-        <div class="row">
+        <div class="row" v-if="artwork.seller.commoditys.length">
           <!-- <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
@@ -308,7 +285,8 @@
               <div>100x100cm</div>
             </div>
           </div> -->
-          <div class="col-3" v-if="artwork.seller.commoditys.length" v-for="(item, index) in artwork.seller.commoditys" :key="'sellerCommodity'+index">
+          <router-link :to="`${item.commodityId}`" class="col-3"   v-for="(item, index) in artwork.seller.commoditys" :key="'sellerCommodity'+index" v-if="item.commodityId !== $route.params.artworkId">
+
             <div class="paint">
               <!-- <div class="image"></div> -->
               <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
@@ -317,7 +295,7 @@
               <div>丙烯酸 • 亚麻</div>
               <div>{{item.width}}x{{item.height}}cm</div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -325,7 +303,7 @@
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">类似艺术作品</div>
-          <div class="more absolute">更多</div>
+          <router-link :to="`/${$i18n.locale}/artwork?shape=0`" class="more absolute">更多</router-link>
         </div>
         <div class="row">
           <!-- <div class="col-3" v-for="i in 4" :key="i">
@@ -337,7 +315,7 @@
               <div>100x100cm</div>
             </div>
           </div> -->
-          <div class="col-3" v-if="artwork.commoditySimilar.length" v-for="(item, index) in artwork.commoditySimilar" :key="'commoditySimilar'+index">
+          <router-link :to="`${item.commodityId}`" class="col-3" v-if="artwork.commoditySimilar.length" v-for="(item, index) in artwork.commoditySimilar" :key="'commoditySimilar'+index">
             <div class="paint">
               <!-- <div class="image"></div> -->
               <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
@@ -346,7 +324,7 @@
               <div>丙烯酸 • 亚麻</div>
               <div>{{item.width}}x{{item.height}}cm</div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -354,7 +332,7 @@
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">您最近浏览的作品</div>
-          <div class="more absolute btn">更多</div>
+          <!-- <router-link :to="" class="more absolute btn">更多</router-link> -->
         </div>
 
         <div class="row">
@@ -367,9 +345,9 @@
               <div>100x100cm</div>
             </div>
           </div> -->
-          <div v-if="artwork.browsingHistory.length" class="col-3" v-for="(item, index) in artwork.browsingHistory" :key="'browsingHistory'+index">
+          <div v-if="browsingHistory && browsingHistory.length" class="col-3" v-for="(item, index) in browsingHistory" :key="'browsingHistory'+index">
             <div class="paint">
-              <div class="image"></div>
+              <q-img :src="item.photos[0].src" width="208px" height="208px" />
             </div>
             <div class="text text-left">
               <div>丙烯酸 • 亚麻</div>
@@ -387,25 +365,49 @@ export default {
   data() {
     return {
       slide: 0,
+      photoFrame: '',
+      photoFrames: [{
+        label: '黑色木制',
+        price: '800'
+      }, {
+        label: '白色木制',
+        price: '800'
+      }, {
+        label: '深木色',
+        price: '800'
+      }, {
+        label: '纯黑色',
+        price: '800'
+      }, {
+        label: '纯白色',
+        price: '800'
+      }, {
+        label: '金色',
+        price: '800'
+      }, {
+        label: '浅木色',
+        price: '800'
+      }],
+      photoFrameSize: '',
       defaultPriceOptions: [{
         label: "CNY",
         value: "CNY",
-        locale: "zh-cn",
+        locale: "zh",
         price: ""
       }, {
         label: "USD",
         value: "USD",
-        locale: "en-us",
+        locale: "en",
         price: ""
       }, {
         label: "JPY",
         value: "JPY",
-        locale: "ja-jp",
+        locale: "ja",
         price: ""
       }, {
         label: "EUR",
         value: "EUR",
-        locale: "fr-fr",
+        locale: "fr",
         price: ""
       }],
       options: ["CNY", "USD", "JPY", "EUR"],
@@ -413,7 +415,8 @@ export default {
       prise: "7000",
       email: "",
       msg: "",
-      hasMyArtwork: false
+      hasMyArtwork: false,
+
     };
   },
   async preFetch({ store, currentRoute }) {
@@ -423,24 +426,36 @@ export default {
       locale,
       artworkId
     })
+    await store.dispatch('artwork/getArtwork', {
+      locale,
+      artworkId
+    })
   },
   async mounted() {
-    const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
-      userId: this.$store.state.user.info.userId,
-      artworkId: this.$route.params.artworkId
-    });
-    this.hasMyArtwork = hasMyArtworkData.success;
+    let hasMyArtwork = false;
+    console.log("commodity", this.$store.state.user.info)
+    if(this.$store.state.user.info){
+      const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
+        userId: this.$store.state.user.info.userId,
+        artworkId: this.$route.params.artworkId
+      });
+      hasMyArtwork = hasMyArtworkData.success;
 
-    const myBrowsingHistory = await this.$store.dispatch("my/addMyBrowsingHistory", {
-      userId: this.$store.state.user.info.userId,
-      artworkId: this.$route.params.artworkId
-    });
+      await this.$store.dispatch("my/addMyBrowsingHistory", {
+        userId: this.$store.state.user.info.userId,
+        artworkId: this.$route.params.artworkId
+      });
+    }
+    this.hasMyArtwork = hasMyArtwork;
 
 
   },
   computed: {
     artwork() {
       return this.$store.state.artwork.data;
+    },
+    browsingHistory() {
+      return this.$store.state.my.browsingHistory;
     },
     priceOptions() {
       return this.defaultPriceOptions.map((item) => {
@@ -469,8 +484,18 @@ export default {
       this.$refs.offerPage.classList.remove("closepage");
       this.$refs.offerPage.classList.add("openpage");
     },
-    async myArtwork(has) {
-      if(has) {
+    async myArtwork() {
+      console.log("this.$store.state.user.info", this.$store.state.user.info)
+      if(!this.$store.state.user.info){
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: "请先登录",
+          color: 'negative',
+        })
+        return;
+      }
+      if(this.hasMyArtwork) {
         const delMyArtwork =await this.$store.dispatch("my/delMyArtwork", {
           userId: this.$store.state.user.info.userId,
           artworkId: this.$route.params.artworkId
@@ -488,7 +513,7 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: data.msg,
+            message: delMyArtwork.msg,
             color: 'negative',
           })
         }
@@ -533,26 +558,35 @@ export default {
   }
   .button {
     z-index: 1000;
-    left: 604px;
+    right: 42px;
     top: 42px;
     .heart,
     .share {
       display: inline-block;
-    }
-    .image {
       width: 65px;
       height: 27px;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+    .image {
+      // width: 65px;
+      // height: 27px;
+      width: 25px;
+      height: 25px;
       background: url("/img/share.png") center center no-repeat;
       background-color: rgba(255, 255, 255, 0.7);
-      margin-left: 10px;
+      margin: 0 auto;
     }
     .image1 {
-      background: url("/img/heart.png") center center no-repeat;
-      background-color: red;
+      // background: url("/img/heart.png") center center no-repeat;
+      // background-color: red;
+      background: url("/img/favorites-fill.png")  no-repeat;
+      background-size: 100%;
     }
     .image2 {
-      background: url("/img/heart.png") center center no-repeat;
-      background-color: rgba(255, 255, 255, 0.7);
+      // background: url("/img/heart.png") center center no-repeat;
+      // background-color: rgba(255, 255, 255, 0.7);
+      background: url("/img/favorites.png") no-repeat;
+      background-size: 100%;
     }
   }
 
@@ -578,8 +612,8 @@ export default {
     .q-btn-item {
       border-radius: 0%;
       background-color: rgba(0, 0, 0, 0.6) !important;
-      height: 48px;
-      top: 265px;
+      height: 47px;
+      top: 266px;
     }
     .q-carousel__thumbnail {
       border-radius: 0%;
@@ -594,9 +628,14 @@ export default {
       left: 0;
       right: 0;
     }
+    .q-carousel__navigation-inner{
+      align-items: start;
+      justify-content: start;
+      padding: 0 41px;
+    }
   }
   .top {
-    margin-top: 150px;
+    margin-top: 110px;
     height: 1px;
   }
   .container2 {
@@ -679,6 +718,9 @@ export default {
           outline: 2px solid rgb(173, 175, 139);
         }
       }
+      .frame.active {
+        outline: 2px solid rgb(173, 175, 139);
+      }
       .custom {
         background-image: url("/img/custom.png");
       }
@@ -701,6 +743,9 @@ export default {
       &:hover {
         border: 1px solid rgba(21, 44, 43, 0.6);
       }
+    }
+    .size.active {
+      border: 1px solid rgba(21, 44, 43, 0.6);
     }
     .advantages {
       font-size: 12px;
@@ -911,14 +956,3 @@ export default {
 
 
 
-
-.已下架 {
-  font-size: 44px;
-  font-family: "STFangsong";
-  color: rgb(173, 175, 139);
-  line-height: 1.2;
-  position: absolute;
-  left: 1165.328px;
-  top: 221.635px;
-  z-index: 45;
-}
