@@ -12,13 +12,19 @@ declare module 'vue/types/vue' {
 
 Vue.use(VueI18n)
 
-export const i18n = new VueI18n({
-  locale: 'zh-cn',
-  fallbackLocale: 'zh-cn',
-  messages
-})
+// export const i18n = new VueI18n({
+//   locale: 'zh-cn',
+//   fallbackLocale: 'zh-cn',
+//   messages
+// })
 
 export default boot(({ app }) => {
   // Set i18n instance on app
+  const i18n = new VueI18n({
+    locale: 'zh-cn',
+    fallbackLocale: 'zh-cn',
+    messages
+  })
+
   app.i18n = i18n
 })

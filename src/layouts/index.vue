@@ -31,17 +31,17 @@
         </div>
         <div class="col-grow">
           <div class="artist-register btn" @click="isApplyArtistPop = true" v-if="!isApplyArtist">
-            成为艺术家
+            {{$t('layout.header.BecomeAnArtist')}}
           </div>
           <q-breadcrumbs separator="|" class="separator" v-if="!userInfo">
             <q-breadcrumbs-el
-              label="登录"
+              :label="$t('layout.header.login')"
               class="login text-black btn"
               @click="isLoginPop = true"
 
             />
             <q-breadcrumbs-el
-              label="注册"
+              :label="$t('layout.header.registered')"
               class="register btn"
               @click="isRegisterPop = true"
             />
@@ -54,10 +54,10 @@
             <div class="dropdowncontent2 absolute">
               <div class="items">
                 <div class="item" @click="goMine">
-                  个人中心
+                  {{$t('layout.header.PersonalCenter')}}
                 </div>
                 <div class="item" @click="logout">
-                  登出
+                  {{$t('layout.header.Signout')}}
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@
                   <div class="col desc">Arbeiten in Lack</div>
                 </div>
                 <div class="pay">
-                  <div class="paybtn text-center text-white btn">结账</div>
+                  <div class="paybtn text-center text-white btn">{{$t('layout.header.BillPlease')}}</div>
                 </div>
                 <!-- <div class="text-center null">您的购物车是空的</div> -->
               </div>
@@ -105,30 +105,30 @@
         <div class="container row">
           <div class="col-9 row">
             <div class="col-3 item">
-              <div class="title">客户服务</div>
-              <div>联系我们</div>
-              <div>法律声明</div>
-              <div>一般条例</div>
-              <div>客户评价</div>
+              <div class="title">{{$t('layout.footer.customerService')}}</div>
+              <div>{{$t('layout.footer.contactUs')}}</div>
+              <div>{{$t('layout.footer.LegalNotices')}}</div>
+              <div>{{$t('layout.footer.GeneralRegulations')}}</div>
+              <div>{{$t('layout.footer.CustomerReviews')}}</div>
               <div>Offer a Gift Card</div>
-              <div>获取我的USD$200抵用券</div>
-              <div>我的账户</div>
-              <div>办公室艺术品</div>
-              <div>设计师艺术品</div>
+              <div>{{$t('layout.footer.GetMyVoucher')}}</div>
+              <div>{{$t('layout.footer.myAccount')}}</div>
+              <div>{{$t('layout.footer.OfficeArtwork')}}</div>
+              <div>{{$t('layout.footer.DesignerArtwork')}}</div>
               <div>+44 203 445 6333</div>
             </div>
             <div class="col-3 item">
-              <div class="title">关于我们</div>
-              <div>关于永宝</div>
-              <div>我们的艺术家</div>
-              <div>杂志</div>
-              <div>团队</div>
-              <div>我们的甄选标准</div>
-              <div>常见问题</div>
-              <div>联系方式</div>
+              <div class="title">{{$t('layout.footer.aboutAs')}}</div>
+              <div>{{$t('layout.footer.AboutYongbao')}}</div>
+              <div>{{$t('layout.footer.OurArtist')}}</div>
+              <div>{{$t('layout.footer.magazine')}}</div>
+              <div>{{$t('layout.footer.team')}}</div>
+              <div>{{$t('layout.footer.OurSelectionCriteria')}}</div>
+              <div>{{$t('layout.footer.commonProblem')}}</div>
+              <div>{{$t('layout.footer.ContactInformation')}}</div>
             </div>
             <div class="col-3 item">
-              <div class="title">精选艺术家</div>
+              <div class="title">{{$t('layout.footer.FeaturedArtist')}}</div>
               <div>Kirstin Mccoy</div>
               <div>Josep Moncada</div>
               <div>Ivan Pili</div>
@@ -136,9 +136,9 @@
               <div>Peter Nottrott</div>
             </div>
             <div class="col-3 item">
-              <div class="title">关注永宝</div>
-              <div>微信</div>
-              <div>微博</div>
+              <div class="title">{{$t('layout.footer.FollowYongbao')}}</div>
+              <div>{{$t('layout.footer.WeChat')}}</div>
+              <div>{{$t('layout.footer.Weibo')}}</div>
               <div>Facebook</div>
               <div>Instagram</div>
               <div>Pinterest</div>
@@ -146,12 +146,13 @@
           </div>
 
           <div class="col-3">
-            <div class="title book">订阅永宝电子资讯</div>
+            <div class="title book">{{$t('layout.footer.SubscribetoYongbaoElectronicNews')}}</div>
             <div class="privacy-policy">
-              通过订阅，即代表您接受永宝的<span class="btn">隐私政策条款</span>
+              <!-- 通过订阅，即代表您接受永宝的<span class="btn">隐私政策条款</span> -->
+              {{$t('layout.footer.BySubscribing')}}
             </div>
             <div class="row mail">
-              <div class="col">电子邮件地址</div>
+              <div class="col">{{$t('layout.footer.emailAddress')}}</div>
               <div class="col-grow">
                 <q-img
                   src="img/index/nextpage.png"
@@ -161,7 +162,7 @@
               </div>
             </div>
 
-            <div class="title pay">支持的支付方式</div>
+            <div class="title pay">{{$t('layout.footer.SupportedPaymentMethods')}}</div>
             <div class="row pay1">
               <div class="col-3">
                 <q-img src="img/index/zfb.png" width="60px"></q-img>
@@ -176,8 +177,8 @@
             <q-img src="img/index/mastercard.png" width="140px" contain></q-img>
           </div>
           <div class="col-12 row bottom">
-            <div class="col-4">©2020 永宝（中国）有限公司 保留所有权利</div>
-            <div class="col-3">沪ICP备15013228号-17</div>
+            <div class="col-4">{{$t('layout.footer.AllRightsReserved')}}</div>
+            <div class="col-3">{{$t('layout.footer.ICPNo')}}</div>
             <div class="col-3 row">
               <div class="col-grow image">
                 <q-img
@@ -186,7 +187,7 @@
                   class="img"
                 ></q-img>
               </div>
-              <div class="col">沪公网安备 31010402004774号</div>
+              <div class="col">{{$t('layout.footer.PublicNetworkSecurityNo')}}</div>
             </div>
           </div>
         </div>
@@ -287,6 +288,8 @@ export default {
   },
 
   preFetch({ store, currentRoute, redirect }) {
+    console.log("layout preFetch", currentRoute.params)
+
     store.commit("setLang", currentRoute.params.locale)
     // if (!store.state.user.info) {
     //   redirect({ path: '/' })
@@ -301,8 +304,10 @@ export default {
       return this.$store.state.user.info ? this.$store.state.user.info.seller : false
     }
   },
+
   async created() {
-    console.log("layout created")
+    console.log("layout created", this.$i18n.locale, this.$store.state.lang.locale)
+    this.$i18n.locale = this.$store.state.lang.locale;
     const userInfo = this.$q.cookies.get('userInfo');
     if(userInfo) {
       if(userInfo.userId){
@@ -319,7 +324,8 @@ export default {
     }
   },
   mounted() {
-    console.log("layout mounted")
+    console.log("layout mounted", this.$i18n.locale, this.$store.state.lang)
+
   },
   methods: {
     changeLang(item) {

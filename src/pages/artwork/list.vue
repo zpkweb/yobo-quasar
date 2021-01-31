@@ -3,14 +3,14 @@
     <div class="banner relative-position">
       <q-img src="img/artworks/banner.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
-        <div class="title">油画</div>
-        <div class="number">{{ artworkTotal }}件符合您搜索条件的艺术品</div>
+        <div class="title">{{$t('artwork.list.artwork')}}</div>
+        <div class="number">{{ artworkTotal }} {{$t('artwork.list.searchCriteria')}}</div>
       </div>
     </div>
     <div class="container">
       <div class="tags">
         <div class="tag">
-          <div class="text-dark">形状</div>
+          <div class="text-dark">{{$t('artwork.list.shape')}}</div>
           <!-- <div>不限</div>
           <div>横版</div>
           <div>竖版</div>
@@ -24,12 +24,12 @@
               :to="{
                 query: Object.assign({}, $route.query, { shape: item.value }),
               }"
-              >{{ item.label }}</q-route-tab
+              >{{ $t(item.label) }}</q-route-tab
             >
           </q-tabs>
         </div>
         <div class="tag">
-          <div class="text-dark">价格</div>
+          <div class="text-dark">{{$t('artwork.list.price')}}</div>
           <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
@@ -42,7 +42,7 @@
                   pricemax: item.price.max,
                 }),
               }"
-              >{{ item.label }}</q-route-tab
+              >{{ $t(item.label) }}</q-route-tab
             >
           </q-tabs>
           <div>
@@ -53,11 +53,11 @@
             />
           </div>
           <q-tabs>
-            <span @click="customPrice" class="customPrice">确定</span>
+            <span @click="customPrice" class="customPrice">{{$t('artwork.list.determine')}}</span>
           </q-tabs>
         </div>
         <div class="tag">
-          <div class="text-dark">颜色</div>
+          <div class="text-dark">{{$t('artwork.list.colour')}}</div>
           <q-tabs dense inline-label class="options-tabs text-grey-8">
             <q-route-tab
               class="color"
@@ -68,14 +68,14 @@
               <span
                 class="color-box"
                 :style="{ backgroundColor: '#' + item }"
-                >{{ item ? "" : "不限" }}</span
+                >{{ item ? "" : $t('artwork.list.Unlimited') }}</span
               >
             </q-route-tab>
           </q-tabs>
         </div>
         <template v-if="expandOptions">
           <div class="tag">
-            <div class="text-dark">主题</div>
+            <div class="text-dark">{{$t('artwork.list.theme')}}</div>
             <q-tabs class="options-tabs text-grey-8">
               <q-route-tab
                 class="btn"
@@ -84,12 +84,12 @@
                 :to="{
                   query: Object.assign({}, $route.query, { theme: item.value }),
                 }"
-                >{{ item.label }}</q-route-tab
+                >{{ $t(item.label) }}</q-route-tab
               >
             </q-tabs>
           </div>
           <div class="tag">
-            <div class="text-dark">类别</div>
+            <div class="text-dark">{{$t('artwork.list.category')}}</div>
             <q-tabs class="options-tabs text-grey-8">
               <q-route-tab
                 class="btn"
@@ -100,12 +100,12 @@
                     category: item.value,
                   }),
                 }"
-                >{{ item.label }}</q-route-tab
+                >{{ $t(item.label) }}</q-route-tab
               >
             </q-tabs>
           </div>
           <div class="tag">
-            <div class="text-dark">手法</div>
+            <div class="text-dark">{{$t('artwork.list.Technique')}}</div>
             <q-tabs class="options-tabs text-grey-8">
               <q-route-tab
                 class="btn"
@@ -116,7 +116,7 @@
                     technique: item.value,
                   }),
                 }"
-                >{{ item.label }}</q-route-tab
+                >{{ $t(item.label) }}</q-route-tab
               >
             </q-tabs>
           </div>
@@ -124,13 +124,13 @@
       </div>
       <q-expansion-item
         dense
-        :label="`${expandOptions ? '收起选项' : '展开选项'}`"
+        :label="`${expandOptions ? $t('artwork.list.CollapseOptions') : $t('artwork.list.ExpandOptions')}`"
         class="text-center title2 relative-position"
         @show="optionsShow"
         @hide="optionsHide"
       >
         <div class="text-left selected relative-position">
-          <div>您已选择：</div>
+          <div>{{$t('artwork.list.YouHaveSelected')}}：</div>
           <div
             class="tag"
             v-for="(item, index) in search"
@@ -141,7 +141,7 @@
             <span @click="deleteTag(item)" class="btn">×</span>
           </div>
           <div class="clear absolute-right btn" @click="deleteAllTags">
-            清空所有
+            {{$t('artwork.list.EmptyAll')}}
           </div>
         </div>
       </q-expansion-item>
@@ -157,7 +157,7 @@
             }),
           }"
           class="tabs"
-          >默认排序</router-link
+          >{{$t('artwork.list.DefaultSort')}}</router-link
         >
         <router-link
           :to="{
@@ -167,7 +167,7 @@
           }"
           class="tabs"
           :class="{ active: hots }"
-          >最热</router-link
+          >{{$t('artwork.list.Hottest')}}</router-link
         >
         <router-link
           :to="{
@@ -177,7 +177,7 @@
           }"
           class="tabs"
           :class="{ active: news }"
-          >最新上传</router-link
+          >{{$t('artwork.list.NewestUpload')}}</router-link
         >
       </div>
       <!-- <div class="text-center none">
@@ -207,7 +207,7 @@
           <div class="flex-break"></div>
           <div class="flex-break"></div>
           <router-link
-            :to="`artwork/${item.commodityId}`"
+            :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
             class="example-cell"
             v-for="(item, index) in artworkList"
             :key="index"
@@ -241,14 +241,14 @@
           :boundary-numbers="true"
         >
         </q-pagination>
-        <div class="next btn" @click="nextPage">下一页</div>
-        <div class="all">共{{ pageTotal }}页</div>
+        <div class="next btn" @click="nextPage">{{$t('pagination.NextPage')}}</div>
+        <div class="all">{{$t('pagination.Total')}}{{ pageTotal }}{{$t('pagination.page')}}</div>
         <div>
-          到
+          {{$t('pagination.To')}}
           <input type="text" class="input" v-model="newPage" />
-          页
+          {{$t('pagination.page')}}
         </div>
-        <div class="btn button" @click="toNewPage">确定</div>
+        <div class="btn button" @click="toNewPage">{{$t('pagination.determine')}}</div>
       </div>
     </div>
   </q-layout>
@@ -265,7 +265,7 @@ export default {
   },
   data() {
     return {
-      tags: ["新闻摄影", "概念艺术"],
+      tags: ['artwork.list.newsPhotography', 'artwork.list.ConceptArt'],
       search: {
         shape: {
           label: "shape",
@@ -300,7 +300,7 @@ export default {
 
       prices: [
         {
-          label: "不限",
+          label: 'artwork.list.Unlimited',
           value: "",
           price: {
             min: "",
@@ -308,8 +308,8 @@ export default {
           },
         },
         {
-          label: "低于6000",
-          value: "低于6000",
+          label: 'artwork.list.LessThan',
+          value: 'artwork.list.LessThan',
           price: {
             min: "",
             max: "6000",
@@ -332,16 +332,16 @@ export default {
           },
         },
         {
-          label: "高于40000",
-          value: "高于40000",
+          label: 'artwork.list.Above',
+          value: 'artwork.list.Above',
           price: {
             min: "40000",
             max: "",
           },
         },
         {
-          label: "自定义",
-          value: "自定义",
+          label: 'artwork.list.Above',
+          value: 'artwork.list.Above',
           price: {
             min: this.$route.query.pricemin,
             max: this.$route.query.pricemax,
@@ -389,7 +389,9 @@ export default {
       pageSize,
     } = currentRoute.query;
     // 获取艺术品选项
-    await store.dispatch("artwork/getArtworkShape");
+    await store.dispatch("artwork/getArtworkShape", {
+      locale
+    });
 
     if (shape || pricemin || pricemax || color || theme || hots || news) {
       store.commit("artwork/setSearch", {
@@ -431,7 +433,7 @@ export default {
       return [
         {
           value: "",
-          label: "不限",
+          label: 'artwork.list.Unlimited',
         },
         ...this.$store.state.artwork.options.shape.map((item) => {
           item.value = item.name;
@@ -444,7 +446,7 @@ export default {
       return [
         {
           value: "",
-          label: "不限",
+          label: 'artwork.list.Unlimited',
         },
         ...this.$store.state.artwork.options.theme.map((item) => {
           item.value = item.name;
@@ -457,7 +459,7 @@ export default {
       return [
         {
           value: "",
-          label: "不限",
+          label: 'artwork.list.Unlimited',
         },
         ...this.$store.state.artwork.options.category.map((item) => {
           item.value = item.name;
@@ -470,7 +472,7 @@ export default {
       return [
         {
           value: "",
-          label: "不限",
+          label: 'artwork.list.Unlimited',
         },
         ...this.$store.state.artwork.options.technique.map((item) => {
           item.value = item.name;

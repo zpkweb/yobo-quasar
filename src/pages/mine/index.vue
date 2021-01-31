@@ -9,19 +9,18 @@
             <div class="btn" @click="goWishlist">我的最爱</div>
             <div class="btn" @click="goLike">我最喜爱的艺术家</div>
             <div class="btn" @click="goOrder">购买记录</div>
-
           </div> -->
           <q-tabs
             no-caps
             class="tags text-white "
             align="left"
           >
-            <q-route-tab v-for="item in tags" :key="item.value" :to="item.value" exact replace :label="item.label" />
+            <q-route-tab v-for="item in tags" :key="item.value" :to="item.value" exact replace :label="$t(item.label)" />
           </q-tabs>
 
           <div class="line"></div>
-          <div class="title">下午好 {{ userInfo ? userInfo.name : '' }}</div>
-          <div class="time">您自{{ userInfo ? userInfo.createdDate.substr(0,10) : '' }}起成为了永宝 {{ userInfo ? userInfo.seller ? "艺术家" : "艺术收藏家" : ''}}</div>
+          <div class="title">{{$t('my.index.goodAfternoon')}} {{ userInfo ? userInfo.name : '' }}</div>
+          <div class="time">{{$t('my.index.YouSelf')}}{{ userInfo ? userInfo.createdDate.substr(0,10) : '' }}{{$t('my.index.BecameYongbao')}} {{ userInfo ? userInfo.seller ? $t('my.index.artist') : $t('my.index.ArtCollector') : ''}}</div>
         </div>
       </div>
     </div>
@@ -33,17 +32,17 @@ export default {
   data() {
     return {
       tags: [{
-        label: "我的账户",
+        label: "my.index.myAccount",
         value: "info"
       }, {
-        label: "我的最爱",
+        label: "my.index.myFavourite",
         value: "wishlist"
       }, {
-        label: "我最喜爱的艺术家",
+        label: "my.index.MyFavoriteArtist",
         value: "like"
       },
       // {
-      //   label: "购买记录",
+      //   label: "my.index.myAccount",
       //   value: "order"
       // }
       ]

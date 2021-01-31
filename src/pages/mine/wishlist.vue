@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="col-3 prise">
-            <div>价格</div>
+            <div>{{$t('my.wishlist.price')}}</div>
             <div class="num">{{ item.price[$i18n.locale] }}</div>
           </div>
           <div class="col-2 row items-center">
@@ -73,12 +73,12 @@
           </div>
         </div>
       </template>
-      <div class="noData" v-else>暂无数据</div>
+      <div class="noData" v-else>{{$t('my.wishlist.NoData')}}</div>
     </div>
 
     <div class="history-container">
       <div class="history relative-position">
-        <div class="text-center title">您最近浏览的艺术品</div>
+        <div class="text-center title">{{$t('my.wishlist.YourRecentlyViewedArtworks')}}</div>
         <!-- <div class="text-right more absolute">更多</div> -->
         <div class="row">
           <!-- <div class="item text-center col-3" v-for="i in 4" :key="'style3-'+i">
@@ -108,7 +108,7 @@
               {{ item.commodity.width }}x{{ item.commodity.height }}cm
             </div>
           </router-link>
-          <div class="noData" v-else>暂无数据</div>
+          <div class="noData" v-else>{{$t('my.wishlist.NoData')}}</div>
         </div>
       </div>
     </div>
@@ -173,7 +173,7 @@ export default {
         this.$q.notify({
           position: 'top',
           timeout: 1500,
-          message: "请先登录",
+          message: this.$t('my.wishlist.NoData'),
           color: 'negative',
         })
         return;
@@ -193,7 +193,7 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "取消喜欢",
+            message: this.$t('my.wishlist.Unlike'),
             color: 'negative',
           })
 
@@ -222,7 +222,7 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "喜欢成功",
+            message: this.$t('my.wishlist.LikeSuccess'),
             color: 'positive',
           })
         }else{

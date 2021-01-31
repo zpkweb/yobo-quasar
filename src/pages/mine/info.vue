@@ -1,7 +1,7 @@
 <template>
   <div class="container2 row">
       <div class="msgs col-6">
-        <div class="title2">您的送货地址在哪里</div>
+        <div class="title2">{{$t('my.info.shippingAddress')}}</div>
         <div class="name" v-if="userInfo">
           <!-- <template v-if="userInfo.seller">
             <q-input :dense="true" square outlined v-model="userInfo.firstname" placeholder="请输入名" />
@@ -10,12 +10,12 @@
           <template v-else>
             <q-input :dense="true" square outlined v-model="address.name" placeholder="请输入姓名" />
           </template> -->
-          <q-input :dense="true" square outlined v-model="address.name" placeholder="请输入姓名" />
+          <q-input :dense="true" square outlined v-model="address.name" :placeholder="$t('my.info.name')" />
         </div>
-        <q-input class="item" :dense="true" square outlined v-model="address.phone" placeholder="请输入手机号" />
-        <q-input class="item" :dense="true" square outlined v-model="address.country" placeholder="请输入国家" />
-        <q-input class="item" :dense="true" square outlined v-model="address.city" placeholder="请输入省市" />
-        <q-input class="item" :dense="true" square outlined v-model="address.detail" placeholder="请输入详细地址" />
+        <q-input class="item" :dense="true" square outlined v-model="address.phone" :placeholder="$t('my.info.phone')" />
+        <q-input class="item" :dense="true" square outlined v-model="address.country" :placeholder="$t('my.info.country')" />
+        <q-input class="item" :dense="true" square outlined v-model="address.city" :placeholder="$t('my.info.province')" />
+        <q-input class="item" :dense="true" square outlined v-model="address.detail" :placeholder="$t('my.info.detailedAddress')" />
         <!-- <el-cascader
           v-model="value"
           :options="options"
@@ -38,17 +38,17 @@
           <el-option label="否" value="0"> </el-option>
         </el-select> -->
 
-        <div class="title2">您的联系方式是什么？</div>
+        <div class="title2">{{$t('my.info.contactMethod')}}</div>
         <input
           type="text"
           v-model="user.email"
-          placeholder="您的邮箱地址"
+          :placeholder="$t('my.info.emailAddress')"
           class="item"
         />
         <input
           type="text"
           v-model="user.phone"
-          placeholder="联系电话号码"
+          :placeholder="$t('my.info.contactPhoneNumber')"
           class="item"
         />
         <!-- <div class="title2">您是否需要开具发票？</div>
@@ -69,21 +69,21 @@
             >增值税专用发票</el-radio
           >
         </div> -->
-        <div class="new text-white text-center btn" @click="update">更新</div>
+        <div class="new text-white text-center btn" @click="update">{{$t('my.info.Update')}}</div>
       </div>
 
       <div class="notices col-6">
         <div class="notice">
-          <div class="title">请注意以下几点：</div>
+          <div class="title">{{$t('my.info.PleaseFollowing')}}：</div>
           <div>
-            •我们将使用收件人手机号码来发送有关送货状态更新的短信，以及安排送货。
+            • {{$t('my.info.FollowingOne')}}
           </div>
-          <div>•我们将使用联系人电话号码来沟通有关订单或付款方面的适宜</div>
+          <div>• {{$t('my.info.FollowingTwo')}}</div>
         </div>
         <div class="notice2">
-          <div class="title">请注意以下几点</div>
-          <div>• 我们将通过此联系方式向你发送电子收据和订单的最新状态</div>
-          <div>• 请核实你输入的电话号码是否正确，下单后将无法修改</div>
+          <div class="title">{{$t('my.info.PleaseFollowing')}}</div>
+          <div>• {{$t('my.info.FollowingThree')}}</div>
+          <div>• {{$t('my.info.FollowingFore')}}</div>
         </div>
         <!-- <div class="notice3">
           <div class="title">请注意以下几点</div>
@@ -206,7 +206,7 @@ export default {
         this.$q.notify({
           position: 'top',
           timeout: 1500,
-          message: "送货地址，更新失败",
+          message: this.$t('my.info.UpdateFailed'),
           color: 'negative',
         })
       }
@@ -218,7 +218,7 @@ export default {
         this.$q.notify({
           position: 'top',
           timeout: 1500,
-          message: "联系方式，更新失败",
+          message: this.$t('my.info.UpdateFailed'),
           color: 'negative',
         })
       }
@@ -232,10 +232,9 @@ export default {
       this.$q.notify({
         position: 'top',
         timeout: 1500,
-        message: "更新成功",
+        message: this.$t('my.info.updateCompleted'),
         color: 'positive',
       })
-
     }
   },
 };

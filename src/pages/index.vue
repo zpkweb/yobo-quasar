@@ -49,7 +49,7 @@
       <Carousel v-if="home" :slide="slide" :data="home.banner"></Carousel>
     </div>
     <div class="advantage text-center">
-      <div class="title">我们的优势</div>
+      <div class="title">{{$t('home.OurAdvantage')}}</div>
       <div class="row items-end">
         <div class="col-3">
           <q-img
@@ -57,8 +57,8 @@
             class="advantage-img"
             width="55px"
           ></q-img>
-          <div class="item-title">精选艺术家</div>
-          <div class="item-desc">来自五湖四海的艺术家</div>
+          <div class="item-title">{{$t('home.FeaturedArtist')}}</div>
+          <div class="item-desc">{{$t('home.ArtistsWorld')}}</div>
         </div>
         <div class="col-3">
           <q-img
@@ -66,8 +66,8 @@
             class="advantage-img"
             width="55px"
           ></q-img>
-          <div class="item-title">全球免费邮送</div>
-          <div class="item-desc">专业物流三至四周到货</div>
+          <div class="item-title">{{$t('home.FreeShippingWorldwide')}}</div>
+          <div class="item-desc">{{$t('home.ProfessionalWeeks')}}</div>
         </div>
         <div class="col-3">
           <q-img
@@ -75,8 +75,8 @@
             class="advantage-img"
             width="55px"
           ></q-img>
-          <div class="item-title">免费返品</div>
-          <div class="item-desc">收到作品14天内免费返品</div>
+          <div class="item-title">{{$t('home.FreeReturn')}}</div>
+          <div class="item-desc">{{$t('home.FreeWork')}}</div>
         </div>
         <div class="col-3">
           <q-img
@@ -84,49 +84,17 @@
             class="advantage-img"
             width="55px"
           ></q-img>
-          <div class="item-title">安全支付方式</div>
-          <div class="item-desc">信用卡或转账支付</div>
+          <div class="item-title">{{$t('home.SafePaymentMethod')}}</div>
+          <div class="item-desc">{{$t('home.CreditPayment')}}</div>
         </div>
       </div>
     </div>
     <div class="gallary-container">
       <div class="gallary">
-        <div class="gallary-title text-center">您的线上画廊</div>
-        <div class="gallary-desc text-center">为您精选的系列作品</div>
+        <div class="gallary-title text-center">{{$t('home.YourOnlineGallery')}}</div>
+        <div class="gallary-desc text-center">{{$t('home.SeriesYou')}}</div>
         <div class="row">
-          <!-- <div class="col-3 relative-position text-center">
-            <div class="line absolute"></div>
-            <q-img src="img/index/painting1.png" width="230px"></q-img>
-            <div class="desc bottom text-right">
-              <div class="place">Naku</div>
-              <div class="name">Margaret Ashman</div>
-            </div>
-          </div>
-          <div class="col-3 relative-position text-center">
-            <div class="line-bottom absolute"></div>
-            <div class="desc text-right">
-              <div class="place">Dessin Louvre : Les trois grâces</div>
-              <div class="name">Harry Boudchicha</div>
-            </div>
-            <q-img src="img/index/painting2.png" width="230px"></q-img>
-          </div>
-          <div class="col-3 relative-position text-center">
-            <div class="line absolute"></div>
-            <q-img src="img/index/painting3.png" width="230px"></q-img>
-            <div class="desc bottom text-right">
-              <div class="place">Naku</div>
-              <div class="name">Margaret Ashman</div>
-            </div>
-          </div>
-          <div class="col-3 relative-position text-center">
-            <div class="line-bottom absolute"></div>
-            <div class="desc text-right">
-              <div class="place">Dessin Louvre : Les trois grâces</div>
-              <div class="name">Harry Boudchicha</div>
-            </div>
-            <q-img src="img/index/painting4.png" width="230px"></q-img>
-          </div>
-           -->
+
            <template v-if="home && home.gallerySeller">
 
 
@@ -168,60 +136,9 @@
       </div>
     </div>
     <div class="new text-center">
-      <div class="new-title text-dark">最新上线的艺术作品</div>
+      <div class="new-title text-dark">{{$t('home.LatestOnlineArtworks')}}</div>
       <div class="row new-items">
-        <!-- <div class="col-3 relative-position">
-          <div class="bg absolute"></div>
-          <div class="new-item relative-position">
-            <q-img src="img/index/new1.png" width="255px"></q-img>
-            <div class="new-desc text-left bg-white">
-              <q-breadcrumbs separator="|" gutter="sm">
-                <q-breadcrumbs-el label="粉彩 • 帆布" class="text-dark" />
-                <q-breadcrumbs-el label="80cmx80cm" class="text-dark" />
-              </q-breadcrumbs>
-            </div>
-          </div>
-          <div class="name absolute text-left">Lucky me</div>
-        </div>
-        <div class="col-3 relative-position">
-          <div class="bg absolute"></div>
-          <div class="new-item relative-position">
-            <q-img src="img/index/new2.png" width="255px"></q-img>
-            <div class="new-desc text-left bg-white">
-              <q-breadcrumbs separator="|" gutter="sm">
-                <q-breadcrumbs-el label="丙烯酸 • 帆布" class="text-dark" />
-                <q-breadcrumbs-el label="80cmx80cm" class="text-dark" />
-              </q-breadcrumbs>
-            </div>
-          </div>
-          <div class="name absolute text-left">Stormy weather</div>
-        </div>
-        <div class="col-3 relative-position">
-          <div class="bg absolute"></div>
-          <div class="new-item relative-position">
-            <q-img src="img/index/new3.png" width="255px"></q-img>
-            <div class="new-desc text-left bg-white">
-              <q-breadcrumbs separator="|" gutter="sm">
-                <q-breadcrumbs-el label="油画 • 帆布" class="text-dark" />
-                <q-breadcrumbs-el label="76.2cmx76.2cm" class="text-dark" />
-              </q-breadcrumbs>
-            </div>
-          </div>
-          <div class="name absolute text-left">Lucky me</div>
-        </div>
-        <div class="col-3 relative-position">
-          <div class="bg absolute"></div>
-          <div class="new-item relative-position">
-            <q-img src="img/index/new4.png" width="255px"></q-img>
-            <div class="new-desc text-left bg-white">
-              <q-breadcrumbs separator="|" gutter="sm">
-                <q-breadcrumbs-el label="丙烯酸 • 帆布" class="text-dark ddd" />
-                <q-breadcrumbs-el label="150cmx150cm" class="text-dark" />
-              </q-breadcrumbs>
-            </div>
-          </div>
-          <div class="name absolute text-left">Lucky me</div>
-        </div> -->
+
 
         <template v-if="home && home.latestCommodity">
 
@@ -246,29 +163,11 @@
       <div class="row sort">
         <div class="col-grow left">
           <div class="title relative-position">
-            <div>通过画作看世界</div>
+            <div>{{$t('home.SeePaintings')}}</div>
             <div class="num absolute">20万+</div>
           </div>
           <div class="row">
-            <!-- <div
-              class="col-4 sort-item relative-position"
-              v-for="i in [1, 2, 3, 4, 5, 6]"
-              :key="i"
-            >
-              <div class="line1 absolute"></div>
-              <div class="line2 absolute"></div>
-              <q-img
-                src="img/index/1.png"
-                width="210px"
-                class="relative-position"
-              >
-                <div class="tab absolute-bottom text-center">
-                  <div>花草自然</div>
-                  <q-img src="img/index/next.png" width="20px"></q-img>
-                </div>
-                <div class="absolute-full bg"></div>
-              </q-img>
-            </div> -->
+
             <router-link
               class="col-4 sort-item relative-position"
               v-if="home && home.lookWorld"
@@ -297,14 +196,14 @@
           </div>
         </div>
         <div class="col right">
-          <div class="title">按价格浏览</div>
+          <div class="title">{{$t('home.BrowsePrice')}}</div>
           <div class="row text-center text-white">
             <div class="col-6">
               <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
                 price: 0,
                 pricemin: '',
                 pricemax: 6000
-              }) }" class="prise">低于¥<span>6000</span></router-link>
+              }) }" class="prise">{{$t('home.Below')}}¥<span>6000</span></router-link>
             </div>
             <div class="col-6">
               <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
@@ -325,7 +224,7 @@
                 price: 3,
                 pricemin: 40000,
                 pricemax: ''
-              }) }" class="prise">高于¥<span>40000</span></router-link>
+              }) }" class="prise">{{$t('home.Higher')}}¥<span>40000</span></router-link>
             </div>
           </div>
         </div>
@@ -333,20 +232,46 @@
     </div>
     <div class="contact-container">
       <div class="row contact text-white">
-        <div class="col">
-          <div class="title">让永宝帮您找到心仪的作品</div>
+        <div class="col relative-position">
+          <div class="title">{{$t('home.LetFavoriteWork')}}</div>
           <div class="line"></div>
           <div class="text">
-            您是否寻求专业的顾问？<br />
-            或是想要定制作品？<br />
-            我们在线的艺术顾问能够免费回答你的所有问题
+            {{$t('home.DoConsultants')}}<br />
+            {{$t('home.OrWork')}}<br />
+            {{$t('home.OurFree')}}
           </div>
-          <div class="mail text-center text-dark">
+          <div class="mail text-center text-dark btn" @click="openOfferPage">
             <q-img src="img/index/mail.png" width="14px"></q-img>
-            直接联系
+            {{$t('home.contactDirectly')}}
           </div>
+
+          <div class="offer relative-position absolute" ref="offerPage" v-show="sendEmailPop">
+            <q-img
+              src="img/close.png"
+              width="20px"
+              class="offer-close absolute btn"
+              @click="closeOfferPage"
+            ></q-img>
+            <div class="email-outer bg-white">
+              <input
+                type="text"
+                v-model="email"
+                :placeholder="$t('home.EmailAddress')"
+                class="email"
+              />
+            </div>
+            <div class="msg-outer bg-white">
+              <textarea
+                :placeholder="$t('home.sendEmailMsgPlaceholder')"
+                class="msg"
+                v-model="msg"
+              ></textarea>
+            </div>
+            <q-btn color="black" class="full-width" :label="$t('home.send')" @click="sendEmail" />
+          </div>
+
         </div>
-        <div class="col-6" v-if="false">
+        <div class="col-6" v-if="true">
           <q-carousel
             v-model="slides"
             animated
@@ -356,27 +281,7 @@
             :autoplay="autoplay"
 
           >
-            <!-- <q-carousel-slide
-              v-for="ite in ['a', 'b', 'c', 'd']"
-              :name="ite"
-              class="row"
-              :key="ite"
-            >
-              <div class="col-6 image">
-                <q-img src="img/index/aaaa.png" width="210px"></q-img>
-              </div>
-              <div class="col-6">
-                <div class="row star">
-                  <div class="col-2" v-for="i of 5" :key="i">
-                    <q-img src="img/index/star.png" width="20px"></q-img>
-                  </div>
-                </div>
-                <div class="col-12 buyer">The staircase. Vaynor Park</div>
-                <div class="col-12 content">
-                  今天我们收到了我们的艺术品。我们很满意！你们对于装框的建议非常实用，感谢你们的帮助！
-                </div>
-              </div>
-            </q-carousel-slide> -->
+
             <q-carousel-slide
               v-if="home && home.commentCommodity"
               v-for="(item, index) in home.commentCommodity"
@@ -404,9 +309,9 @@
       </div>
     </div>
     <div class="hot-artists text-center relative-position">
-      <div class="title">我们热卖的艺术家</div>
-      <div @click="goArtists()" class="more absolute row">
-        <div class="col-grow text">更多</div>
+      <div class="title">{{$t('home.OurBestSellers')}}</div>
+      <div @click="goArtists()" class="more absolute row btn">
+        <div class="col-grow text">{{$t('home.More')}}</div>
         <q-img src="img/index/more.png" class="col" width="22px"></q-img>
       </div>
 
@@ -429,7 +334,7 @@
     </div>
     <div class="to-top none" ref="top">
       <q-img class="cs btn" src="img/index/cs.png" width="50px"></q-img>
-      <div class="text text-white text-center">在线客服</div>
+      <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
       <q-img
         class="top btn"
         src="img/index/top.png"
@@ -462,7 +367,10 @@ export default {
         theme: "",
         category: "",
         technique: ""
-      }
+      },
+      sendEmailPop: false,
+      email: "",
+      msg: ""
     };
   },
   async preFetch({ store, currentRoute, previousRoute, redirect, ssrContext, urlPath, publicPath }) {
@@ -499,6 +407,37 @@ export default {
     goArtworks(data) {
       this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign({}, this.artwork, data))}`);
     },
+    closeOfferPage() {
+      this.sendEmailPop = false;
+    },
+    openOfferPage() {
+      this.sendEmailPop = true;
+    },
+    async sendEmail() {
+      const sendEmail = await this.$store.dispatch('home/sendEmail', {
+        email: this.email,
+        msg: this.msg,
+      })
+      console.log("sendEmail", sendEmail)
+
+      if(sendEmail.success) {
+        this.sendEmailPop = false;
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: this.$t('home.sendSuccessfully'),
+          color: 'positive',
+        })
+
+      }else{
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: this.$t('home.sendFailed'),
+          color: 'negative',
+        })
+      }
+    }
   },
 };
 </script>
@@ -887,4 +826,67 @@ export default {
     vertical-align: top;
   }
 }
+
+.offer {
+      background-color: #d6d7c5;
+      padding: 50px 29px 25px;
+      top: 160px;
+      z-index: 100;
+      left: 0;
+      .offer-close {
+        left: 290px;
+        top: 28px;
+      }
+      .offer-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .newprise {
+        padding: 5px 10px;
+        margin-bottom: 20px;
+        .num {
+          font-size: 16px;
+          padding: 0 10px;
+        }
+        .symbol2 {
+          padding-right: 10px;
+        }
+        .add,
+        .sub {
+          border: 1px solid rgba(21, 44, 43, 0.1);
+          font-size: 12px;
+        }
+      }
+      .email-outer {
+        margin-bottom: 20px;
+        .email {
+          width: 280px;
+          border: none;
+          outline: none;
+          padding: 5px 10px;
+          font-size: 14px;
+        }
+      }
+
+      .msg-outer {
+        margin-bottom: 27px;
+        .msg {
+          width: 280px;
+          height: 165px;
+          resize: none;
+          padding-left: 10px;
+          font-size: 14px;
+          border: none;
+          outline: none;
+          padding-top: 10px;
+        }
+      }
+    }
+    .closepage {
+      display: none;
+    }
+    .openpage {
+      display: block;
+    }
+
 </style>

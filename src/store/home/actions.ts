@@ -15,6 +15,16 @@ const actions: ActionTree<HomeStateInterface, StateInterface> = {
     }).catch((err) => {
     })
 
+  },
+  async sendEmail({ commit }, payload) {
+    return await axiosInstance.post('/api/email/send', {
+      email: payload.email,
+      msg: payload.msg,
+    })
+    .then(response => {
+      return response.data;
+    }).catch((err) => {
+    })
   }
 }
 

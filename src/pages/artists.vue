@@ -3,45 +3,45 @@
     <div class="banner relative-position">
       <q-img src="img/artist.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
-        <div class="title">画家</div>
-        <div class="number">{{artistTotal}}件符合您搜索条件的画家</div>
+        <div class="title">{{$t('artists.painter')}}</div>
+        <div class="number">{{artistTotal}}{{$t('artists.PaintersCriteria')}}</div>
       </div>
     </div>
     <div class="container">
       <div class="options">
         <div class="option">
-          <div class="title">标签</div>
+          <div class="title">{{$t('artists.label')}}</div>
           <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
               v-for="(item, index) in tags"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { tag: item.value }) }"
-              >{{ item.label }}</q-route-tab
+              >{{ $t(item.label) }}</q-route-tab
             >
           </q-tabs>
         </div>
         <div class="option">
-          <div class="title text-dark">国籍</div>
+          <div class="title text-dark">{{$t('artists.Country')}}</div>
           <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
               v-for="(item, index) in countrys"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { country: item.value }) }"
-              >{{ item.label }}</q-route-tab
+              >{{ $t(item.label) }}</q-route-tab
             >
           </q-tabs>
         </div>
         <div class="option">
-          <div class="title title-surname text-dark">姓氏</div>
+          <div class="title title-surname text-dark">{{$t('artists.LastName')}}</div>
           <q-tabs class="options-tabs options-tabs-surname text-grey-8" dense inline-label>
             <q-route-tab
               class="tab-surname"
               v-for="(item, index) in surnames"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { surname: item }) }"
-              >{{ item || '不限' }}</q-route-tab
+              >{{ item || $t('artists.Unlimited') }}</q-route-tab
             >
           </q-tabs>
         </div>
@@ -61,9 +61,9 @@
         </div>
       </q-expansion-item> -->
       <div class="sort-by text-right">
-        <router-link :to="{ query: Object.assign({}, $route.query, { hots: false, news: false }) }" class="tabs">默认排序</router-link>
-        <router-link :to="{ query: Object.assign({}, $route.query, { hots: hots ? false : true }) }" class="tabs" :class="{ active: hots }">最热</router-link>
-        <router-link :to="{ query: Object.assign({}, $route.query, { news: news ? false : true }) }" class="tabs" :class="{ active: news }">最新上传</router-link>
+        <router-link :to="{ query: Object.assign({}, $route.query, { hots: false, news: false }) }" class="tabs">{{$t('artists.DefaultSort')}}</router-link>
+        <router-link :to="{ query: Object.assign({}, $route.query, { hots: hots ? false : true }) }" class="tabs" :class="{ active: hots }">{{$t('artists.Hottest')}}</router-link>
+        <router-link :to="{ query: Object.assign({}, $route.query, { news: news ? false : true }) }" class="tabs" :class="{ active: news }">{{$t('artists.NewestUpload')}}</router-link>
       </div>
       <div class="artists " v-if="artistList">
         <q-item
@@ -91,7 +91,7 @@
           width="60px"
           class="img"
         ></q-img>
-        <div>暂无数据，请您重新搜索，我们会尽快完善！</div>
+        <div>{{$t('artists.NoData')}}</div>
       </div>
       <!-- <div class="q-pa-lg flex flex-center">
         <q-pagination
@@ -120,14 +120,14 @@
           :boundary-numbers="true"
         >
         </q-pagination>
-        <div class="next btn" @click="nextPage">下一页</div>
-        <div class="all">共{{ pageTotal }}页</div>
+        <div class="next btn" @click="nextPage">{{$t('pagination.NextPage')}}</div>
+        <div class="all">{{$t('pagination.Total')}}{{ pageTotal }}{{$t('pagination.page')}}</div>
         <div>
-          到
+          {{$t('pagination.To')}}
           <input type="text" class="input" v-model="newPage" />
-          页
+          {{$t('pagination.page')}}
         </div>
-        <div class="btn button" @click="toNewPage">确定</div>
+        <div class="btn button" @click="toNewPage">{{$t('pagination.determine')}}</div>
       </div>
 
     </div>
@@ -171,46 +171,46 @@ export default {
       tag: this.$route.query.tag,
       tags: [
         {
-          label: "不限",
+          label: 'artists.Unlimited',
           value: "",
         },
         {
-          label: "画家",
+          label: 'artists.painter',
           value: "0",
         },
         {
-          label: "雕刻家",
+          label: 'artists.sculptor',
           value: "1",
         },
         {
-          label: "摄影家",
+          label: 'artists.photographer',
           value: "2",
         },
       ],
       country: this.$route.query.country,
       countrys: [
         {
-          label: "不限",
+          label: 'artists.Unlimited',
           value: "",
         },
         {
-          label: "中国",
+          label: 'artists.China',
           value: "zh",
         },
         {
-          label: "日本",
+          label: 'artists.Japan',
           value: "ja",
         },
         {
-          label: "西班牙",
+          label: 'artists.Spain',
           value: "es",
         },
         {
-          label: "美国",
+          label: 'artists.UnitedStates',
           value: "us",
         },
       ],
-      text: "展开选项",
+      // text: "展开选项",
       // current: 1,
       // hots: false,
       // news: false,
@@ -224,7 +224,6 @@ export default {
     store,
     currentRoute,
   }) {
-    console.log("currentRoute.query", currentRoute.query)
     const { locale } = currentRoute.params;
     const {  currentPage, pageSize, ...serach } = currentRoute.query;
     store.commit("artist/setSearch", serach);
@@ -264,13 +263,12 @@ export default {
   },
 
   methods: {
-
-    show() {
-      this.text = "收起选项";
-    },
-    hide() {
-      this.text = "展开选项";
-    },
+    // show() {
+    //   this.text = "收起选项";
+    // },
+    // hide() {
+    //   this.text = "展开选项";
+    // },
     nextPage() {
       if(this.currentPage < this.pageTotal){
         this.currentPage = this.currentPage+1

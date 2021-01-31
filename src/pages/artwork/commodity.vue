@@ -35,7 +35,7 @@
         </div>
         <div class="top"></div>
         <div class="container2">
-          <div class="title">作品简介</div>
+          <div class="title">{{$t('artwork.commodity.introduction')}}</div>
           <div class="row">
             <div class="col-6">
               <!-- <q-img src="img/image1.png" width="350px"></q-img> -->
@@ -50,31 +50,31 @@
               <div class="painter">{{ artwork.commodity.seller.firstname }} {{ artwork.commodity.seller.lastname }} {{ artwork.commodity.seller.country}}</div>
               <div class="row">
                 <div class="col-6 item">
-                  <div class="title2">手法</div>
+                  <div class="title2">{{$t('artwork.commodity.Technique')}}</div>
                   <div class="content">
                     <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
                     {{ artwork.commodity.techniques[0].name}}
                   </div>
                 </div>
                 <div class="col-6 item">
-                  <div class="title2">其他细节</div>
-                  <div class="contant">可直接挂上墙 可免费添加外框</div>
+                  <div class="title2">{{$t('artwork.commodity.OtherDetails')}}</div>
+                  <div class="contant">{{$t('artwork.commodity.CanFree')}}</div>
                 </div>
                 <div class="col-6 item">
-                  <div class="title2">尺寸</div>
+                  <div class="title2">{{$t('artwork.commodity.size')}}</div>
                   <!-- <div class="contant">40cmX40cm</div> -->
                   <div class="contant">{{ artwork.commodity.width }}cmX{{ artwork.commodity.height }}cm</div>
                 </div>
                 <div class="col-6 item">
-                  <div class="title2">邮费</div>
-                  <div class="contant">免费专业物流三到四周左右到</div>
+                  <div class="title2">{{$t('artwork.commodity.Postage')}}</div>
+                  <div class="contant">{{$t('artwork.commodity.FreeWeeks')}}</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="container2">
-          <div class="title">作者简介</div>
+          <div class="title">{{$t('artwork.commodity.AboutAuthor')}}</div>
           <div class="row">
             <div class="col-4">
               <!-- <q-img src="img/painter.png" width="210px"></q-img> -->
@@ -83,7 +83,7 @@
             <div class="col-8">
               <div class="row painter">
                 <div class="col">{{ artwork.commodity.name }}</div>
-                <router-link :to="`/${$i18n.locale}/artist/${ artwork.seller.sellerId }`" class="col-grow">进入{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}的主页</router-link>
+                <router-link :to="`/${$i18n.locale}/artist/${ artwork.seller.sellerId }`" class="col-grow">{{$t('artwork.commodity.enter')}}{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}{{$t('artwork.commodity.Homepage')}}</router-link>
               </div>
               <!-- <div class="content2">
                 我的工作是将不同的图片和颜料混合在一起，在计算机和画布上创建一个新的图像。
@@ -110,10 +110,10 @@
         <!-- <div class="prise"><span class="symbol">¥</span>7，000</div> -->
 
         <div class="soldout" v-if="artwork.commodity.state == 2">
-          已售
+          {{$t('artwork.commodity.Sold')}}
         </div>
         <div class="off" v-else-if="artwork.commodity.state == 3">
-          已下架
+          {{$t('artwork.commodity.HasBeenRemoved')}}
         </div>
         <div class="prise" v-else>{{ price }}</div>
 
@@ -126,36 +126,36 @@
           emit-value
           class="currency"
         />
-        <div class="title2">相框选择材质</div>
+        <div class="title2">{{$t('artwork.commodity.FrameSelectionMaterial')}}</div>
         <div class="row text-center frames">
           <div class="btn col-4" v-for="(item, index) in photoFrames" :key="index" >
             <!-- <div class="frame"></div> -->
             <q-img :src="`img/photoFrame/photoFrame-${index+1}.png`" class="frame" :class="{ active: photoFrame == index }" @click="photoFrame = index" />
-            <div class="color">{{item.label}} ¥{{item.price}}</div>
+            <div class="color">{{$t(item.label)}} ¥{{item.price}}</div>
           </div>
           <div class="col-4">
             <div class="frame custom"></div>
-            <div class="color">定制</div>
+            <div class="color">{{$t('artwork.commodity.customMade')}}</div>
           </div>
         </div>
-        <div class="title2">相框选择大小</div>
+        <div class="title2">{{$t('artwork.commodity.FrameSelectionSize')}}</div>
         <div class="row">
-          <div class="size btn col-4" :class="{ active: photoFrameSize == 'small' }" @click="photoFrameSize = 'small'">小</div>
-          <div class="size btn col-4" :class="{ active: photoFrameSize == 'middle' }" @click="photoFrameSize = 'middle'">中</div>
-          <div class="size btn col-4" :class="{ active: photoFrameSize == 'large' }" @click="photoFrameSize = 'large'">大</div>
+          <div class="size btn col-4" :class="{ active: photoFrameSize == 'small' }" @click="photoFrameSize = 'small'">{{$t('artwork.commodity.small')}}</div>
+          <div class="size btn col-4" :class="{ active: photoFrameSize == 'middle' }" @click="photoFrameSize = 'middle'">{{$t('artwork.commodity.in')}}</div>
+          <div class="size btn col-4" :class="{ active: photoFrameSize == 'large' }" @click="photoFrameSize = 'large'">{{$t('artwork.commodity.Big')}}</div>
         </div>
         <div class="row text-center items-end advantages">
           <div class="col-4 item2">
             <q-img src="img/send.png" width="30px" class="image"></q-img>
-            <div>全球免费送货</div>
+            <div>{{$t('artwork.commodity.FreeShippingWorldwide')}}</div>
           </div>
           <div class="col-4 item2">
             <q-img src="img/change.png" width="35px" class="image"></q-img>
-            <div>免费换货</div>
+            <div>{{$t('artwork.commodity.FreeExchange')}}</div>
           </div>
           <div class="col-4 item2">
             <q-img src="img/pay.png" width="30px" class="image"></q-img>
-            <div>安全支付</div>
+            <div>{{$t('artwork.commodity.SafePayment')}}</div>
           </div>
         </div>
         <!-- <div class="buy text-center relative-position">
@@ -204,50 +204,54 @@
           </div>
         </div> -->
         <div class="sold relative-position">
-          <div class="sold-title">您心仪的作品已被售出？</div>
+          <div class="sold-title">{{$t('artwork.commodity.YourSold')}}</div>
           <div>
-            好消息！这位艺术家接受艺术品订制！您可以提供给我们之前的作品细节并选择尺寸，我们会和该艺术家协商订制作品价格！
+            {{$t('artwork.commodity.goodNews')}}
           </div>
           <div class="btn sold-btn text-white text-center" @click="openOfferPage">
-            同这位艺术家定制作品
+            {{$t('artwork.commodity.CustomizedArtist')}}
           </div>
           <div class="row contactus">
             <div class="contact col-grow btn">
               <q-img src="img/contact.png" width="20px"></q-img>
             </div>
             <div class="askquestion col text-left btn">
-              <div>对于购买此画有任何疑问？</div>
-              <div>与永宝专业客服在线交流</div>
+              <div>{{$t('artwork.commodity.HavePainting')}}</div>
+              <div>{{$t('artwork.commodity.OnlineService')}}</div>
             </div>
           </div>
-          <div class="offer relative-position absolute closepage" ref="offerPage">
+          <div class="offer relative-position absolute " ref="offerPage" v-show="bidPop">
             <q-img
               src="img/close.png"
               width="20px"
               class="offer-close absolute btn"
               @click="closeOfferPage"
             ></q-img>
-            <div class="offer-title text-left">就此作品向艺术家出价</div>
+            <div class="offer-title text-left">{{$t('artwork.commodity.BidWork')}}</div>
             <div class="newprise bg-white text-left">
-              <span class="symbol2">¥</span><span class="sub btn">－</span
-              ><span class="num btn">{{ price }}</span
-              ><span class="add btn">＋</span>
+              <!-- <span class="symbol2">¥</span> -->
+              <span class="symbol2">{{currency}}</span>
+              <span class="sub btn" @click="subBidPrice">－</span
+              >
+              <span class="num btn">{{ bidPrice ? bidPrice : price }}</span
+              ><span class="add btn" @click="addBidPrice">＋</span>
             </div>
             <div class="email-outer bg-white">
               <input
                 type="text"
-                v-model="email"
-                placeholder="您的电子邮件地址"
+                v-model="bidEmail"
+                :placeholder="$t('artwork.commodity.EmailAddress')"
                 class="email"
               />
             </div>
             <div class="msg-outer bg-white">
               <textarea
-                placeholder="您的出价是多少呢？您也可以写下您的其他问题，留下微信或电话号码。我们的工作人员会很快联系您的"
+                :placeholder="$t('artwork.commodity.yourBid')"
                 class="msg"
-                v-model="msg"
+                v-model="bidMsg"
               ></textarea>
             </div>
+            <q-btn color="black" class="full-width" :label="$t('artwork.commodity.bid')" @click="bid" />
           </div>
         </div>
         <div class="follow relative-position" ref="follow">
@@ -262,8 +266,8 @@
               <q-img src="img/erweima.png" width="55px"></q-img>
             </div>
             <div class="follow-us col-grow">
-              <div>扫码下载永宝APP</div>
-              <div>即时接受艺术品及订阅信息</div>
+              <div>{{$t('artwork.commodity.ScanAPP')}}</div>
+              <div>{{$t('artwork.commodity.InstantlyInformation')}}</div>
             </div>
           </div>
         </div>
@@ -272,8 +276,8 @@
     <div class="paints">
       <div class="container text-center">
         <div class="relative-position">
-          <div class="title">{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}的其他作品</div>
-          <router-link :to="`/${$i18n.locale}/artist/${artwork.seller.sellerId}#artworks`" class="more absolute btn">更多</router-link>
+          <div class="title">{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}{{$t('artwork.commodity.OtherWorks')}}</div>
+          <router-link :to="`/${$i18n.locale}/artist/${artwork.seller.sellerId}#artworks`" class="more absolute btn">{{$t('artwork.commodity.More')}}</router-link>
         </div>
         <div class="row" v-if="artwork.seller.commoditys.length">
           <!-- <div class="col-3" v-for="i in 4" :key="i">
@@ -302,8 +306,8 @@
     <div class="similar-paints paints">
       <div class="container text-center">
         <div class="relative-position">
-          <div class="title">类似艺术作品</div>
-          <router-link :to="`/${$i18n.locale}/artwork?shape=0`" class="more absolute">更多</router-link>
+          <div class="title">{{$t('artwork.commodity.SimilarWorksArt')}}</div>
+          <router-link :to="`/${$i18n.locale}/artwork?shape=0`" class="more absolute">{{$t('artwork.commodity.More')}}</router-link>
         </div>
         <div class="row">
           <!-- <div class="col-3" v-for="i in 4" :key="i">
@@ -331,7 +335,7 @@
     <div class="paints history">
       <div class="container text-center">
         <div class="relative-position">
-          <div class="title">您最近浏览的作品</div>
+          <div class="title">{{$t('artwork.commodity.RecentlyViewedWorks')}}</div>
           <!-- <router-link :to="" class="more absolute btn">更多</router-link> -->
         </div>
 
@@ -367,54 +371,56 @@ export default {
       slide: 0,
       photoFrame: '',
       photoFrames: [{
-        label: '黑色木制',
+        label: 'artwork.commodity.BlackWooden',
         price: '800'
       }, {
-        label: '白色木制',
+        label: 'artwork.commodity.WhiteWooden',
         price: '800'
       }, {
-        label: '深木色',
+        label: 'artwork.commodity.DarkWood',
         price: '800'
       }, {
-        label: '纯黑色',
+        label: 'artwork.commodity.pureBlack',
         price: '800'
       }, {
-        label: '纯白色',
+        label: 'artwork.commodity.pureWhite',
         price: '800'
       }, {
-        label: '金色',
+        label: 'artwork.commodity.Golden',
         price: '800'
       }, {
-        label: '浅木色',
+        label: 'artwork.commodity.LightWood',
         price: '800'
       }],
       photoFrameSize: '',
       defaultPriceOptions: [{
         label: "CNY",
         value: "CNY",
-        locale: "zh",
+        locale: "zh-cn",
         price: ""
       }, {
         label: "USD",
         value: "USD",
-        locale: "en",
+        locale: "en-us",
         price: ""
       }, {
         label: "JPY",
         value: "JPY",
-        locale: "ja",
+        locale: "ja-jp",
         price: ""
       }, {
         label: "EUR",
         value: "EUR",
-        locale: "fr",
+        locale: "es-es",
         price: ""
       }],
       options: ["CNY", "USD", "JPY", "EUR"],
       currency: "CNY",
       prise: "7000",
-      email: "",
-      msg: "",
+      bidPrice: "",
+      bidEmail: "",
+      bidMsg: "",
+      bidPop: false,
       hasMyArtwork: false,
 
     };
@@ -448,7 +454,6 @@ export default {
     }
     this.hasMyArtwork = hasMyArtwork;
 
-
   },
   computed: {
     artwork() {
@@ -458,6 +463,7 @@ export default {
       return this.$store.state.my.browsingHistory;
     },
     priceOptions() {
+      console.log("this.$store.state.artwork.data.commodity", this.$store.state.artwork.data.commodity)
       return this.defaultPriceOptions.map((item) => {
         return Object.assign(item, {
           price: this.$store.state.artwork.data.commodity.price[item.locale]
@@ -465,7 +471,9 @@ export default {
       })
     },
     price() {
+      console.log("this.priceOptions", this.priceOptions)
       for(let item in this.priceOptions) {
+        console.log("price item", this.priceOptions[item], this.currency)
         if(this.priceOptions[item].label == this.currency) {
           return this.priceOptions[item].price;
         }
@@ -477,12 +485,14 @@ export default {
       this.$refs.follow.classList.add("closepage");
     },
     closeOfferPage() {
-      this.$refs.offerPage.classList.add("closepage");
-      this.$refs.offerPage.classList.remove("openpage");
+      // this.$refs.offerPage.classList.add("closepage");
+      // this.$refs.offerPage.classList.remove("openpage");
+      this.bidPop = true;
     },
     openOfferPage() {
-      this.$refs.offerPage.classList.remove("closepage");
-      this.$refs.offerPage.classList.add("openpage");
+      // this.$refs.offerPage.classList.remove("closepage");
+      // this.$refs.offerPage.classList.add("openpage");
+      this.bidPop = false;
     },
     async myArtwork() {
       console.log("this.$store.state.user.info", this.$store.state.user.info)
@@ -490,7 +500,7 @@ export default {
         this.$q.notify({
           position: 'top',
           timeout: 1500,
-          message: "请先登录",
+          message: this.$t('layout.pleaseLoginFirst'),
           color: 'negative',
         })
         return;
@@ -505,10 +515,9 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "取消喜欢",
-            color: 'negative',
+            message: this.$t('artwork.commodity.Unlike'),
+            color: 'positive',
           })
-
         }else{
           this.$q.notify({
             position: 'top',
@@ -517,9 +526,7 @@ export default {
             color: 'negative',
           })
         }
-
       }else{
-
         const addMyArtwork =await this.$store.dispatch("my/addMyArtwork", {
           userId: this.$store.state.user.info.userId,
           artworkId: this.$route.params.artworkId
@@ -529,20 +536,59 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "喜欢成功",
+            message: this.$t('artwork.commodity.LikeSuccess'),
             color: 'positive',
           })
         }else{
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: data.msg,
+            message: addMyArtwork.msg,
             color: 'negative',
           })
         }
-
+      }
+    },
+    subBidPrice() {
+      if(this.bidPrice){
+        this.bidPrice -= 1;
+      }else{
+        this.bidPrice = this.price - 1;
       }
 
+    },
+    addBidPrice() {
+      if(this.bidPrice){
+        this.bidPrice += 1;
+      }else{
+        this.bidPrice = this.price + 1;
+      }
+    },
+    async bid() {
+      const sendEmailBid = await this.$store.dispatch('artwork/sendEmailBid', {
+        email: this.bidEmail,
+        currency: this.currency,
+        price: this.bidPrice || this.price,
+        msg: this.bidMsg,
+      })
+      console.log("sendEmailBid", sendEmailBid)
+
+      if(sendEmailBid.success) {
+        this.bidPop = false;
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: this.$t('artwork.commodity.bidSuccess'),
+          color: 'negative',
+        })
+      }else{
+        this.$q.notify({
+          position: 'top',
+          timeout: 1500,
+          message: this.$t('artwork.commodity.bidFaile'),
+          color: 'negative',
+        })
+      }
     }
   },
 };

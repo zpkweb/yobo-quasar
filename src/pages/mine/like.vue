@@ -34,7 +34,7 @@
         <q-img v-if="item.user" :src="item.user.avatar" class="image" width="212px"></q-img>
         <div class="col-4 desc">
           <div class="title">{{item.seller.firstname}} {{item.seller.lastname}}</div>
-          <div>已上传2000副作品</div>
+          <div>{{$t('my.like.uploaded')}}2000{{$t('my.like.SecondaryWorks')}}</div>
           <div>{{item.seller.country}}</div>
         </div>
 
@@ -42,12 +42,12 @@
           <!-- <div class="btn follow follow2 text-white text-center">
             +关注艺术家
           </div> -->
-          <div class="btn follow follow2 text-white text-center" @click="myArtist(item)">{{ item.hasMyArtist ? "已关注" : "+关注艺术家"}}</div>
+          <div class="btn follow follow2 text-white text-center" @click="myArtist(item)">{{ item.hasMyArtist ? $t('my.like.Followed') : '+'+$t('my.like.FollowArtist')}}</div>
         </div>
       </div>
     </template>
 
-    <div v-else>暂无数据</div>
+    <div v-else>{{$t('my.like.NoData')}}</div>
   </div>
 </template>
 
@@ -90,7 +90,7 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "取消关注",
+            message: this.$t('my.like.unsubscribe'),
             color: 'negative',
           })
         }else{
@@ -113,7 +113,7 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "关注成功",
+            message: this.$t('my.like.FollowedSuccess'),
             color: 'positive',
           })
         }else{

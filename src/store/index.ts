@@ -27,7 +27,7 @@ export default store(function ({ Vue }) {
 
   const Store = new Vuex.Store<StateInterface>({
     state: {
-      lang: { value: "zh", label: "中文", locale: 'zh-cn' },
+      lang: null,
       langOptions: [
         { value: "zh", label: "中文", locale: 'zh-cn' },
         { value: "en", label: "English", locale: 'en-us' },
@@ -48,14 +48,15 @@ export default store(function ({ Vue }) {
       ],
     },
     mutations: {
-      setLang (state, lang) {
-        let locale:any = { value: "zh", label: "中文", locale: 'zh-cn' };
+      setLang (state, locale) {
+        // let langNew = { value: "zh", label: "中文", locale: 'zh-cn' };
+        let langNew:any;
         for(let item in state.langOptions) {
-          if(state.langOptions[item].locale == lang) {
-            locale = state.langOptions[item].locale;
+          if(state.langOptions[item].locale == locale) {
+            langNew = state.langOptions[item];
           }
         }
-        state.lang.locale = locale
+        state.lang = langNew
       }
     },
     modules: {

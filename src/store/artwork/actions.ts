@@ -37,10 +37,26 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     })
   },
   async getArtworkShape({ commit }, payload) {
-    return await axiosInstance.get('/api/artwork/options')
+    return await axiosInstance.get('/api/artwork/options', {
+      params: {
+        locale: payload.locale
+      }
+    })
     .then(response => {
       const { data } = response.data;
       commit('setOptins', data)
+    }).catch((err) => {
+    })
+  },
+  async sendEmailBid({ commit }, payload) {
+    return await axiosInstance.post('/api/email/bid', {
+      email: payload.email,
+      currency: payload.currency,
+      price: payload.price,
+      msg: payload.msg,
+    })
+    .then(response => {
+      return response.data;
     }).catch((err) => {
     })
   }

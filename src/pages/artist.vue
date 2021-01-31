@@ -7,18 +7,15 @@
           <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
         <div class="title">{{portrait.firstname}} {{portrait.lastname}}</div>
         <div class="number">
-          <span v-for="item in portrait.tags">{{item}}</span>
-
-
+          <span v-for="item in portrait.tags">{{$t(item)}}</span>
         </div>
         </template>
-
       </div>
     </div>
     <div class="title2-container">
       <div class="title2">
         <!-- <q-tabs no-caps indicator-color="transparent" active-color="white" align="left" class="text-teal"> -->
-          <router-link class="tabs" :class="{ active: (hash && hash == '#'+item.value) || (!hash && index === 0) }"  v-for="(item, index) in navs" :key="item.value" :to="{ hash: `#${item.value}` }" >{{item.label}}</router-link>
+          <router-link class="tabs" :class="{ active: (hash && hash == '#'+item.value) || (!hash && index === 0) }"  v-for="(item, index) in navs" :key="item.value" :to="{ hash: `#${item.value}` }" >{{ $t(item.label) }}</router-link>
         <!-- </q-tabs> -->
       </div>
     </div>
@@ -45,7 +42,7 @@
           <q-img src="img/artist/qq.png" width="32px" class="image"></q-img>
           <q-img src="img/artist/txwb.png" width="32px" class="image"></q-img>
           <q-img src="img/artist/mail.png" width="32px" class="image"></q-img> -->
-          <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? "已关注" : "+关注艺术家"}}</div>
+          <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
       </div>
     </div>
@@ -74,7 +71,7 @@
       </div>
     </div>
     <div id="sold" class="sold hide">
-      <div class="title text-center">最新出售的艺术品</div>
+      <div class="title text-center">{{$t('artist.LatestArtSold')}}</div>
       <div class="row">
         <div class="col-3 text-center" v-for="i of 4" :key="`sold-${i}`">
           <div class="bg">
@@ -85,19 +82,19 @@
     </div>
     <div id="studio" class="video hide"></div>
     <div id="resume" class="credentials ">
-      <div class="title text-center ">我的履历</div>
+      <div class="title text-center ">{{$t('artist.MyResume')}}</div>
       <div class="title2 text-right">
-        <div>奖项</div>
-        <div>个展</div>
-        <div>组展</div>
-        <div>发表</div>
+        <div>{{$t('artist.Awards')}}</div>
+        <div>{{$t('artist.SoloExhibition')}}</div>
+        <div>{{$t('artist.GroupExhibition')}}</div>
+        <div>{{$t('artist.Publish')}}</div>
       </div>
       <div class="content row hide">
         <div class="col-6 item">
           <div v-for="i of 8" :key="`resume-${i}`">
             <div class="year">2019</div>
             <div class="name">
-              Prix de photographie (Salon d’Automne)- 获奖者- 法国
+              Prix de photographie (Salon d’Automne)- {{$t('artist.winner')}}- 法国
             </div>
           </div>
         </div>
@@ -105,7 +102,7 @@
           <div v-for="i of 8" :key="`resume2-${i}`">
             <div class="year">2019</div>
             <div class="name">
-              Prix de photographie (Salon d’Automne)- 获奖者- 法国
+              Prix de photographie (Salon d’Automne)- {{$t('artist.winner')}}- 法国
             </div>
           </div>
         </div>
@@ -119,22 +116,22 @@ export default {
   data() {
     return {
       navs: [{
-        label: "个人信息",
+        label: 'artist.PersonalInformation',
         value: "info",
       }, {
-        label: "所有作品",
+        label: 'artist.AllWorks',
         value: "artworks",
       }, {
-        label: "最新售出艺术品",
+        label: 'artist.LatestSold',
         value: "sold",
       }, {
-        label: "工作室",
+        label: 'artist.studio',
         value: "studio",
       }, {
-        label: "履历表",
+        label: 'artist.Resume',
         value: "resume",
       }],
-      tags: ["杂志封面", "原始结构的波帕特肖像画", "波帕特肖像画"],
+      tags: ['artist.magazineCover', 'artist.PortraitStructure', 'artist.PortraitOfPopart'],
       hasMyArtist: false
     };
   },
@@ -154,11 +151,14 @@ export default {
     }
   },
   async mounted() {
-    const hasMyArtistData = await this.$store.dispatch("my/hasMyArtist", {
+    if(this.$store.state.user.info && this.$store.state.user.info.userId) {
+      const hasMyArtistData = await this.$store.dispatch("my/hasMyArtist", {
       userId: this.$store.state.user.info.userId,
       artistId: this.$route.params.artistId
     });
     this.hasMyArtist = hasMyArtistData.success;
+    }
+
   },
   methods: {
     async myArtist(has) {
@@ -166,7 +166,7 @@ export default {
         this.$q.notify({
           position: 'top',
           timeout: 1500,
-          message: "请先登录",
+          message: this.$t('layout.pleaseLoginFirst'),
           color: 'negative',
         })
         return;
@@ -181,7 +181,7 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "取消关注",
+            message: this.$t('artist.unsubscribe'),
             color: 'negative',
           })
         }else{
@@ -204,7 +204,7 @@ export default {
           this.$q.notify({
             position: 'top',
             timeout: 1500,
-            message: "关注成功",
+            message: this.$t('artist.FollowedSuccess'),
             color: 'positive',
           })
         }else{
