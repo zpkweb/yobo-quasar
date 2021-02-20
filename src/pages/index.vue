@@ -149,12 +149,13 @@
             <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="255px" height="255px"></q-img>
             <div class="new-desc text-left bg-white">
               <q-breadcrumbs separator="|" gutter="sm">
-                <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.techniques[0].name} • ${item.themes[0].name}`" class="text-dark ddd" />
+                <!-- <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.techniques[0].name} • ${item.themes[0].name}`" class="text-dark ddd" /> -->
+                <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.categorys[0].name}`" class="text-dark ddd" />
                 <q-breadcrumbs-el  :label="`${item.width}cm X ${item.height}cm`" class="text-dark" />
               </q-breadcrumbs>
             </div>
           </div>
-          <div class="name absolute text-left">{{item.name}}</div>
+          <div class="name absolute text-left" :title="item.name">{{item.name}}</div>
         </router-link>
         </template>
       </div>
@@ -271,7 +272,7 @@
           </div>
 
         </div>
-        <div class="col-6" v-if="true">
+        <div class="col-6" v-if="false">
           <q-carousel
             v-model="slides"
             animated
@@ -561,11 +562,11 @@ export default {
       margin: 0 auto;
     }
     .bottom {
-      padding: 28px 40px 15px 0;
+      padding: 28px 40px 15px 40px;
       white-space: nowrap;
     }
     .top {
-      padding: 0 40px 15px 0;
+      padding: 0 40px 15px 40px;
       white-space: nowrap;
     }
     .place {
@@ -576,9 +577,14 @@ export default {
       font-size: 14px;
     }
     .name {
+      display: inline-block;
+      width: 100%;
       font-size: 14px;
       font-family: "FangSong";
       color: #909090;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
@@ -623,6 +629,9 @@ export default {
       line-height: 35px;
       color: #a7acab;
       font-weight: bolder;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }

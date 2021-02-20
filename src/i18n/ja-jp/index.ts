@@ -40,6 +40,13 @@ export default {
     },
     pleaseLoginFirst: "最初にログインしてください"
   },
+  pagination: {
+    NextPage: "次のページ",
+    Total: "合計",
+    page: "ページ",
+    To: "に",
+    determine: "決定する",
+  },
   home: {
     artist: "アーティスト",
     painter: "画家",
@@ -86,12 +93,7 @@ export default {
     sendSuccessfully: "正常に送信されました",
     sendFailed: "送信に失敗しました"
   },
-  pagination: {
-    NextPage: "次のページ",
-    Total: "合計",
-    page: "ページ",
-    To: "に",
-  },
+
   my: {
     index: {
       myAccount: "マイアカウント",

@@ -40,6 +40,13 @@ export default {
     },
     pleaseLoginFirst: "please log in first"
   },
+  pagination: {
+    NextPage: "Next page",
+    Total: "Total",
+    page: "page",
+    To: "To",
+    determine: "determine",
+  },
   home: {
     artist: "artist",
     painter: "painter",
@@ -86,12 +93,7 @@ export default {
     sendSuccessfully: "Sent successfully",
     sendFailed: "Failed to send"
   },
-  pagination: {
-    NextPage: "Next page",
-    Total: "Total",
-    page: "page",
-    To: "To",
-  },
+
   my: {
     index: {
       myAccount: "my account",
@@ -152,7 +154,6 @@ export default {
     Hottest: "Hottest",
     NewestUpload: "Newest upload",
     NoData: "No data, please search again, we will improve it as soon as possible!",
-
     determine: "determine",
     sculptor: "sculptor",
     photographer: "photographer",

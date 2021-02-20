@@ -103,7 +103,8 @@
                 height="300px"
               ></q-img>
             </div>
-            <div class="text text-left">丙烯酸 • 亚麻</div>
+            <!-- <div class="text text-left">丙烯酸 • 亚麻</div> -->
+            <div class="text text-left">{{item.categorys ? item.categorys[0].name : ''}}</div>
             <div class="text text-left">
               {{ item.commodity.width }}x{{ item.commodity.height }}cm
             </div>

@@ -7,6 +7,9 @@ module.exports = {
       script: './dist/ssr/index.js',
       args: 'start',
       port: '8088',
+      env: {
+        ORIGIN: "http://39.105.190.188:7001"
+      }
     }
   ]
 }

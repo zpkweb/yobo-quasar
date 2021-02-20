@@ -53,7 +53,7 @@
                   <div class="title2">{{$t('artwork.commodity.Technique')}}</div>
                   <div class="content">
                     <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
-                    {{ artwork.commodity.techniques[0].name}}
+                    <div>{{artwork.commodity.categorys ? artwork.commodity.categorys[0].name : ''}}</div>
                   </div>
                 </div>
                 <div class="col-6 item">
@@ -296,7 +296,8 @@
               <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
             </div>
             <div class="text text-left">
-              <div>丙烯酸 • 亚麻</div>
+              <!-- <div>丙烯酸 • 亚麻</div> -->
+              <div>{{item.category ? item.category[0].name : ''}}</div>
               <div>{{item.width}}x{{item.height}}cm</div>
             </div>
           </router-link>
@@ -325,7 +326,8 @@
               <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
             </div>
             <div class="text text-left">
-              <div>丙烯酸 • 亚麻</div>
+              <!-- <div>丙烯酸 • 亚麻</div> -->
+              <div>{{item.categorys ? item.categorys[0].name : ''}}</div>
               <div>{{item.width}}x{{item.height}}cm</div>
             </div>
           </router-link>
@@ -354,7 +356,8 @@
               <q-img :src="item.photos[0].src" width="208px" height="208px" />
             </div>
             <div class="text text-left">
-              <div>丙烯酸 • 亚麻</div>
+              <!-- <div>丙烯酸 • 亚麻</div> -->
+              <div>{{item.categorys ? item.categorys[0].name : ''}}</div>
               <div>{{item.width}}x{{item.height}}cm</div>
             </div>
           </div>
@@ -487,12 +490,12 @@ export default {
     closeOfferPage() {
       // this.$refs.offerPage.classList.add("closepage");
       // this.$refs.offerPage.classList.remove("openpage");
-      this.bidPop = true;
+      this.bidPop = false;
     },
     openOfferPage() {
       // this.$refs.offerPage.classList.remove("closepage");
       // this.$refs.offerPage.classList.add("openpage");
-      this.bidPop = false;
+      this.bidPop = true;
     },
     async myArtwork() {
       console.log("this.$store.state.user.info", this.$store.state.user.info)

@@ -40,6 +40,13 @@ export default {
     },
     pleaseLoginFirst: "请先登录"
   },
+  pagination: {
+    NextPage: "下一页",
+    Total: "共",
+    page: "页",
+    To: "到",
+    determine: "确定",
+  },
   home: {
     artist: "艺术家",
     painter: "画家",
@@ -86,12 +93,7 @@ export default {
     sendSuccessfully: "发送成功",
     sendFailed: "发送失败"
   },
-  pagination: {
-    NextPage: "下一页",
-    Total: "共",
-    page: "页",
-    To: "到",
-  },
+
   my: {
     index: {
       myAccount: "我的账户",

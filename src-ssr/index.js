@@ -100,5 +100,5 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Server listening at port ${port}`)
+  console.log(`Server listening at port ${port}, env.api=${process.env.api}`)
 })

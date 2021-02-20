@@ -13,7 +13,6 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
    * @return {*}
    */
   async getArtworkSearch ({ commit }, payload) {
-    console.log("getArtworkSearch", payload, process.env.api, process.env.API)
     return await axiosInstance.get('/api/commodity/search', {
       params: payload
     }).then(response => {

@@ -40,6 +40,13 @@ export default {
     },
     pleaseLoginFirst: "por favor ingresa primero"
   },
+  pagination: {
+    NextPage: "Siguiente página",
+    Total: "Total",
+    page: "página",
+    To: "A",
+    determine: "determinar",
+  },
   home: {
     artist: "artista",
     painter: "pintor",
@@ -86,12 +93,7 @@ export default {
     sendSuccessfully: "Enviado correctamente",
     sendFailed: "fallo al enviar"
   },
-  pagination: {
-    NextPage: "Siguiente página",
-    Total: "Total",
-    page: "página",
-    To: "A",
-  },
+
   my: {
     index: {
       myAccount: "mi cuenta",
