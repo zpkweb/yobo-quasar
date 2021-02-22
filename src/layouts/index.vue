@@ -306,8 +306,9 @@ export default {
   },
 
   async created() {
-    console.log("layout created", this.$i18n.locale, this.$store.state.lang.locale)
-    this.$i18n.locale = this.$store.state.lang.locale;
+    console.log("layout created", this.$i18n.locale, this.$store.state.lang)
+
+    this.$i18n.locale = this.$store.state.lang ? this.$store.state.lang.locale : 'zh-cn';
     const userInfo = this.$q.cookies.get('userInfo');
     if(userInfo) {
       if(userInfo.userId){

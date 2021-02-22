@@ -8,7 +8,10 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { configure } = require('quasar/wrappers')
+
 module.exports = configure(function (ctx) {
+  console.log("process.env.api", process.env.api)
+  console.log("process.env.ORIGIN", process.env.ORIGIN)
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: {
@@ -60,7 +63,7 @@ module.exports = configure(function (ctx) {
 
       proxy: {
         '/api': {
-          target: process.env.ORIGIN || 'http://localhost:7001' ,
+          target: ctx.dev ? 'http://localhost:7001' : 'http://39.105.190.188:7001/',
           // target: 'http://39.105.190.188:7001/',
           changeOrigin: true
         }
@@ -70,7 +73,7 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       env: {
-        API: process.env.ORIGIN || 'http://localhost:7001'
+        API: ctx.dev ? 'http://localhost:7001' : 'http://39.105.190.188:7001/'
       },
       devtool: 'source-map',
       vueRouterMode: 'hash', // available values: 'hash', 'history'

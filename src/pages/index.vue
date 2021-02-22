@@ -104,30 +104,32 @@
             :key="`gallerySeller-${item.sellerId}`"
 
            >
-           <template v-if="index%2 == 0">
-             <div class="line absolute"></div>
-             <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" v-if="item.commoditys && item.commoditys.length" >
-                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px" height="300px"></q-img>
-             </router-link>
 
-              <div class="desc bottom text-right odd">
-                <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
-                <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityName}}</router-link>
-              </div>
+           <template v-if="index%2 == 0">
+             <template v-if="item.commoditys && item.commoditys.length">
+              <div class="line absolute"></div>
+              <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`"  >
+                  <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px" height="300px"></q-img>
+              </router-link>
+
+                <div class="desc bottom text-right odd">
+                  <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
+                  <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityName}}</router-link>
+                </div>
+              </template>
            </template>
            <template v-else>
-
+            <template v-if="item.commoditys && item.commoditys.length">
               <div class="line-bottom absolute"></div>
               <div class="desc top text-right even">
                 <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
-
                 <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityName}}</router-link>
               </div>
 
-
-              <router-link v-if="item.commoditys && item.commoditys.length" :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
+              <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
                 <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px" height="300px"></q-img>
              </router-link>
+             </template>
            </template>
 
           </div>
@@ -146,7 +148,7 @@
         <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity.list" :key="`artwork-${item.commodityId}`">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
-            <q-img :src="item.photos.length ? item.photos[0].src : `img/index/new${index+1}.png`" width="255px" height="255px"></q-img>
+            <q-img :src="item.photos.length ? item.photos[0].src : ''" width="255px" height="255px"></q-img>
             <div class="new-desc text-left bg-white">
               <q-breadcrumbs separator="|" gutter="sm">
                 <!-- <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.techniques[0].name} • ${item.themes[0].name}`" class="text-dark ddd" /> -->
