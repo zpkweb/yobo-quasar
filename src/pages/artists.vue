@@ -14,9 +14,9 @@
           <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
               class="btn"
-              v-for="(item, index) in tags"
+              v-for="(item, index) in types"
               :key="index"
-              :to="{ query: Object.assign({}, $route.query, { tag: item.value }) }"
+              :to="{ query: Object.assign({}, $route.query, { type: item.value }) }"
               >{{ $t(item.label) }}</q-route-tab
             >
           </q-tabs>
@@ -168,8 +168,8 @@ export default {
         "Y",
         "Z",
       ],
-      tag: this.$route.query.tag,
-      tags: [
+      type: this.$route.query.type,
+      types: [
         {
           label: 'artists.Unlimited',
           value: "",
@@ -195,19 +195,19 @@ export default {
         },
         {
           label: 'artists.China',
-          value: "zh",
+          value: "中国",
         },
         {
           label: 'artists.Japan',
-          value: "ja",
+          value: "日本",
         },
         {
           label: 'artists.Spain',
-          value: "es",
+          value: "西班牙",
         },
         {
           label: 'artists.UnitedStates',
-          value: "us",
+          value: "美国",
         },
       ],
       // text: "展开选项",

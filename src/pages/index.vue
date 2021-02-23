@@ -176,7 +176,7 @@
               v-if="home && home.lookWorld"
               v-for="item in home.lookWorld"
               :key="`lookWorld-${item.id}`"
-              :to="{ path: `artwork`, query: Object.assign({}, artwork, {
+              :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({}, artwork, {
                 theme: item.name
               }) }"
             >
@@ -402,7 +402,7 @@ export default {
     },
     goArtists(data) {
       this.$router.push(`/${this.$i18n.locale}/artists?${this.$qs.stringify(Object.assign({},{
-        tag: "",
+        type: "",
         country: "",
         surname: ""
       }, data))}`);

@@ -23,6 +23,7 @@
               infinite
               arrows
               control-type="unelevated"
+              v-if="artwork && artwork.commodity && artwork.commodity.photos && artwork.commodity.photos.length"
             >
               <q-carousel-slide
                 v-for="(item, index) in artwork.commodity.photos"
@@ -39,7 +40,7 @@
           <div class="row">
             <div class="col-6">
               <!-- <q-img src="img/image1.png" width="350px"></q-img> -->
-              <q-img :src="artwork.commodity.photos ? artwork.commodity.photos[0].src : ''" width="350px"></q-img>
+              <q-img :src="artwork && artwork.commodity && artwork.commodity.photos && artwork.commodity.photos.length ? artwork.commodity.photos[0].src : ''" width="350px"></q-img>
             </div>
             <div class="col-6 left2">
               <!-- <div class="name">Aqua small resin gloss edition</div> -->
@@ -78,7 +79,7 @@
           <div class="row">
             <div class="col-4">
               <!-- <q-img src="img/painter.png" width="210px"></q-img> -->
-              <q-img :src="artwork.seller.user.avatar" width="210px"></q-img>
+              <q-img v-if="artwork && artwork.seller && artwork.seller.user" :src="artwork.seller.user.avatar" width="210px"></q-img>
             </div>
             <div class="col-8">
               <div class="row painter">
@@ -93,7 +94,7 @@
                 我最喜欢的主题是女性脸,我用人和旧墙的照片，垃圾海报和其他各种有趣的主题来重新创造一个新的形象。当数码部分准备好后，我打印图像并开始在上面画画。我创造了厚厚的结构和许多层的油漆和凝胶
               </div> -->
               <div class="content2">
-                {{ artwork.seller.metadata.profile }}
+                {{ artwork && artwork.seller && artwork.seller.metadata ? artwork.seller.metadata.profile : '' }}
               </div>
             </div>
           </div>
@@ -279,7 +280,7 @@
           <div class="title">{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}{{$t('artwork.commodity.OtherWorks')}}</div>
           <router-link :to="`/${$i18n.locale}/artist/${artwork.seller.sellerId}#artworks`" class="more absolute btn">{{$t('artwork.commodity.More')}}</router-link>
         </div>
-        <div class="row" v-if="artwork.seller.commoditys.length">
+        <div class="row" v-if="artwork && artwork.seller && artwork.seller.commoditys && artwork.seller.commoditys.length">
           <!-- <div class="col-3" v-for="i in 4" :key="i">
             <div class="paint">
               <div class="image"></div>
@@ -353,7 +354,7 @@
           </div> -->
           <div v-if="browsingHistory && browsingHistory.length" class="col-3" v-for="(item, index) in browsingHistory" :key="'browsingHistory'+index">
             <div class="paint">
-              <q-img :src="item.photos[0].src" width="208px" height="208px" />
+              <q-img :src="item && item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
             </div>
             <div class="text text-left">
               <!-- <div>丙烯酸 • 亚麻</div> -->

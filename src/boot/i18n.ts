@@ -23,7 +23,8 @@ export default boot(({ app }) => {
   const i18n = new VueI18n({
     locale: 'zh-cn',
     fallbackLocale: 'zh-cn',
-    messages
+    messages,
+    silentTranslationWarn: true
   })
 
   app.i18n = i18n
