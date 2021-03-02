@@ -582,16 +582,36 @@ a {
   display: block;
 }
 .dropdown1 {
+  position: relative;
+  top: -5px;
+  left: -5px;
   display: inline-block;
   background-color: #fff;
-  display: none;
+  // display: none;
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -36px;
+    width: 0;
+    height: 0;
+    border: solid 15px;
+  }
+  &::before {
+    border-color: transparent transparent #ddd  transparent ;
+  }
+  &::after {
+    top: 2px;
+    border-color: transparent transparent #fff transparent ;
+  }
+
   &:hover {
     display: block;
   }
   .dropdowncontent1 {
     background: transparent;
-    left: 93px;
-    top: 67px;
+    left: -146px;
+    top: 30px;
     z-index: 1000;
 
     .items {

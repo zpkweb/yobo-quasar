@@ -26,7 +26,8 @@
     </q-carousel>
 
     <div class="text-white slide">
-      {{ slide }}<span class="line">/</span
+      <span class="number">{{ slide }}</span>
+      <span class="line">/</span
       ><span class="all" v-if="data">{{ data.length }}</span>
     </div>
   </div>
@@ -84,14 +85,19 @@ export default {
   letter-spacing: 8px;
   padding: 100px 0 0 580px;
   font-size: 60px;
+  .number{
+    text-shadow: 0 0 10px #000;
+  }
+  .line {
+    display: inline-block;
+    font-size: 80px;
+    transform: rotate(20deg);
+    font-weight: lighter;
+  }
+  .all {
+    font-size: 30px;
+    text-shadow: 0 0 10px #000;
+  }
 }
-.line {
-  display: inline-block;
-  font-size: 80px;
-  transform: rotate(20deg);
-  font-weight: lighter;
-}
-.all {
-  font-size: 30px;
-}
+
 </style>

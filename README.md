@@ -1,36 +1,35 @@
-# Quasar App (yobo-quasar)
-
-A Quasar Framework app
-
-## Install the dependencies
+# 官网
+## 安装
 ```bash
-yarn
+npm run install / yarn
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### 开发
+
+本地环境
 ```bash
-yarn dev
+npm run dev / yarn dev
+```
+服务器环境
+```bash
+npm run server / yarn server
 ```
 
-### Build the app for production
+### 编译
 
+```bash
+npm run build / yarn build
+```
+### 部署
+```bash
 前端部署：（监听端口: 8080）
 创建yobo-quasar目录，把文件解压到yobo-quasar。
 进入yobo-quasar/dist/ssr,执行：npm install。
 执行命令：pm2 start
-
-
-```bash
-yarn build
 ```
-
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
-
-### 目录
+### 页面
 ```
-yobo页面
+yobo
 
   首页
     登录弹窗
@@ -47,36 +46,13 @@ yobo页面
     艺术品搜索
     艺术品购买
 ```
+### 目录
 
 ```
 .
 ├── README.md
 ├── babel.config.js
 ├── dist // 编译文件
-│   └── ssr
-│       ├── index.js
-│       ├── package.json
-│       ├── quasar.client-manifest.json
-│       ├── quasar.server-manifest.json
-│       ├── template.html
-│       └── www
-├── package.json
-├── public // 静态资源
-│   ├── favicon.ico
-│   ├── icons
-│   │   ├── favicon-128x128.png
-│   │   ├── favicon-16x16.png
-│   │   ├── favicon-32x32.png
-│   │   └── favicon-96x96.png
-│   └── img
-│       ├── artist
-│       ├── artist.png
-│       ├── artists
-│       ├── artworks
-│       ├── index
-│       ├── mine
-│       ├── pay
-│       └── test
 ├── quasar.conf.js // quasar配置文件
 ├── src
 │   ├── App.vue
@@ -141,13 +117,3 @@ yobo页面
 └── yarn.lock
 ```
 
-
-
-
-
-
-艺术品购买页面
-
-1. 类似作品按什么搜索
-
-2. 您最近浏览的艺术品-更多 链接

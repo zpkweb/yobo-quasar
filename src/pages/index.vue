@@ -6,7 +6,10 @@
           <div class="menu text-white text-bold">
             <div class="menu-item">
               <div class="menu-title menu-title1 btn" @click="goArtists()">{{$t('home.artist')}}</div>
-              <q-breadcrumbs class="menu-el" separator="|" gutter="md">
+              <q-breadcrumbs class="menu-el" separator="|" gutter="md" >
+                <template v-slot:separator>
+                  <span style="display: inline-block;width: 2px;height: 14px;font-size: 16px;background-color: rgb(255, 255, 255,.4);"></span>
+                </template>
                 <q-breadcrumbs-el
                   :label="$t('home.painter')"
                   class="text-white btn"
@@ -24,6 +27,9 @@
             <div class="menu-item">
               <div class="menu-title btn" @click="goArtworks()">{{$t('home.artwork')}}</div>
               <q-breadcrumbs class="menu-el" separator="|" gutter="md">
+                <template v-slot:separator>
+                  <span style="display: inline-block;width: 2px;height: 14px;font-size: 16px;background-color: rgb(255, 255, 255,.4);"></span>
+                </template>
                 <q-breadcrumbs-el
                   :label="$t('home.painting')"
                   class="text-white btn"
@@ -38,6 +44,9 @@
             <div class="menu-item">
               <div class="menu-title">{{$t('home.other')}}</div>
               <q-breadcrumbs class="menu-el" separator="|" gutter="md">
+                <template v-slot:separator>
+                  <span style="display: inline-block;width: 2px;height: 14px;font-size: 16px;background-color: rgb(255, 255, 255,.4);"></span>
+                </template>
                 <q-breadcrumbs-el :label="$t('home.artInformation')" class="text-white" />
                 <q-breadcrumbs-el :label="$t('home.VRExhibition')" class="text-white" />
                 <q-breadcrumbs-el :label="$t('home.industryArtExhibition')" class="text-white" />
@@ -336,8 +345,10 @@
       </div>
     </div>
     <div class="to-top none" ref="top">
-      <q-img class="cs btn" src="img/index/cs.png" width="50px"></q-img>
-      <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
+      <div class="onlineService">
+        <q-img class="cs btn" src="img/index/cs.png" width="50px"></q-img>
+        <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
+      </div>
       <q-img
         class="top btn"
         src="img/index/top.png"
@@ -822,20 +833,33 @@ export default {
 }
 .to-top {
   z-index: 1000;
-  width: 130px;
+  width: 60px;
   position: fixed;
   top: 180px;
   right: 0;
-  .text {
-    display: inline-block;
-    background-color: #333333;
-    width: 50px;
-    font-size: 18px;
+  .onlineService{
+
+    .cs {
+      margin-bottom: 10px;
+      vertical-align: top;
+    }
+    .text {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 10px;
+      background-color: #333333;
+      width: 50px;
+      font-size: 18px;
+    }
   }
-  .cs {
-    margin-right: 10px;
-    vertical-align: top;
+  .onlineService:hover{
+    .text {
+      display: inline-block;
+    }
   }
+
+
 }
 
 .offer {
@@ -899,5 +923,12 @@ export default {
     .openpage {
       display: block;
     }
+
+.separator-span{
+  display: inline-block;
+  width: 5px;
+  height: 10px;
+  background-color: #f00;
+}
 
 </style>
