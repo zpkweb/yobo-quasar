@@ -21,7 +21,7 @@ difference=$(( end - start ))
 git add .
 git add .
 git commit -m ":ok_hand: build at ${dateNow}"
-git push origin master
+git push
 
 
 echo "git auto push end..."
