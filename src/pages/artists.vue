@@ -75,7 +75,8 @@
           <div class="image">
             <!-- <q-img src="img/artists/artist.png" width="194px"></q-img> -->
             <q-img
-              :src="item.user ? item.user.avatar : ''"
+              v-if="item && item.user && item.user.avatar"
+              :src="item.user.avatar"
               width="231px"
               height="231px"
             ></q-img>

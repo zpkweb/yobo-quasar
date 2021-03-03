@@ -63,7 +63,7 @@ module.exports = configure(function (ctx) {
 
       proxy: {
         '/api': {
-          target: ctx.dev ? 'http://localhost:7001' : 'http://39.105.190.188:7001/',
+          target: !ctx.dev || process.env.api === 'prod' ? 'http://39.105.190.188:7001/' : 'http://localhost:7001' ,
           // target: 'http://39.105.190.188:7001/',
           changeOrigin: true
         }
@@ -73,7 +73,7 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       env: {
-        API: ctx.dev ? 'http://localhost:7001' : 'http://39.105.190.188:7001/'
+        API: !ctx.dev || process.env.api === 'prod' ? 'http://39.105.190.188:7001/' : 'http://localhost:7001'
       },
       devtool: 'source-map',
       vueRouterMode: 'hash', // available values: 'hash', 'history'

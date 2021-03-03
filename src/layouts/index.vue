@@ -10,7 +10,7 @@
             @click="goIndex"
           ></q-img>
           <div class="choose-language-container">
-            <q-btn size="xs" rounded flat class="choose-language btn">{{lang.value}}</q-btn>
+            <q-btn size="xs" rounded flat class="choose-language btn" v-if="lang">{{lang.value}}</q-btn>
           </div>
 
           <div class="dropdown1">
@@ -110,9 +110,9 @@
               <div>{{$t('layout.footer.LegalNotices')}}</div>
               <div>{{$t('layout.footer.GeneralRegulations')}}</div>
               <div>{{$t('layout.footer.CustomerReviews')}}</div>
-              <div>Offer a Gift Card</div>
+              <!-- <div>Offer a Gift Card</div>
               <div>{{$t('layout.footer.GetMyVoucher')}}</div>
-              <div>{{$t('layout.footer.myAccount')}}</div>
+              <div>{{$t('layout.footer.myAccount')}}</div> -->
               <div>{{$t('layout.footer.OfficeArtwork')}}</div>
               <div>{{$t('layout.footer.DesignerArtwork')}}</div>
               <div>+44 203 445 6333</div>
@@ -162,7 +162,7 @@
               </div>
             </div>
 
-            <div class="title pay">{{$t('layout.footer.SupportedPaymentMethods')}}</div>
+            <!-- <div class="title pay">{{$t('layout.footer.SupportedPaymentMethods')}}</div>
             <div class="row pay1">
               <div class="col-3">
                 <q-img src="img/index/zfb.png" width="60px"></q-img>
@@ -174,9 +174,9 @@
                 <q-img src="img/index/paypal.png" width="60px"></q-img>
               </div>
             </div>
-            <q-img src="img/index/mastercard.png" width="140px" contain></q-img>
+            <q-img src="img/index/mastercard.png" width="140px" contain></q-img> -->
           </div>
-          <div class="col-12 row bottom">
+          <!-- <div class="col-12 row bottom">
             <div class="col-4">{{$t('layout.footer.AllRightsReserved')}}</div>
             <div class="col-3">{{$t('layout.footer.ICPNo')}}</div>
             <div class="col-3 row">
@@ -189,7 +189,7 @@
               </div>
               <div class="col">{{$t('layout.footer.PublicNetworkSecurityNo')}}</div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -579,20 +579,20 @@ a {
   display: inline-block;
 }
 .choose-language-container:hover + .dropdown1 {
-  display: block;
+  display: inline-block;
 }
 .dropdown1 {
   position: relative;
   top: -5px;
   left: -5px;
-  display: inline-block;
   background-color: #fff;
-  // display: none;
+  display: none;
   &::before, &::after {
     content: "";
     position: absolute;
     top: 0;
     left: -36px;
+    z-index: 9999;
     width: 0;
     height: 0;
     border: solid 15px;
@@ -601,19 +601,19 @@ a {
     border-color: transparent transparent #ddd  transparent ;
   }
   &::after {
-    top: 2px;
+    top: 1px;
     border-color: transparent transparent #fff transparent ;
   }
 
   &:hover {
-    display: block;
+    display: inline-block;
   }
   .dropdowncontent1 {
-    background: transparent;
+    background: #fff;
     left: -146px;
-    top: 30px;
+    top: 29px;
     z-index: 1000;
-
+    padding-top: 2px;
     .items {
       box-shadow: 0px 3px 7px 0px rgba(21, 44, 43, 0.4);
       .after {

@@ -59,10 +59,10 @@
               {{ item.commodity.width }}cmX{{ item.commodity.height }}cm in - 2019
             </div>
           </div>
-          <div class="col-3 prise">
+          <!-- <div class="col-3 prise">
             <div>{{$t('my.wishlist.price')}}</div>
             <div class="num">{{ item.price[$i18n.locale] }}</div>
-          </div>
+          </div> -->
           <div class="col-2 row items-center">
             <div class="btn buy text-white text-center">
               <!-- 购买 -->

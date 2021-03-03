@@ -1,21 +1,17 @@
 <template>
   <div class="container2 row">
       <div class="msgs col-6">
-        <div class="title2">{{$t('my.info.shippingAddress')}}</div>
+        <!-- <div class="title2">{{$t('my.info.shippingAddress')}}</div>
         <div class="name" v-if="userInfo">
-          <!-- <template v-if="userInfo.seller">
-            <q-input :dense="true" square outlined v-model="userInfo.firstname" placeholder="请输入名" />
-            <q-input :dense="true" square outlined v-model="userInfo.lastname" placeholder="请输入姓氏" />
-          </template>
-          <template v-else>
-            <q-input :dense="true" square outlined v-model="address.name" placeholder="请输入姓名" />
-          </template> -->
           <q-input :dense="true" square outlined v-model="address.name" :placeholder="$t('my.info.name')" />
         </div>
         <q-input class="item" :dense="true" square outlined v-model="address.phone" :placeholder="$t('my.info.phone')" />
         <q-input class="item" :dense="true" square outlined v-model="address.country" :placeholder="$t('my.info.country')" />
         <q-input class="item" :dense="true" square outlined v-model="address.city" :placeholder="$t('my.info.province')" />
-        <q-input class="item" :dense="true" square outlined v-model="address.detail" :placeholder="$t('my.info.detailedAddress')" />
+        <q-input class="item" :dense="true" square outlined v-model="address.detail" :placeholder="$t('my.info.detailedAddress')" /> -->
+
+
+
         <!-- <el-cascader
           v-model="value"
           :options="options"
@@ -73,7 +69,7 @@
       </div>
 
       <div class="notices col-6">
-        <div class="notice">
+        <!-- <div class="notice">
           <div class="title">{{$t('my.info.PleaseFollowing')}}：</div>
           <div>
             • {{$t('my.info.FollowingOne')}}
@@ -84,7 +80,8 @@
           <div class="title">{{$t('my.info.PleaseFollowing')}}</div>
           <div>• {{$t('my.info.FollowingThree')}}</div>
           <div>• {{$t('my.info.FollowingFore')}}</div>
-        </div>
+        </div> -->
+
         <!-- <div class="notice3">
           <div class="title">请注意以下几点</div>
           <div>• 选择此选项，发票抬头为“个人”。</div>

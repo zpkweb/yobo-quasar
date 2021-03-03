@@ -9,6 +9,7 @@
     "dev": "quasar dev -m ssr",
     "server": "api=prod quasar dev -m ssr",
     "build": "api=prod quasar build -m ssr",
+    "push": "bash ./commit-push.sh",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },

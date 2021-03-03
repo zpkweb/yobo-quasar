@@ -22,7 +22,7 @@
     <div id="info" class="desc row">
       <div class="col-4" v-if="portrait">
         <!-- <q-img src="img/artist/zp.png" width="340px"></q-img> -->
-        <q-img :src="portrait.user ? portrait.user.avatar : ''"></q-img>
+        <q-img v-if="portrait && portrait.user && portrait.user.avatar" :src="portrait.user.avatar"></q-img>
       </div>
       <div class="col-7 offset-1 text-right resume">
         <!-- <div class="resume1">ARTIST</div>

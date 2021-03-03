@@ -28,7 +28,9 @@
             >
           </q-tabs>
         </div>
-        <div class="tag">
+
+        <!-- 按价格浏览 -->
+        <!-- <div class="tag">
           <div class="text-dark">{{$t('artwork.list.price')}}</div>
           <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
@@ -55,7 +57,9 @@
           <q-tabs>
             <span @click="customPrice" class="customPrice">{{$t('artwork.list.determine')}}</span>
           </q-tabs>
-        </div>
+        </div> -->
+
+
         <div class="tag">
           <div class="text-dark">{{$t('artwork.list.colour')}}</div>
           <q-tabs dense inline-label class="options-tabs text-grey-8">

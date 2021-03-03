@@ -57,7 +57,8 @@
       </div>
       <Carousel v-if="home" :slide="slide" :data="home.banner"></Carousel>
     </div>
-    <div class="advantage text-center">
+    <!-- 我们的优势 -->
+    <!-- <div class="advantage text-center">
       <div class="title">{{$t('home.OurAdvantage')}}</div>
       <div class="row items-end">
         <div class="col-3">
@@ -97,7 +98,7 @@
           <div class="item-desc">{{$t('home.CreditPayment')}}</div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="gallary-container">
       <div class="gallary">
         <div class="gallary-title text-center">{{$t('home.YourOnlineGallery')}}</div>
@@ -208,7 +209,8 @@
           </div>
         </div>
         <div class="col right">
-          <div class="title">{{$t('home.BrowsePrice')}}</div>
+          <!-- 按价格浏览 -->
+          <!-- <div class="title">{{$t('home.BrowsePrice')}}</div>
           <div class="row text-center text-white">
             <div class="col-6">
               <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
@@ -238,11 +240,14 @@
                 pricemax: ''
               }) }" class="prise">{{$t('home.Higher')}}¥<span>40000</span></router-link>
             </div>
-          </div>
+          </div> -->
+
+
         </div>
       </div>
     </div>
-    <div class="contact-container">
+    <!-- 让永宝帮您找到心仪的作品 -->
+    <!-- <div class="contact-container">
       <div class="row contact text-white">
         <div class="col relative-position">
           <div class="title">{{$t('home.LetFavoriteWork')}}</div>
@@ -319,7 +324,9 @@
           </q-carousel>
         </div>
       </div>
-    </div>
+    </div> -->
+
+
     <div class="hot-artists text-center relative-position">
       <div class="title">{{$t('home.OurBestSellers')}}</div>
       <div @click="goArtists()" class="more absolute row btn">
@@ -337,7 +344,7 @@
 
 
         <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="col-2"  v-for="item in home.hotSaleSeller.list" :key="`artist-${item.sellerId}`">
-          <img class="image" :src="item.user.avatar" width="180px" />
+          <img class="image" v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="180px" />
           <div class="name">{{item.firstname}} {{item.lastname}}</div>
           <div class="country">{{item.country}}-{{item.typeName}}</div>
         </router-link>

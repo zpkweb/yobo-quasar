@@ -31,7 +31,7 @@
         :key="'like1-' + index"
       >
         <!-- <div class="col-3 image"></div> -->
-        <q-img v-if="item.user" :src="item.user.avatar" class="image" width="212px"></q-img>
+        <q-img v-if="item.user && item.user.avatar" :src="item.user.avatar" class="image" width="212px"></q-img>
         <div class="col-4 desc">
           <div class="title">{{item.seller.firstname}} {{item.seller.lastname}}</div>
           <div>{{$t('my.like.uploaded')}}2000{{$t('my.like.SecondaryWorks')}}</div>

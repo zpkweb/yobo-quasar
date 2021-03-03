@@ -57,19 +57,18 @@
                     <div>{{artwork.commodity.categorys ? artwork.commodity.categorys[0].name : ''}}</div>
                   </div>
                 </div>
-                <div class="col-6 item">
+                <!-- <div class="col-6 item">
                   <div class="title2">{{$t('artwork.commodity.OtherDetails')}}</div>
                   <div class="contant">{{$t('artwork.commodity.CanFree')}}</div>
-                </div>
+                </div> -->
                 <div class="col-6 item">
                   <div class="title2">{{$t('artwork.commodity.size')}}</div>
-                  <!-- <div class="contant">40cmX40cm</div> -->
                   <div class="contant">{{ artwork.commodity.width }}cmX{{ artwork.commodity.height }}cm</div>
                 </div>
-                <div class="col-6 item">
+                <!-- <div class="col-6 item">
                   <div class="title2">{{$t('artwork.commodity.Postage')}}</div>
                   <div class="contant">{{$t('artwork.commodity.FreeWeeks')}}</div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -78,8 +77,7 @@
           <div class="title">{{$t('artwork.commodity.AboutAuthor')}}</div>
           <div class="row">
             <div class="col-4">
-              <!-- <q-img src="img/painter.png" width="210px"></q-img> -->
-              <q-img v-if="artwork && artwork.seller && artwork.seller.user" :src="artwork.seller.user.avatar" width="210px"></q-img>
+              <q-img v-if="artwork && artwork.seller && artwork.seller.user && artwork.seller.user.avatar" :src="artwork.seller.user.avatar" width="210px"></q-img>
             </div>
             <div class="col-8">
               <div class="row painter">
@@ -110,29 +108,27 @@
 
         <!-- <div class="prise"><span class="symbol">¥</span>7，000</div> -->
 
-        <div class="soldout" v-if="artwork.commodity.state == 2">
+        <!-- 艺术品价格 -->
+        <!-- <div class="soldout" v-if="artwork.commodity.state == 2">
           {{$t('artwork.commodity.Sold')}}
         </div>
         <div class="off" v-else-if="artwork.commodity.state == 3">
           {{$t('artwork.commodity.HasBeenRemoved')}}
         </div>
         <div class="prise" v-else>{{ price }}</div>
-
-        <!-- <div class="soldout">已售</div>
-        <div class="off">已下架</div> -->
         <q-select
           borderless
           v-model="currency"
           :options="priceOptions"
           emit-value
           class="currency"
-        />
-        <div class="title2">{{$t('artwork.commodity.FrameSelectionMaterial')}}</div>
+        /> -->
+
+        <!-- <div class="title2">{{$t('artwork.commodity.FrameSelectionMaterial')}}</div>
         <div class="row text-center frames">
           <div class="btn col-4" v-for="(item, index) in photoFrames" :key="index" >
-            <!-- <div class="frame"></div> -->
             <q-img :src="`img/photoFrame/photoFrame-${index+1}.png`" class="frame" :class="{ active: photoFrame == index }" @click="photoFrame = index" />
-            <div class="color">{{$t(item.label)}} ¥{{item.price}}</div>
+            <div class="color">{{$t(item.label)}}</div>
           </div>
           <div class="col-4">
             <div class="frame custom"></div>
@@ -158,7 +154,7 @@
             <q-img src="img/pay.png" width="30px" class="image"></q-img>
             <div>{{$t('artwork.commodity.SafePayment')}}</div>
           </div>
-        </div>
+        </div> -->
         <!-- <div class="buy text-center relative-position">
           <div class="prise prise2"><span class="symbol">¥</span> 7，000</div>
           <div class="buynow text-white btn">点击购买</div>
@@ -204,7 +200,9 @@
             </div>
           </div>
         </div> -->
-        <div class="sold relative-position">
+
+        <!-- 您心仪的作品已被售出？ -->
+        <!-- <div class="sold relative-position">
           <div class="sold-title">{{$t('artwork.commodity.YourSold')}}</div>
           <div>
             {{$t('artwork.commodity.goodNews')}}
@@ -230,7 +228,6 @@
             ></q-img>
             <div class="offer-title text-left">{{$t('artwork.commodity.BidWork')}}</div>
             <div class="newprise bg-white text-left">
-              <!-- <span class="symbol2">¥</span> -->
               <span class="symbol2">{{currency}}</span>
               <span class="sub btn" @click="subBidPrice">－</span
               >
@@ -254,7 +251,10 @@
             </div>
             <q-btn color="black" class="full-width" :label="$t('artwork.commodity.bid')" @click="bid" />
           </div>
-        </div>
+        </div> -->
+
+
+
         <div class="follow relative-position" ref="follow">
           <q-img
             src="img/close.png"
