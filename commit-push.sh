@@ -10,7 +10,7 @@ start=$(date +%s)
 # cd .
 
 # build
-npm run build
+yarn build
 
 end=$(date +%s)
 
@@ -18,7 +18,6 @@ dateNow=$(date +%T)
 difference=$(( end - start ))
 
 # push
-git add .
 git add .
 git commit -m ":ok_hand: build at ${dateNow}"
 git push
