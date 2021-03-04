@@ -109,13 +109,13 @@
               <div>{{$t('layout.footer.contactUs')}}</div>
               <div>{{$t('layout.footer.LegalNotices')}}</div>
               <div>{{$t('layout.footer.GeneralRegulations')}}</div>
-              <div>{{$t('layout.footer.CustomerReviews')}}</div>
+              <!-- <div>{{$t('layout.footer.CustomerReviews')}}</div> -->
               <!-- <div>Offer a Gift Card</div>
               <div>{{$t('layout.footer.GetMyVoucher')}}</div>
               <div>{{$t('layout.footer.myAccount')}}</div> -->
               <div>{{$t('layout.footer.OfficeArtwork')}}</div>
               <div>{{$t('layout.footer.DesignerArtwork')}}</div>
-              <div>+44 203 445 6333</div>
+              <!-- <div>+44 203 445 6333</div> -->
             </div>
             <div class="col-3 item">
               <div class="title">{{$t('layout.footer.aboutAs')}}</div>
