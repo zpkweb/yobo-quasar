@@ -129,7 +129,7 @@
             </div>
             <div class="col-3 item">
               <div class="title">{{$t('layout.footer.FeaturedArtist')}}</div>
-              <div>Kirstin Mccoy</div>
+              <!-- <div>Kirstin Mccoy</div> -->
               <div>Josep Moncada</div>
               <div>Ivan Pili</div>
               <div>Kristin Kossi</div>
