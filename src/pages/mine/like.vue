@@ -47,12 +47,21 @@
       </div>
     </template>
 
-    <div v-else>{{$t('my.like.NoData')}}</div>
+
+    <noData
+      v-else
+      text="my.like.NoData"
+      :routerLink="`/${$i18n.locale}/artists`"
+    />
   </div>
 </template>
 
 <script>
+import noData from "src/components/noData";
 export default {
+  components: {
+    noData,
+  },
   data() {
     return {
       myArtists: []
@@ -169,4 +178,5 @@ export default {
     }
   }
 }
+
 </style>

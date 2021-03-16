@@ -35,7 +35,7 @@ export default {
       emailAddress: "email address",
       SupportedPaymentMethods: "Supported payment methods",
       AllRightsReserved: "©2020 Yongbao (China) Co., Ltd. All rights reserved",
-      ICPNo: "Shanghai ICP No. 15013228-17",
+      ICPNo: "Beijing ICP No. 2021007113",
       PublicNetworkSecurityNo: "Shanghai Public Network Security No. 31010402004774"
     },
     pleaseLoginFirst: "please log in first"
@@ -108,6 +108,7 @@ export default {
     },
     info: {
       shippingAddress: "Where is your shipping address",
+      LastName: "Please enter last name",
       name: "Please type in your name",
       phone: "Please enter phone number",
       country: "Please enter country",
@@ -160,7 +161,12 @@ export default {
     China: "China",
     Japan: "Japan",
     Spain: "Spain",
-    UnitedStates: "United States"
+    UnitedStates: "United States",
+    Other: "Other",
+    Gender: "Gender",
+    Male: "Male",
+    Female: "Female",
+    Studio: "Studio "
   },
   artist: {
     Followed: "Followed",
@@ -184,6 +190,7 @@ export default {
     FollowedSuccess: "Followed Success"
   },
   artwork: {
+    NoData: "No data, please search again, we will improve it as soon as possible!",
     list: {
       artwork: "artwork",
       searchCriteria: "Works of art that match your search criteria",

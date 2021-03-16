@@ -5,6 +5,7 @@
   "productName": "Quasar App",
   "author": "zpk <zpkweb@icloud.com>",
   "private": true,
+  "license": "ISC",
   "scripts": {
     "dev": "quasar dev -m ssr",
     "server": "api=prod quasar dev -m ssr",

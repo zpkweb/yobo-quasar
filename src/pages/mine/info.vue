@@ -1,38 +1,35 @@
 <template>
   <div class="container2 row">
-      <div class="msgs col-6">
-        <!-- <div class="title2">{{$t('my.info.shippingAddress')}}</div>
-        <div class="name" v-if="userInfo">
-          <q-input :dense="true" square outlined v-model="address.name" :placeholder="$t('my.info.name')" />
-        </div>
-        <q-input class="item" :dense="true" square outlined v-model="address.phone" :placeholder="$t('my.info.phone')" />
-        <q-input class="item" :dense="true" square outlined v-model="address.country" :placeholder="$t('my.info.country')" />
-        <q-input class="item" :dense="true" square outlined v-model="address.city" :placeholder="$t('my.info.province')" />
-        <q-input class="item" :dense="true" square outlined v-model="address.detail" :placeholder="$t('my.info.detailedAddress')" /> -->
+    <div class="msgs col-6">
+      <div class="title2">{{$t('my.info.shippingAddress')}}</div>
+      <!-- <input class="item" :dense="true" square outlined v-model="address.name" :placeholder="$t('my.info.name')" /> -->
+      <div class="name">
+        <input class="firstname" type="input" v-model="address.firstname" :placeholder="$t('my.info.LastName')" />
+        <input class="lastname" type="input" v-model="address.lastname" :placeholder="$t('my.info.name')" />
+      </div>
+      <input class="item" :dense="true" square outlined standout v-model="address.phone" :placeholder="$t('my.info.phone')" />
+      <input class="item" :dense="true" square outlined v-model="address.country" :placeholder="$t('my.info.country')" />
+      <input class="item" :dense="true" square outlined v-model="address.city" :placeholder="$t('my.info.province')" />
+      <input class="item" :dense="true" square outlined v-model="address.detail" :placeholder="$t('my.info.detailedAddress')" />
 
-
-
-        <!-- <el-cascader
-          v-model="value"
-          :options="options"
-          class="item"
-        ></el-cascader> -->
-        <!-- <el-select
-          class="item item1"
+        <!-- <select
+          class="item item-select"
           v-model="subscribe"
           placeholder="是否订阅我们的刊物"
         >
-          <el-option label="是" value="1"> </el-option>
-          <el-option label="否" value="0"> </el-option>
-        </el-select> -->
-        <!-- <el-select
-          class="item"
+
+          <option label="是" value="1"> </option>
+          <option label="否" value="0"> </option>
+        </select> -->
+
+        <!-- <select
+          class="item item-select"
           v-model="invoice"
           placeholder="发票地址与收货地址是否相同"
         >
-          <el-option label="是" value="1"> </el-option>
-          <el-option label="否" value="0"> </el-option>
-        </el-select> -->
+          <option label="是" value="1"> </option>
+          <option label="否" value="0"> </option>
+        </select> -->
 
         <div class="title2">{{$t('my.info.contactMethod')}}</div>
         <input
@@ -65,11 +62,11 @@
             >增值税专用发票</el-radio
           >
         </div> -->
-        <div class="new text-white text-center btn" @click="update">{{$t('my.info.Update')}}</div>
+        <div class="new text-white text-center btn" :class="{isUpdate: 'update'}" @click="update">{{$t('my.info.Update')}}</div>
       </div>
 
       <div class="notices col-6">
-        <!-- <div class="notice">
+        <div class="notice">
           <div class="title">{{$t('my.info.PleaseFollowing')}}：</div>
           <div>
             • {{$t('my.info.FollowingOne')}}
@@ -80,7 +77,7 @@
           <div class="title">{{$t('my.info.PleaseFollowing')}}</div>
           <div>• {{$t('my.info.FollowingThree')}}</div>
           <div>• {{$t('my.info.FollowingFore')}}</div>
-        </div> -->
+        </div>
 
         <!-- <div class="notice3">
           <div class="title">请注意以下几点</div>
@@ -149,12 +146,15 @@ export default {
           ],
         },
       ],
+
       user: {
         email: '',
         phone: ''
       },
       address: {
         name: '',
+        firstname: '',
+        lastname: '',
         phone: '',
         country: '',
         city: '',
@@ -177,11 +177,14 @@ export default {
       this.user.email = this.$store.state.user.info.email;
       this.user.phone = this.$store.state.user.info.phone;
 
-      this.address.name = this.$store.state.user.info.address[0].name;
-      this.address.phone = this.$store.state.user.info.address[0].phone;
-      this.address.country = this.$store.state.user.info.address[0].country;
-      this.address.city = this.$store.state.user.info.address[0].city;
-      this.address.detail = this.$store.state.user.info.address[0].address;
+      if(this.$store.state.user.info.address && this.$store.state.user.info.address.length){
+        this.address.name = this.$store.state.user.info.address[0].name;
+        this.address.phone = this.$store.state.user.info.address[0].phone;
+        this.address.country = this.$store.state.user.info.address[0].country;
+        this.address.city = this.$store.state.user.info.address[0].city;
+        this.address.detail = this.$store.state.user.info.address[0].address;
+      }
+
 
     }, 300)
 
@@ -190,10 +193,15 @@ export default {
 
     userInfo() {
       return this.$store.state.user.info;
+    },
+    isApplyArtist() {
+      return this.$store.state.user.info ? this.$store.state.user.info.seller : false
     }
   },
   methods: {
+
     async update() {
+
       const updateUserAddress = await this.$store.dispatch('user/updateUserAddress', {
         ...this.address,
         userId: this.$store.state.user.info.userId,
@@ -267,7 +275,11 @@ input {
   margin: 20px 0 !important;
   border-radius: 0;
   outline: none;
-  color: rgb(153, 153, 153);
+  // color: rgb(153, 153, 153);
+  &:focus{
+    border: 1px solid #152c2b;
+    color: #152c2b;
+  }
 }
 .item::v-deep {
   .el-cascader {
@@ -291,6 +303,9 @@ input {
     height: auto;
   }
 }
+.item-select{
+  padding: 0 10px;
+}
 
 .name {
   width: 420px;
@@ -300,6 +315,7 @@ input {
     height: 36px;
     width: 200px;
     outline: none;
+    box-sizing: border-box;
   }
   .firstname {
     margin-right: 20px;
@@ -322,6 +338,9 @@ input {
   font-weight: bolder;
   background-color: #152c2b;
   margin: 80px 0 60px 0;
+}
+.update{
+  background-color: #152c2b;
 }
 .notices {
   padding: 36px 60px;

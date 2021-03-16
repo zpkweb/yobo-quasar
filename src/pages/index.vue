@@ -57,8 +57,9 @@
       </div>
       <Carousel v-if="home" :slide="slide" :data="home.banner"></Carousel>
     </div>
+
     <!-- 我们的优势 -->
-    <!-- <div class="advantage text-center">
+    <div class="advantage text-center">
       <div class="title">{{$t('home.OurAdvantage')}}</div>
       <div class="row items-end">
         <div class="col-3">
@@ -98,7 +99,8 @@
           <div class="item-desc">{{$t('home.CreditPayment')}}</div>
         </div>
       </div>
-    </div> -->
+    </div>
+
     <div class="gallary-container">
       <div class="gallary">
         <div class="gallary-title text-center">{{$t('home.YourOnlineGallery')}}</div>
@@ -210,44 +212,44 @@
         </div>
         <div class="col right">
           <!-- 按价格浏览 -->
-          <!-- <div class="title">{{$t('home.BrowsePrice')}}</div>
+          <div class="title">{{$t('home.BrowsePrice')}}</div>
           <div class="row text-center text-white">
             <div class="col-6">
               <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
                 price: 0,
                 pricemin: '',
                 pricemax: 6000
-              }) }" class="prise">{{$t('home.Below')}}¥<span>6000</span></router-link>
+              }) }" class="prise">{{$t('home.Below')}}¥<span>6,000</span></router-link>
             </div>
             <div class="col-6">
               <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
                 price: 1,
                 pricemin: 6000,
                 pricemax: 20000
-              }) }" class="prise">¥ <span>6000-</span>¥<span>20000</span></router-link>
+              }) }" class="prise">¥ <span>6000-</span>¥<span>20,000</span></router-link>
             </div>
             <div class="col-6">
               <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
                 price: 2,
                 pricemin: 20000,
                 pricemax: 40000
-              }) }" class="prise">¥<span>20000-</span>¥<span>40000</span></router-link>
+              }) }" class="prise">¥<span>20000-</span>¥<span>40,000</span></router-link>
             </div>
             <div class="col-6">
               <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
                 price: 3,
                 pricemin: 40000,
                 pricemax: ''
-              }) }" class="prise">{{$t('home.Higher')}}¥<span>40000</span></router-link>
+              }) }" class="prise">{{$t('home.Higher')}}¥<span>40,000</span></router-link>
             </div>
-          </div> -->
+          </div>
 
 
         </div>
       </div>
     </div>
     <!-- 让永宝帮您找到心仪的作品 -->
-    <!-- <div class="contact-container">
+    <div class="contact-container">
       <div class="row contact text-white">
         <div class="col relative-position">
           <div class="title">{{$t('home.LetFavoriteWork')}}</div>
@@ -324,7 +326,7 @@
           </q-carousel>
         </div>
       </div>
-    </div> -->
+    </div>
 
 
     <div class="hot-artists text-center relative-position">
@@ -422,7 +424,8 @@ export default {
       this.$router.push(`/${this.$i18n.locale}/artists?${this.$qs.stringify(Object.assign({},{
         type: "",
         country: "",
-        surname: ""
+        surname: "",
+        other: ""
       }, data))}`);
     },
     goArtworks(data) {
@@ -628,20 +631,21 @@ export default {
         font-size: 12px;
         font-family: "Heiti SC";
         width: 255px;
-        padding: 61px 0 20px 15px;
+        padding: 64px 15px 15px 15px;
       }
     }
     .bg {
       width: 255px;
       background-color: #738080;
-      height: 362px;
+      height: 356px;
       left: 38px;
       top: 10px;
     }
     .name {
       font-size: 16px;
       background-color: #152c2b;
-      width: 154px;
+      // width: 154px;
+      width: 66.66%;
       height: 35px;
       top: 270px;
       left: 10px;
@@ -671,6 +675,7 @@ export default {
     .title {
       padding-bottom: 46px;
       font-size: 21px;
+      font-weight: bold;
       .num {
         font-size: 48px;
         font-family: "Hiragino Sans GB";
@@ -713,7 +718,8 @@ export default {
       .line2 {
         width: 210px;
         height: 165px;
-        background-color: #caccaa;
+        // background-color: #caccaa;
+        background-color: rgba(202,203,171,.7);
         top: 10px;
         left: 7px;
         // z-index: -1;
@@ -723,7 +729,8 @@ export default {
         height: 148px;
         top: 19px;
         left: 14px;
-        background-color: #d3d4c6;
+        // background-color: #d3d4c6;
+        background-color: rgba(212,212,198,.7);
       }
     }
     .prise {

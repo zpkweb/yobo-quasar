@@ -45,16 +45,18 @@
           class="input"
           v-model="password"
         />
-        <input type="checkbox" class="check mt10" />
+        <q-checkbox v-model="checkbox1" label="我已阅读并同意" color="black" size="xs" />
+        <!-- <input type="checkbox" class="check mt10" /> -->
         <div class="checkbox1 mt10">
-          我已阅读并同意 <span class="xy btn">《永宝协议》</span>及
+          <span class="xy btn">《永宝协议》</span>及
           <span class="ys btn">《永宝隐私政策》</span>
         </div>
-        <div class="text-white text-center register btn" @click="register">
+        <div class="text-white text-center register btn bg-active" @click="register">
           注册
         </div>
-        <input type="checkbox" class="check" />
-        <div class="checkbox2">保持登录</div>
+        <q-checkbox v-model="checkbox2" label="保持登录" color="black" size="xs" />
+        <!-- <input type="checkbox" class="check" />
+        <div class="checkbox2">保持登录</div> -->
         <!-- <div class="text-center">
             <div class="title2">第三方账号注册</div>
             <div>
@@ -87,6 +89,8 @@
 export default {
   data() {
     return {
+      checkbox1: false,
+      checkbox2: false,
       showRegister: true,
       name: "",
       email: "",
@@ -246,6 +250,41 @@ export default {
   }
   .img {
     margin: 0 16px;
+  }
+}
+.card1 {
+  padding: 0;
+}
+.success {
+  width: 485px;
+  height: 374px;
+  background: url("/img/index/success.png") center center no-repeat;
+  .quotation {
+    font-size: 88px;
+    font-family: "Hei";
+    color: rgba(21, 44, 43, 0.102);
+    line-height: 1.2;
+    text-align: center;
+    transform: matrix(5.563888314405, 0, 0, 5.563888314405, 0, 0);
+    -moz-transform: matrix(5.563888314405, 0, 0, 5.563888314405, 0, 0);
+    -webkit-transform: matrix(5.563888314405, 0, 0, 5.563888314405, 0, 0);
+    -ms-transform: matrix(5.563888314405, 0, 0, 5.563888314405, 0, 0);
+    position: absolute;
+    left: -102px;
+    top: 153px;
+    z-index: 101;
+  }
+  .title {
+    font-size: 24px;
+    font-family: "STFangsong";
+    margin-bottom: 30px;
+    margin-top: 26px;
+    padding-left: 14px;
+  }
+  .content {
+    font-size: 16px;
+    font-family: "STFangsong";
+    letter-spacing: 0.5px;
   }
 }
 </style>

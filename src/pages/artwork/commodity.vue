@@ -43,32 +43,29 @@
               <q-img :src="artwork && artwork.commodity && artwork.commodity.photos && artwork.commodity.photos.length ? artwork.commodity.photos[0].src : ''" width="350px"></q-img>
             </div>
             <div class="col-6 left2">
-              <!-- <div class="name">Aqua small resin gloss edition</div> -->
               <div class="name">{{ artwork.commodity.name }}</div>
-              <!-- <div class="year">2019</div> -->
-              <div class="year">{{ artwork.commodity.createdDate.substr(0, 4) }}</div>
-              <!-- <div class="painter">Karin Vermeer 荷兰</div> -->
-              <div class="painter">{{ artwork.commodity.seller.firstname }} {{ artwork.commodity.seller.lastname }} {{ artwork.commodity.seller.country}}</div>
+              <div class="year title-color">{{ artwork.commodity.createdDate.substr(0, 4) }}</div>
+              <div class="painter title-color">{{ artwork.commodity.seller.firstname }} {{ artwork.commodity.seller.lastname }} {{ artwork.commodity.seller.country}}</div>
               <div class="row">
                 <div class="col-6 item">
-                  <div class="title2">{{$t('artwork.commodity.Technique')}}</div>
+                  <div class="title2 title-color">{{$t('artwork.commodity.Technique')}}</div>
                   <div class="content">
                     <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
                     <div>{{artwork.commodity.categorys ? artwork.commodity.categorys[0].name : ''}}</div>
                   </div>
                 </div>
-                <!-- <div class="col-6 item">
-                  <div class="title2">{{$t('artwork.commodity.OtherDetails')}}</div>
-                  <div class="contant">{{$t('artwork.commodity.CanFree')}}</div>
-                </div> -->
                 <div class="col-6 item">
-                  <div class="title2">{{$t('artwork.commodity.size')}}</div>
+                  <div class="title2 title-color">{{$t('artwork.commodity.OtherDetails')}}</div>
+                  <div class="contant">{{$t('artwork.commodity.CanFree')}}</div>
+                </div>
+                <div class="col-6 item">
+                  <div class="title2 title-color">{{$t('artwork.commodity.size')}}</div>
                   <div class="contant">{{ artwork.commodity.width }}cmX{{ artwork.commodity.height }}cm</div>
                 </div>
-                <!-- <div class="col-6 item">
-                  <div class="title2">{{$t('artwork.commodity.Postage')}}</div>
+                <div class="col-6 item">
+                  <div class="title2 title-color">{{$t('artwork.commodity.Postage')}}</div>
                   <div class="contant">{{$t('artwork.commodity.FreeWeeks')}}</div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -81,16 +78,9 @@
             </div>
             <div class="col-8">
               <div class="row painter">
-                <div class="col">{{ artwork.commodity.name }}</div>
+                <div class="col title-color">{{ artwork.commodity.name }}</div>
                 <router-link :to="`/${$i18n.locale}/artist/${ artwork.seller.sellerId }`" class="col-grow">{{$t('artwork.commodity.enter')}}{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}{{$t('artwork.commodity.Homepage')}}</router-link>
               </div>
-              <!-- <div class="content2">
-                我的工作是将不同的图片和颜料混合在一起，在计算机和画布上创建一个新的图像。
-              </div> -->
-
-              <!-- <div class="content2">
-                我最喜欢的主题是女性脸,我用人和旧墙的照片，垃圾海报和其他各种有趣的主题来重新创造一个新的形象。当数码部分准备好后，我打印图像并开始在上面画画。我创造了厚厚的结构和许多层的油漆和凝胶
-              </div> -->
               <div class="content2">
                 {{ artwork && artwork.seller && artwork.seller.metadata ? artwork.seller.metadata.profile : '' }}
               </div>
@@ -105,11 +95,11 @@
         </div>
 
 
-
-        <!-- <div class="prise"><span class="symbol">¥</span>7，000</div> -->
-
         <!-- 艺术品价格 -->
-        <!-- <div class="soldout" v-if="artwork.commodity.state == 2">
+        <!-- <div class="prise"><span class="symbol">¥</span><span>7，000</span></div> -->
+
+
+        <div class="soldout" v-if="artwork.commodity.state == 2">
           {{$t('artwork.commodity.Sold')}}
         </div>
         <div class="off" v-else-if="artwork.commodity.state == 3">
@@ -122,9 +112,14 @@
           :options="priceOptions"
           emit-value
           class="currency"
-        /> -->
+        >
+        <template v-slot:selected-item="scope">
+          <span class="currency-span">{{ scope.opt }}</span>
+        </template>
 
-        <!-- <div class="title2">{{$t('artwork.commodity.FrameSelectionMaterial')}}</div>
+        </q-select>
+
+        <div class="title2">{{$t('artwork.commodity.FrameSelectionMaterial')}}</div>
         <div class="row text-center frames">
           <div class="btn col-4" v-for="(item, index) in photoFrames" :key="index" >
             <q-img :src="`img/photoFrame/photoFrame-${index+1}.png`" class="frame" :class="{ active: photoFrame == index }" @click="photoFrame = index" />
@@ -154,8 +149,8 @@
             <q-img src="img/pay.png" width="30px" class="image"></q-img>
             <div>{{$t('artwork.commodity.SafePayment')}}</div>
           </div>
-        </div> -->
-        <!-- <div class="buy text-center relative-position">
+        </div>
+        <div class="buy text-center relative-position">
           <div class="prise prise2"><span class="symbol">¥</span> 7，000</div>
           <div class="buynow text-white btn">点击购买</div>
           <div class="makeoffer text-white btn" @click="openOfferPage">
@@ -199,10 +194,13 @@
               ></textarea>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <!-- 您心仪的作品已被售出？ -->
-        <!-- <div class="sold relative-position">
+        <div id="scrollDom" :class="{scrollDomClass}" :style="{top: (scrollDomClass ? 50 : scrollDomTop) +'px',left:scrollDomLeft+'px'}" ref="scrollDom">
+
+
+        <div class="sold relative-position"  >
           <div class="sold-title">{{$t('artwork.commodity.YourSold')}}</div>
           <div>
             {{$t('artwork.commodity.goodNews')}}
@@ -251,7 +249,7 @@
             </div>
             <q-btn color="black" class="full-width" :label="$t('artwork.commodity.bid')" @click="bid" />
           </div>
-        </div> -->
+        </div>
 
 
 
@@ -272,28 +270,20 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
     </div>
-    <div class="paints">
+    <!--  艺术家的其他作品 -->
+    <div class="paints" v-if="artwork && artwork.seller && artwork.seller.commoditys && artwork.seller.commoditys.length">
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">{{ artwork.seller.firstname }} {{ artwork.seller.lastname }}{{$t('artwork.commodity.OtherWorks')}}</div>
           <router-link :to="`/${$i18n.locale}/artist/${artwork.seller.sellerId}#artworks`" class="more absolute btn">{{$t('artwork.commodity.More')}}</router-link>
         </div>
-        <div class="row" v-if="artwork && artwork.seller && artwork.seller.commoditys && artwork.seller.commoditys.length">
-          <!-- <div class="col-3" v-for="i in 4" :key="i">
-            <div class="paint">
-              <div class="image"></div>
-            </div>
-            <div class="text text-left">
-              <div>丙烯酸 • 亚麻</div>
-              <div>100x100cm</div>
-            </div>
-          </div> -->
+        <div class="row" >
           <router-link :to="`${item.commodityId}`" class="col-3"   v-for="(item, index) in artwork.seller.commoditys" :key="'sellerCommodity'+index" v-if="item.commodityId !== $route.params.artworkId">
 
             <div class="paint">
-              <!-- <div class="image"></div> -->
               <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
             </div>
             <div class="text text-left">
@@ -312,22 +302,11 @@
           <router-link :to="`/${$i18n.locale}/artwork?shape=0`" class="more absolute">{{$t('artwork.commodity.More')}}</router-link>
         </div>
         <div class="row">
-          <!-- <div class="col-3" v-for="i in 4" :key="i">
-            <div class="paint">
-              <div class="image"></div>
-            </div>
-            <div class="text text-left">
-              <div>丙烯酸 • 亚麻</div>
-              <div>100x100cm</div>
-            </div>
-          </div> -->
           <router-link :to="`${item.commodityId}`" class="col-3" v-if="artwork.commoditySimilar.length" v-for="(item, index) in artwork.commoditySimilar" :key="'commoditySimilar'+index">
             <div class="paint">
-              <!-- <div class="image"></div> -->
               <q-img :src="item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
             </div>
             <div class="text text-left">
-              <!-- <div>丙烯酸 • 亚麻</div> -->
               <div>{{item.categorys ? item.categorys[0].name : ''}}</div>
               <div>{{item.width}}x{{item.height}}cm</div>
             </div>
@@ -335,29 +314,21 @@
         </div>
       </div>
     </div>
-    <div class="paints history">
+    <!-- 您最近浏览的作品 -->
+    <div class="paints history" v-if="browsingHistory && browsingHistory.length">
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">{{$t('artwork.commodity.RecentlyViewedWorks')}}</div>
-          <!-- <router-link :to="" class="more absolute btn">更多</router-link> -->
-        </div>
 
+          <router-link v-if="$store.state.user.info" :to="`/${$i18n.locale}/mine/wishlist`" class="more absolute btn">更多</router-link>
+
+        </div>
         <div class="row">
-          <!-- <div class="col-3" v-for="i in 4" :key="i">
-            <div class="paint">
-              <div class="image"></div>
-            </div>
-            <div class="text text-left">
-              <div>丙烯酸 • 亚麻</div>
-              <div>100x100cm</div>
-            </div>
-          </div> -->
-          <div v-if="browsingHistory && browsingHistory.length" class="col-3" v-for="(item, index) in browsingHistory" :key="'browsingHistory'+index">
+          <div  class="col-3" v-for="(item, index) in browsingHistory" :key="'browsingHistory'+index">
             <div class="paint">
               <q-img :src="item && item.photos && item.photos.length ? item.photos[0].src : ''" width="208px" height="208px" />
             </div>
             <div class="text text-left">
-              <!-- <div>丙烯酸 • 亚麻</div> -->
               <div>{{item.categorys ? item.categorys[0].name : ''}}</div>
               <div>{{item.width}}x{{item.height}}cm</div>
             </div>
@@ -426,7 +397,11 @@ export default {
       bidMsg: "",
       bidPop: false,
       hasMyArtwork: false,
-
+      scrollDomClass: false,
+      scrollDomTop: 980,
+      scrollDomLeft: 1121,
+      email: "",
+      msg: ""
     };
   },
   async preFetch({ store, currentRoute }) {
@@ -457,8 +432,15 @@ export default {
       });
     }
     this.hasMyArtwork = hasMyArtwork;
-
+    this.scrollDomTop = this.$refs.scrollDom.offsetTop;
+    this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
+    // 监听页面滚动
+    window.addEventListener("scroll",this.handleScroll);
   },
+  destroyed() {
+    // 销毁页面滚动
+      document.removeEventListener('scroll', this.handleScroll)
+    },
   computed: {
     artwork() {
       return this.$store.state.artwork.data;
@@ -485,6 +467,22 @@ export default {
     }
   },
   methods: {
+    handleScroll() {
+        //获取滚动时的高度
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        // let scrollDomTop = this.$refs.scrollDom.offsetTop;
+        // console.log("scroll",scrollTop, this.scrollDomTop)
+        if (scrollTop > 0 && (scrollTop -30) > this.scrollDomTop) {
+          // console.log("滚动大于0的时候要做的操作")
+          this.scrollDomClass = true;
+          // this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
+        }else{
+          this.scrollDomClass = false;
+          // this.scrollDomTop = this.$refs.scrollDom.offsetTop;
+          // this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
+        }
+
+    },
     close() {
       this.$refs.follow.classList.add("closepage");
     },
@@ -593,7 +591,8 @@ export default {
           color: 'negative',
         })
       }
-    }
+    },
+
   },
 };
 </script>
@@ -603,6 +602,7 @@ export default {
   width: 1200px;
   margin: 0 auto;
   color: rgb(21, 44, 43);
+  padding-top: 30px;
   .btn {
     cursor: pointer;
   }
@@ -620,11 +620,11 @@ export default {
     .image {
       // width: 65px;
       // height: 27px;
-      width: 25px;
-      height: 25px;
+      width: 16px;
+      height: 16px;
       background: url("/img/share.png") center center no-repeat;
       background-color: rgba(255, 255, 255, 0.7);
-      margin: 0 auto;
+      margin: 7px auto 0 auto;
     }
     .image1 {
       // background: url("/img/heart.png") center center no-repeat;
@@ -635,7 +635,7 @@ export default {
     .image2 {
       // background: url("/img/heart.png") center center no-repeat;
       // background-color: rgba(255, 255, 255, 0.7);
-      background: url("/img/favorites.png") no-repeat;
+      background: url("/img/like.png") no-repeat;
       background-size: 100%;
     }
   }
@@ -708,6 +708,9 @@ export default {
   .content {
     font-size: 14px;
   }
+  .title-color{
+    color: #666666;
+  }
   .painter {
     margin-bottom: 20px;
   }
@@ -744,6 +747,10 @@ export default {
       display: inline-block;
       font-size: 18px;
       margin-bottom: 10px;
+
+      .currency-span{
+        color: #152c2b;
+      }
     }
     .prise {
       display: inline-block;
@@ -778,7 +785,8 @@ export default {
         width: 100px;
         font-size: 12px;
         font-family: "Heiti SC";
-        margin-bottom: 5px;
+        margin: 5px 0  5px 0;
+        font-weight: bold;
       }
     }
 
@@ -901,6 +909,7 @@ export default {
       width: 340px;
       margin-bottom: 20px;
       font-size: 16px;
+      background-color: #fff;
       .sold-title {
         font-size: 24px;
         font-weight: 600;
@@ -940,6 +949,7 @@ export default {
       border: 1px solid rgba(21, 44, 43, 0.1);
       width: 340px;
       padding: 20px 35px;
+      background-color: #fff;
       .close {
         top: 20px;
         left: 300px;
@@ -972,7 +982,8 @@ export default {
     width: 216px;
     margin: 10px auto 0;
     font-size: 16px;
-    font-weight: 600;
+    // font-weight: 600;
+    font-weight: 400;
     line-height: 18px;
   }
 }
@@ -1000,6 +1011,15 @@ export default {
     height: 208px;
     background: url("/img/paint1.png") center center no-repeat;
   }
+}
+
+.scrollDomClass{
+  position: fixed;
+  z-index: 9;
+}
+.col-grow{
+  color: #000;
+  text-decoration: underline;
 }
 </style>
 

@@ -30,7 +30,7 @@
         </div>
 
         <!-- 按价格浏览 -->
-        <!-- <div class="tag">
+        <div class="tag">
           <div class="text-dark">{{$t('artwork.list.price')}}</div>
           <q-tabs class="options-tabs text-grey-8">
             <q-route-tab
@@ -57,7 +57,7 @@
           <q-tabs>
             <span @click="customPrice" class="customPrice">{{$t('artwork.list.determine')}}</span>
           </q-tabs>
-        </div> -->
+        </div>
 
 
         <div class="tag">
@@ -129,11 +129,11 @@
       <q-expansion-item
         dense
         :label="`${expandOptions ? $t('artwork.list.CollapseOptions') : $t('artwork.list.ExpandOptions')}`"
-        class="text-center title2 relative-position"
+        class="text-center title2 relative-position "
         @show="optionsShow"
         @hide="optionsHide"
       >
-        <div class="text-left selected relative-position">
+        <div class="text-left selected relative-position selected-item-content">
           <div>{{$t('artwork.list.YouHaveSelected')}}：</div>
           <div
             class="tag"
@@ -199,7 +199,7 @@
           maxCols="4"
         ></vue-waterfall-easy>
       </div> -->
-      <div class="q-pa-md">
+      <div class="q-pa-md" v-if="artworkList && artworkList.length">
         <!-- <q-btn class="q-mb-md" color="primary" label="Regenerate layout" @click="generateCells" /> -->
 
         <div
@@ -226,17 +226,14 @@
         </div>
       </div>
 
-      <!-- <el-pagination
-        background
-        layout="prev, pager, next"
-        :page-size="pageSize"
-        :current-page="currentPage"
-        :total="artworkTotal"
-        @current-change="changeCurrentPage"
-        style="margin: 20px 0; text-align: center"
-      >
-      </el-pagination> -->
-      <div class="q-pa-lg flex flex-center">
+
+      <noData
+        v-else
+        text="artwork.NoData"
+      />
+
+
+      <div class="q-pa-lg flex flex-center" v-if="pageTotal">
         <q-pagination
           v-model="currentPage"
           color="teal-10"
@@ -259,8 +256,11 @@
 </template>
 
 <script>
+import noData from "src/components/noData";
 export default {
-  // name: "app",
+  components: {
+    noData,
+  },
   watch: {
     $route: "changeQueryData",
     currentPage: function() {
@@ -277,7 +277,7 @@ export default {
         },
         price: {
           label: "price",
-          value: this.$route.query.price || "",
+          value: this.$t(this.$route.query.price) || "",
         },
 
         color: {
@@ -344,8 +344,8 @@ export default {
           },
         },
         {
-          label: 'artwork.list.Above',
-          value: 'artwork.list.Above',
+          label: 'artwork.list.customize',
+          value: 'artwork.list.customize',
           price: {
             min: this.$route.query.pricemin,
             max: this.$route.query.pricemax,
@@ -515,7 +515,7 @@ export default {
     },
     deleteTag(item) {
       let searchData = {};
-      this.search[item.label] = "";
+      // this.search[item.label] = "";
       searchData[item.label] = "";
       if (item.label == "price") {
         this.pricemin = "";
@@ -583,7 +583,7 @@ export default {
       const query = this.$route.query;
       for (let item in query) {
         if (this.search[item]) {
-          this.search[item].value = query[item];
+          this.search[item].value = this.$t(query[item]);
         }
       }
     },
@@ -614,15 +614,20 @@ export default {
 .container {
   width: 1000px;
   margin: 0 auto;
+  padding-top: 50px;
   .tags {
     font-size: 16px;
-    color: #a1a190;
+    color: #152c2b;
     width: 1100px;
     margin: 0 auto;
     margin-bottom: 30px;
-    border-bottom: 1px solid rgba(#a1a190, 0.2);
+    border-bottom: 1px solid rgba(#e8e8e8, 0.2);
     padding-bottom: 60px;
     .tag {
+      .text-dark{
+        font-weight: bold;
+        color: #152c2b;
+      }
       div {
         display: inline-block;
         margin: 5px 15px;
@@ -633,9 +638,10 @@ export default {
     }
     .input {
       width: 80px;
+      height: 28px;
       outline: 0;
       padding: 3px 10px;
-      border: 1px solid #a1a190;
+      border: 1px solid #e8e8e8;
     }
     .tag .color {
       display: inline-block;
@@ -657,7 +663,7 @@ export default {
     }
   }
   .sort-by {
-    padding: 10px 10px 20px 0;
+    padding: 10px 10px 10px 0;
     border-bottom: 1px solid rgba(#a1a190, 0.2);
     .tabs {
       display: inline-block;
@@ -790,7 +796,7 @@ export default {
   .selected > div {
     display: inline-block;
     margin-left: 10px;
-    padding: 3px 5px;
+    padding: 5px 8px;
     letter-spacing: 3px;
     border-radius: 2px;
   }
@@ -850,7 +856,10 @@ export default {
 .customPrice{
   display: inline-block;
   cursor: pointer;
-  color: #333;
+  color: #152c2b;
+}
+.selected-item-content{
+  margin-top: 40px;
 }
 </style>
 

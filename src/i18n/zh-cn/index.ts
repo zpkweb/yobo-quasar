@@ -35,7 +35,7 @@ export default {
       emailAddress: "电子邮件地址",
       SupportedPaymentMethods: "支持的支付方式",
       AllRightsReserved: "©2020 永宝（中国）有限公司 保留所有权利",
-      ICPNo: "沪ICP备15013228号-17",
+      ICPNo: "京ICP备2021007113号",
       PublicNetworkSecurityNo: "沪公网安备 31010402004774号"
     },
     pleaseLoginFirst: "请先登录"
@@ -109,11 +109,12 @@ export default {
     },
     info: {
       shippingAddress: "您的送货地址在哪里",
-      name: "请输入姓名",
-      phone: "请输入手机号",
-      country: "请输入国家",
-      province: "请输入省市",
-      detailedAddress: "请输入详细地址",
+      LastName: "姓氏",
+      name: "姓名",
+      phone: "手机号",
+      country: "国家",
+      province: "省市",
+      detailedAddress: "详细地址",
       contactMethod: "您的联系方式是什么？",
       emailAddress: "您的邮箱地址",
       contactPhoneNumber: "联系电话号码",
@@ -128,7 +129,7 @@ export default {
     },
     wishlist: {
       price: "价格",
-      NoData: "暂无数据",
+      NoData: "您还没有添加作品至我的喜欢",
       YourRecentlyViewedArtworks: "您最近浏览的艺术品",
       Unlike: "取消喜欢",
       LikeSuccess: "喜欢成功",
@@ -138,7 +139,7 @@ export default {
       SecondaryWorks: "副作品",
       Followed: "已关注",
       FollowArtist: "关注艺术家",
-      NoData: "暂无数据",
+      NoData: "暂时还没有喜欢的艺术家，快去看看艺术家们的作品！",
       unsubscribe: "取消关注",
       FollowedSuccess: "关注成功"
     }
@@ -160,7 +161,12 @@ export default {
     China: "中国",
     Japan: "日本",
     Spain: "西班牙",
-    UnitedStates: "美国"
+    UnitedStates: "美国",
+    Other: "其他",
+    Gender: "性别",
+    Male: "男",
+    Female: "女",
+    Studio: "工作室 "
   },
   artist: {
     Followed: "已关注",
@@ -181,9 +187,11 @@ export default {
     PortraitStructure: "原始结构的波帕特肖像画",
     PortraitOfPopart: "波帕特肖像画",
     unsubscribe: "取消关注",
-    FollowedSuccess: "关注成功"
+    FollowedSuccess: "关注成功",
+
   },
   artwork: {
+    NoData: "暂无数据，请您重新搜索，我们会尽快完善！",
     list: {
       artwork: "艺术品",
       searchCriteria: "件符合您搜索条件的艺术品",
@@ -206,7 +214,7 @@ export default {
       ConceptArt: "概念艺术",
       customize: "自定义",
       LessThan: "低于6000",
-      Above: "高于40000"
+      Above: "高于40000",
     },
     commodity: {
       introduction: "作品简介",

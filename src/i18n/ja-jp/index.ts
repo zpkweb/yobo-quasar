@@ -35,7 +35,7 @@ export default {
       emailAddress: "電子メールアドレス",
       SupportedPaymentMethods: "サポートされている支払い方法",
       AllRightsReserved: "©2020Yongbao（China）Co.、Ltd。無断複写・転載を禁じます",
-      ICPNo: "上海ICP番号15013228-17",
+      ICPNo: "北京ICPNo。2021007113",
       PublicNetworkSecurityNo: "上海パブリックネットワークセキュリティNo.31010402004774"
     },
     pleaseLoginFirst: "最初にログインしてください"
@@ -108,6 +108,7 @@ export default {
     },
     info: {
       shippingAddress: "配送先住所はどこですか",
+      LastName: "名前を入力してください",
       name: "名前を入力してください",
       phone: "電話番号を入力してください",
       country: "国を入力してください",
@@ -159,7 +160,12 @@ export default {
     China: "中国",
     Japan: "日本",
     Spain: "スペイン",
-    UnitedStates: "アメリカ"
+    UnitedStates: "アメリカ",
+    Other: "その他",
+    Gender: "性別",
+    Male: "男性",
+    Female: "女性",
+    Studio: "スタジオ"
   },
   artist: {
     Followed: "フォローしました",
@@ -183,6 +189,7 @@ export default {
     FollowedSuccess: "フォローしました"
   },
   artwork: {
+    NoData: "データがありません。もう一度検索してください。できるだけ早く改善します。",
     list: {
       artwork: "アートワーク",
       searchCriteria: "検索条件に一致する芸術作品",

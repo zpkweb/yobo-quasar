@@ -48,9 +48,15 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    */
   async applyArtist({ commit }, payload) {
     return await axiosInstance.post('/api/user/seller/apply', payload).then(response => {
+      console.log("applyAritst then", response)
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
+      console.log("applyAritst catch", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
 

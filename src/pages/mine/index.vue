@@ -12,10 +12,16 @@
           </div> -->
           <q-tabs
             no-caps
-            class="tags text-white "
+            class="tags"
             align="left"
+            indicator-color="transparent"
+            active-color="brand"
+            active-bg-color="brand"
+            content-class="tabs"
           >
-            <q-route-tab v-for="item in tags" :key="item.value" :to="item.value" exact replace :label="$t(item.label)" />
+            <q-route-tab content-class="text-bold" v-for="item in tags" :key="item.value" :to="item.value" exact replace >
+              {{$t(item.label)}}
+            </q-route-tab>
           </q-tabs>
 
           <div class="line"></div>
@@ -83,21 +89,20 @@ export default {
 .banner {
   color: #d6d7c5;
   .container {
-    width: 1100px;
+    width: 1220px;
     margin: 0 auto;
     .tags > div {
       display: inline-block;
       padding: 10px 20px;
     }
     .tags {
+      font-weight: bold;
       padding-left: 80px;
-      .active {
-        background-color: #d6d7c5;
-        color: #333;
-      }
+      color: #d1d2c0;
+      // background-color: #1b2b2a;
     }
     .line {
-      width: 800px;
+      width: 900px;
       height: 1px;
       background-color: rgba(214, 215, 197, 0.1);
       margin-bottom: 50px;
@@ -114,5 +119,19 @@ export default {
       font-size: 18px;
     }
   }
+}
+
+.text-brand {
+  color: #1b2d2b;
+}
+.bg-brand {
+  background: #d6d7c5;
+}
+.tabs{
+  color: #fff;
+}
+.tab{
+  color: #f00;
+  font-weight: bold;
 }
 </style>

@@ -11,7 +11,12 @@
       <div class="options">
         <div class="option">
           <div class="title">{{$t('artists.label')}}</div>
-          <q-tabs class="options-tabs text-grey-8">
+          <q-tabs class="options-tabs text-grey-8" indicator-color="transparent" align="justify">
+            <q-route-tab
+              class="btn"
+              :to="{ query: Object.assign({}, $route.query, { type: '' }) }"
+              >{{ $t('artists.Unlimited') }}</q-route-tab
+            >
             <q-route-tab
               class="btn"
               v-for="(item, index) in types"
@@ -23,7 +28,12 @@
         </div>
         <div class="option">
           <div class="title text-dark">{{$t('artists.Country')}}</div>
-          <q-tabs class="options-tabs text-grey-8">
+          <q-tabs class="options-tabs text-grey-8" indicator-color="transparent" align="justify">
+            <q-route-tab
+              class="btn"
+              :to="{ query: Object.assign({}, $route.query, { country: '' }) }"
+              >{{ $t('artists.Unlimited') }}</q-route-tab
+            >
             <q-route-tab
               class="btn"
               v-for="(item, index) in countrys"
@@ -35,84 +45,75 @@
         </div>
         <div class="option">
           <div class="title title-surname text-dark">{{$t('artists.LastName')}}</div>
-          <q-tabs class="options-tabs options-tabs-surname text-grey-8" dense inline-label>
+          <q-tabs class="options-tabs options-tabs-surname text-grey-8" dense inline-label indicator-color="transparent" align="justify">
+            <q-route-tab
+              class="tab"
+              :to="{ query: Object.assign({}, $route.query, { surname: '' }) }"
+              >{{ $t('artists.Unlimited') }}</q-route-tab
+            >
             <q-route-tab
               class="tab-surname"
               v-for="(item, index) in surnames"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { surname: item }) }"
-              >{{ item || $t('artists.Unlimited') }}</q-route-tab
+              >{{ item }}</q-route-tab
             >
           </q-tabs>
         </div>
-      </div>
-      <!-- <q-expansion-item
-        dense
-        :label="text"
-        class="text-center title2 relative-position hide"
-        @show="show"
-        @hide="hide"
-      >
-        <div class="text-left selected relative-position">
-          <div>您已选择：</div>
-          <div class="option">摄影家<span class="btn">×</span></div>
-          <div class="option">新闻摄影 <span class="btn">×</span></div>
-          <div class="clear absolute-right btn">清空所有</div>
+
+        <div class="option">
+          <div class="title text-dark">{{$t('artists.Other')}}</div>
+          <q-tabs class="options-tabs text-grey-8" indicator-color="transparent" align="justify">
+            <q-route-tab
+              class="btn"
+              v-for="(item, index) in others"
+              :key="index"
+              :to="{ query: Object.assign({}, $route.query, { other: item.value }) }"
+              >{{ $t(item.label) }}</q-route-tab
+            >
+          </q-tabs>
         </div>
-      </q-expansion-item> -->
+
+      </div>
+
       <div class="sort-by text-right">
         <router-link :to="{ query: Object.assign({}, $route.query, { hots: false, news: false }) }" class="tabs">{{$t('artists.DefaultSort')}}</router-link>
         <router-link :to="{ query: Object.assign({}, $route.query, { hots: hots ? false : true }) }" class="tabs" :class="{ active: hots }">{{$t('artists.Hottest')}}</router-link>
         <router-link :to="{ query: Object.assign({}, $route.query, { news: news ? false : true }) }" class="tabs" :class="{ active: news }">{{$t('artists.NewestUpload')}}</router-link>
       </div>
-      <div class="artists " v-if="artistList">
+      <div class="artists " v-if="artistList && artistList.length">
+        <q-list>
+
         <q-item
           class="artist col-3"
           v-for="(item, index) of artistList"
           :key="index"
-          :to="`artist/${item.sellerId}`"
         >
-          <div class="image">
-            <!-- <q-img src="img/artists/artist.png" width="194px"></q-img> -->
+          <router-link class="artist-router-link" :to="`artist/${item.sellerId}`">
+            <div class="image">
             <q-img
               v-if="item && item.user && item.user.avatar"
               :src="item.user.avatar"
               width="231px"
               height="231px"
+              class="artist-avatar"
             ></q-img>
-
           </div>
           <div class=" text-left">{{ item.firstname }} {{ item.lastname }}</div>
           <div class="text-left">{{ item.country }} {{ item.typeName }}</div>
+          </router-link>
+
+
         </q-item>
+
+        </q-list>
       </div>
-      <div class="text-center none" v-else>
-        <q-img
-          src="img/artists/exclamatory.png"
-          width="60px"
-          class="img"
-        ></q-img>
-        <div>{{$t('artists.NoData')}}</div>
-      </div>
-      <!-- <div class="q-pa-lg flex flex-center">
-        <q-pagination
-          v-model="current"
-          color="teal-10"
-          :max="maxPage"
-          :max-pages="4"
-          :boundary-numbers="true"
-        >
-        </q-pagination>
-        <div class="next btn" @click="nextPage">下一页</div>
-        <div class="all">共{{ maxPage }}页</div>
-        <div>
-          到
-          <input type="text" class="input" v-model="newPage" />
-          页
-        </div>
-        <div class="btn button" @click="toNewPage">确定</div>
-      </div> -->
-      <div class="q-pa-lg flex flex-center">
+      <noData
+        v-else
+        text="artists.NoData"
+      />
+
+      <div class="q-pa-lg flex flex-center" v-if="pageTotal">
         <q-pagination
           v-model="currentPage"
           color="teal-10"
@@ -136,13 +137,16 @@
 </template>
 
 <script>
+import noData from "src/components/noData";
 export default {
+  components: {
+    noData,
+  },
   data() {
     return {
       // current: 2,
       surname: this.$route.query.surname,
       surnames: [
-        "",
         "A",
         "B",
         "C",
@@ -171,10 +175,10 @@ export default {
       ],
       type: this.$route.query.type,
       types: [
-        {
-          label: 'artists.Unlimited',
-          value: "",
-        },
+        // {
+        //   label: 'artists.Unlimited',
+        //   value: "",
+        // },
         {
           label: 'artists.painter',
           value: "0",
@@ -190,10 +194,10 @@ export default {
       ],
       country: this.$route.query.country,
       countrys: [
-        {
-          label: 'artists.Unlimited',
-          value: "",
-        },
+        // {
+        //   label: 'artists.Unlimited',
+        //   value: "",
+        // },
         {
           label: 'artists.China',
           value: "中国",
@@ -210,6 +214,21 @@ export default {
           label: 'artists.UnitedStates',
           value: "美国",
         },
+      ],
+      other: this.$route.query.Other,
+      others: [
+        {
+          label: 'artists.Male',
+          value: '男'
+        },
+        {
+          label: 'artists.Female',
+          value: '女'
+        },
+        {
+          label: 'artists.Studio',
+          value: '工作室'
+        }
       ],
       // text: "展开选项",
       // current: 1,
@@ -304,7 +323,7 @@ export default {
     .title {
       font-size: 46px;
       letter-spacing: 8px;
-      padding-bottom: 10px;
+      // padding-bottom: 10px;
       font-weight: bolder;
     }
     .number {
@@ -334,7 +353,7 @@ export default {
         }
       }
       .title {
-
+        font-weight: bold;
         color: rgb(21, 44, 43);
       }
 
@@ -345,7 +364,8 @@ export default {
         flex: 1;
       }
       .tab-surname{
-        width: 38px;
+        width: 37px;
+        height: 48px;
         padding: 0 10px;
       }
     }
@@ -380,9 +400,15 @@ export default {
       position: relative;
       margin: 10px 0 10px 0;
       width: 100%;
-      padding: 6px;
-      background-color: #152c2b;
+      border: 6px solid #152c2b;
+      overflow: hidden;
+    }
 
+    .artist-avatar{
+      transition: all 0.4s;
+    }
+    .artist-avatar:hover{
+      transform: scale(1.2);
     }
 
   }
@@ -463,5 +489,8 @@ export default {
   .all {
     margin: 0 10px;
   }
+}
+.artist-router-link{
+  color: rgb(26,43,43);
 }
 </style>

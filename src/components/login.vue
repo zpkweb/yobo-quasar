@@ -51,13 +51,14 @@
         />
         <div class="overflow-hidden mt10">
           <div class="left">
-            <input type="checkbox" class="check" />
-            <div class="checkbox2">保持登录</div>
+            <!-- <input type="checkbox" class="check" />
+            <div class="checkbox2">保持登录</div> -->
+            <q-checkbox v-model="checkbox1" label="保持登录" color="black" size="xs" />
           </div>
           <div class="right btn" @click="$emit('show-new-password')">忘记密码</div>
         </div>
         <div
-          class="text-white text-center login btn"
+          class="text-white text-center login btn bg-active"
           @click="login"
           ref="login"
         >
@@ -92,6 +93,7 @@ export default {
       msg: "",
       msg2: "",
       msg3: "",
+      checkbox1: false
     };
   },
   methods: {
@@ -132,11 +134,15 @@ export default {
           // utils.setGlobalUserInfo(res.data.data);
           // this.userInfo = utils.getGlobalUserInfo();
           const { token, ...userInfo } = user.data;
+
+          console.log("token", token)
+
           this.$q.cookies.set("token", token, {
             expires: 1,
             path: '/'
           });
 
+          console.log("userInfo", userInfo)
           this.$q.cookies.set("userInfo", userInfo, {
             expires: 1,
             path: '/'
@@ -202,12 +208,7 @@ export default {
     font-weight: bolder;
     font-family: "STFangsong";
   }
-  .border-active {
-    border: 1px solid rgb(21, 44, 43) !important;
-  }
-  .bg-active {
-    background-color: #152c2b !important;
-  }
+
   .select {
     display: block;
     margin: 20px auto;

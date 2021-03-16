@@ -48,7 +48,7 @@
           </q-breadcrumbs>
 
           <div class="username btn" v-if="userInfo" >
-            {{ userInfo.name }}
+            {{ userInfo.name || isApplyArtist ? "艺术家" : "收藏家"  }}
           </div>
           <div class="dropdown2">
             <div class="dropdowncontent2 absolute">
@@ -109,13 +109,13 @@
               <div>{{$t('layout.footer.contactUs')}}</div>
               <div>{{$t('layout.footer.LegalNotices')}}</div>
               <div>{{$t('layout.footer.GeneralRegulations')}}</div>
-              <!-- <div>{{$t('layout.footer.CustomerReviews')}}</div> -->
-              <!-- <div>Offer a Gift Card</div>
+              <div>{{$t('layout.footer.CustomerReviews')}}</div>
+              <div>Offer a Gift Card</div>
               <div>{{$t('layout.footer.GetMyVoucher')}}</div>
-              <div>{{$t('layout.footer.myAccount')}}</div> -->
+              <div>{{$t('layout.footer.myAccount')}}</div>
               <div>{{$t('layout.footer.OfficeArtwork')}}</div>
               <div>{{$t('layout.footer.DesignerArtwork')}}</div>
-              <!-- <div>+44 203 445 6333</div> -->
+              <div>+44 203 445 6333</div>
             </div>
             <div class="col-3 item">
               <div class="title">{{$t('layout.footer.aboutAs')}}</div>
@@ -129,9 +129,9 @@
             </div>
             <div class="col-3 item">
               <div class="title">{{$t('layout.footer.FeaturedArtist')}}</div>
-              <!-- <div>Kirstin Mccoy</div> -->
-              <!-- <div>Josep Moncada</div> -->
-              <!-- <div>Ivan Pili</div> -->
+              <div>Kirstin Mccoy</div>
+              <div>Josep Moncada</div>
+              <div>Ivan Pili</div>
               <div>Kristin Kossi</div>
               <div>Peter Nottrott</div>
             </div>
@@ -154,15 +154,16 @@
             <div class="row mail">
               <div class="col">{{$t('layout.footer.emailAddress')}}</div>
               <div class="col-grow">
+
                 <q-img
-                  src="img/index/nextpage.png"
-                  width="5px"
+                  src="img/index/Right arrow.png"
+                  width="15px"
                   class="getmail"
                 ></q-img>
               </div>
             </div>
 
-            <!-- <div class="title pay">{{$t('layout.footer.SupportedPaymentMethods')}}</div>
+            <div class="title pay">{{$t('layout.footer.SupportedPaymentMethods')}}</div>
             <div class="row pay1">
               <div class="col-3">
                 <q-img src="img/index/zfb.png" width="60px"></q-img>
@@ -174,12 +175,12 @@
                 <q-img src="img/index/paypal.png" width="60px"></q-img>
               </div>
             </div>
-            <q-img src="img/index/mastercard.png" width="140px" contain></q-img> -->
+            <q-img src="img/index/mastercard.png" width="140px" contain></q-img>
           </div>
-          <!-- <div class="col-12 row bottom">
+          <div class="col-12 row bottom">
             <div class="col-4">{{$t('layout.footer.AllRightsReserved')}}</div>
-            <div class="col-3">{{$t('layout.footer.ICPNo')}}</div>
-            <div class="col-3 row">
+            <div class="col-3"><a href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
+            <!-- <div class="col-3 row">
               <div class="col-grow image">
                 <q-img
                   src="img/index/police.png"
@@ -188,8 +189,8 @@
                 ></q-img>
               </div>
               <div class="col">{{$t('layout.footer.PublicNetworkSecurityNo')}}</div>
-            </div>
-          </div> -->
+            </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -296,6 +297,7 @@ export default {
     // }
 
   },
+
   computed: {
     userInfo () {
       return this.$store.state.user.info
@@ -305,7 +307,7 @@ export default {
     }
   },
 
-  async created() {
+  async beforeCreate() {
     console.log("layout created", this.$i18n.locale, this.$store.state.lang)
 
     this.$i18n.locale = this.$store.state.lang ? this.$store.state.lang.locale : 'zh-cn';
@@ -326,7 +328,10 @@ export default {
   },
   mounted() {
     console.log("layout mounted", this.$i18n.locale, this.$store.state.lang)
-
+    this.$q.cookies.set("test", {test:111}, {
+      expires: 1,
+      path: '/'
+    })
   },
   methods: {
     changeLang(item) {
@@ -435,11 +440,49 @@ a {
 .hide {
   display: none;
 }
-.noData {
-  margin: 20px 0;
+.border-active {
+  border: 1px solid rgb(21, 44, 43) !important;
 }
-</style>
+.bg-active {
+  background-color: #152c2b !important;
+}
+.text-brand {
+  color: #1b2d2b;
+}
+.bg-brand {
+  background: #d6d7c5;
+}
 
+.q-field--outlined .q-field__control:after{
+  border-width: 1px !important;
+}
+
+.footer-link-color {
+  color: #fff;
+}
+
+
+
+
+
+</style>
+<style lang="sass">
+.q-placeholder
+  &::-webkit-input-placeholder
+    color: #a2a2a2
+
+  &::-moz-placeholder
+    color: #a2a2a2
+
+  &:-ms-input-placeholder
+    color: #a2a2a2 !important
+  &::-ms-input-placeholder
+    color: #a2a2a2
+
+  &::placeholder
+    color: #a2a2a2
+
+</style>
 <style lang="scss" scoped>
 
 .app {
@@ -468,7 +511,7 @@ a {
   margin: 0 auto;
   width: 1220px;
   padding: 0 20px;
-
+  color: #152c2b;
   .username {
     display: inline-block;
     font-size: 18px;
