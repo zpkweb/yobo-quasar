@@ -180,16 +180,23 @@
           </div>
           <div class="col-12 row bottom">
             <div class="col-4" v-if="$store.state.isShowPay">{{$t('layout.footer.AllRightsReserved')}}</div>
-            <div class="col-3 offset-5"><a href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
+            <div class="col-3 offset-5"><a target="_blank" href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
+            <div class="col-3"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337" class="footer-link-color"><q-img
+                  src="img/index/police.png"
+                  width="12px"
+                  class="img"
+                ></q-img>{{$t('layout.footer.PublicNetworkSecurityNo')}}</a></div>
+
             <!-- <div class="col-3 row">
-              <div class="col-grow image">
+              <a class="col-grow image" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337">
                 <q-img
                   src="img/index/police.png"
                   width="12px"
                   class="img"
                 ></q-img>
-              </div>
-              <div class="col">{{$t('layout.footer.PublicNetworkSecurityNo')}}</div>
+                <div class="col">{{$t('layout.footer.PublicNetworkSecurityNo')}}</div>
+              </a>
+
             </div> -->
           </div>
         </div>

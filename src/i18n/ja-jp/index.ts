@@ -36,7 +36,7 @@ export default {
       SupportedPaymentMethods: "サポートされている支払い方法",
       AllRightsReserved: "©2020Yongbao（China）Co.、Ltd。無断複写・転載を禁じます",
       ICPNo: "北京ICPNo。2021007113",
-      PublicNetworkSecurityNo: "上海パブリックネットワークセキュリティNo.31010402004774"
+      PublicNetworkSecurityNo: "北京パブリックネットワークセキュリティNo.11010202009337"
     },
     pleaseLoginFirst: "最初にログインしてください"
   },

@@ -36,7 +36,7 @@ export default {
       SupportedPaymentMethods: "支持的支付方式",
       AllRightsReserved: "©2021 永宝（中国）有限公司 保留所有权利",
       ICPNo: "京ICP备2021007113号",
-      PublicNetworkSecurityNo: "沪公网安备 31010402004774号"
+      PublicNetworkSecurityNo: "京公网安备 11010202009337号"
     },
     pleaseLoginFirst: "请先登录"
   },

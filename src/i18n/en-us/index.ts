@@ -36,7 +36,7 @@ export default {
       SupportedPaymentMethods: "Supported payment methods",
       AllRightsReserved: "©2020 Yongbao (China) Co., Ltd. All rights reserved",
       ICPNo: "Beijing ICP No. 2021007113",
-      PublicNetworkSecurityNo: "Shanghai Public Network Security No. 31010402004774"
+      PublicNetworkSecurityNo: "Beijing Public Network Security No. 11010202009337"
     },
     pleaseLoginFirst: "please log in first"
   },
