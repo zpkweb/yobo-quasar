@@ -159,9 +159,9 @@ export default {
       const artworkSearchData = await this.$store.dispatch("artwork/getArtworkSearch", {
           name: "",
           shape: "",
-          price: "",
-          pricemin: "",
-          pricemax: "",
+          // price: "",
+          // pricemin: "",
+          // pricemax: "",
           color: "",
           theme: "",
           category: "",

@@ -59,7 +59,7 @@
     </div>
 
     <!-- 我们的优势 -->
-    <div class="advantage text-center">
+    <div class="advantage text-center" v-if="$store.state.isShowPay">
       <div class="title">{{$t('home.OurAdvantage')}}</div>
       <div class="row items-end">
         <div class="col-3">
@@ -210,8 +210,8 @@
 
           </div>
         </div>
-        <div class="col right">
           <!-- 按价格浏览 -->
+        <div class="col right" v-if="$store.state.isShowPay">
           <div class="title">{{$t('home.BrowsePrice')}}</div>
           <div class="row text-center text-white">
             <div class="col-6">
@@ -249,7 +249,7 @@
       </div>
     </div>
     <!-- 让永宝帮您找到心仪的作品 -->
-    <div class="contact-container">
+    <div class="contact-container" v-if="$store.state.isShowPay">
       <div class="row contact text-white">
         <div class="col relative-position">
           <div class="title">{{$t('home.LetFavoriteWork')}}</div>
@@ -383,9 +383,9 @@ export default {
       hotartist: "a",
       artwork: {
         shape: "",
-        price: "",
-        pricemin: "",
-        pricemax: "",
+        // price: "",
+        // pricemin: "",
+        // pricemax: "",
         color: "",
         theme: "",
         category: "",

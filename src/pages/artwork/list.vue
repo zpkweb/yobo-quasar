@@ -26,7 +26,7 @@
         </div>
 
         <!-- 按价格浏览 -->
-        <div class="tag">
+        <div class="tag" v-if="$store.state.isShowPay">
           <div class="text-dark">{{$t('artwork.list.price')}}</div>
           <q-tabs class="options-tabs text-grey-8" indicator-color="transparent">
             <router-link

@@ -34,7 +34,7 @@ export default {
       BySubscribing: "通过订阅，即代表您接受永宝的隐私政策条款",
       emailAddress: "电子邮件地址",
       SupportedPaymentMethods: "支持的支付方式",
-      AllRightsReserved: "©2020 永宝（中国）有限公司 保留所有权利",
+      AllRightsReserved: "©2021 永宝（中国）有限公司 保留所有权利",
       ICPNo: "京ICP备2021007113号",
       PublicNetworkSecurityNo: "沪公网安备 31010402004774号"
     },

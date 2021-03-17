@@ -23,7 +23,7 @@
               2019
             </div>
           </div>
-          <div class="col-3 prise">
+          <div class="col-3 prise" v-if="$store.state.isShowPay">
             <div>{{ $t("my.wishlist.price") }}</div>
             <div class="num">{{ item.price[$i18n.locale] }}</div>
           </div>

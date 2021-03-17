@@ -65,7 +65,7 @@
         <div class="new text-white text-center btn" :class="{isUpdate: 'update'}" @click="update">{{$t('my.info.Update')}}</div>
       </div>
 
-      <div class="notices col-6">
+      <div class="notices col-6" v-if="$store.state.isShowPay">
         <div class="notice">
           <div class="title">{{$t('my.info.PleaseFollowing')}}：</div>
           <div>

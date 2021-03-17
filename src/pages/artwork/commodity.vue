@@ -54,7 +54,7 @@
                     <div>{{artwork.commodity.categorys ? artwork.commodity.categorys[0].name : ''}}</div>
                   </div>
                 </div>
-                <div class="col-6 item">
+                <div class="col-6 item" v-if="$store.state.isShowPay">
                   <div class="title2 title-color">{{$t('artwork.commodity.OtherDetails')}}</div>
                   <div class="contant">{{$t('artwork.commodity.CanFree')}}</div>
                 </div>
@@ -62,7 +62,7 @@
                   <div class="title2 title-color">{{$t('artwork.commodity.size')}}</div>
                   <div class="contant">{{ artwork.commodity.width }}cmX{{ artwork.commodity.height }}cm</div>
                 </div>
-                <div class="col-6 item">
+                <div class="col-6 item" v-if="$store.state.isShowPay">
                   <div class="title2 title-color">{{$t('artwork.commodity.Postage')}}</div>
                   <div class="contant">{{$t('artwork.commodity.FreeWeeks')}}</div>
                 </div>
@@ -98,7 +98,7 @@
         <!-- 艺术品价格 -->
         <!-- <div class="prise"><span class="symbol">¥</span><span>7，000</span></div> -->
 
-
+        <template v-if="$store.state.isShowPay">
         <div class="soldout" v-if="artwork.commodity.state == 2">
           {{$t('artwork.commodity.Sold')}}
         </div>
@@ -119,6 +119,7 @@
 
         </q-select>
 
+
         <div class="title2">{{$t('artwork.commodity.FrameSelectionMaterial')}}</div>
         <div class="row text-center frames">
           <div class="btn col-4" v-for="(item, index) in photoFrames" :key="index" >
@@ -131,12 +132,13 @@
           </div>
         </div>
         <div class="title2">{{$t('artwork.commodity.FrameSelectionSize')}}</div>
-        <div class="row">
+        <div class="row" >
           <div class="size btn col-4" :class="{ active: photoFrameSize == 'small' }" @click="photoFrameSize = 'small'">{{$t('artwork.commodity.small')}}</div>
           <div class="size btn col-4" :class="{ active: photoFrameSize == 'middle' }" @click="photoFrameSize = 'middle'">{{$t('artwork.commodity.in')}}</div>
           <div class="size btn col-4" :class="{ active: photoFrameSize == 'large' }" @click="photoFrameSize = 'large'">{{$t('artwork.commodity.Big')}}</div>
         </div>
-        <div class="row text-center items-end advantages">
+
+        <div class="row text-center items-end advantages" >
           <div class="col-4 item2">
             <q-img src="img/send.png" width="30px" class="image"></q-img>
             <div>{{$t('artwork.commodity.FreeShippingWorldwide')}}</div>
@@ -150,7 +152,7 @@
             <div>{{$t('artwork.commodity.SafePayment')}}</div>
           </div>
         </div>
-        <div class="buy text-center relative-position">
+        <div class="buy text-center relative-position" >
           <div class="prise prise2"><span class="symbol">¥</span> 7，000</div>
           <div class="buynow text-white btn">点击购买</div>
           <div class="makeoffer text-white btn" @click="openOfferPage">
@@ -271,6 +273,7 @@
           </div>
         </div>
         </div>
+        </template>
       </div>
     </div>
     <!--  艺术家的其他作品 -->

@@ -14,6 +14,7 @@ import { MyStateInterface } from './my/state';
 
 export interface StateInterface {
   lang: any;
+  isShowPay: Boolean;
   langOptions: any;
   home?: HomeStateInterface;
   user?: UserStateInterface;
@@ -28,6 +29,7 @@ export default store(function ({ Vue }) {
   const Store = new Vuex.Store<StateInterface>({
     state: {
       lang: null,
+      isShowPay: false,
       langOptions: [
         { value: "zh", label: "中文", locale: 'zh-cn' },
         { value: "en", label: "English", locale: 'en-us' },

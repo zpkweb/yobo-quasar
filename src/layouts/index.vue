@@ -109,13 +109,13 @@
               <div>{{$t('layout.footer.contactUs')}}</div>
               <div>{{$t('layout.footer.LegalNotices')}}</div>
               <div>{{$t('layout.footer.GeneralRegulations')}}</div>
-              <div>{{$t('layout.footer.CustomerReviews')}}</div>
-              <div>Offer a Gift Card</div>
-              <div>{{$t('layout.footer.GetMyVoucher')}}</div>
+              <div v-if="$store.state.isShowPay">{{$t('layout.footer.CustomerReviews')}}</div>
+              <div v-if="$store.state.isShowPay">Offer a Gift Card</div>
+              <div v-if="$store.state.isShowPay">{{$t('layout.footer.GetMyVoucher')}}</div>
               <div>{{$t('layout.footer.myAccount')}}</div>
               <div>{{$t('layout.footer.OfficeArtwork')}}</div>
               <div>{{$t('layout.footer.DesignerArtwork')}}</div>
-              <div>+44 203 445 6333</div>
+              <div v-if="$store.state.isShowPay">+44 203 445 6333</div>
             </div>
             <div class="col-3 item">
               <div class="title">{{$t('layout.footer.aboutAs')}}</div>
@@ -168,18 +168,19 @@
               <div class="col-3">
                 <q-img src="img/index/zfb.png" width="60px"></q-img>
               </div>
-              <div class="col-3">
+
+              <div class="col-3" v-if="$store.state.isShowPay">
                 <q-img src="img/index/visa.png" width="60px"></q-img>
               </div>
-              <div class="col-3">
+              <div class="col-3" v-if="$store.state.isShowPay">
                 <q-img src="img/index/paypal.png" width="60px"></q-img>
               </div>
             </div>
-            <q-img src="img/index/mastercard.png" width="140px" contain></q-img>
+            <q-img v-if="$store.state.isShowPay" src="img/index/mastercard.png" width="140px" contain></q-img>
           </div>
           <div class="col-12 row bottom">
-            <div class="col-4">{{$t('layout.footer.AllRightsReserved')}}</div>
-            <div class="col-3"><a href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
+            <div class="col-4" v-if="$store.state.isShowPay">{{$t('layout.footer.AllRightsReserved')}}</div>
+            <div class="col-3 offset-5"><a href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
             <!-- <div class="col-3 row">
               <div class="col-grow image">
                 <q-img
