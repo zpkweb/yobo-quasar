@@ -12,51 +12,51 @@
         <div class="option">
           <div class="title">{{$t('artists.label')}}</div>
           <q-tabs class="options-tabs text-grey-8" indicator-color="transparent" align="justify">
-            <q-route-tab
-              class="btn"
+            <router-link
+              class="options-link"
               :to="{ query: Object.assign({}, $route.query, { type: '' }) }"
-              >{{ $t('artists.Unlimited') }}</q-route-tab
+              >{{ $t('artists.Unlimited') }}</router-link
             >
-            <q-route-tab
-              class="btn"
+            <router-link
+              class="options-link"
               v-for="(item, index) in types"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { type: item.value }) }"
-              >{{ $t(item.label) }}</q-route-tab
+              >{{ $t(item.label) }}</router-link
             >
           </q-tabs>
         </div>
         <div class="option">
           <div class="title text-dark">{{$t('artists.Country')}}</div>
           <q-tabs class="options-tabs text-grey-8" indicator-color="transparent" align="justify">
-            <q-route-tab
-              class="btn"
+            <router-link
+              class="options-link"
               :to="{ query: Object.assign({}, $route.query, { country: '' }) }"
-              >{{ $t('artists.Unlimited') }}</q-route-tab
+              >{{ $t('artists.Unlimited') }}</router-link
             >
-            <q-route-tab
-              class="btn"
+            <router-link
+              class="options-link"
               v-for="(item, index) in countrys"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { country: item.value }) }"
-              >{{ $t(item.label) }}</q-route-tab
+              >{{ $t(item.label) }}</router-link
             >
           </q-tabs>
         </div>
         <div class="option">
           <div class="title title-surname text-dark">{{$t('artists.LastName')}}</div>
           <q-tabs class="options-tabs options-tabs-surname text-grey-8" dense inline-label indicator-color="transparent" align="justify">
-            <q-route-tab
-              class="tab"
+            <router-link
+              class="options-link tab"
               :to="{ query: Object.assign({}, $route.query, { surname: '' }) }"
-              >{{ $t('artists.Unlimited') }}</q-route-tab
+              >{{ $t('artists.Unlimited') }}</router-link
             >
-            <q-route-tab
-              class="tab-surname"
+            <router-link
+              class="options-link tab-surname"
               v-for="(item, index) in surnames"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { surname: item }) }"
-              >{{ item }}</q-route-tab
+              >{{ item }}</router-link
             >
           </q-tabs>
         </div>
@@ -64,12 +64,12 @@
         <div class="option">
           <div class="title text-dark">{{$t('artists.Other')}}</div>
           <q-tabs class="options-tabs text-grey-8" indicator-color="transparent" align="justify">
-            <q-route-tab
-              class="btn"
+            <router-link
+              class="options-link"
               v-for="(item, index) in others"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { other: item.value }) }"
-              >{{ $t(item.label) }}</q-route-tab
+              >{{ $t(item.label) }}</router-link
             >
           </q-tabs>
         </div>
@@ -358,7 +358,19 @@ export default {
       }
 
       .options-tabs{
-
+        .options-link{
+          display: inline-block;
+          height: 48px;
+          line-height: 48px;
+          border-radius: 5px;
+          margin-left: 0;
+          padding: 0 16px;
+          min-height: 48px;
+          text-transform: uppercase;
+          white-space: nowrap;
+          color: inherit;
+          text-decoration: none;
+        }
       }
       .options-tabs-surname{
         flex: 1;

@@ -9,22 +9,18 @@
     </div>
     <div class="container">
       <div class="tags">
+        <!-- 按形状浏览 -->
         <div class="tag">
           <div class="text-dark">{{$t('artwork.list.shape')}}</div>
-          <!-- <div>不限</div>
-          <div>横版</div>
-          <div>竖版</div>
-          <div>方形</div>
-          <div>自定义</div> -->
-          <q-tabs class="options-tabs text-grey-8">
-            <q-route-tab
-              class="btn"
+          <q-tabs class="options-tabs text-grey-8" indicator-color="transparent">
+            <router-link
+              class="options-link"
               v-for="(item, index) in shapes"
               :key="index"
               :to="{
                 query: Object.assign({}, $route.query, { shape: item.value }),
               }"
-              >{{ $t(item.label) }}</q-route-tab
+              >{{ $t(item.label) }}</router-link
             >
           </q-tabs>
         </div>
@@ -32,9 +28,9 @@
         <!-- 按价格浏览 -->
         <div class="tag">
           <div class="text-dark">{{$t('artwork.list.price')}}</div>
-          <q-tabs class="options-tabs text-grey-8">
-            <q-route-tab
-              class="btn"
+          <q-tabs class="options-tabs text-grey-8" indicator-color="transparent">
+            <router-link
+              class="options-link"
               v-for="(item, index) in prices"
               :key="index"
               :to="{
@@ -44,27 +40,26 @@
                   pricemax: item.price.max,
                 }),
               }"
-              >{{ $t(item.label) }}</q-route-tab
-            >
+              >{{ $t(item.label) }}</router-link>
           </q-tabs>
-          <div>
+          <div class="price-custom inline-block">
             <input type="text" class="input" v-model="pricemin" />-<input
               type="text"
               class="input"
               v-model="pricemax"
             />
           </div>
-          <q-tabs>
+          <q-tabs class="inline-block">
             <span @click="customPrice" class="customPrice">{{$t('artwork.list.determine')}}</span>
           </q-tabs>
         </div>
 
-
+        <!-- 按颜色浏览 -->
         <div class="tag">
           <div class="text-dark">{{$t('artwork.list.colour')}}</div>
-          <q-tabs dense inline-label class="options-tabs text-grey-8">
-            <q-route-tab
-              class="color"
+          <q-tabs dense inline-label class="options-tabs text-grey-8" indicator-color="transparent">
+            <router-link
+              class="options-link color"
               v-for="(item, index) in colors"
               :key="index"
               :to="{ query: Object.assign({}, $route.query, { color: item }) }"
@@ -74,29 +69,16 @@
                 :style="{ backgroundColor: '#' + item }"
                 >{{ item ? "" : $t('artwork.list.Unlimited') }}</span
               >
-            </q-route-tab>
+            </router-link>
           </q-tabs>
         </div>
         <template v-if="expandOptions">
-          <div class="tag">
-            <div class="text-dark">{{$t('artwork.list.theme')}}</div>
-            <q-tabs class="options-tabs text-grey-8">
-              <q-route-tab
-                class="btn"
-                v-for="(item, index) in themes"
-                :key="index"
-                :to="{
-                  query: Object.assign({}, $route.query, { theme: item.value }),
-                }"
-                >{{ $t(item.label) }}</q-route-tab
-              >
-            </q-tabs>
-          </div>
+          <!-- 按类别浏览 -->
           <div class="tag">
             <div class="text-dark">{{$t('artwork.list.category')}}</div>
-            <q-tabs class="options-tabs text-grey-8">
-              <q-route-tab
-                class="btn"
+            <q-tabs class="options-tabs text-grey-8 wrap" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
                 v-for="(item, index) in categorys"
                 :key="index"
                 :to="{
@@ -104,15 +86,152 @@
                     category: item.value,
                   }),
                 }"
-                >{{ $t(item.label) }}</q-route-tab
+                >{{ $t(item.label) }}</router-link
               >
             </q-tabs>
           </div>
+          <!-- 按类别浏览 -->
           <div class="tag">
-            <div class="text-dark">{{$t('artwork.list.Technique')}}</div>
-            <q-tabs class="options-tabs text-grey-8">
-              <q-route-tab
-                class="btn"
+            <div class="text-dark">{{$t('artwork.list.classification')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in classifications"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    classification: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.material')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in materials"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    material: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.model')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in models"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    model: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.place')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in places"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    place: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.ruiwu')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in ruiwus"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    ruiwu: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.shape')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in shapes"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    shape: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.specification')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in specifications"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    specification: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.style')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in styles"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    style: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.technique')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
                 v-for="(item, index) in techniques"
                 :key="index"
                 :to="{
@@ -120,10 +239,61 @@
                     technique: item.value,
                   }),
                 }"
-                >{{ $t(item.label) }}</q-route-tab
+                >{{ $t(item.label) }}</router-link
               >
             </q-tabs>
           </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.theme')}}</div>
+            <q-tabs class="options-tabs text-grey-8 wrap" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in themes"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    theme: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按类别浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.type')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in types"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    type: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+          <!-- 按主题浏览 -->
+          <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.use')}}</div>
+            <q-tabs class="options-tabs text-grey-8" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in uses"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, { use: item.value }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+
+
         </template>
       </div>
       <q-expansion-item
@@ -140,9 +310,10 @@
             v-for="(item, index) in search"
             :key="`search-${index}`"
             v-if="item.value"
+            @click="deleteTag(item)"
           >
             <span>{{ item.value }}</span>
-            <span @click="deleteTag(item)" class="btn">×</span>
+            <span  class="btn">×</span>
           </div>
           <div class="clear absolute-right btn" @click="deleteAllTags">
             {{$t('artwork.list.EmptyAll')}}
@@ -271,31 +442,70 @@ export default {
     return {
       tags: ['artwork.list.newsPhotography', 'artwork.list.ConceptArt'],
       search: {
-        shape: {
-          label: "shape",
-          value: this.$route.query.shape || "",
-        },
         price: {
           label: "price",
           value: this.$t(this.$route.query.price) || "",
         },
-
         color: {
           label: "color",
           value: this.$route.query.color || "",
-        },
-        theme: {
-          label: "theme",
-          value: this.$route.query.theme || "",
         },
         category: {
           label: "category",
           value: this.$route.query.category || "",
         },
+        classification: {
+          label: "classification",
+          value: this.$route.query.classification || "",
+        },
+        material: {
+          label: "material",
+          value: this.$route.query.material || "",
+        },
+        model: {
+          label: "model",
+          value: this.$route.query.model || "",
+        },
+        place: {
+          label: "place",
+          value: this.$route.query.place || "",
+        },
+        ruiwu: {
+          label: "ruiwu",
+          value: this.$route.query.ruiwu || "",
+        },
+        shape: {
+          label: "shape",
+          value: this.$route.query.shape || "",
+        },
+        specification: {
+          label: "specification",
+          value: this.$route.query.specification || "",
+        },
+        style: {
+          label: "style",
+          value: this.$route.query.style || "",
+        },
         technique: {
           label: "technique",
           value: this.$route.query.technique || "",
         },
+        theme: {
+          label: "theme",
+          value: this.$route.query.theme || "",
+        },
+        type: {
+          label: "type",
+          value: this.$route.query.type || "",
+        },
+        use: {
+          label: "use",
+          value: this.$route.query.use || "",
+        },
+
+
+
+
       },
       pricemin:
         this.$route.query.price == "自定义" ? this.$route.query.pricemin : "",
@@ -433,6 +643,84 @@ export default {
     console.log("mounted");
   },
   computed: {
+    categorys() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.category.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    classifications() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.classification.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    materials() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.material.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    models() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.model.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    places() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.place.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    ruiwus() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.ruiwu.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
     shapes() {
       return [
         {
@@ -446,26 +734,26 @@ export default {
         }),
       ];
     },
-    themes() {
+    specifications() {
       return [
         {
           value: "",
           label: 'artwork.list.Unlimited',
         },
-        ...this.$store.state.artwork.options.theme.map((item) => {
+        ...this.$store.state.artwork.options.specification.map((item) => {
           item.value = item.name;
           item.label = item.name;
           return item;
         }),
       ];
     },
-    categorys() {
+    styles() {
       return [
         {
           value: "",
           label: 'artwork.list.Unlimited',
         },
-        ...this.$store.state.artwork.options.category.map((item) => {
+        ...this.$store.state.artwork.options.style.map((item) => {
           item.value = item.name;
           item.label = item.name;
           return item;
@@ -485,6 +773,49 @@ export default {
         }),
       ];
     },
+    themes() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.theme.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    types() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.type.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+    uses() {
+      return [
+        {
+          value: "",
+          label: 'artwork.list.Unlimited',
+        },
+        ...this.$store.state.artwork.options.use.map((item) => {
+          item.value = item.name;
+          item.label = item.name;
+          return item;
+        }),
+      ];
+    },
+
+
+
+
     artworkList() {
       return this.$store.state.artwork.searchData;
     },
@@ -624,15 +955,57 @@ export default {
     border-bottom: 1px solid rgba(#e8e8e8, 0.2);
     padding-bottom: 60px;
     .tag {
+      position: relative;
+      overflow: hidden;
+      // display: flex;
+      .price-custom{
+        margin-top: 10px;
+      }
       .text-dark{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 32px;
+        height: 48px;
+        line-height: 48px;
         font-weight: bold;
         color: #152c2b;
       }
-      div {
-        display: inline-block;
-        margin: 5px 15px;
+      .options-tabs {
+        // flex: 1;
+        // margin: 5px 15px;
+        float: left;
+        margin-left: 42px;
         &:hover {
           color: #152c2b;
+        }
+        .options-tab{
+          flex-wrap: wrap;
+        }
+        .options-link{
+          display: inline-block;
+          height: 48px;
+          line-height: 48px;
+          border-radius: 5px;
+          margin-left: 0;
+          padding: 0 16px;
+          min-height: 48px;
+          text-transform: uppercase;
+          white-space: nowrap;
+          color: inherit;
+          text-decoration: none;
+
+          .color-box {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            margin-top: 10px;
+            // border: 3px solid transparent;
+            // &:hover {
+            //   border: 3px solid #152c2b;
+            // }
+          }
         }
       }
     }
@@ -643,24 +1016,7 @@ export default {
       padding: 3px 10px;
       border: 1px solid #e8e8e8;
     }
-    .tag .color {
-      display: inline-block;
-      // width: 24px;
-      // height: 24px;
-      border-radius: 5px;
-      vertical-align: middle;
-      margin-left: 0;
 
-      .color-box {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        // border: 3px solid transparent;
-        // &:hover {
-        //   border: 3px solid #152c2b;
-        // }
-      }
-    }
   }
   .sort-by {
     padding: 10px 10px 10px 0;
@@ -669,6 +1025,7 @@ export default {
       display: inline-block;
       padding-left: 20px;
       color: #333;
+
     }
     .active {
       color: #f00;
@@ -681,13 +1038,13 @@ export default {
       margin-bottom: 30px;
     }
   }
-  .wrap {
-    margin: 0 auto;
-    width: 1000px;
-    column-count: 4;
-    column-gap: 10px;
-    padding: 60px 0;
-  }
+  // .wrap {
+  //   margin: 0 auto;
+  //   width: 1000px;
+  //   column-count: 4;
+  //   column-gap: 10px;
+  //   padding: 60px 0;
+  // }
   .item {
     margin-bottom: 10px;
     break-inside: avoid;
@@ -803,6 +1160,10 @@ export default {
   .selected {
     .tag {
       background-color: #d6d7c5;
+      cursor: pointer;
+      .btn{
+        margin-left: 8px;
+      }
     }
     .clear {
       text-decoration: underline;

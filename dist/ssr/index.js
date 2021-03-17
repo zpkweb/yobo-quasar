@@ -277,7 +277,9 @@ module.exports.renderToString = function (opts, cb) {
   }
 
 
-  renderer.renderToString(ctx, cb)
+  renderer.renderToString(ctx, (err, html) => {
+    cb(err, err ? html : ctx.$getMetaHTML(html, ctx))
+  })
 
 }
 

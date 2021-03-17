@@ -461,7 +461,10 @@ a {
   color: #fff;
 }
 
-
+.q-tabs--not-scrollable .q-tabs__content{
+  flex-wrap: wrap;
+  justify-content: left;
+}
 
 
 

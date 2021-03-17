@@ -7105,10 +7105,10 @@ qs@^6.9.4:
   resolved "https://registry.npmjs.org/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
   integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
 
-quasar@^1.0.0:
-  version "1.14.7"
-  resolved "https://registry.npmjs.org/quasar/-/quasar-1.14.7.tgz#63475a6550bf70a99298ac531bb36e7ac1116d15"
-  integrity sha512-AP++F9xNEmzdK4zEjYBgEF0lifg3LBIrE24weUyQqS/jNQ22YT1cGyqDzWrfScaGLmRdm27R6eWLsbT4Qnh3Pg==
+quasar@^1.15.5:
+  version "1.15.5"
+  resolved "https://registry.npmjs.org/quasar/-/quasar-1.15.5.tgz#61b68de4d4cde41c3835d1daa2e5127514b4b331"
+  integrity sha512-6A1o/kjFU72fJaQ+2flm7zK/NPDg/6z3oQ0twxZW/PxkMwZXANjq3fAXvzI3bpFXi4x8s4nQ6qiDFNAW8RTFjA==
 
 query-string@^4.1.0:
   version "4.3.4"
