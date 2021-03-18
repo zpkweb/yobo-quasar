@@ -51,14 +51,13 @@
         />
         <div class="overflow-hidden mt10">
           <div class="left">
-            <!-- <input type="checkbox" class="check" />
-            <div class="checkbox2">保持登录</div> -->
-            <q-checkbox v-model="checkbox1" label="保持登录" color="black" size="xs" />
+            <q-checkbox class="no-box-shadow no-border-radius no-border no-outline " style="outline:0 !important;" v-model="checkbox1" label="保持登录" color="default" size="xs"  />
           </div>
           <div class="right btn" @click="$emit('show-new-password')">忘记密码</div>
         </div>
         <div
-          class="text-white text-center login btn bg-active"
+          class="text-white text-center login btn"
+          :class="{'bg-active': isButtonDisable}"
           @click="login"
           ref="login"
         >
@@ -95,6 +94,15 @@ export default {
       msg3: "",
       checkbox1: false
     };
+  },
+  computed: {
+    isButtonDisable(){
+      let disable = false;
+      if(this.name || this.password){
+        disable = true;
+      }
+      return disable;
+    }
   },
   methods: {
     getPassword() {

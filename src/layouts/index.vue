@@ -179,9 +179,9 @@
             <q-img v-if="$store.state.isShowPay" src="img/index/mastercard.png" width="140px" contain></q-img>
           </div>
           <div class="col-12 row bottom">
-            <div class="col-4" v-if="$store.state.isShowPay">{{$t('layout.footer.AllRightsReserved')}}</div>
-            <div class="col-3 offset-5"><a target="_blank" href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
-            <div class="col-3"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337" class="footer-link-color"><q-img
+            <div class="col-4 text-left" v-if="$store.state.isShowPay">{{$t('layout.footer.AllRightsReserved')}}</div>
+            <div class="col-4 text-center"><a target="_blank" href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
+            <div class="col-4 text-right"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337" class="footer-link-color"><q-img
                   src="img/index/police.png"
                   width="12px"
                   class="img"
@@ -426,10 +426,12 @@ export default {
 a {
   text-decoration: none;
 }
+
 .app {
   min-width: 1200px;
   font-family: "STFangsong";
 }
+
 .btn {
   cursor: pointer;
 }
@@ -461,6 +463,13 @@ a {
   background: #d6d7c5;
 }
 
+.text-default {
+  color: #152c2b;
+}
+.bg-default {
+  background: #152c2b;
+}
+
 .q-field--outlined .q-field__control:after{
   border-width: 1px !important;
 }
@@ -473,8 +482,6 @@ a {
   flex-wrap: wrap;
   justify-content: left;
 }
-
-
 
 </style>
 <style lang="sass">
@@ -492,6 +499,31 @@ a {
 
   &::placeholder
     color: #a2a2a2
+
+body.desktop
+  .q-checkbox:not(.disabled)
+    .q-checkbox__inner:before
+      content: ''
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      border-radius: 50%
+      background: currentColor
+      // opacity: .12
+      opacity: 0
+      transform: scale3d(0, 0, 1)
+      transition: transform $option-focus-transition
+    &:focus,
+    &:hover
+      .q-checkbox__inner:before
+        transform: scale3d(1, 1, 1)
+  .q-checkbox--dense:not(.disabled)
+    &:focus,
+    &:hover
+      .q-checkbox__inner:before
+        transform: scale3d(1.4, 1.4, 1)
 
 </style>
 <style lang="scss" scoped>

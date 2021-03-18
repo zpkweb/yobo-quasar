@@ -29,7 +29,7 @@ export default store(function ({ Vue }) {
   const Store = new Vuex.Store<StateInterface>({
     state: {
       lang: null,
-      isShowPay: false,
+      isShowPay: true,
       langOptions: [
         { value: "zh", label: "中文", locale: 'zh-cn' },
         { value: "en", label: "English", locale: 'en-us' },

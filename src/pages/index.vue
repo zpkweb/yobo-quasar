@@ -489,7 +489,8 @@ export default {
       padding-right: 160px;
     }
     .menu {
-      background-color: rgba(21, 44, 43, 0.502);
+      // background-color: rgba(21, 44, 43, 0.502);
+      background-color: rgba(0, 0 , 0, 0.5);
       height: 510px;
       padding: 36px 20px;
       width: 273px;
