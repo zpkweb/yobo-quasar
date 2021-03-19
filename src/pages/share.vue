@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-page>
     <div class="container text-center">
       <div class="title">
         <div>将永宝分享给您的朋友，一起买画获得</div>
@@ -19,14 +19,14 @@
         </div>
       </div>
     </div>
-  </q-layout>
+  </q-page>
 </template>
 
 
 
 <style lang="scss" scoped>
 .container {
-  background: url("/img/bg.png") top center no-repeat;
+  background: url("~assets/images/banner-artist.png") top center no-repeat;
   background-size: auto 375px;
   color: #d6d7c5;
   font-weight: bolder;

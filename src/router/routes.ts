@@ -44,7 +44,8 @@ const routes: RouteConfig[] = [
         component: () => import('pages/artwork/commodity.vue')
       }] },
       { path: 'share', name: 'share', component: () => import('pages/share.vue') },
-
+      { path: 'about', name: 'about', component: () => import('pages/about.vue') },
+      { path: 'criteria', name: 'criteria', component: () => import('pages/criteria.vue') },
     ]
   },
 

@@ -62,7 +62,7 @@
             >增值税专用发票</el-radio
           >
         </div> -->
-        <div class="new text-white text-center btn" :class="{isUpdate: 'update'}" @click="update">{{$t('my.info.Update')}}</div>
+        <div class="new text-white text-center btn" :class="{'bg-active': isButtonDisable}" @click="update">{{$t('my.info.Update')}}</div>
       </div>
 
       <div class="notices col-6" v-if="$store.state.isShowPay">
@@ -159,6 +159,19 @@ export default {
         country: '',
         city: '',
         detail: ''
+      },
+      userDefault: {
+        email: '',
+        phone: ''
+      },
+      addressDefault: {
+        name: '',
+        firstname: '',
+        lastname: '',
+        phone: '',
+        country: '',
+        city: '',
+        detail: ''
       }
     };
   },
@@ -170,12 +183,17 @@ export default {
     setTimeout(() => {
 
       if(this.$store.state.seller){
-        this.address.name = this.$store.state.user.info.firstname + ' ' + this.$store.state.user.info.lastname
+        this.address.name = this.$store.state.user.info.firstname + ' ' + this.$store.state.user.info.lastname;
+        this.addressDefault.name = this.$store.state.user.info.firstname + ' ' + this.$store.state.user.info.lastname
       }else{
-        this.address.name = this.$store.state.user.info.name
+        this.address.name = this.$store.state.user.info.name;
+        this.addressDefault.name = this.$store.state.user.info.name
       }
       this.user.email = this.$store.state.user.info.email;
       this.user.phone = this.$store.state.user.info.phone;
+
+      this.userDefault.email = this.$store.state.user.info.email;
+      this.userDefault.phone = this.$store.state.user.info.phone;
 
       if(this.$store.state.user.info.address && this.$store.state.user.info.address.length){
         this.address.name = this.$store.state.user.info.address[0].name;
@@ -183,6 +201,12 @@ export default {
         this.address.country = this.$store.state.user.info.address[0].country;
         this.address.city = this.$store.state.user.info.address[0].city;
         this.address.detail = this.$store.state.user.info.address[0].address;
+
+        this.addressDefault.name = this.$store.state.user.info.address[0].name;
+        this.addressDefault.phone = this.$store.state.user.info.address[0].phone;
+        this.addressDefault.country = this.$store.state.user.info.address[0].country;
+        this.addressDefault.city = this.$store.state.user.info.address[0].city;
+        this.addressDefault.detail = this.$store.state.user.info.address[0].address;
       }
 
 
@@ -196,6 +220,23 @@ export default {
     },
     isApplyArtist() {
       return this.$store.state.user.info ? this.$store.state.user.info.seller : false
+    },
+    isButtonDisable(){
+      let disable = false;
+      if(
+        this.user.email != this.userDefault.email
+        || this.user.phone != this.userDefault.phone
+        || this.address.name != this.addressDefault.name
+        || this.address.firstname != this.addressDefault.firstname
+        || this.address.lastname != this.addressDefault.lastname
+        || this.address.phone != this.addressDefault.phone
+        || this.address.country != this.addressDefault.country
+        || this.address.city != this.addressDefault.city
+        || this.address.detail != this.addressDefault.detail
+      ){
+        disable = true;
+      }
+      return disable;
     }
   },
   methods: {
@@ -336,7 +377,7 @@ input {
   height: 33px;
   line-height: 30px;
   font-weight: bolder;
-  background-color: #152c2b;
+  background-color: #526463;
   margin: 80px 0 60px 0;
 }
 .update{

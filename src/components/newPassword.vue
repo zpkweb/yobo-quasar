@@ -19,7 +19,7 @@
       <q-card-section class="row items-center q-pb-none section1">
         <div class="title">忘记密码</div>
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
+        <q-btn icon="close" class="icon-close" flat round dense v-close-popup />
       </q-card-section>
 
       <div class="section2">

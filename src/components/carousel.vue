@@ -76,14 +76,15 @@ export default {
 }
 .slide {
   position: absolute;
-  right: 100px;
+  left: 50%;
   bottom: 10px;
   user-select: none;
   font-size: 20.576px;
   font-family: "STFangsong";
   line-height: 1.75;
   letter-spacing: 8px;
-  padding: 100px 0 0 580px;
+  padding: 100px 0 0 0;
+  margin-left: 400px;
   font-size: 60px;
   .number{
     text-shadow: 0 0 10px #000;

@@ -1,7 +1,7 @@
 <template>
-  <q-layout>
+  <q-page>
     <div class="banner relative-position">
-      <q-img src="img/artworks/banner.png" height="360px"></q-img>
+      <q-img src="~assets/images/banner-artist.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <div class="title">{{$t('artwork.list.artwork')}}</div>
         <div class="number">{{ artworkTotal }} {{$t('artwork.list.searchCriteria')}}</div>
@@ -355,14 +355,7 @@
           >{{$t('artwork.list.NewestUpload')}}</router-link
         >
       </div>
-      <!-- <div class="text-center none">
-        <q-img
-          src="img/artists/exclamatory.png"
-          width="60px"
-          class="img"
-        ></q-img>
-        <div>暂无数据，请您重新搜索，我们会尽快完善！</div>
-      </div> -->
+
       <!-- <div class="artworks">
         <vue-waterfall-easy
           :imgsArr="imgsArr"
@@ -423,7 +416,7 @@
         <div class="btn button" @click="toNewPage">{{$t('pagination.determine')}}</div>
       </div>
     </div>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>
@@ -1085,7 +1078,7 @@ export default {
       width: 40px;
       height: 60px;
       border-radius: 50%;
-      background: url("/img/artworks/i.png") center center no-repeat;
+      background-color: #152c2b;
       display: inline-block;
       vertical-align: middle;
     }
@@ -1104,14 +1097,13 @@ export default {
         padding: 10px;
       }
       .artwork {
-        background: url("/img/artworks/4.png") center center no-repeat;
-        background-size: contain;
+        background-color: #152c2b;
         height: 80px;
       }
       .header2 {
         width: 40px;
         height: 40px;
-        background: url("/img/artworks/i.png") center center no-repeat;
+        background-color: #152c2b;
         background-size: contain;
       }
       .desc {

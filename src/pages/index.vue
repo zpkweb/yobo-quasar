@@ -1,5 +1,5 @@
 <template>
-  <q-layout @scroll="Top">
+  <q-page @scroll="Top">
     <div class="carousel1 relative-position">
       <div class="content absolute-full row">
         <div class="col-3">
@@ -64,7 +64,7 @@
       <div class="row items-end">
         <div class="col-3">
           <q-img
-            src="img/index/artist.png"
+            src="~assets/images/artist.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -73,7 +73,7 @@
         </div>
         <div class="col-3">
           <q-img
-            src="img/index/ship.png"
+            src="~assets/images/ship.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -82,7 +82,7 @@
         </div>
         <div class="col-3">
           <q-img
-            src="img/index/freereturn.png"
+            src="~assets/images/freereturn.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -91,7 +91,7 @@
         </div>
         <div class="col-3">
           <q-img
-            src="img/index/pay.png"
+            src="~assets/images/pay.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -100,14 +100,13 @@
         </div>
       </div>
     </div>
-
-    <div class="gallary-container">
+    <div class="gallary-container" v-if="home && home.gallerySeller && home.gallerySeller.list && home.gallerySeller.list.length">
       <div class="gallary">
         <div class="gallary-title text-center">{{$t('home.YourOnlineGallery')}}</div>
         <div class="gallary-desc text-center">{{$t('home.SeriesYou')}}</div>
         <div class="row">
 
-           <template v-if="home && home.gallerySeller">
+           <template >
 
 
            <div class="col-3 relative-position text-center"
@@ -121,7 +120,7 @@
              <template v-if="item.commoditys && item.commoditys.length">
               <div class="line absolute"></div>
               <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`"  >
-                  <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px" height="300px"></q-img>
+                  <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0].src ? item.commodityPhotos[0].src : ''" width="230px" height="300px"></q-img>
               </router-link>
 
                 <div class="desc bottom text-right odd">
@@ -139,7 +138,7 @@
               </div>
 
               <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
-                <q-img :src="item.commodityPhotos.length ? item.commodityPhotos[0].src : `img/index/painting${index+1}.png`" width="230px" height="300px"></q-img>
+                <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0].src ? item.commodityPhotos[0].src : ''" width="230px" height="300px"></q-img>
              </router-link>
              </template>
            </template>
@@ -161,12 +160,18 @@
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
             <q-img :src="item.photos.length ? item.photos[0].src : ''" width="255px" height="255px"></q-img>
-            <div class="new-desc text-left bg-white">
+            <!-- <div class="new-desc text-left bg-white">
               <q-breadcrumbs separator="|" gutter="sm">
-                <!-- <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.techniques[0].name} • ${item.themes[0].name}`" class="text-dark ddd" /> -->
                 <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.categorys[0].name}`" class="text-dark ddd" />
                 <q-breadcrumbs-el  :label="`${item.width}cm X ${item.height}cm`" class="text-dark" />
               </q-breadcrumbs>
+            </div> -->
+            <div class="new-desc text-left bg-white text-dark">
+
+              <sapn v-if="item.techniques.length && item.themes.length" class="ddd">{{item.categorys[0].name}}</sapn>
+              <span style="padding: 0 10px;">|</span>
+              <sapn class="">{{item.width}}cm X {{item.height}}cm</sapn>
+
             </div>
           </div>
           <div class="name absolute text-left" :title="item.name">{{item.name}}</div>
@@ -202,7 +207,7 @@
               >
                 <div class="tab absolute-bottom text-center">
                   <div>{{item.name}}</div>
-                  <q-img src="img/index/next.png" width="20px"></q-img>
+                  <q-img src="~assets/images/next.png" width="20px"></q-img>
                 </div>
                 <div class="absolute-full bg"></div>
               </q-img>
@@ -260,15 +265,15 @@
             {{$t('home.OurFree')}}
           </div>
           <div class="mail text-center text-dark btn" @click="openOfferPage">
-            <q-img src="img/index/mail.png" width="14px"></q-img>
+            <q-img src="~assets/images/mail.png" width="14px"></q-img>
             {{$t('home.contactDirectly')}}
           </div>
 
           <div class="offer relative-position absolute" ref="offerPage" v-show="sendEmailPop">
             <q-img
-              src="img/close.png"
+              src="~assets/images/close.png"
               width="20px"
-              class="offer-close absolute btn"
+              class="offer-close absolute btn icon-close"
               @click="closeOfferPage"
             ></q-img>
             <div class="email-outer bg-white">
@@ -314,7 +319,7 @@
               <div class="col-6">
                 <div class="row star">
                   <div class="col-2" v-for="i of item.star" :key="`star-${i}`">
-                    <q-img src="img/index/star.png" width="20px"></q-img>
+                    <q-img src="~assets/images/star.png" width="20px"></q-img>
                   </div>
                 </div>
                 <div class="col-12 buyer">{{item.title}}</div>
@@ -333,7 +338,7 @@
       <div class="title">{{$t('home.OurBestSellers')}}</div>
       <div @click="goArtists()" class="more absolute row btn">
         <div class="col-grow text">{{$t('home.More')}}</div>
-        <q-img src="img/index/more.png" class="col" width="22px"></q-img>
+        <q-img src="~assets/images/more.png" class="col" width="22px"></q-img>
       </div>
 
       <div class="row hot-artist justify-between">
@@ -355,17 +360,17 @@
     </div>
     <div class="to-top none" ref="top">
       <div class="onlineService">
-        <q-img class="cs btn" src="img/index/cs.png" width="50px"></q-img>
+        <q-img class="cs btn" src="~assets/images/cs.png" width="50px"></q-img>
         <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
       </div>
       <q-img
         class="top btn"
-        src="img/index/top.png"
+        src="~assets/images/top.png"
         width="50px"
         @click="toTop"
       ></q-img>
     </div>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>
@@ -510,24 +515,24 @@ export default {
         font-weight: bolder !important;
       }
     }
-    .slide {
-      user-select: none;
-      font-size: 20.576px;
-      font-family: "STFangsong";
-      line-height: 1.75;
-      letter-spacing: 8px;
-      padding: 100px 0 0 580px;
-      font-size: 60px;
-      .line {
-        display: inline-block;
-        font-size: 80px;
-        transform: rotate(20deg);
-        font-weight: lighter;
-      }
-      .all {
-        font-size: 30px;
-      }
-    }
+    // .slide {
+    //   user-select: none;
+    //   font-size: 20.576px;
+    //   font-family: "STFangsong";
+    //   line-height: 1.75;
+    //   letter-spacing: 8px;
+    //   padding: 100px 0 0 0;
+    //   font-size: 60px;
+    //   .line {
+    //     display: inline-block;
+    //     font-size: 80px;
+    //     transform: rotate(20deg);
+    //     font-weight: lighter;
+    //   }
+    //   .all {
+    //     font-size: 30px;
+    //   }
+    // }
   }
 }
 .advantage {
@@ -839,8 +844,6 @@ export default {
   }
   .image {
     margin-bottom: 30px;
-    // background: url("/img/index/hotartist1.png") no-repeat;
-    // background-size: contain;
     border-radius: 50%;
     width: 180px;
     height: 180px;

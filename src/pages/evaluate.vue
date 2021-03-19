@@ -1,10 +1,10 @@
 <template>
-  <q-layout>
+  <q-page>
     <div class="container">
       <div class="title">评价订单</div>
       <div class="row">
         <div class="col-3">
-          <q-img width="186px" src="img/pay/pj.png" class="image"></q-img>
+          <q-img width="186px" src="~assets/images/commodity.png" class="image"></q-img>
           <div class="detail">浅绿色树脂光泽版</div>
           <div class="size">130cmx180cm油画帆布</div>
           <div class="prise">¥7，900</div>
@@ -63,7 +63,7 @@
       </div>
     </div>
     <div class="public text-center text-white">去发表</div>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>

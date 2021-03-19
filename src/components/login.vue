@@ -4,7 +4,7 @@
       <q-card-section class="row items-center q-pb-none">
         <div class="title">登录</div>
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
+        <q-btn icon="close" class="icon-close"  flat round dense v-close-popup />
       </q-card-section>
 
       <q-card-section>
@@ -15,19 +15,8 @@
             >注册</span
           >
         </div>
-        <!-- <div class="msg" ref="msg">
-            <q-img src="img/index/exclamation.png" width="14px"></q-img>
-            {{ msg }}
-          </div> -->
-        <!-- <input
-            type="text"
-            placeholder="您的全名"
-            class="input"
-            v-model="name"
-            ref="name"
-          /> -->
         <div class="msg" ref="msg2">
-          <q-img src="img/index/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
           {{ msg2 }}
         </div>
         <input
@@ -38,7 +27,7 @@
           ref="loginName"
         />
         <div class="msg" ref="msg3">
-          <q-img src="img/index/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
           {{ msg3 }}
         </div>
         <input
@@ -70,13 +59,13 @@
         <!-- <div class="text-center">
             <div class="title2">第三方账号登录</div>
             <div>
-              <q-img src="img/index/qq-1.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/images/logo-qq.png" width="26px" class="img"></q-img>
               <q-img
-                src="img/index/wechat-1.png"
+                src="~assets/images/logo-wechat.png"
                 width="26px"
                 class="img"
               ></q-img>
-              <q-img src="img/index/zfb-1.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/images/logo-zfb.png" width="26px" class="img"></q-img>
             </div>
           </div> -->
       </q-card-section>
@@ -92,7 +81,7 @@ export default {
       msg: "",
       msg2: "",
       msg3: "",
-      checkbox1: false
+      checkbox1: true
     };
   },
   computed: {

@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-page>
     <div class="title row">
       <div class="col">结账</div>
       <div class="col-grow prise">显示订单摘要：RMB 8,598</div>
@@ -93,7 +93,7 @@
         除你本人亲自签收之外，你的同住家属或你指定的第三方签收，或你指示承运人将本产品置于指定地点，亦将视为你本人签收，且产品已完成交付
       </div>
     </div>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>

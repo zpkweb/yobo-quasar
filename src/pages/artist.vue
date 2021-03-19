@@ -1,7 +1,7 @@
 <template>
-  <q-layout>
+  <q-page>
     <div class="banner relative-position">
-      <q-img src="img/artworks/banner.png" height="360px"></q-img>
+      <q-img src="~assets/images/banner-artist.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <template v-if="portrait">
           <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
@@ -21,7 +21,6 @@
     </div>
     <div id="info" class="desc row">
       <div class="col-4" v-if="portrait">
-        <!-- <q-img src="img/artist/zp.png" width="340px"></q-img> -->
         <q-img v-if="portrait && portrait.user && portrait.user.avatar" :src="portrait.user.avatar"></q-img>
       </div>
       <div class="col-7 offset-1 text-right resume">
@@ -37,30 +36,12 @@
           {{ portrait.metadata.profile }}
         </p>
         <div class="resume4">
-          <!-- <q-img src="img/artist/weibo.png" width="32px" class="image"></q-img>
-          <q-img src="img/artist/wechat.png" width="32px" class="image"></q-img>
-          <q-img src="img/artist/qq.png" width="32px" class="image"></q-img>
-          <q-img src="img/artist/txwb.png" width="32px" class="image"></q-img>
-          <q-img src="img/artist/mail.png" width="32px" class="image"></q-img> -->
           <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
       </div>
     </div>
     <div id="artworks" class="artworks-container">
       <div class="artworks">
-        <!-- <div v-for="tag in tags" :key="tag">
-          <div class="row title">
-            <div class="tag col-6">{{ tag }}</div>
-            <div class="more col-6 text-right">更多</div>
-          </div>
-          <div class="artwork row">
-            <div class="col-3 text-center" v-for="i of 4" :key="i">
-              <div class="image">
-                <q-img src="img/artist/artwork.png" width="180px"></q-img>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="artwork row">
           <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 text-center" v-for="(item, index) of portrait.commoditys" :key="`artwork-${index}`">
             <div class="image">
@@ -70,16 +51,17 @@
         </div>
       </div>
     </div>
-    <div id="sold" class="sold hide">
+    <!-- 最新出售的艺术品 -->
+    <!-- <div id="sold" class="sold">
       <div class="title text-center">{{$t('artist.LatestArtSold')}}</div>
       <div class="row">
         <div class="col-3 text-center" v-for="i of 4" :key="`sold-${i}`">
           <div class="bg">
-            <q-img src="img/artist/new.png" width="180px" class="image"></q-img>
+            <q-img :src="item.photos[0].src" width="180px" class="image"></q-img>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div id="studio" class="video hide"></div>
     <div id="resume" class="credentials ">
       <div class="title text-center ">{{$t('artist.MyResume')}}</div>
@@ -108,7 +90,7 @@
         </div>
       </div>
     </div>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>

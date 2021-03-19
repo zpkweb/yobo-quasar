@@ -4,7 +4,7 @@
       <q-card-section class="row items-center q-pb-none">
         <div class="title">注册</div>
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
+        <q-btn icon="close" class="icon-close" flat round dense v-close-popup />
       </q-card-section>
 
       <q-card-section>
@@ -16,7 +16,7 @@
           >
         </div>
         <div class="msg" ref="registerMsg1">
-          <q-img src="img/index/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
           {{ registerMsg1 }}
         </div>
         <input
@@ -26,7 +26,7 @@
           v-model="name"
         />
         <div class="msg" ref="registerMsg2">
-          <q-img src="img/index/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
           {{ registerMsg2 }}
         </div>
         <input
@@ -36,7 +36,7 @@
           v-model="email"
         />
         <div class="msg" ref="registerMsg3">
-          <q-img src="img/index/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
           {{ registerMsg3 }}
         </div>
         <input
@@ -51,22 +51,26 @@
           <span class="xy btn">《永宝协议》</span>及
           <span class="ys btn">《永宝隐私政策》</span>
         </div>
-        <div class="text-white text-center register btn bg-active" @click="register">
+        <div
+          class="text-white text-center register btn"
+          :class="{'bg-active': isButtonDisable}"
+          @click="register"
+        >
           注册
         </div>
         <q-checkbox v-model="checkbox2" label="保持登录" color="black" size="xs" />
         <!-- <input type="checkbox" class="check" />
         <div class="checkbox2">保持登录</div> -->
-        <!-- <div class="text-center">
-            <div class="title2">第三方账号注册</div>
+          <!-- <div class="text-center">
+            <div class="title2">第三方账号登录</div>
             <div>
-              <q-img src="img/index/qq-1.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/images/logo-qq.png" width="26px" class="img"></q-img>
               <q-img
-                src="img/index/wechat-1.png"
+                src="~assets/images/logo-wechat.png"
                 width="26px"
                 class="img"
               ></q-img>
-              <q-img src="img/index/zfb-1.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/images/logo-zfb.png" width="26px" class="img"></q-img>
             </div>
           </div> -->
       </q-card-section>
@@ -75,7 +79,7 @@
       <q-card-section class="row items-center q-pb-none">
         <div class="quotation">“</div>
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
+        <q-btn icon="close" class="icon-close" flat round dense v-close-popup />
       </q-card-section>
       <div class="text-center title">恭喜，注册已确认！</div>
       <div class="text-center content">已给您发送一封确认邮件</div>
@@ -89,8 +93,8 @@
 export default {
   data() {
     return {
-      checkbox1: false,
-      checkbox2: false,
+      checkbox1: true,
+      checkbox2: true,
       showRegister: true,
       name: "",
       email: "",
@@ -99,6 +103,15 @@ export default {
       registerMsg2: "",
       registerMsg3: "",
     };
+  },
+  computed: {
+    isButtonDisable(){
+      let disable = false;
+      if(this.name || this.email || this.password){
+        disable = true;
+      }
+      return disable;
+    }
   },
   methods: {
     async register() {
@@ -258,7 +271,7 @@ export default {
 .success {
   width: 485px;
   height: 374px;
-  background: url("/img/index/success.png") center center no-repeat;
+  background: url("~assets/images/login-success-bg.png") center center no-repeat;
   .quotation {
     font-size: 88px;
     font-family: "Hei";

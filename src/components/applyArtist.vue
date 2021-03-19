@@ -4,7 +4,7 @@
       <q-card-section class="applyArtist-title row items-center q-pb-none">
         <div class="title">成为艺术家</div>
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
+        <q-btn icon="close" class="icon-close" flat round dense v-close-popup />
       </q-card-section>
 
       <q-card-section class="applyArtist-content">
@@ -132,14 +132,14 @@
       <q-card-section class="applyArtist-title row items-center q-pb-none">
         <div class="title">成为艺术家</div>
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
+        <q-btn icon="close" class="icon-close" flat round dense v-close-popup />
       </q-card-section>
 
       <q-card-section class="applyArtist-content">
         <div class="row">
           <div class="col">已有4555，6783位艺术家入驻</div>
           <div class="col-grow back" @click="goPage1">
-            <q-img src="img/index/back.png" width="14px"></q-img>
+            <q-img src="~assets/images/back.png" width="14px"></q-img>
             上一步
           </div>
         </div>
@@ -360,11 +360,11 @@
     <q-card v-else class="card card1 success">
       <q-card-section class="row items-center q-pb-none">
         <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
+        <q-btn icon="close" class="icon-close" flat round dense v-close-popup />
       </q-card-section>
 
       <div class="text-center">
-        <q-img src="img/success-filling.png" width="80px" />
+        <q-img src="~assets/images/success-filling.png" width="80px" />
       </div>
       <div class="text-center title">恭喜您！成为永宝第<br/>460，693位艺术家</div>
       <div class="text-center content">
@@ -683,7 +683,6 @@ export default {
 .success {
   width: 485px;
   height: 424px;
-  // background: url("/img/index/success.png") center center no-repeat;
   .quotation {
     font-size: 88px;
     font-family: "Hei";

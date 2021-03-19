@@ -1,16 +1,24 @@
 <template>
   <q-layout class="app">
+    <q-header>
     <div class="bg-white nav relative-position">
       <div class="header row text-black relative-position">
         <div class="col">
           <q-img
-            src="img/index/logo.png"
+            src="~assets/images/logo.png"
             class="logo btn"
             width="170px"
             @click="goIndex"
           ></q-img>
           <div class="choose-language-container">
-            <q-btn size="xs" rounded flat class="choose-language btn" v-if="lang">{{lang.value}}</q-btn>
+            <q-btn
+              size="xs"
+              rounded
+              flat
+              class="choose-language btn"
+              v-if="lang"
+              >{{ lang.value }}</q-btn
+            >
           </div>
 
           <div class="dropdown1">
@@ -27,18 +35,20 @@
               </div>
             </div>
           </div>
-
         </div>
         <div class="col-grow">
-          <div class="artist-register btn" @click="isApplyArtistPop = true" v-if="!isApplyArtist">
-            {{$t('layout.header.BecomeAnArtist')}}
+          <div
+            class="artist-register btn"
+            @click="isApplyArtistPop = true"
+            v-if="!isApplyArtist"
+          >
+            {{ $t("layout.header.BecomeAnArtist") }}
           </div>
           <q-breadcrumbs separator="|" class="separator" v-if="!userInfo">
             <q-breadcrumbs-el
               :label="$t('layout.header.login')"
               class="login text-black btn"
               @click="isLoginPop = true"
-
             />
             <q-breadcrumbs-el
               :label="$t('layout.header.registered')"
@@ -47,17 +57,17 @@
             />
           </q-breadcrumbs>
 
-          <div class="username btn" v-if="userInfo" >
-            {{ userInfo.name || isApplyArtist ? "艺术家" : "收藏家"  }}
+          <div class="username btn" v-if="userInfo">
+            {{ userInfo.name || (isApplyArtist ? "艺术家" : "收藏家") }}
           </div>
           <div class="dropdown2">
             <div class="dropdowncontent2 absolute">
               <div class="items">
                 <div class="item" @click="goMine">
-                  {{$t('layout.header.PersonalCenter')}}
+                  {{ $t("layout.header.PersonalCenter") }}
                 </div>
                 <div class="item" @click="logout">
-                  {{$t('layout.header.Signout')}}
+                  {{ $t("layout.header.Signout") }}
                 </div>
               </div>
             </div>
@@ -65,14 +75,14 @@
 
           <div class="search btn text-center" @click="isSearch = true">
             <q-img
-              src="img/index/search.png"
+              src="~assets/images/search.png"
               class="image"
               width="21px"
             ></q-img>
           </div>
 
           <!-- <div class="cart btn text-center">
-            <q-img src="img/index/cart.png" class="image" width="17px"></q-img>
+            <q-img src="~assets/images/cart.png" class="image" width="17px"></q-img>
             <div class="num absolute btn text-white text-center">2</div>
           </div> -->
 
@@ -89,46 +99,55 @@
                   <div class="col desc">Arbeiten in Lack</div>
                 </div>
                 <div class="pay">
-                  <div class="paybtn text-center text-white btn">{{$t('layout.header.BillPlease')}}</div>
+                  <div class="paybtn text-center text-white btn">
+                    {{ $t("layout.header.BillPlease") }}
+                  </div>
                 </div>
                 <!-- <div class="text-center null">您的购物车是空的</div> -->
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-    <div class="rv">
+    </q-header>
+    <q-page-container class=".rv">
       <router-view></router-view>
+    </q-page-container>
+
+    <q-footer >
       <div class="footer text-white" v-if="$route.name != 'Artworks'">
         <div class="container row">
           <div class="col-9 row">
             <div class="col-3 item">
-              <div class="title">{{$t('layout.footer.customerService')}}</div>
-              <div>{{$t('layout.footer.contactUs')}}</div>
-              <div>{{$t('layout.footer.LegalNotices')}}</div>
-              <div>{{$t('layout.footer.GeneralRegulations')}}</div>
-              <div v-if="$store.state.isShowPay">{{$t('layout.footer.CustomerReviews')}}</div>
+              <div class="title">{{ $t("layout.footer.customerService") }}</div>
+              <div>{{ $t("layout.footer.contactUs") }}</div>
+              <div>{{ $t("layout.footer.LegalNotices") }}</div>
+              <div>{{ $t("layout.footer.GeneralRegulations") }}</div>
+              <div v-if="$store.state.isShowPay">
+                {{ $t("layout.footer.CustomerReviews") }}
+              </div>
               <div v-if="$store.state.isShowPay">Offer a Gift Card</div>
-              <div v-if="$store.state.isShowPay">{{$t('layout.footer.GetMyVoucher')}}</div>
-              <div>{{$t('layout.footer.myAccount')}}</div>
-              <div>{{$t('layout.footer.OfficeArtwork')}}</div>
-              <div>{{$t('layout.footer.DesignerArtwork')}}</div>
+              <div v-if="$store.state.isShowPay">
+                {{ $t("layout.footer.GetMyVoucher") }}
+              </div>
+              <div>{{ $t("layout.footer.myAccount") }}</div>
+              <div>{{ $t("layout.footer.OfficeArtwork") }}</div>
+              <div>{{ $t("layout.footer.DesignerArtwork") }}</div>
               <div v-if="$store.state.isShowPay">+44 203 445 6333</div>
             </div>
             <div class="col-3 item">
-              <div class="title">{{$t('layout.footer.aboutAs')}}</div>
-              <div>{{$t('layout.footer.AboutYongbao')}}</div>
-              <div>{{$t('layout.footer.OurArtist')}}</div>
-              <div>{{$t('layout.footer.magazine')}}</div>
-              <div>{{$t('layout.footer.team')}}</div>
-              <div>{{$t('layout.footer.OurSelectionCriteria')}}</div>
-              <div>{{$t('layout.footer.commonProblem')}}</div>
-              <div>{{$t('layout.footer.ContactInformation')}}</div>
+              <div class="title">{{ $t("layout.footer.aboutAs") }}</div>
+              <router-link class="footer-link-color" :to="`/${$i18n.locale}/about`">{{ $t("layout.footer.AboutYongbao") }}</router-link>
+              <div>{{ $t("layout.footer.OurArtist") }}</div>
+              <div>{{ $t("layout.footer.magazine") }}</div>
+              <div>{{ $t("layout.footer.team") }}</div>
+              <router-link class="footer-link-color" :to="`/${$i18n.locale}/criteria`">{{ $t("layout.footer.OurSelectionCriteria") }}</router-link>
+              <div class="cursor-pointer" @click="showHelp = true">{{ $t("layout.footer.commonProblem") }}</div>
+              <div>{{ $t("layout.footer.ContactInformation") }}</div>
             </div>
             <div class="col-3 item">
-              <div class="title">{{$t('layout.footer.FeaturedArtist')}}</div>
+              <div class="title">{{ $t("layout.footer.FeaturedArtist") }}</div>
               <div>Kirstin Mccoy</div>
               <div>Josep Moncada</div>
               <div>Ivan Pili</div>
@@ -136,9 +155,9 @@
               <div>Peter Nottrott</div>
             </div>
             <div class="col-3 item">
-              <div class="title">{{$t('layout.footer.FollowYongbao')}}</div>
-              <div>{{$t('layout.footer.WeChat')}}</div>
-              <div>{{$t('layout.footer.Weibo')}}</div>
+              <div class="title">{{ $t("layout.footer.FollowYongbao") }}</div>
+              <div>{{ $t("layout.footer.WeChat") }}</div>
+              <div>{{ $t("layout.footer.Weibo") }}</div>
               <div>Facebook</div>
               <div>Instagram</div>
               <div>Pinterest</div>
@@ -146,87 +165,137 @@
           </div>
 
           <div class="col-3">
-            <div class="title book">{{$t('layout.footer.SubscribetoYongbaoElectronicNews')}}</div>
+            <div class="title book">
+              {{ $t("layout.footer.SubscribetoYongbaoElectronicNews") }}
+            </div>
             <div class="privacy-policy">
               <!-- 通过订阅，即代表您接受永宝的<span class="btn">隐私政策条款</span> -->
-              {{$t('layout.footer.BySubscribing')}}
+              {{ $t("layout.footer.BySubscribing") }}
             </div>
             <div class="row mail">
-              <div class="col">{{$t('layout.footer.emailAddress')}}</div>
+              <div class="col">{{ $t("layout.footer.emailAddress") }}</div>
               <div class="col-grow">
-
                 <q-img
-                  src="img/index/Right arrow.png"
+                  src="~assets/images/arrow-right.png"
                   width="15px"
                   class="getmail"
                 ></q-img>
               </div>
             </div>
 
-            <div class="title pay">{{$t('layout.footer.SupportedPaymentMethods')}}</div>
+            <div class="title pay">
+              {{ $t("layout.footer.SupportedPaymentMethods") }}
+            </div>
             <div class="row pay1">
               <div class="col-3">
-                <q-img src="img/index/zfb.png" width="60px"></q-img>
+                <q-img src="~assets/images/zfb.png" width="60px"></q-img>
               </div>
 
               <div class="col-3" v-if="$store.state.isShowPay">
-                <q-img src="img/index/visa.png" width="60px"></q-img>
+                <q-img src="~assets/images/visa.png" width="60px"></q-img>
               </div>
               <div class="col-3" v-if="$store.state.isShowPay">
-                <q-img src="img/index/paypal.png" width="60px"></q-img>
+                <q-img src="~assets/images/paypal.png" width="60px"></q-img>
               </div>
             </div>
-            <q-img v-if="$store.state.isShowPay" src="img/index/mastercard.png" width="140px" contain></q-img>
+            <q-img
+              v-if="$store.state.isShowPay"
+              src="~assets/images/mastercard.png"
+              width="140px"
+              contain
+            ></q-img>
           </div>
           <div class="col-12 row bottom">
-            <div class="col-4 text-left" v-if="$store.state.isShowPay">{{$t('layout.footer.AllRightsReserved')}}</div>
-            <div class="col-4 text-center"><a target="_blank" href="https://beian.miit.gov.cn/" class="footer-link-color">{{$t('layout.footer.ICPNo')}}</a></div>
-            <div class="col-4 text-right"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337" class="footer-link-color"><q-img
-                  src="img/index/police.png"
+            <div class="col-3 footer-link-color-grey" v-if="$store.state.isShowPay">
+              {{ $t("layout.footer.AllRightsReserved") }}
+            </div>
+            <div class="col-2">
+              <a
+                target="_blank"
+                href="https://beian.miit.gov.cn/"
+                class="footer-link-color-grey"
+                >{{ $t("layout.footer.ICPNo") }}</a
+              >
+            </div>
+            <div class="col-3">
+              <a
+                target="_blank"
+                href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337"
+                class="footer-link-color-grey"
+                ><q-img
+                  src="~assets/images/police.png"
                   width="12px"
                   class="img"
-                ></q-img>{{$t('layout.footer.PublicNetworkSecurityNo')}}</a></div>
+                  style="margin-right: 5px;vertical-align: -2px;"
+                ></q-img
+                >{{ $t("layout.footer.PublicNetworkSecurityNo") }}</a
+              >
+            </div>
 
-            <!-- <div class="col-3 row">
-              <a class="col-grow image" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337">
-                <q-img
-                  src="img/index/police.png"
-                  width="12px"
-                  class="img"
-                ></q-img>
-                <div class="col">{{$t('layout.footer.PublicNetworkSecurityNo')}}</div>
-              </a>
-
-            </div> -->
           </div>
         </div>
       </div>
-    </div>
+      <template v-if="$route.name != 'Artworks'">
+      <div class="footer-criteria" v-if="!showFooterCriteria && !isApplyArtist">
+        <Banner class="criteria-module-footer">
+          <template v-slot:bgImg>
+            <q-img class="banner-bg-img" src="~assets/images/criteria-footer-ar-bg.png" />
+          </template>
+          <q-btn icon="close" class="banner-close icon-close" flat round dense v-close-popup @click="showFooterCriteria = true" />
+          <h3 class="banner-title title text-bold">您是艺术家么？</h3>
+          <p class="banner-desc q-mt-md">如果对我们感兴趣，跟我们做个自我介绍 吧！我们会<br/>仔细审核您的履历，并在2周内给您答复</p>
+          <div class="banner-btn q-mt-lg" @click="isApplyArtistPop = true">申请</div>
+        </Banner>
+      </div>
+      </template>
+    </q-footer>
     <!-- 登录 -->
-    <q-dialog v-model="isLoginPop" transition-hide="fade" transition-show="fade">
-      <Login v-on:show-register="showRegister" v-on:hide-login="hideLogin" v-on:show-new-password="showNewPassword" />
-    </q-dialog>
-    <!-- 注册 -->
-    <q-dialog v-model="isRegisterPop" transition-hide="fade" transition-show="fade">
-      <Register v-on:show-login="showLogin" />
-    </q-dialog>
-    <!-- 成为艺术家 -->
-    <q-dialog v-model="isApplyArtistPop" transition-hide="fade" transition-show="fade">
-      <ApplyArtist  v-on:hide-applyArtist="hideApplyArtist" />
-    </q-dialog>
-    <!-- 搜索 -->
     <q-dialog
-      v-model="isSearch"
+      v-model="isLoginPop"
       transition-hide="fade"
       transition-show="fade"
     >
+      <Login
+        v-on:show-register="showRegister"
+        v-on:hide-login="hideLogin"
+        v-on:show-new-password="showNewPassword"
+      />
+    </q-dialog>
+    <!-- 注册 -->
+    <q-dialog
+      v-model="isRegisterPop"
+      transition-hide="fade"
+      transition-show="fade"
+    >
+      <Register v-on:show-login="showLogin" />
+    </q-dialog>
+    <!-- 成为艺术家 -->
+    <q-dialog
+      v-model="isApplyArtistPop"
+      transition-hide="fade"
+      transition-show="fade"
+    >
+      <ApplyArtist v-on:hide-applyArtist="hideApplyArtist" />
+    </q-dialog>
+    <!-- 搜索 -->
+    <q-dialog v-model="isSearch" transition-hide="fade" transition-show="fade">
       <Search />
     </q-dialog>
     <!-- 忘记密码 -->
-    <q-dialog v-model="isNewPasswordPop" transition-hide="fade" transition-show="fade">
-      <NewPassword v-on:hide-login="hideLogin" v-on:hide-new-password="hideNewPassword" />
+    <q-dialog
+      v-model="isNewPasswordPop"
+      transition-hide="fade"
+      transition-show="fade"
+    >
+      <NewPassword
+        v-on:hide-login="hideLogin"
+        v-on:hide-new-password="hideNewPassword"
+      />
     </q-dialog>
-
+    <!-- 帮助 -->
+    <q-dialog class="" maximized v-model="showHelp" full-height position="right" transition-hide="fade" transition-show="fade">
+      <Help />
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -234,11 +303,13 @@
 import * as ApiUser from "src/api/user.js";
 import * as utils from "src/api/utils.js";
 import * as loclist from "../assets/loclist.json";
-import Login from 'src/components/login';
-import Register from 'src/components/register';
-import ApplyArtist from 'src/components/applyArtist';
-import Search from 'src/components/search';
-import NewPassword from 'src/components/newPassword';
+import Login from "src/components/login";
+import Register from "src/components/register";
+import ApplyArtist from "src/components/applyArtist";
+import Search from "src/components/search";
+import NewPassword from "src/components/newPassword";
+import Banner from "src/components/banner";
+import Help from "src/components/help";
 
 export default {
   components: {
@@ -246,7 +317,9 @@ export default {
     Register,
     ApplyArtist,
     Search,
-    NewPassword
+    NewPassword,
+    Banner,
+    Help
   },
   data() {
     return {
@@ -280,70 +353,77 @@ export default {
       isRegisterPop: false,
       isApplyArtistPop: false,
       isSearch: false,
-      isNewPasswordPop: false
+      isNewPasswordPop: false,
+      showFooterCriteria: false,
+      showHelp: false
     };
   },
   watch: {
     lang(lang) {
-      console.log("watch lang", lang)
+      console.log("watch lang", lang);
       this.$i18n.locale = lang.locale;
       this.$router.push({
         params: {
-          locale: lang.locale
+          locale: lang.locale,
         },
-        query: this.$route.query
-      })
+        query: this.$route.query,
+      });
     },
   },
 
   preFetch({ store, currentRoute, redirect }) {
-    console.log("layout preFetch", currentRoute.params)
+    console.log("layout preFetch", currentRoute.params);
 
-    store.commit("setLang", currentRoute.params.locale)
+    store.commit("setLang", currentRoute.params.locale);
     // if (!store.state.user.info) {
     //   redirect({ path: '/' })
     // }
-
   },
 
   computed: {
-    userInfo () {
-      return this.$store.state.user.info
+    userInfo() {
+      return this.$store.state.user.info;
     },
     isApplyArtist() {
-      return this.$store.state.user.info ? this.$store.state.user.info.seller : false
-    }
+      return this.$store.state.user.info
+        ? this.$store.state.user.info.seller
+        : false;
+    },
   },
 
   async beforeCreate() {
-    console.log("layout created", this.$i18n.locale, this.$store.state.lang)
+    console.log("layout created", this.$i18n.locale, this.$store.state.lang);
 
-    this.$i18n.locale = this.$store.state.lang ? this.$store.state.lang.locale : 'zh-cn';
-    const userInfo = this.$q.cookies.get('userInfo');
-    if(userInfo) {
-      if(userInfo.userId){
-        const getUserInfo = await this.$store.dispatch('user/getUserInfo', {
-          userId: userInfo.userId
-        })
-        console.log("getUserInfo", getUserInfo)
+    this.$i18n.locale = this.$store.state.lang
+      ? this.$store.state.lang.locale
+      : "zh-cn";
+    const userInfo = this.$q.cookies.get("userInfo");
+    if (userInfo) {
+      if (userInfo.userId) {
+        const getUserInfo = await this.$store.dispatch("user/getUserInfo", {
+          userId: userInfo.userId,
+        });
+        console.log("getUserInfo", getUserInfo);
         // this.$store.commit('user/setUserInfo', getUserInfo.data);
-
       }
-
-    }else{
+    } else {
       // this.$router.push('/')
     }
   },
   mounted() {
-    console.log("layout mounted", this.$i18n.locale, this.$store.state.lang)
-    this.$q.cookies.set("test", {test:111}, {
-      expires: 1,
-      path: '/'
-    })
+    console.log("layout mounted", this.$i18n.locale, this.$store.state.lang);
+    this.$q.cookies.set(
+      "test",
+      { test: 111 },
+      {
+        expires: 1,
+        path: "/",
+      }
+    );
   },
   methods: {
     changeLang(item) {
-      console.log("changelang", item)
+      console.log("changelang", item);
       this.lang = item;
     },
 
@@ -364,17 +444,15 @@ export default {
     hideRegister() {
       this.isRegisterPop = false;
     },
-    showApplyArtist() {
-
-    },
+    showApplyArtist() {},
     hideApplyArtist() {
       this.isApplyArtistPop = false;
     },
-    showNewPassword(){
+    showNewPassword() {
       this.isLoginPop = false;
       this.isNewPasswordPop = true;
     },
-    hideNewPassword(){
+    hideNewPassword() {
       this.isNewPasswordPop = false;
       this.isLoginPop = true;
     },
@@ -387,16 +465,15 @@ export default {
       this.$router.push(`/${this.$i18n.locale}/mine/`);
     },
 
-
     logout() {
-      this.$store.commit('user/setUserInfo', null);
-      this.$q.cookies.remove('token', {
-        path: '/'
+      this.$store.commit("user/setUserInfo", null);
+      this.$q.cookies.remove("token", {
+        path: "/",
       });
-      this.$q.cookies.remove('userInfo', {
-        path: '/'
+      this.$q.cookies.remove("userInfo", {
+        path: "/",
       });
-      this.$router.push('/')
+      this.$router.push("/");
     },
     async setNewPassword() {
       let res = await ApiUser.setNewPassword(
@@ -414,7 +491,6 @@ export default {
       // let res;
     },
     async setNewPassword() {},
-
   },
 };
 </script>
@@ -426,10 +502,18 @@ export default {
 a {
   text-decoration: none;
 }
-
+body {
+  font-family: "Heiti SC";
+}
+.content-width{
+  width: 1220px;
+}
+.title {
+  font-family: "STFangsong";
+}
 .app {
   min-width: 1200px;
-  font-family: "STFangsong";
+  /* font-family: "STFangsong"; */
 }
 
 .btn {
@@ -438,7 +522,7 @@ a {
 .mt10 {
   margin-top: 10px;
 }
-.left{
+.left {
   float: left;
 }
 .right {
@@ -453,6 +537,21 @@ a {
 .border-active {
   border: 1px solid rgb(21, 44, 43) !important;
 }
+
+.icon-close {
+  transition: transform 0.5s;
+  -moz-transition: -moz-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+}
+.icon-close:hover {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+}
+
+/* quasar layout css */
 .bg-active {
   background-color: #152c2b !important;
 }
@@ -470,21 +569,70 @@ a {
   background: #152c2b;
 }
 
-.q-field--outlined .q-field__control:after{
+.q-field--outlined .q-field__control:after {
   border-width: 1px !important;
 }
 
 .footer-link-color {
   color: #fff;
 }
+.footer-link-color-grey{
+  color: #999999;
+}
 
-.q-tabs--not-scrollable .q-tabs__content{
+.q-tabs--not-scrollable .q-tabs__content {
   flex-wrap: wrap;
   justify-content: left;
 }
-
+</style>
+<style lang="scss">
+.footer-criteria{
+  height: 292px;
+  background-color: #232323;
+}
+.app .criteria-module-footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  .banner-close{
+    position: absolute;
+    top: 42px;
+    left: 50%;
+    color: #252221;
+    margin-left: 470px;
+  }
+  .banner-title{
+    font-size: 24px;
+    color: #000;
+  }
+  .banner-desc{
+    font-size: 16px;
+    color: #000;
+  }
+  .banner-btn{
+    width: 213px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    font-size: 24px;
+    color: #d6d7c5;
+    background-color: #152c2b;
+    cursor: pointer;
+  }
+}
 </style>
 <style lang="sass">
+
+.flex-break
+  flex: 1 0 100% !important
+.row
+  .flex-break
+    height: 0 !important
+.column
+  .flex-break
+    width: 0 !important
+
 .q-placeholder
   &::-webkit-input-placeholder
     color: #a2a2a2
@@ -524,10 +672,85 @@ body.desktop
     &:hover
       .q-checkbox__inner:before
         transform: scale3d(1.4, 1.4, 1)
+body.desktop
+  .q-focus-helper
+    position: absolute
+    top: 0
+    left: 0 #{"/* rtl:ignore */"}
+    width: 100%
+    height: 100%
+    pointer-events: none
+    border-radius: inherit
+    opacity: 0
+    transition: background-color .3s cubic-bezier(.25,.8,.5,1), opacity .4s cubic-bezier(.25,.8,.5,1)
 
+    &:before, &:after
+      content: ''
+      position: absolute
+      top: 0
+      left: 0 #{"/* rtl:ignore */"}
+      width: 100%
+      height: 100%
+      opacity: 0
+      border-radius: inherit
+      transition: background-color .3s cubic-bezier(.25,.8,.5,1), opacity .6s cubic-bezier(.25,.8,.5,1)
+    &:before
+      background: #000
+    &:after
+      background: #fff
+    &--rounded
+      border-radius: $generic-border-radius
+    &--round
+      border-radius: 50%
+  .q-focusable, .q-manual-focusable, .q-hoverable
+    outline: 0
+  .q-focusable:focus, .q-manual-focusable--focused, .q-hoverable:hover
+    > .q-focus-helper
+      background: currentColor
+      // opacity: .15
+      opacity: 0
+
+      &:before
+        // opacity: .1
+        opacity: 0
+      &:after
+        // opacity: .4
+        opacity: 0
+  .q-focusable:focus, .q-manual-focusable--focused
+    > .q-focus-helper
+      // opacity: .22
+      opacity: 0
+
+.q-ripple
+  position: absolute
+  top: 0
+  left: 0 #{"/* rtl:ignore */"}
+  // width: 100%
+  width: 0
+  // height: 100%
+  height: 0
+  color: inherit
+  border-radius: inherit
+  z-index: 0
+  pointer-events: none
+  overflow: hidden
+  contain: strict
+  &__inner
+    position: absolute
+    top: 0
+    left: 0 #{"/* rtl:ignore */"}
+    opacity: 0
+    color: inherit
+    border-radius: 50%
+    background: currentColor
+    pointer-events: none
+    will-change: transform, opacity
+    &--enter
+      transition: transform .225s cubic-bezier(.4, 0, .2, 1), opacity .1s cubic-bezier(.4, 0, .2, 1)
+    &--leave
+      transition: opacity .25s cubic-bezier(.4, 0, .2, 1)
 </style>
 <style lang="scss" scoped>
-
 .app {
   display: flex;
   flex-direction: column;
@@ -566,7 +789,6 @@ body.desktop
   .username:hover + .dropdown2 {
     display: inline-block;
   }
-
 
   .logo {
     margin-right: 30px;
@@ -673,7 +895,8 @@ body.desktop
   left: -5px;
   background-color: #fff;
   display: none;
-  &::before, &::after {
+  &::before,
+  &::after {
     content: "";
     position: absolute;
     top: 0;
@@ -684,11 +907,11 @@ body.desktop
     border: solid 15px;
   }
   &::before {
-    border-color: transparent transparent #ddd  transparent ;
+    border-color: transparent transparent #ddd transparent;
   }
   &::after {
     top: 1px;
-    border-color: transparent transparent #fff transparent ;
+    border-color: transparent transparent #fff transparent;
   }
 
   &:hover {
@@ -733,16 +956,12 @@ body.desktop
   }
 }
 
-
-
-
 .dropdown2 {
   display: none;
   &:hover {
     display: inline-block;
   }
   .dropdowncontent2 {
-
     background: transparent;
     right: 63px;
     top: 67px;
@@ -818,14 +1037,14 @@ body.desktop
           background-color: #d6d7c5;
         }
         .image {
-          background: url("/img/index/cart1.png") center center no-repeat;
+          background: url("~assets/images/cart1.png") center center no-repeat;
           background-size: contain;
           width: 40px;
           height: 40px;
           margin: 25px 30px;
         }
         .image2 {
-          background-image: url("/img/index/cart2.png");
+          background-image: url("~assets/images/cart1.png");
         }
       }
       .desc {
@@ -873,7 +1092,7 @@ body.desktop
     font-size: 18px;
   }
   .image {
-    background: url("/img/index/search.png") no-repeat;
+    background: url("~assets/images/search.png") no-repeat;
     width: 21px;
     height: 21px;
     vertical-align: middle;
@@ -916,7 +1135,7 @@ body.desktop
 .success {
   width: 485px;
   height: 374px;
-  background: url("/img/index/success.png") center center no-repeat;
+  background: url("~assets/images/login-success-bg.png") center center no-repeat;
   .quotation {
     font-size: 88px;
     font-family: "Hei";

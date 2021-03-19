@@ -11,11 +11,11 @@
         <q-space />
         <q-btn
           icon="close"
+          class="close absolute icon-close"
           flat
           round
           dense
           v-close-popup
-          class="close absolute"
         />
       </q-card-section>
       <div v-show="searchResult.length" ref="scrollTargetRef" class="q-pa-md" style="max-height: 250px; overflow: auto;">
@@ -305,7 +305,7 @@ export default {
     left: 0;
   }
   .image {
-    background: url("/img/index/search.png") no-repeat;
+    background: url("~assets/images/search.png") no-repeat;
     width: 21px;
     height: 21px;
     vertical-align: middle;

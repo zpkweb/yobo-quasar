@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-page>
     <div class="container text-center">
       <div class="total">您的购物袋总计 CNY 15,567</div>
       <div class="service">所有订单均可享受免费送货和退货服务</div>
@@ -114,7 +114,7 @@
       </div>
       <div class="text-center more">显示更多产品</div>
     </div>
-  </q-layout>
+  </q-page>
 </template>
 
 <style lang="scss" scoped>
@@ -156,12 +156,12 @@
   .img-outer {
     padding: 70px 20px;
     .img {
-      background: url("/img/pay/2.png") center center no-repeat;
       width: 200px;
       height: 200px;
+      background-color: #152c2b;
     }
     .img2 {
-      background: url("/img/pay/1.png") center center no-repeat;
+      background-color: #152c2b;
     }
   }
   .desc {
@@ -266,7 +266,7 @@
       margin: 0 auto;
     }
     .img {
-      background: url("/img/pay/1.png") center center no-repeat;
+      background-color: #152c2b;
       width: 270px;
       height: 270px;
       margin: 0 auto;
@@ -274,7 +274,7 @@
       margin-bottom: 12px;
     }
     .img2 {
-      background: url("/img/pay/2.png") center center no-repeat;
+      background-color: #152c2b;
       background-size: contain;
     }
     .name {

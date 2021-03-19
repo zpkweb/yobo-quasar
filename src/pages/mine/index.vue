@@ -1,7 +1,7 @@
 <template>
-  <q-layout>
+  <q-page>
     <div class="banner relative-position">
-      <q-img src="img/mine/man.png" height="240px"></q-img>
+      <q-img src="~assets/images/banner-man.png" height="240px"></q-img>
       <div class="absolute-full">
         <div class="container">
           <!-- <div class="tags">
@@ -31,7 +31,7 @@
       </div>
     </div>
     <router-view></router-view>
-  </q-layout>
+  </q-page>
 </template>
 <script>
 export default {
