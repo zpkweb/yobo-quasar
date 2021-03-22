@@ -235,7 +235,7 @@
           </div>
         </div>
       </div>
-      <template v-if="$route.name != 'Artworks'">
+      <template v-if="$route.name == 'criteria'">
       <div class="footer-criteria" v-if="!showFooterCriteria && !isApplyArtist">
         <Banner class="criteria-module-footer">
           <template v-slot:bgImg>

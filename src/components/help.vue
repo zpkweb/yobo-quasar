@@ -3,7 +3,7 @@
       <q-layout view="Lhh lpR fff" container class="bg-white">
         <q-header class="help-header bg-white">
           <q-toolbar>
-            <q-toolbar-title>推荐帮助</q-toolbar-title>
+            <h3 class="help-header-title title">推荐帮助</h3>
             <q-btn class="icon-close" flat v-close-popup round dense icon="close" />
           </q-toolbar>
         </q-header>
@@ -85,6 +85,12 @@ export default {};
   color: #152c2b;
   border-bottom: 1px solid #f2f1f1;
   text-align: center;
+  .help-header-title{
+    width: 100%;
+    color: #152c2b;
+    font-size: 18px;
+    font-weight: bold;
+  }
 }
 .help-footer {
   padding: 20px;

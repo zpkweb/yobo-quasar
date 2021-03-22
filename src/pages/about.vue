@@ -123,7 +123,25 @@ export default {
   },
   methods: {
     aboutSubmit() {
-      this.aboutEmail = "";
+      var verify = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
+      if (!verify.test(this.aboutEmail)) {
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: "请输入正确的邮箱！",
+          color: "negative",
+        });
+      }else{
+        this.aboutEmail = "";
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: "订阅成功",
+          color: "positive",
+        });
+      }
+
+
     }
   },
 }
