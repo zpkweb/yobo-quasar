@@ -534,12 +534,12 @@ export default {
             path: "/",
           });
 
-          await this.$store.commit("user/setUserInfo", storageUserInfo);
+        await this.$store.commit("user/setUserInfo", storageUserInfo);
         // this.$q.cookies.set("userInfo", storageUserInfo, {
         //   expires: 1,
         //   path: "/",
         // });
-        // this.$emit('hide-applyArtist')
+        this.$emit('hide-isApplyArtist')
 
         this.$q.notify({
           position: "top",

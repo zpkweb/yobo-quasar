@@ -173,12 +173,15 @@
               {{ $t("layout.footer.BySubscribing") }}
             </div>
             <div class="row mail">
-              <div class="col">{{ $t("layout.footer.emailAddress") }}</div>
-              <div class="col-grow">
+              <div class="col">
+                <input class="footer-email" v-model="footerEmail" :placeholder="$t('layout.footer.emailAddress')" />
+              </div>
+              <div class="col-grow row " @click="footerEmailSubmit">
                 <q-img
                   src="~assets/images/arrow-right.png"
-                  width="15px"
-                  class="getmail"
+                  width="21px"
+                  class="getmail cursor-pointer"
+
                 ></q-img>
               </div>
             </div>
@@ -259,6 +262,7 @@
         v-on:show-register="showRegister"
         v-on:hide-login="hideLogin"
         v-on:show-new-password="showNewPassword"
+        v-on:hide-isApplyArtist="hideIsApplyArtist"
       />
     </q-dialog>
     <!-- 注册 -->
@@ -275,7 +279,7 @@
       transition-hide="fade"
       transition-show="fade"
     >
-      <ApplyArtist v-on:hide-applyArtist="hideApplyArtist" />
+      <ApplyArtist v-on:hide-applyArtist="hideApplyArtist" v-on:hide-isApplyArtist="hideIsApplyArtist" />
     </q-dialog>
     <!-- 搜索 -->
     <q-dialog v-model="isSearch" transition-hide="fade" transition-show="fade">
@@ -352,10 +356,12 @@ export default {
       isLoginPop: false,
       isRegisterPop: false,
       isApplyArtistPop: false,
+      isApplyArtist: false,
       isSearch: false,
       isNewPasswordPop: false,
       showFooterCriteria: false,
-      showHelp: false
+      showHelp: false,
+      footerEmail: ""
     };
   },
   watch: {
@@ -384,11 +390,20 @@ export default {
     userInfo() {
       return this.$store.state.user.info;
     },
-    isApplyArtist() {
-      return this.$store.state.user.info
-        ? this.$store.state.user.info.seller
-        : false;
-    },
+    // isApplyArtist() {
+    //   let isApplyArtist = false;
+    //   const userInfo = this.$q.cookies.get("userInfo");
+    //   if (userInfo) {
+    //     console.log("userInfo", userInfo)
+    //     isApplyArtist = userInfo.isApplyArtist;
+    //   }else{
+    //     if(this.$store.state.user.info){
+    //       isApplyArtist = this.$store.state.user.info.isApplyArtist
+    //     }
+    //   }
+
+    //   return isApplyArtist;
+    // },
   },
 
   async beforeCreate() {
@@ -420,6 +435,12 @@ export default {
         path: "/",
       }
     );
+    let isApplyArtist = false;
+      const userInfo = this.$q.cookies.get("userInfo");
+      if (userInfo && userInfo.seller) {
+        isApplyArtist = true
+      }
+    this.isApplyArtist = isApplyArtist;
   },
   methods: {
     changeLang(item) {
@@ -448,6 +469,9 @@ export default {
     hideApplyArtist() {
       this.isApplyArtistPop = false;
     },
+    hideIsApplyArtist() {
+      this.isApplyArtist = true;
+    },
     showNewPassword() {
       this.isLoginPop = false;
       this.isNewPasswordPop = true;
@@ -466,6 +490,8 @@ export default {
     },
 
     logout() {
+      this.isApplyArtist = false;
+
       this.$store.commit("user/setUserInfo", null);
       this.$q.cookies.remove("token", {
         path: "/",
@@ -474,6 +500,7 @@ export default {
         path: "/",
       });
       this.$router.push("/");
+
     },
     async setNewPassword() {
       let res = await ApiUser.setNewPassword(
@@ -491,6 +518,49 @@ export default {
       // let res;
     },
     async setNewPassword() {},
+    async footerEmailSubmit() {
+
+      var verify = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
+      if (!verify.test(this.footerEmail)) {
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: "请输入正确的邮箱！",
+          color: "negative",
+        });
+      }else{
+        if(!this.$store.state.user.info) {
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "请登录！",
+            color: "negative",
+          });
+        }
+        // 订阅
+        const subscriber = await this.$store.dispatch("home/subscriber", {
+          email: this.footerEmail,
+          userId: this.$store.state.user.info.userId
+        })
+        if(subscriber.success) {
+          this.footerEmail = "";
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "订阅成功",
+            color: "positive",
+          });
+        }else{
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: subscriber.message,
+            color: "negative",
+          });
+        }
+
+      }
+    }
   },
 };
 </script>
@@ -559,6 +629,14 @@ body {
   color: #1b2d2b;
 }
 .bg-brand {
+  background: #d6d7c5;
+}
+
+
+.text-d6d7c5 {
+  color: #d6d7c5;
+}
+.bg-default {
   background: #d6d7c5;
 }
 
@@ -1163,6 +1241,13 @@ body.desktop
     font-family: "STFangsong";
     letter-spacing: 0.5px;
   }
+}
+.footer-email{
+  border: 0;
+  outline: none;
+  width: 100%;
+  color: #fff;
+  background-color: transparent;
 }
 </style>
 

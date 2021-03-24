@@ -16,10 +16,22 @@ const actions: ActionTree<HomeStateInterface, StateInterface> = {
     })
 
   },
+
   async sendEmail({ commit }, payload) {
     return await axiosInstance.post('/api/email/send', {
       email: payload.email,
       msg: payload.msg,
+    })
+    .then(response => {
+      return response.data;
+    }).catch((err) => {
+    })
+  },
+
+  async subscriber({ commit }, payload) {
+    return await axiosInstance.post('/api/subscriber', {
+      email: payload.email,
+      userId: payload.userId,
     })
     .then(response => {
       return response.data;

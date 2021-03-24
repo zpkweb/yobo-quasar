@@ -63,6 +63,7 @@ export default {
     artInformation: "アート情報",
     VRExhibition: "VR展",
     industryArtExhibition: "インダストリーアート展",
+    worldMasterpiece: "世界名作",
     OurAdvantage: "私たちの利点",
     FeaturedArtist: "注目のアーティスト",
     ArtistsWorld: "世界各地のアーティスト",

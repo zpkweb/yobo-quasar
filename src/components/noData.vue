@@ -2,7 +2,7 @@
   <div class="noData">
       <q-img
         src="~assets/images/exclamatory.png"
-        width="60px"
+        width="52px"
         class="noData-img"
       ></q-img>
       <div class="noData-text">{{$t(text) || "暂无数据"}}</div>

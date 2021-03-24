@@ -337,6 +337,7 @@
         <router-link
           :to="{
             query: Object.assign({}, $route.query, {
+              news: false,
               hots: hots ? false : true,
             }),
           }"
@@ -348,6 +349,7 @@
           :to="{
             query: Object.assign({}, $route.query, {
               news: news ? false : true,
+              hots: false,
             }),
           }"
           class="tabs"
@@ -827,6 +829,7 @@ export default {
     news() {
       return this.$route.query.news && this.$route.query.news !== "false";
     },
+
   },
   methods: {
     generateCells() {

@@ -63,6 +63,7 @@ export default {
     artInformation: "Art Information",
     VRExhibition: "VR exhibition",
     industryArtExhibition: "Industry Art Exhibition",
+    worldMasterpiece: "world masterpiece",
     OurAdvantage: "Our advantage",
     FeaturedArtist: "Featured Artist",
     ArtistsWorld: "Artists from all corners of the world",

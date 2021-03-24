@@ -8,17 +8,17 @@
               <q-img v-if="hasMyArtwork" src="~assets/images/share.png" width="16px" height="14px" />
               <q-img v-else src="~assets/images/shared.png" width="16px" height="14px" />
             </div> -->
-            <div class="heart cursor-pointer q-ml-md">
+            <div class="heart cursor-pointer q-ml-md" v-if="showMyArtwork">
               <q-img
                 v-if="hasMyArtwork"
-                src="~assets/images/like.png"
+                src="~assets/images/liked.png"
                 width="16px"
                 height="14px"
                 @click="myArtwork"
               />
               <q-img
                 v-else
-                src="~assets/images/liked.png"
+                src="~assets/images/like.png"
                 width="16px"
                 height="14px"
                 @click="myArtwork"
@@ -614,6 +614,7 @@ export default {
       bidMsg: "",
       bidPop: false,
       hasMyArtwork: false,
+      showMyArtwork: false,
       scrollDomClass: false,
       scrollDomTop: 980,
       scrollDomLeft: 1121,
@@ -650,12 +651,17 @@ export default {
         });
       }
       this.hasMyArtwork = hasMyArtwork;
+      this.showMyArtwork = true;
+
+    }, 500);
+    this.$nextTick(()=>{
+      console.log("this.$refs.scrollDom", this.$refs.scrollDom)
       this.scrollDomTop = this.$refs.scrollDom.offsetTop;
       this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
-    }, 500);
-
     // 监听页面滚动
     window.addEventListener("scroll", this.handleScroll);
+    })
+
   },
   destroyed() {
     // 销毁页面滚动

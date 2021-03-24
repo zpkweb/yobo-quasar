@@ -50,6 +50,7 @@
                 <q-breadcrumbs-el :label="$t('home.artInformation')" class="text-white" />
                 <q-breadcrumbs-el :label="$t('home.VRExhibition')" class="text-white" />
                 <q-breadcrumbs-el :label="$t('home.industryArtExhibition')" class="text-white" />
+                <q-breadcrumbs-el :label="$t('home.worldMasterpiece')" class="text-white" />
               </q-breadcrumbs>
             </div>
           </div>
@@ -102,7 +103,7 @@
     </div>
     <div class="gallary-container" v-if="home && home.gallerySeller && home.gallerySeller.list && home.gallerySeller.list.length">
       <div class="gallary">
-        <div class="gallary-title text-center">{{$t('home.YourOnlineGallery')}}</div>
+        <div class="gallary-title text-center title">{{$t('home.YourOnlineGallery')}}</div>
         <div class="gallary-desc text-center">{{$t('home.SeriesYou')}}</div>
         <div class="row">
 
@@ -149,7 +150,7 @@
       </div>
     </div>
     <div class="new text-center">
-      <div class="new-title text-dark">{{$t('home.LatestOnlineArtworks')}}</div>
+      <div class="new-title text-dark title">{{$t('home.LatestOnlineArtworks')}}</div>
       <div class="row new-items">
 
 
@@ -168,9 +169,9 @@
             </div> -->
             <div class="new-desc text-left bg-white text-dark">
 
-              <sapn v-if="item.techniques.length && item.themes.length" class="ddd">{{item.categorys[0].name}}</sapn>
+              <span v-if="item.techniques.length && item.themes.length" class="ddd">{{item.categorys[0].name}}</span>
               <span style="padding: 0 10px;">|</span>
-              <sapn class="">{{item.width}}cm X {{item.height}}cm</sapn>
+              <span class="">{{item.width}}cm X {{item.height}}cm</span>
 
             </div>
           </div>
@@ -179,6 +180,7 @@
         </template>
       </div>
     </div>
+    <!-- 通过画作看世界 -->
     <div class="sort-container">
       <div class="row sort">
         <div class="col-grow left">
@@ -511,7 +513,7 @@ export default {
         line-height: 13px;
         font-size: 16px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        padding-bottom: 10px;
+        padding-bottom: 40px;
         font-weight: bolder !important;
       }
     }

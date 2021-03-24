@@ -117,7 +117,7 @@ export default {
         this.msg3 = "";
         this.$refs.msg3.classList.remove("opacity");
       }
-      if (this.name && this.password !== "") {
+      if ((this.name !== "") && (this.password !== "")) {
         const user = await this.$store.dispatch("user/login", {
           name: this.name,
           password: this.password,
@@ -132,8 +132,8 @@ export default {
           // this.userInfo = utils.getGlobalUserInfo();
           const { token, ...userInfo } = user.data;
 
-          console.log("token", token)
-
+          console.log("login token", token)
+          console.log("login userInfo", userInfo)
           this.$q.cookies.set("token", token, {
             expires: 1,
             path: '/'
@@ -146,15 +146,27 @@ export default {
           })
 
           await this.$store.commit("user/setUserInfo", user.data);
+          if(userInfo && userInfo.seller){
+            this.$emit('hide-isApplyArtist')
+          }
           this.$emit('hide-login')
+
         } else {
           // alert("密码不正确，请重新输入密码");
-          this.$q.notify({
-            position: "top",
-            timeout: 1500,
-            message: user.message,
-            color: "negative",
-          });
+          // this.$q.notify({
+          //   position: "top",
+          //   timeout: 1500,
+          //   message: user.message,
+          //   color: "negative",
+          // });
+          if(user.message == "用户不存在"){
+            this.msg2 = user.message;
+            this.$refs.msg2.classList.add("opacity");
+          }else if(user.message == "用户密码不正确"){
+            this.msg3 = user.message;
+            this.$refs.msg3.classList.add("opacity");
+          }
+
         }
       }
     },

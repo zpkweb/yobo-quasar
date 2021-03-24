@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wishlist">
+    <div class="wishlist" v-if="!loading">
       <template v-if="myWishlist && myWishlist.length">
         <div
           class="row item"
@@ -15,7 +15,7 @@
           ></q-img>
           <div class="col-4 desc">
             <div class="title">{{ item.name }}</div>
-            <div class="name">
+            <div class="name" v-if="item.seller">
               {{ item.seller.firstname }} {{ item.seller.lastname }}
             </div>
             <div class="size">
@@ -44,6 +44,12 @@
         v-else
         text="my.wishlist.NoData"
         :routerLink="`/${$i18n.locale}/artwork`"
+      />
+    </div>
+    <div class="row justify-center items-center" style="height: 300px" v-else>
+      <q-spinner
+        color="d6d7c5"
+        size="3em"
       />
     </div>
     <div
@@ -92,6 +98,7 @@ export default {
   data() {
     return {
       myWishlist: [],
+      loading: true
     };
   },
   async mounted() {
@@ -123,7 +130,9 @@ export default {
       if (myBrowsingHistory.success) {
         this.$store.commit("my/setMyBrowsingHistory", myBrowsingHistory.data);
       }
-    }, 500);
+
+      this.loading = false;
+}, 500);
   },
 
   computed: {
@@ -232,7 +241,7 @@ export default {
       margin: 7px auto 0 auto;
     }
     .image1 {
-      background: url("~assets/images/favorites-fill.png") no-repeat;
+      background: url("~assets/images/liked.png") no-repeat;
       background-size: 100%;
     }
     .image2 {

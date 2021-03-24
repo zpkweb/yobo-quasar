@@ -63,6 +63,7 @@ export default {
     artInformation: "艺术资讯",
     VRExhibition: "VR看展",
     industryArtExhibition: "行业画展",
+    worldMasterpiece: "世界名画",
     OurAdvantage: "我们的优势",
     FeaturedArtist: "精选艺术家",
     ArtistsWorld: "来自五湖四海的艺术家",

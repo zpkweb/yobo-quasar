@@ -5,7 +5,7 @@
       <template v-slot:bgImg>
         <q-img class="banner-bg-img" src="~assets/images/banner-about.png" />
       </template>
-      <h3 class="banner-title title text-bold">艺术的归宿是欣赏与分享</h3>
+      <h3 class="banner-title title text-bold">从心出发 奔赴热爱</h3>
       <p class="banner-desc q-mt-md">关于我们</p>
      </Banner>
 
@@ -41,37 +41,37 @@
      <Banner class="about-module4">
         <h3 class="banner-title title text-bold">我们的团队</h3>
         <div class="banner-desc content-width text-center q-mt-lg row">
-          <div class="col-3 offset-1">
-            <q-img src="~assets/images/about-team-1.png" width="200px" />
+          <div class="col-4">
+            <q-img src="~assets/images/about-team-11.png" width="132px" />
             <p class="q-mt-md">
-              Vera Kempf
+              Oscar-Claude Monet
               <br/>
               联合创始人
             </p>
-            <p class="q-mt-lg">
-              "Robert Capa的一张摄影完全改变了我的人生。那是我从未体验过的精神力量。我希望把这种感动带给其他人，也希望他们能由心爱的艺术品陪伴着度过每一天。"
+            <p class="q-mt-lg q-pl-xl q-pr-xl">
+              "要忘掉你眼前是哪一种物体，想到的只是一小方蓝色、一小块长方形的粉红色、一丝黄色。不是集中于要表现的景物上，而是放到了景物周围的空间环境、光线、气流所产生的效果上，或只是局限于表达在一定条件下，景物着光给画家留下的瞬间印象上。"
             </p>
           </div>
-          <div class="col-3 offset-1">
-            <q-img src="~assets/images/about-team-2.png" width="200px" />
+          <div class="col-4">
+            <q-img src="~assets/images/about-team-22.png" width="132px" />
             <p class="q-mt-md">
-              Brice Lecompte
+              Frida Kahlo
               <br/>
               联合创始人
             </p>
-            <p class="q-mt-lg">
-              "数字科技是推进机遇平等的好帮手。将我的IT技能运用于推广艺术家们到全世界去，我觉得意义非凡。”
+            <p class="q-mt-lg q-pl-xl q-pr-xl">
+              "弥漫在作品全篇中的死亡意象根源上来源于墨西哥人从古代印第安人哲学中继承的对死亡独特的价值观念。墨西哥人对死亡是嬉笑相对的，他们认为死亡是生命的回照，更是生命的补充。”
             </p>
           </div>
-          <div class="col-3 offset-1">
-            <q-img src="~assets/images/about-team-3.png" width="200px" />
+          <div class="col-4">
+            <q-img src="~assets/images/about-team-33.png" width="132px" />
             <p class="q-mt-md">
-              Denis Fayolle
+              Vincent Willem van Gogh
               <br/>
               联合创始人
             </p>
-            <p class="q-mt-lg">
-              "疾驰, 变化, 碰壁, 缓冲, 继续尝试，周而复始。艺术家如此，企业家亦如此。"
+            <p class="q-mt-lg q-pl-xl q-pr-xl">
+              "梵高的作品中充满天然的悲悯情怀和苦难意识。例如在梵高艺术生涯的初期，绘画最多的题材是矿区阴惨的场景和劳作的矿工。在埃顿时期，落日的翻滚、日里的农夫和农妇更多出现在他作品中。"
             </p>
           </div>
         </div>
@@ -79,10 +79,10 @@
      </Banner>
 
 
-    <Banner class="about-module5">
+    <!-- <Banner class="about-module5">
         <h3 class="banner-title title text-bold">媒体报告</h3>
         <q-img class="banner-desc q-mt-lg content-width" src="~assets/images/about-ad.png" />
-     </Banner>
+     </Banner> -->
 
      <Banner class="about-module6">
       <template v-slot:bgImg>
@@ -122,7 +122,7 @@ export default {
     }
   },
   methods: {
-    aboutSubmit() {
+    async aboutSubmit() {
       var verify = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
       if (!verify.test(this.aboutEmail)) {
         this.$q.notify({
@@ -132,13 +132,37 @@ export default {
           color: "negative",
         });
       }else{
-        this.aboutEmail = "";
-        this.$q.notify({
-          position: "top",
-          timeout: 1500,
-          message: "订阅成功",
-          color: "positive",
-        });
+        if(!this.$store.state.user.info) {
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "请登录！",
+            color: "negative",
+          });
+        }
+        // 订阅
+        const subscriber = await this.$store.dispatch("home/subscriber", {
+          email: this.aboutEmail,
+          userId: this.$store.state.user.info.userId
+        })
+        if(subscriber.success) {
+          this.aboutEmail = "";
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "订阅成功",
+            color: "positive",
+          });
+        }else{
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: subscriber.message,
+            color: "negative",
+          });
+        }
+
+
       }
 
 

@@ -63,6 +63,7 @@ export default {
     artInformation: "Información de arte",
     VRExhibition: "Exposición de realidad virtual",
     industryArtExhibition: "Exposición de arte industrial",
+    worldMasterpiece: "obra maestra mundial",
     OurAdvantage: "Nuestra ventaja",
     FeaturedArtist: "Artista destacado",
     ArtistsWorld: "Artistas de todos los rincones del mundo",
