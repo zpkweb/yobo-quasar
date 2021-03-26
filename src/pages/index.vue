@@ -360,7 +360,7 @@
         </template>
       </div>
     </div>
-    <div class="to-top none" ref="top">
+    <div class="to-top" ref="top">
       <div class="onlineService">
         <q-img class="cs btn" src="~assets/images/cs.png" width="50px"></q-img>
         <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
@@ -855,8 +855,9 @@ export default {
   z-index: 1000;
   width: 60px;
   position: fixed;
-  top: 180px;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  margin: -30px 0 0 640px;
   .onlineService{
 
     .cs {

@@ -60,6 +60,10 @@
           <div class="username btn" v-if="userInfo">
             {{ userInfo.name || (isApplyArtist ? "艺术家" : "收藏家") }}
           </div>
+
+          <div class="commonProblem cursor-pointer btn" @click="showHelp = true">{{ $t("layout.footer.commonProblem") }}</div>
+
+
           <div class="dropdown2">
             <div class="dropdowncontent2 absolute">
               <div class="items">
@@ -72,6 +76,8 @@
               </div>
             </div>
           </div>
+
+
 
           <div class="search btn text-center" @click="isSearch = true">
             <q-img
@@ -580,6 +586,7 @@ body {
 }
 .title {
   font-family: "STFangsong";
+  font-weight: bold;
 }
 .app {
   min-width: 1200px;
@@ -672,7 +679,7 @@ body {
   position: fixed;
   left: 0;
   bottom: 0;
-  background-color: #ffffff;
+  background-color: transparent;
   .banner-close{
     position: absolute;
     top: 42px;
@@ -887,17 +894,21 @@ body.desktop
   .login,
   .register,
   .separator,
-  .artist-register {
+  .artist-register, .commonProblem {
     font-size: 18px;
   }
   .separator,
-  .artist-register {
+  .artist-register, .commonProblem {
     display: inline-block;
     margin-left: 14px;
   }
   .separator {
     padding-right: 10px;
   }
+  .commonProblem{
+
+  }
+
   .search,
   .cart {
     display: inline-block;
@@ -906,6 +917,9 @@ body.desktop
     .image {
       margin-bottom: 4px;
     }
+  }
+  .search{
+    margin-left: 14px;
   }
 }
 .footer {

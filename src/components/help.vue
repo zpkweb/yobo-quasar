@@ -90,6 +90,7 @@ export default {};
     color: #152c2b;
     font-size: 18px;
     font-weight: bold;
+    margin-left: 34px;
   }
 }
 .help-footer {

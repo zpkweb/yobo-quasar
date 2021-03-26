@@ -72,8 +72,8 @@
             </router-link>
           </q-tabs>
         </div>
-        <template v-if="expandOptions">
-          <!-- 按类别浏览 -->
+
+        <!-- 按类别浏览 -->
           <div class="tag">
             <div class="text-dark">{{$t('artwork.list.category')}}</div>
             <q-tabs class="options-tabs text-grey-8 wrap" content-class="options-tab" indicator-color="transparent">
@@ -90,8 +90,28 @@
               >
             </q-tabs>
           </div>
+
           <!-- 按类别浏览 -->
           <div class="tag">
+            <div class="text-dark">{{$t('artwork.list.place')}}</div>
+            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
+              <router-link
+                class="options-link"
+                v-for="(item, index) in places"
+                :key="index"
+                :to="{
+                  query: Object.assign({}, $route.query, {
+                    place: item.value,
+                  }),
+                }"
+                >{{ $t(item.label) }}</router-link
+              >
+            </q-tabs>
+          </div>
+        <template v-if="expandOptions">
+
+          <!-- 按类别浏览 -->
+          <!-- <div class="tag">
             <div class="text-dark">{{$t('artwork.list.classification')}}</div>
             <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
               <router-link
@@ -106,7 +126,7 @@
                 >{{ $t(item.label) }}</router-link
               >
             </q-tabs>
-          </div>
+          </div> -->
           <!-- 按类别浏览 -->
           <div class="tag">
             <div class="text-dark">{{$t('artwork.list.material')}}</div>
@@ -141,23 +161,7 @@
               >
             </q-tabs>
           </div>
-          <!-- 按类别浏览 -->
-          <div class="tag">
-            <div class="text-dark">{{$t('artwork.list.place')}}</div>
-            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
-              <router-link
-                class="options-link"
-                v-for="(item, index) in places"
-                :key="index"
-                :to="{
-                  query: Object.assign({}, $route.query, {
-                    place: item.value,
-                  }),
-                }"
-                >{{ $t(item.label) }}</router-link
-              >
-            </q-tabs>
-          </div>
+
           <!-- 按类别浏览 -->
           <div class="tag">
             <div class="text-dark">{{$t('artwork.list.ruiwu')}}</div>
@@ -175,23 +179,7 @@
               >
             </q-tabs>
           </div>
-          <!-- 按类别浏览 -->
-          <div class="tag">
-            <div class="text-dark">{{$t('artwork.list.shape')}}</div>
-            <q-tabs class="options-tabs text-grey-8" content-class="options-tab" indicator-color="transparent">
-              <router-link
-                class="options-link"
-                v-for="(item, index) in shapes"
-                :key="index"
-                :to="{
-                  query: Object.assign({}, $route.query, {
-                    shape: item.value,
-                  }),
-                }"
-                >{{ $t(item.label) }}</router-link
-              >
-            </q-tabs>
-          </div>
+
           <!-- 按类别浏览 -->
           <div class="tag">
             <div class="text-dark">{{$t('artwork.list.specification')}}</div>
@@ -243,6 +231,7 @@
               >
             </q-tabs>
           </div>
+
           <!-- 按类别浏览 -->
           <div class="tag">
             <div class="text-dark">{{$t('artwork.list.theme')}}</div>

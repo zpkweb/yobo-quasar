@@ -5,7 +5,7 @@
       <template v-slot:bgImg>
         <q-img class="banner-bg-img" src="~assets/images/banner-about.png" />
       </template>
-      <h3 class="banner-title title text-bold">从心出发 奔赴热爱</h3>
+      <h3 class="banner-title title text-bold"><span>从心出发</span> <sapn class="q-ml-xl">奔赴热爱</sapn></h3>
       <p class="banner-desc q-mt-md">关于我们</p>
      </Banner>
 
@@ -207,7 +207,7 @@ export default {
 }
 
 .about-module4{
-  height: 450px;
+  height: 650px;
   background-color: #f9f9f9;
   .banner-title{
     font-size: 24px;
