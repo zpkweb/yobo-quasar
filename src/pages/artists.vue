@@ -78,8 +78,8 @@
 
       <div class="sort-by text-right">
         <router-link :to="{ query: Object.assign({}, $route.query, { hots: false, news: false }) }" class="tabs">{{$t('artists.DefaultSort')}}</router-link>
-        <router-link :to="{ query: Object.assign({}, $route.query, { hots: hots ? false : true }) }" class="tabs" :class="{ active: hots }">{{$t('artists.Hottest')}}</router-link>
-        <router-link :to="{ query: Object.assign({}, $route.query, { news: news ? false : true }) }" class="tabs" :class="{ active: news }">{{$t('artists.NewestUpload')}}</router-link>
+        <router-link :to="{ query: Object.assign({}, $route.query, { news: false, hots: hots ? false : true }) }" class="tabs" :class="{ active: hots }">{{$t('artists.Hottest')}}</router-link>
+        <router-link :to="{ query: Object.assign({}, $route.query, { news: news ? false : true, hots: false,}) }" class="tabs" :class="{ active: news }">{{$t('artists.NewestUpload')}}</router-link>
       </div>
       <div class="artists " v-if="artistList && artistList.length">
         <q-list>

@@ -22,28 +22,28 @@
           <input type="text" placeholder="名" class="firstname" />
           <input type="text" placeholder="姓氏" class="lastname" />
         </div>
-        <el-cascader
+        <input
           v-model="value"
           :options="options"
           class="item"
-        ></el-cascader>
+        ></input>
         <input type="text" placeholder="详细地址" class="item" />
-        <el-select
+        <select
           class="item item1"
           v-model="subscribe"
           placeholder="是否订阅我们的刊物"
         >
-          <el-option label="是" value="1"> </el-option>
-          <el-option label="否" value="0"> </el-option>
-        </el-select>
-        <el-select
+          <option label="是" value="1"> </option>
+          <option label="否" value="0"> </option>
+        </select>
+        <select
           class="item"
           v-model="invoice"
           placeholder="发票地址与收货地址是否相同"
         >
-          <el-option label="是" value="1"> </el-option>
-          <el-option label="否" value="0"> </el-option>
-        </el-select>
+          <option label="是" value="1"> </option>
+          <option label="否" value="0"> </option>
+        </select>
 
         <div class="title2">您的联系方式是什么？</div>
         <input
@@ -60,20 +60,20 @@
         />
         <div class="title2">您是否需要开具发票？</div>
         <div class="invoice">
-          <el-radio v-model="radio1" label="1" border class="item radio"
-            >无需发票</el-radio
+          <input type="radio" v-model="radio1" label="1" border class="item radio"
+            >无需发票</input
           >
-          <el-radio v-model="radio1" label="2" border class="item radio"
-            >电子普通发票-个人抬头</el-radio
+          <input type="radio" v-model="radio1" label="2" border class="item radio"
+            >电子普通发票-个人抬头</input
           >
-          <el-radio v-model="radio1" label="3" border class="item radio"
-            >电子普通发票-其他抬头</el-radio
+          <input type="radio" v-model="radio1" label="3" border class="item radio"
+            >电子普通发票-其他抬头</input
           >
-          <el-radio v-model="radio1" label="4" border class="item radio"
-            >电子普通发票-企业抬头</el-radio
+          <input type="radio" v-model="radio1" label="4" border class="item radio"
+            >电子普通发票-企业抬头</input
           >
-          <el-radio v-model="radio1" label="5" border class="item radio"
-            >增值税专用发票</el-radio
+          <input type="radio" v-model="radio1" label="5" border class="item radio"
+            >增值税专用发票</input
           >
         </div>
         <div class="new text-white text-center btn">更新</div>
@@ -218,7 +218,7 @@ export default {
   }
 }
 .invoice::v-deep {
-  .el-radio__input {
+  .radio__input {
     display: none;
   }
 }
@@ -237,11 +237,11 @@ input {
   color: rgb(153, 153, 153);
 }
 .item::v-deep {
-  .el-cascader {
+  .cascader {
     height: 43px;
     margin: 20px 0;
   }
-  .el-input__inner {
+  .input__inner {
     border: none;
     height: 40px;
     padding-left: 18px;
@@ -250,12 +250,12 @@ input {
       border: none;
     }
   }
-  .el-input {
+  .input {
     border: 1px solid rgb(153, 153, 153);
     height: 43px;
     line-height: 36px;
   }
-  .el-input__icon {
+  .input__icon {
     height: auto;
   }
 }
@@ -277,10 +277,10 @@ input {
   padding-left: 8px;
 }
 .radio::v-deep {
-  .el-radio__label {
+  .radio__label {
     font-size: 18px;
   }
-  .el-radio__input.is-checked + .el-radio__label {
+  .radio__input.is-checked + .radio__label {
     color: rgb(21, 44, 43);
   }
 }
@@ -295,16 +295,16 @@ input {
 }
 </style>
 <style lang="scss" >
-// .el-popper {
+// .popper {
 //   margin: 0 !important;
 // }
-.el-cascader-node__label,
-.el-icon-check,
-.el-icon-arrow-right {
+.cascader-node__label,
+.icon-check,
+.icon-arrow-right {
   color: rgb(153, 153, 153);
 }
-// .el-popper .popper__arrow,
-// .el-popper .popper__arrow::after {
+// .popper .popper__arrow,
+// .popper .popper__arrow::after {
 //   display: none;
 // }
 </style>

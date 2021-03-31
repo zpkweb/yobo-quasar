@@ -13,6 +13,10 @@ module.exports = configure(function (ctx) {
   console.log("process.env.api", process.env.api)
   console.log("process.env.ORIGIN", process.env.ORIGIN)
   return {
+    htmlVariables: {
+      productName: "yobo",
+      productDescription: "yobo"
+    },
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: {
       tsCheckerConfig: {
@@ -27,11 +31,11 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
-      'composition-api',
+      // 'composition-api',
       'i18n',
       // 'axios',
       'quasar-lang-pack',
-      'element-ui',
+      // 'element-ui',
       'qs',
       'router'
     ],
@@ -92,8 +96,9 @@ module.exports = configure(function (ctx) {
       // analyze: true,
 
       // Options below are automatically set depending on the env, set them if you want to override
-      // extractCSS: false,
-
+      extractCSS: true,
+      sourceMap: false,
+      minify: true,
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack (cfg) {
         // linting is slow in TS projects, we execute it only for production builds

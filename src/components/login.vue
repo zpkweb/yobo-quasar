@@ -10,7 +10,7 @@
       <q-card-section>
         <div>
           没有账号？可以去<span
-            class="to-login btn"
+            class="to-login btn underline"
             @click="$emit('show-register')"
             >注册</span
           >
@@ -42,7 +42,7 @@
           <div class="left">
             <q-checkbox class="no-box-shadow no-border-radius no-border no-outline " style="outline:0 !important;" v-model="checkbox1" label="保持登录" color="default" size="xs"  />
           </div>
-          <div class="right btn" @click="$emit('show-new-password')">忘记密码</div>
+          <div class="right btn underline" @click="$emit('show-new-password')">忘记密码</div>
         </div>
         <div
           class="text-white text-center login btn"

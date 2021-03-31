@@ -75,7 +75,7 @@
           </div> -->
       </q-card-section>
     </q-card>
-    <q-card v-else class="card card1 success">
+    <q-card v-else class="card card1 success overflow">
       <q-card-section class="row items-center q-pb-none">
         <div class="quotation">“</div>
         <q-space />

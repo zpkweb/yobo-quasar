@@ -49,12 +49,12 @@
       <q-card-section v-show="!searchResult.length">
         <div>
           <div class="tag tag1">热门搜索</div>
-          <div class="tag btn">精选艺术家</div>
-          <div class="tag btn">油画</div>
-          <div class="tag btn">后起之秀</div>
-          <div class="tag btn">雕刻</div>
-          <div class="tag btn">摄影师</div>
-          <div class="tag btn">艺术大家</div>
+          <div class="tag underline btn">精选艺术家</div>
+          <div class="tag underline btn">油画</div>
+          <div class="tag underline btn">后起之秀</div>
+          <div class="tag underline btn">雕刻</div>
+          <div class="tag underline btn">摄影师</div>
+          <div class="tag underline btn">艺术大家</div>
         </div>
       </q-card-section>
     </q-card>

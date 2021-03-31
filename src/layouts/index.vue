@@ -5,7 +5,7 @@
       <div class="header row text-black relative-position">
         <div class="col">
           <q-img
-            src="~assets/images/logo.png"
+            src="images/logo.png"
             class="logo btn"
             width="170px"
             @click="goIndex"
@@ -61,7 +61,7 @@
             {{ userInfo.name || (isApplyArtist ? "艺术家" : "收藏家") }}
           </div>
 
-          <div class="commonProblem cursor-pointer btn" @click="showHelp = true">{{ $t("layout.footer.commonProblem") }}</div>
+
 
 
           <div class="dropdown2">
@@ -76,7 +76,7 @@
               </div>
             </div>
           </div>
-
+          <div class="commonProblem cursor-pointer btn" @click="showHelp = true">{{ $t("layout.footer.commonProblem") }}</div>
 
 
           <div class="search btn text-center" @click="isSearch = true">
@@ -127,46 +127,46 @@
           <div class="col-9 row">
             <div class="col-3 item">
               <div class="title">{{ $t("layout.footer.customerService") }}</div>
-              <div>{{ $t("layout.footer.contactUs") }}</div>
-              <div>{{ $t("layout.footer.LegalNotices") }}</div>
-              <div>{{ $t("layout.footer.GeneralRegulations") }}</div>
-              <div v-if="$store.state.isShowPay">
+              <div class="underline">{{ $t("layout.footer.contactUs") }}</div>
+              <div class="underline">{{ $t("layout.footer.LegalNotices") }}</div>
+              <div class="underline">{{ $t("layout.footer.GeneralRegulations") }}</div>
+              <div class="underline" v-if="$store.state.isShowPay">
                 {{ $t("layout.footer.CustomerReviews") }}
               </div>
-              <div v-if="$store.state.isShowPay">Offer a Gift Card</div>
-              <div v-if="$store.state.isShowPay">
+              <div class="underline" v-if="$store.state.isShowPay">Offer a Gift Card</div>
+              <div class="underline" v-if="$store.state.isShowPay">
                 {{ $t("layout.footer.GetMyVoucher") }}
               </div>
-              <div>{{ $t("layout.footer.myAccount") }}</div>
-              <div>{{ $t("layout.footer.OfficeArtwork") }}</div>
-              <div>{{ $t("layout.footer.DesignerArtwork") }}</div>
-              <div v-if="$store.state.isShowPay">+44 203 445 6333</div>
+              <div class="underline">{{ $t("layout.footer.myAccount") }}</div>
+              <div class="underline">{{ $t("layout.footer.OfficeArtwork") }}</div>
+              <div class="underline">{{ $t("layout.footer.DesignerArtwork") }}</div>
+              <div class="underline" v-if="$store.state.isShowPay">+44 203 445 6333</div>
             </div>
             <div class="col-3 item">
               <div class="title">{{ $t("layout.footer.aboutAs") }}</div>
-              <router-link class="footer-link-color" :to="`/${$i18n.locale}/about`">{{ $t("layout.footer.AboutYongbao") }}</router-link>
-              <div>{{ $t("layout.footer.OurArtist") }}</div>
-              <div>{{ $t("layout.footer.magazine") }}</div>
-              <div>{{ $t("layout.footer.team") }}</div>
-              <router-link class="footer-link-color" :to="`/${$i18n.locale}/criteria`">{{ $t("layout.footer.OurSelectionCriteria") }}</router-link>
-              <div class="cursor-pointer" @click="showHelp = true">{{ $t("layout.footer.commonProblem") }}</div>
-              <div>{{ $t("layout.footer.ContactInformation") }}</div>
+              <router-link  class="underline footer-link-color" :to="`/${$i18n.locale}/about`">{{ $t("layout.footer.AboutYongbao") }}</router-link>
+              <div  class="underline">{{ $t("layout.footer.OurArtist") }}</div>
+              <div  class="underline">{{ $t("layout.footer.magazine") }}</div>
+              <div  class="underline">{{ $t("layout.footer.team") }}</div>
+              <router-link class="underline footer-link-color" :to="`/${$i18n.locale}/criteria`">{{ $t("layout.footer.OurSelectionCriteria") }}</router-link>
+              <div class="underline cursor-pointer" @click="showHelp = true">{{ $t("layout.footer.commonProblem") }}</div>
+              <div class="underline">{{ $t("layout.footer.ContactInformation") }}</div>
             </div>
             <div class="col-3 item">
               <div class="title">{{ $t("layout.footer.FeaturedArtist") }}</div>
-              <div>Kirstin Mccoy</div>
-              <div>Josep Moncada</div>
-              <div>Ivan Pili</div>
-              <div>Kristin Kossi</div>
-              <div>Peter Nottrott</div>
+              <div class="underline">Kirstin Mccoy</div>
+              <div class="underline">Josep Moncada</div>
+              <div class="underline">Ivan Pili</div>
+              <div class="underline">Kristin Kossi</div>
+              <div class="underline">Peter Nottrott</div>
             </div>
             <div class="col-3 item">
               <div class="title">{{ $t("layout.footer.FollowYongbao") }}</div>
-              <div>{{ $t("layout.footer.WeChat") }}</div>
-              <div>{{ $t("layout.footer.Weibo") }}</div>
-              <div>Facebook</div>
-              <div>Instagram</div>
-              <div>Pinterest</div>
+              <div class="underline">{{ $t("layout.footer.WeChat") }}</div>
+              <div class="underline">{{ $t("layout.footer.Weibo") }}</div>
+              <div class="underline">Facebook</div>
+              <div class="underline">Instagram</div>
+              <div class="underline">Pinterest</div>
             </div>
           </div>
 
@@ -248,7 +248,7 @@
       <div class="footer-criteria" v-if="!showFooterCriteria && !isApplyArtist">
         <Banner class="criteria-module-footer">
           <template v-slot:bgImg>
-            <q-img class="banner-bg-img" src="~assets/images/criteria-footer-ar-bg.png" />
+            <q-img class="banner-bg-img" src="~assets/images/criteria-footer-ar-bg.png" height="100%" />
           </template>
           <q-btn icon="close" class="banner-close icon-close" flat round dense v-close-popup @click="showFooterCriteria = true" />
           <h3 class="banner-title title text-bold">您是艺术家么？</h3>
@@ -258,6 +258,24 @@
       </div>
       </template>
     </q-footer>
+
+    <div class="to-top " >
+      <div class="onlineService">
+        <q-img class="cs btn" src="~assets/images/cs.png" width="50px"></q-img>
+        <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
+      </div>
+      <div class="hide" ref="top" style="width: 50px;height: 50px;" >
+        <q-img
+
+        class="top btn "
+        src="~assets/images/top.png"
+        width="50px"
+        @click="toTop"
+      ></q-img>
+      </div>
+
+    </div>
+
     <!-- 登录 -->
     <q-dialog
       v-model="isLoginPop"
@@ -447,11 +465,37 @@ export default {
         isApplyArtist = true
       }
     this.isApplyArtist = isApplyArtist;
+
+
+    window.addEventListener("scroll", this.Top);
   },
   methods: {
     changeLang(item) {
       console.log("changelang", item);
       this.lang = item;
+    },
+    Top() {
+
+      //获取滚动时的高度
+      let scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      // let scrollDomTop = this.$refs.scrollDom.offsetTop;
+      console.log("scroll",scrollTop)
+      if (scrollTop >= 100) {
+        // console.log("滚动大于0的时候要做的操作")
+        this.$refs.top.classList.remove("hide")
+        // this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
+      } else {
+        this.$refs.top.classList.add("hide");
+        // this.scrollDomTop = this.$refs.scrollDom.offsetTop;
+        // this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
+      }
+
+    },
+    toTop() {
+      document.documentElement.scrollTop = 0;
     },
 
     goIndex() {
@@ -575,8 +619,12 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 a {
   text-decoration: none;
+}
+.underline:hover {
+  text-decoration: underline;
 }
 body {
   font-family: "Heiti SC";
@@ -669,11 +717,44 @@ body {
   flex-wrap: wrap;
   justify-content: left;
 }
+
+.q-carousel__arrow {
+  display: none;
+}
+.q-carousel__arrow .q-btn {
+  width: 62px;
+  height: 62px;
+  background-color: rgba(0, 0, 0, .1);
+  border-radius: 0;
+}
+.carousel1:hover .q-carousel__arrow {
+  display: flex;
+
+}
+.carousel1:hover .q-carousel__arrow:hover .q-btn {
+  background-color: rgba(0, 0, 0, .3);
+}
+.q-carousel__prev-arrow--horizontal{
+  left: 0;
+}
+.q-carousel__next-arrow--horizontal{
+  right: 0;
+}
+.q-carousel__arrow .q-icon{
+  width: 14px;
+  height: 26px;
+}
 </style>
 <style lang="scss">
 .footer-criteria{
+  width: 100%;
+  min-width: 1220px;
   height: 292px;
+  min-height: 292px;
   background-color: #232323;
+  .criteria-module-footer{
+    height: 292px;
+  }
 }
 .app .criteria-module-footer{
   position: fixed;
@@ -854,7 +935,7 @@ body.desktop
   position: relative;
   line-height: 70px;
   background-color: rgb(68, 68, 173);
-  box-shadow: 0 0 15px #c5cbcb;
+  // box-shadow: 0 0 15px #c5cbcb;
 }
 .header {
   line-height: 70px;
@@ -1263,6 +1344,40 @@ body.desktop
   color: #fff;
   background-color: transparent;
 }
+
+
+.to-top {
+  z-index: 99999;
+  width: 60px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: -30px 0 0 640px;
+  .onlineService{
+
+    .cs {
+      margin-bottom: 10px;
+      vertical-align: top;
+    }
+    .text {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 10px;
+      background-color: #333333;
+      width: 50px;
+      font-size: 18px;
+    }
+  }
+  .onlineService:hover{
+    .text {
+      display: inline-block;
+    }
+  }
+
+
+}
+
 </style>
 
 

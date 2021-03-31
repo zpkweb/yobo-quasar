@@ -48,8 +48,8 @@
                   <span style="display: inline-block;width: 2px;height: 14px;font-size: 16px;background-color: rgb(255, 255, 255,.4);"></span>
                 </template>
                 <q-breadcrumbs-el :label="$t('home.artInformation')" class="text-white" />
-                <q-breadcrumbs-el :label="$t('home.VRExhibition')" class="text-white" />
                 <q-breadcrumbs-el :label="$t('home.industryArtExhibition')" class="text-white" />
+                <q-breadcrumbs-el :label="$t('home.VRExhibition')" class="text-white" />
                 <q-breadcrumbs-el :label="$t('home.worldMasterpiece')" class="text-white" />
               </q-breadcrumbs>
             </div>
@@ -343,7 +343,7 @@
         <q-img src="~assets/images/more.png" class="col" width="22px"></q-img>
       </div>
 
-      <div class="row hot-artist justify-between">
+      <div class="row hot-artist">
         <!-- <div class="col-2" v-for="i in [1, 2, 3, 4, 5]" :key="i">
           <div class="image"></div>
           <div class="name">JEFF FERST</div>
@@ -352,7 +352,7 @@
         <template v-if="home && home.hotSaleSeller">
 
 
-        <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="col-2"  v-for="item in home.hotSaleSeller.list" :key="`artist-${item.sellerId}`">
+        <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" style="width:20%;"  v-for="item in home.hotSaleSeller.list" :key="`artist-${item.sellerId}`">
           <img class="image" v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="180px" />
           <div class="name">{{item.firstname}} {{item.lastname}}</div>
           <div class="country">{{item.country}}-{{item.typeName}}</div>
@@ -360,18 +360,7 @@
         </template>
       </div>
     </div>
-    <div class="to-top" ref="top">
-      <div class="onlineService">
-        <q-img class="cs btn" src="~assets/images/cs.png" width="50px"></q-img>
-        <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
-      </div>
-      <q-img
-        class="top btn"
-        src="~assets/images/top.png"
-        width="50px"
-        @click="toTop"
-      ></q-img>
-    </div>
+
   </q-page>
 </template>
 
@@ -500,7 +489,7 @@ export default {
       background-color: rgba(0, 0 , 0, 0.5);
       height: 510px;
       padding: 36px 20px;
-      width: 273px;
+      width: 260px;
       .menu-title {
         font-size: 24px;
         padding: 14px 0;
@@ -851,37 +840,7 @@ export default {
     height: 180px;
   }
 }
-.to-top {
-  z-index: 1000;
-  width: 60px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin: -30px 0 0 640px;
-  .onlineService{
 
-    .cs {
-      margin-bottom: 10px;
-      vertical-align: top;
-    }
-    .text {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 10px;
-      background-color: #333333;
-      width: 50px;
-      font-size: 18px;
-    }
-  }
-  .onlineService:hover{
-    .text {
-      display: inline-block;
-    }
-  }
-
-
-}
 
 .offer {
       background-color: #d6d7c5;

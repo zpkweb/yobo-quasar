@@ -2,6 +2,9 @@
   <div>
     <q-carousel
       height="510px"
+      :arrows="carouselArrows"
+      prev-icon="img:images/carousel-prev.png"
+      next-icon="img:images/carousel-next.png"
       animated
       v-model="slide"
       infinite
@@ -40,8 +43,12 @@ export default {
     return {
       slide: 1,
       autoplay: true,
+      carouselArrows: false
     };
   },
+  mounted() {
+    this.carouselArrows = true;
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -86,7 +86,7 @@
                     <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
                     <div>
                       {{
-                        artwork.commodity.categorys
+                        artwork.commodity.categorys && artwork.commodity.categorys.length
                           ? artwork.commodity.categorys[0].name
                           : ""
                       }}
@@ -167,7 +167,7 @@
               artwork.commodity.height
             }}cm
           </div>
-          <div>{{ artwork.commodity.techniques[0].name }}</div>
+          <div>{{ artwork.commodity.techniques && artwork.commodity.techniques.length ? artwork.commodity.techniques[0].name : '' }}</div>
         </div>
 
         <!-- 艺术品价格 -->
@@ -455,7 +455,7 @@
             </div>
             <div class="text text-left">
               <!-- <div>丙烯酸 • 亚麻</div> -->
-              <div>{{ item.category ? item.category[0].name : "" }}</div>
+              <div>{{ item.category && item.category.legnth ? item.category[0].name : "" }}</div>
               <div>{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </router-link>
@@ -490,7 +490,7 @@
               />
             </div>
             <div class="text text-left">
-              <div>{{ item.categorys ? item.categorys[0].name : "" }}</div>
+              <div>{{ item.categorys && item.categorys.length ? item.categorys[0].name : "" }}</div>
               <div>{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </router-link>
@@ -533,7 +533,7 @@
               />
             </div>
             <div class="text text-left">
-              <div>{{ item.categorys ? item.categorys[0].name : "" }}</div>
+              <div>{{ item.categorys && item.categorys.length ? item.categorys[0].name : "" }}</div>
               <div>{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </div>
@@ -656,10 +656,13 @@ export default {
     }, 500);
     this.$nextTick(()=>{
       console.log("this.$refs.scrollDom", this.$refs.scrollDom)
-      this.scrollDomTop = this.$refs.scrollDom.offsetTop;
-      this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
-    // 监听页面滚动
-    window.addEventListener("scroll", this.handleScroll);
+      if(this.$refs.scrollDom){
+        this.scrollDomTop = this.$refs.scrollDom.offsetTop;
+        this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
+      }
+
+      // 监听页面滚动
+      window.addEventListener("scroll", this.handleScroll);
     })
 
   },

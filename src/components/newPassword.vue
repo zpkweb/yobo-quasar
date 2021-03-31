@@ -32,6 +32,7 @@
           header-class="stepper-header"
           done-color="lime-9"
           active-color="lime-9"
+
         >
           <q-step
             :name="1"
@@ -176,9 +177,11 @@ export default {
   max-width: 800px;
   width: 800px;
   padding: 20px 40px;
+  .title{
+    font-size: 28px;
+  }
   .section1 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-
     padding-bottom: 10px;
   }
   .section2 ::v-deep {
@@ -208,6 +211,7 @@ export default {
           color: #fff;
           background-color: #526463;
         }
+
       }
     }
   }

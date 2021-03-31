@@ -46,20 +46,20 @@
         />
         <!-- <div class="title2">您是否需要开具发票？</div>
         <div class="invoice">
-          <el-radio v-model="radio1" label="1" border class="item radio"
-            >无需发票</el-radio
+          <radio v-model="radio1" label="1" border class="item radio"
+            >无需发票</radio
           >
-          <el-radio v-model="radio1" label="2" border class="item radio"
-            >电子普通发票-个人抬头</el-radio
+          <radio v-model="radio1" label="2" border class="item radio"
+            >电子普通发票-个人抬头</radio
           >
-          <el-radio v-model="radio1" label="3" border class="item radio"
-            >电子普通发票-其他抬头</el-radio
+          <radio v-model="radio1" label="3" border class="item radio"
+            >电子普通发票-其他抬头</radio
           >
-          <el-radio v-model="radio1" label="4" border class="item radio"
-            >电子普通发票-企业抬头</el-radio
+          <radio v-model="radio1" label="4" border class="item radio"
+            >电子普通发票-企业抬头</radio
           >
-          <el-radio v-model="radio1" label="5" border class="item radio"
-            >增值税专用发票</el-radio
+          <radio v-model="radio1" label="5" border class="item radio"
+            >增值税专用发票</radio
           >
         </div> -->
         <div class="new text-white text-center btn" :class="{'bg-active': isButtonDisable}" @click="update">{{$t('my.info.Update')}}</div>
