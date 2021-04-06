@@ -676,6 +676,11 @@ body {
   -o-transform: rotate(180deg);
 }
 
+.fontSize-16{
+  font-size: 16px;
+}
+
+
 /* quasar layout css */
 .bg-active {
   background-color: #152c2b !important;

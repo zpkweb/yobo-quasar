@@ -32,9 +32,7 @@
           Karin Vermeer是一位独立艺术家，自2002年以来一直在鹿特丹生活和工作<br />
           她的作品是通过将照片和绘画进行数字组合和编辑为新的原创艺术作品而创作的<br />威猛(Vermeer)擅长于通过覆盖和融合四到五个不同种族和血统的不同面孔来创建新的不存在的人物而创建的肖像<br />打印数字图像并添加涂料以获得最终的结果，尝试使数字图像再次变得有形
         </div> -->
-        <p  v-if="portrait">
-          {{ portrait.metadata.profile }}
-        </p>
+        <p  v-if="portrait" class="text-left fontSize-16">{{ portrait.metadata.profile }}</p>
         <div class="resume4">
           <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
