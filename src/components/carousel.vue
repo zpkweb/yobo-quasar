@@ -101,6 +101,7 @@ export default {
     font-size: 80px;
     transform: rotate(20deg);
     font-weight: lighter;
+    text-shadow: 0 0 10px #000;
   }
   .all {
     font-size: 30px;

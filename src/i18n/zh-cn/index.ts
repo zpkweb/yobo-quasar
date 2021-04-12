@@ -146,8 +146,8 @@ export default {
     }
   },
   artists: {
-    painter: "画家",
-    PaintersCriteria: "件符合您搜索条件的画家",
+    painter: "艺术家",
+    PaintersCriteria: "件符合您搜索条件的艺术家",
     label: "标签",
     Country: "国籍",
     LastName: "姓氏",
@@ -198,7 +198,7 @@ export default {
       searchCriteria: "件符合您搜索条件的艺术品",
       price: "价格",
       determine: "确定",
-      colour: "颜色",
+      color: "颜色",
       Unlimited: "不限",
       category: "类别",
       classification: "分类",

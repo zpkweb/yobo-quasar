@@ -196,7 +196,7 @@ export default {
       searchCriteria: "検索条件に一致する芸術作品",
       price: "価格",
       determine: "決定する",
-      colour: "色",
+      color: "色",
       Unlimited: "無制限",
       "category": "カテゴリー",
       "classification": "分類",

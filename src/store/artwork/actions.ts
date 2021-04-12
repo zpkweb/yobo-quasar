@@ -13,8 +13,41 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
    * @return {*}
    */
   async getArtworkSearch ({ commit }, payload) {
+    console.log("getArtworkSearch", payload)
+    const {
+      category,
+      classification,
+      material,
+      model,
+      place,
+      ruiwu,
+      shape,
+      specification,
+      style,
+      technique,
+      theme,
+      type,
+      use,
+      ...search
+    } = payload
     return await axiosInstance.get('/api/commodity/search', {
-      params: payload
+      params: {
+        ...search,
+        categorys: JSON.stringify(category),
+        classifications: JSON.stringify(classification),
+        materials: JSON.stringify(material),
+        models: JSON.stringify(model),
+        places: JSON.stringify(place),
+        ruiwus: JSON.stringify(ruiwu),
+        shapes: JSON.stringify(shape),
+        specifications: JSON.stringify(specification),
+        styles: JSON.stringify(style),
+        techniques: JSON.stringify(technique),
+        themes: JSON.stringify(theme),
+        types: JSON.stringify(type),
+        uses: JSON.stringify(use),
+
+      }
     }).then(response => {
       // const { total, currentPage, pageSize, list } = response.data.data;
       // commit('setSearchData', list)
@@ -35,15 +68,15 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     }).catch((err) => {
     })
   },
-  async getArtworkShape({ commit }, payload) {
+  async getArtworkOptions({ commit }, payload) {
     return await axiosInstance.get('/api/artwork/options', {
       params: {
         locale: payload.locale
       }
     })
     .then(response => {
-      const { data } = response.data;
-      commit('setOptins', data)
+      return response.data;
+
     }).catch((err) => {
     })
   },

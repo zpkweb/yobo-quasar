@@ -196,7 +196,7 @@ export default {
       searchCriteria: "Obras de arte que coinciden con sus criterios de búsqueda",
       price: "precio",
       determine: "determinar",
-      colour: "color",
+      color: "color",
       Unlimited: "Ilimitado",
       "category": "categoría",
       "classification": "clasificación",

@@ -24,7 +24,18 @@ const mutation: MutationTree<ArtworkStateInterface> = {
     state.data = payload;
   },
   setOptins(state, payload) {
-    state.options = payload;
+    state.options = Object.assign({}, state.options, payload);
+  },
+  setOptinsItem(state, payload) {
+    console.log("setOptinsItem", payload)
+    if(payload.index != undefined){
+      state.options[payload.option][payload.index].checked = !payload.checked;
+    }else{
+      for(let i in state.options[payload.option]){
+        state.options[payload.option][i].checked = !payload.checked;
+      }
+    }
+
   },
   setOptionsShape(state, payload) {
     state.options.shape = payload;

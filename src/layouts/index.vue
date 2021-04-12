@@ -482,13 +482,19 @@ export default {
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       // let scrollDomTop = this.$refs.scrollDom.offsetTop;
-      console.log("scroll",scrollTop)
+      // console.log("scroll",scrollTop)
       if (scrollTop >= 100) {
         // console.log("滚动大于0的时候要做的操作")
-        this.$refs.top.classList.remove("hide")
+        if(this.$refs.top){
+          this.$refs.top.classList.remove("hide")
+        }
+
         // this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
       } else {
-        this.$refs.top.classList.add("hide");
+        if(this.$refs.top){
+          this.$refs.top.classList.add("hide");
+        }
+
         // this.scrollDomTop = this.$refs.scrollDom.offsetTop;
         // this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
       }
@@ -1355,7 +1361,7 @@ body.desktop
   z-index: 99999;
   width: 60px;
   position: fixed;
-  top: 50%;
+  top: 70%;
   left: 50%;
   margin: -30px 0 0 640px;
   .onlineService{

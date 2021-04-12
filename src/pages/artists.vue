@@ -21,7 +21,7 @@
               class="options-link"
               v-for="(item, index) in types"
               :key="index"
-              :to="{ query: Object.assign({}, $route.query, { type: item.value }) }"
+              :to="{ query: Object.assign({}, $route.query, { type: [...$route.query.type, item.value] }) }"
               >{{ $t(item.label) }}</router-link
             >
           </q-tabs>
@@ -179,10 +179,10 @@ export default {
         //   label: 'artists.Unlimited',
         //   value: "",
         // },
-        {
-          label: 'artists.painter',
-          value: "0",
-        },
+        // {
+        //   label: 'artists.painter',
+        //   value: "0",
+        // },
         {
           label: 'artists.sculptor',
           value: "1",

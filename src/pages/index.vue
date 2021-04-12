@@ -25,7 +25,7 @@
               </q-breadcrumbs>
             </div>
             <div class="menu-item">
-              <div class="menu-title btn" @click="goArtworks()">{{$t('home.artwork')}}</div>
+              <div class="menu-title btn" @click="goArtworks({})">{{$t('home.artwork')}}</div>
               <q-breadcrumbs class="menu-el" separator="|" gutter="md">
                 <template v-slot:separator>
                   <span style="display: inline-block;width: 2px;height: 14px;font-size: 16px;background-color: rgb(255, 255, 255,.4);"></span>
@@ -190,14 +190,14 @@
           </div>
           <div class="row">
 
-            <router-link
+            <div
               class="col-4 sort-item relative-position"
               v-if="home && home.lookWorld"
               v-for="item in home.lookWorld"
               :key="`lookWorld-${item.id}`"
-              :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({}, artwork, {
-                theme: item.name
-              }) }"
+              @click="goArtworks({
+                theme: [item.id]
+              })"
             >
               <div class="line1 absolute"></div>
               <div class="line2 absolute"></div>
@@ -213,7 +213,7 @@
                 </div>
                 <div class="absolute-full bg"></div>
               </q-img>
-            </router-link>
+            </div>
 
           </div>
         </div>
@@ -222,32 +222,32 @@
           <div class="title">{{$t('home.BrowsePrice')}}</div>
           <div class="row text-center text-white">
             <div class="col-6">
-              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+              <div class="prise" @click="goArtworks({
                 price: 0,
                 pricemin: '',
                 pricemax: 6000
-              }) }" class="prise">{{$t('home.Below')}}¥<span>6,000</span></router-link>
+              })">{{$t('home.Below')}}¥<span>6,000</span></div>
             </div>
             <div class="col-6">
-              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+              <div class="prise" @click="goArtworks({
                 price: 1,
                 pricemin: 6000,
                 pricemax: 20000
-              }) }" class="prise">¥ <span>6000-</span>¥<span>20,000</span></router-link>
+              })">¥ <span>6000-</span>¥<span>20,000</span></div>
             </div>
             <div class="col-6">
-              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+              <div class="prise" @click="goArtworks({
                 price: 2,
                 pricemin: 20000,
                 pricemax: 40000
-              }) }" class="prise">¥<span>20000-</span>¥<span>40,000</span></router-link>
+              })">¥<span>20000-</span>¥<span>40,000</span></div>
             </div>
             <div class="col-6">
-              <router-link :to="{ path: `${$i18n.locale}/artwork`, query: Object.assign({},artwork, {
+              <div class="prise" @click="goArtworks({
                 price: 3,
                 pricemin: 40000,
                 pricemax: ''
-              }) }" class="prise">{{$t('home.Higher')}}¥<span>40,000</span></router-link>
+              })">{{$t('home.Higher')}}¥<span>40,000</span></div>
             </div>
           </div>
 
@@ -378,14 +378,14 @@ export default {
       ratingModel: 3,
       hotartist: "a",
       artwork: {
-        shape: "",
+        shapes: "",
         // price: "",
         // pricemin: "",
         // pricemax: "",
-        color: "",
-        theme: "",
-        category: "",
-        technique: ""
+        colors: "",
+        themes: "",
+        categorys: "",
+        techniques: ""
       },
       sendEmailPop: false,
       email: "",
@@ -425,7 +425,9 @@ export default {
       }, data))}`);
     },
     goArtworks(data) {
-      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(Object.assign({}, this.artwork, data))}`);
+      const artworkSearch = Object.assign({}, this.$store.state.artwork.defaultSearch, data);
+      this.$store.commit("artwork/setSearch", artworkSearch);
+      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(artworkSearch)}`);
     },
     closeOfferPage() {
       this.sendEmailPop = false;
@@ -686,6 +688,7 @@ export default {
     }
     .sort-item {
       padding: 0 28px 28px 0;
+      cursor: pointer;
       &:hover {
         .bg {
           opacity: 0.6;

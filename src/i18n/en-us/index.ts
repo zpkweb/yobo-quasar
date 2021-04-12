@@ -197,7 +197,7 @@ export default {
       searchCriteria: "Works of art that match your search criteria",
       price: "price",
       determine: "determine",
-      colour: "colour",
+      color: "color",
       Unlimited: "Unlimited",
       "category": "category",
       "classification": "classification",
