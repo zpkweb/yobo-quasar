@@ -22,6 +22,7 @@
       <q-infinite-scroll @load="searchLoad" :offset="250" :scroll-target="$refs.scrollTargetRef">
         <div v-for="(item, index) in searchResult" :key="index" class="caption">
           <router-link class="caption-item" :to="`/${$i18n.locale}/artist/${ item.sellerId }`" v-if="searchType == '艺术家'" >
+
             <q-img v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="120px" height="120px" class="caption-img" />
             <div class="caption-content">
               <p class="caption-name">{{item.firstname}} {{item.lastname}}</p>
@@ -84,7 +85,7 @@ export default {
 
       if(this.searchType == '艺术家') {
 
-        const sellerSearchData = await this.sellerSearch();
+        const sellerSearchData = await this.sellerSearch(this.search);
         if(sellerSearchData.success) {
           this.searchResult.push(...sellerSearchData.data.list);
           this.currentPage += 1;
@@ -134,12 +135,12 @@ export default {
         done()
       }
     },
-    async sellerSearch() {
+    async sellerSearch(surname) {
       const sellerSearchData = await this.$store.dispatch("artist/sellerSearch", {
-          name: '',
-          tag: "",
+          surname: surname,
+          type: '',
           country: "",
-          surname: "",
+          other: "",
           locale: this.$i18n.locale,
           currentPage: this.currentPage,
           pageSize: this.pageSize

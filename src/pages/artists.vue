@@ -409,14 +409,16 @@ export default {
       margin: 20px 0;
     }
     .image {
+      width: 100%;
+      height: 231px;
       position: relative;
       margin: 10px 0 10px 0;
-      width: 100%;
       border: 6px solid #152c2b;
       overflow: hidden;
     }
 
     .artist-avatar{
+
       transition: all 0.4s;
     }
     .artist-avatar:hover{

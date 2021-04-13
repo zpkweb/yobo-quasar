@@ -111,7 +111,35 @@
       <div class="q-pa-md" v-if="artworkList && artworkList.length">
         <!-- <q-btn class="q-mb-md" color="primary" label="Regenerate layout" @click="generateCells" /> -->
 
-        <div
+
+
+        <div class="column example-container">
+        <div class="flex-break hidden"></div>
+        <div class="flex-break"></div>
+        <div class="flex-break"></div>
+        <div class="flex-break"></div>
+
+        <div v-for="(item, i) in artworkList" :key="i" class="artwork-list" tabindex="0">
+          <router-link
+            :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
+            class="artwork-list-item"
+          >
+            <q-img
+              class="artwork-list-img"
+              :src="item.photos.length ? item.photos[0].src : ''"
+            >
+              <p class="artwork-list-name">{{ item.name }}</p>
+            </q-img>
+
+          </router-link>
+            <!-- <div v-for="(text, j) in cell" :key="j">
+              {{ text }}
+            </div> -->
+        </div>
+      </div>
+
+
+        <!-- <div
           class="column example-container"
           :style="`height: ${Math.floor(pageSize / 4) * 300}px`"
         >
@@ -131,7 +159,11 @@
               <p class="name">{{ item.name }}</p>
             </q-img>
           </router-link>
-        </div>
+        </div> -->
+
+
+
+
       </div>
 
 
@@ -186,12 +218,12 @@ export default {
       total: 0,
     };
   },
-  async preFetch({ store, currentRoute, Vue }) {
-    console.log("currentRoute", currentRoute.query)
-    const { query, params } = currentRoute;
-    const { locale } = params;
+  // async preFetch({ store, currentRoute, Vue }) {
+  //   console.log("currentRoute", currentRoute.query)
+  //   const { query, params } = currentRoute;
+  //   const { locale } = params;
 
-  },
+  // },
   async created() {
     console.log("created");
     console.log("router query", this.$qs.parse(this.$route.query))
@@ -769,11 +801,55 @@ export default {
 </style>
 
 <style lang="sass" scoped>
-$x: 4
+// $x: 4
+// .flex-break
+//   flex: 1 0 100% !important
+//   width: 0 !important
+
+
+// @for $i from 1 through ($x - 1)
+//   .example-container > div:nth-child(#{$x}n + #{$i})
+//     order: #{$i}
+
+// .example-container > div:nth-child(#{$x}n)
+//   order: #{$x}
+
+// .example-container
+
+//   .example-cell
+//     position: relative
+//     width: 25%
+//     padding: 1px
+
+//     > div
+//       padding: 4px 8px
+//       box-shadow: inset 0 0 0 2px $grey-6
+//     .name
+//       display: none
+//       position: absolute
+//       left: 0
+//       bottom: 0
+//       width: 100%
+//       height: 40px
+//       margin: 0
+//       line-height: 40px
+//       text-align: center
+//       color: #fff
+//       background-color: rgba(0, 0, 0, .5)
+//   .example-cell:hover
+//     .name
+//       display: block
+// .my-custom-image
+//   filter: blur(1px) sepia()
+</style>
+
+
+<style lang="sass" scoped>
 .flex-break
   flex: 1 0 100% !important
   width: 0 !important
 
+$x: 4
 
 @for $i from 1 through ($x - 1)
   .example-container > div:nth-child(#{$x}n + #{$i})
@@ -783,12 +859,20 @@ $x: 4
   order: #{$x}
 
 .example-container
+  height: 1000px
 
-  .example-cell
+  .artwork-list
     position: relative
     width: 25%
     padding: 10px
-    .name
+
+    .artwork-list-item
+      display: inline-block
+      width: 100%
+      // padding: 4px 8px
+      // box-shadow: inset 0 0 0 2px $grey-6
+      border: 6px solid #152c2b
+    .artwork-list-name
       display: none
       position: absolute
       left: 0
@@ -800,12 +884,8 @@ $x: 4
       text-align: center
       color: #fff
       background-color: rgba(0, 0, 0, .5)
-    > div
-      padding: 4px 8px
-      box-shadow: inset 0 0 0 2px $grey-6
-
-  .example-cell:hover
-    .name
+  .artwork-list:hover
+    .artwork-list-name
       display: block
 .my-custom-image
   filter: blur(1px) sepia()
