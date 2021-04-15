@@ -391,7 +391,7 @@ export default {
       color: #333;
     }
     .active {
-      color: #f00;
+      // color: #f00;
     }
   }
   .artists {

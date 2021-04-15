@@ -1036,7 +1036,7 @@ export default {
 
     }
     .active {
-      color: #f00;
+      // color: #f00;
     }
   }
   .none {

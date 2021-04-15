@@ -767,7 +767,7 @@ export default {
           }
     }
     .option-item.active{
-      color: #f00;
+      // color: #f00;
     }
   }
 }

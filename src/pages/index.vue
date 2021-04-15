@@ -492,6 +492,7 @@ export default {
       height: 510px;
       padding: 36px 20px;
       width: 260px;
+      overflow-y: auto;
       .menu-title {
         font-size: 24px;
         padding: 14px 0;
