@@ -126,7 +126,7 @@
           >
             <q-img
               class="artwork-list-img"
-              :src="item.photos.length ? item.photos[0].src : ''"
+              :src="item.photos.length ? item.photos[0] : ''"
             >
               <p class="artwork-list-name">{{ item.name }}</p>
             </q-img>
@@ -154,7 +154,7 @@
             :key="index"
           >
             <q-img
-              :src="item.photos.length ? item.photos[0].src : ''"
+              :src="item.photos.length ? item.photos[0] : ''"
             >
               <p class="name">{{ item.name }}</p>
             </q-img>

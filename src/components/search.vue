@@ -30,7 +30,7 @@
           </router-link>
           <router-link class="caption-item" :to="`/${$i18n.locale}/artwork/${ item.commodityId }`" v-else-if="searchType == '艺术品'" >
             <div style="width:120px;height:80px;float:left;">
-              <q-img v-if="item && item.photos && item.photos.length" :src="item.photos[0].src" width="120px" height="80px" class="caption-img" />
+              <q-img v-if="item && item.photos && item.photos.length" :src="item.photos[0]" width="120px" height="80px" class="caption-img" />
             </div>
 
             <div class="caption-content">

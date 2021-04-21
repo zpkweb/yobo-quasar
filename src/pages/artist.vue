@@ -43,7 +43,7 @@
         <div class="artwork row">
           <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 text-center" v-for="(item, index) of portrait.commoditys" :key="`artwork-${index}`">
             <div class="image">
-              <q-img :src="item.photos[0].src" width="180px"></q-img>
+              <q-img :src="item.photos[0]" width="180px"></q-img>
             </div>
           </router-link>
         </div>
@@ -55,7 +55,7 @@
       <div class="row">
         <div class="col-3 text-center" v-for="i of 4" :key="`sold-${i}`">
           <div class="bg">
-            <q-img :src="item.photos[0].src" width="180px" class="image"></q-img>
+            <q-img :src="item.photos[0]" width="180px" class="image"></q-img>
           </div>
         </div>
       </div>

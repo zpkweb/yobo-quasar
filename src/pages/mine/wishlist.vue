@@ -10,7 +10,7 @@
           <q-img
             class="image"
             v-if="item.photos.length"
-            :src="item.photos[0].src"
+            :src="item.photos[0]"
             width="212px"
           ></q-img>
           <div class="col-4 desc">
@@ -72,7 +72,7 @@
             <div class="image">
               <q-img
                 v-if="item.photos.length"
-                :src="item.photos[0].src"
+                :src="item.photos[0]"
                 width="198px"
                 height="300px"
               ></q-img>

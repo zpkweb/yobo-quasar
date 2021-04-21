@@ -14,38 +14,71 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
    */
   async getArtworkSearch ({ commit }, payload) {
     console.log("getArtworkSearch", payload)
-    const {
-      category,
-      classification,
-      material,
-      model,
-      place,
-      ruiwu,
-      shape,
-      specification,
-      style,
-      technique,
-      theme,
-      type,
-      use,
-      ...search
-    } = payload
-    return await axiosInstance.get('/api/commodity/search', {
+    // const {
+    //   category,
+    //   classification,
+    //   material,
+    //   model,
+    //   place,
+    //   ruiwu,
+    //   shape,
+    //   specification,
+    //   style,
+    //   technique,
+    //   theme,
+    //   type,
+    //   use,
+    //   ...search
+    // } = payload;
+
+    let price = '';
+      if(payload.pricemin && payload.pricemax){
+        price = `${payload.pricemin},${payload.pricemax}`
+      }else if(payload.pricemin){
+        price = `0,${payload.pricemin}`
+      }else if(payload.pricemax){
+        price = `0,${payload.pricemax}`
+      }
+
+    return await axiosInstance.get('/api/commodity/searchs', {
       params: {
-        ...search,
-        categorys: JSON.stringify(category),
-        classifications: JSON.stringify(classification),
-        materials: JSON.stringify(material),
-        models: JSON.stringify(model),
-        places: JSON.stringify(place),
-        ruiwus: JSON.stringify(ruiwu),
-        shapes: JSON.stringify(shape),
-        specifications: JSON.stringify(specification),
-        styles: JSON.stringify(style),
-        techniques: JSON.stringify(technique),
-        themes: JSON.stringify(theme),
-        types: JSON.stringify(type),
-        uses: JSON.stringify(use),
+        id: payload.id,
+        commodityId: payload.commodityId,
+        sellerId: payload.sellerId,
+        price: price,
+
+        categorys: payload.category ? payload.category.toString() : '',
+        classifications: payload.classification ? payload.classification.toString() : '',
+        materials: payload.material ? payload.material.toString() : '',
+        models: payload.model ? payload.model.toString() : '',
+        places: payload.place ? payload.place.toString() : '',
+        ruiwus: payload.ruiwu ? payload.ruiwu.toString() : '',
+        shapes: payload.shape ? payload.shape.toString() : '',
+        specifications: payload.specification ? payload.specification.toString() : '',
+        styles: payload.style ? payload.style.toString() : '',
+        techniques: payload.technique ? payload.technique.toString() : '',
+        themes: payload.theme ? payload.theme.toString() : '',
+        types: payload.type ? payload.type.toString() : '',
+        uses: payload.use ? payload.use.toString() : '',
+
+        pageSize: payload.pageSize,
+        currentPage: payload.currentPage,
+
+
+        // ...search,
+        // categorys: JSON.stringify(category),
+        // classifications: JSON.stringify(classification),
+        // materials: JSON.stringify(material),
+        // models: JSON.stringify(model),
+        // places: JSON.stringify(place),
+        // ruiwus: JSON.stringify(ruiwu),
+        // shapes: JSON.stringify(shape),
+        // specifications: JSON.stringify(specification),
+        // styles: JSON.stringify(style),
+        // techniques: JSON.stringify(technique),
+        // themes: JSON.stringify(theme),
+        // types: JSON.stringify(type),
+        // uses: JSON.stringify(use),
 
       }
     }).then(response => {

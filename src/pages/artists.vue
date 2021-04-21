@@ -65,6 +65,11 @@
           <div class="title text-dark">{{$t('artists.Other')}}</div>
           <q-tabs class="options-tabs text-grey-8" indicator-color="transparent" align="justify">
             <router-link
+              class="options-link tab"
+              :to="{ query: Object.assign({}, $route.query, { other: '' }) }"
+              >{{ $t('artists.Unlimited') }}</router-link
+            >
+            <router-link
               class="options-link"
               v-for="(item, index) in others"
               :key="index"

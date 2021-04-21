@@ -61,7 +61,7 @@
                   artwork.commodity &&
                   artwork.commodity.photos &&
                   artwork.commodity.photos.length
-                    ? artwork.commodity.photos[0].src
+                    ? artwork.commodity.photos[0]
                     : ''
                 "
                 width="350px"
@@ -447,7 +447,7 @@
             <div class="paint">
               <q-img
                 :src="
-                  item.photos && item.photos.length ? item.photos[0].src : ''
+                  item.photos && item.photos.length ? item.photos[0] : ''
                 "
                 width="208px"
                 height="208px"
@@ -483,7 +483,7 @@
             <div class="paint">
               <q-img
                 :src="
-                  item.photos && item.photos.length ? item.photos[0].src : ''
+                  item.photos && item.photos.length ? item.photos[0] : ''
                 "
                 width="208px"
                 height="208px"
@@ -525,7 +525,7 @@
               <q-img
                 :src="
                   item && item.photos && item.photos.length
-                    ? item.photos[0].src
+                    ? item.photos[0]
                     : ''
                 "
                 width="208px"

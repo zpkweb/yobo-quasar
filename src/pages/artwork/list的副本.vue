@@ -353,7 +353,7 @@
             :key="index"
           >
             <q-img
-              :src="item.photos.length ? item.photos[0].src : ''"
+              :src="item.photos.length ? item.photos[0] : ''"
             >
               <p class="name">{{ item.name }}</p>
             </q-img>

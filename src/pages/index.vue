@@ -121,7 +121,7 @@
              <template v-if="item.commoditys && item.commoditys.length">
               <div class="line absolute"></div>
               <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`"  >
-                  <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0].src ? item.commodityPhotos[0].src : ''" width="230px" height="300px"></q-img>
+                  <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0] ? item.commodityPhotos[0] : ''" width="230px" height="300px"></q-img>
               </router-link>
 
                 <div class="desc bottom text-right odd">
@@ -139,7 +139,7 @@
               </div>
 
               <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
-                <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0].src ? item.commodityPhotos[0].src : ''" width="230px" height="300px"></q-img>
+                <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0] ? item.commodityPhotos[0] : ''" width="230px" height="300px"></q-img>
              </router-link>
              </template>
            </template>
@@ -160,7 +160,7 @@
         <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity.list" :key="`artwork-${item.commodityId}`">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
-            <q-img :src="item.photos.length ? item.photos[0].src : ''" width="255px" height="255px"></q-img>
+            <q-img :src="item.photos.length ? item.photos[0] : ''" width="255px" height="255px"></q-img>
             <!-- <div class="new-desc text-left bg-white">
               <q-breadcrumbs separator="|" gutter="sm">
                 <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.categorys[0].name}`" class="text-dark ddd" />
