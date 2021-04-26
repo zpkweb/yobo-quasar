@@ -101,7 +101,7 @@
         </div>
       </div>
     </div>
-    <div class="gallary-container" v-if="home && home.gallerySeller && home.gallerySeller.list && home.gallerySeller.list.length">
+    <div class="gallary-container" v-if="home && home.gallerySeller && home.gallerySeller && home.gallerySeller.length">
       <div class="gallary">
         <div class="gallary-title text-center title">{{$t('home.YourOnlineGallery')}}</div>
         <div class="gallary-desc text-center">{{$t('home.SeriesYou')}}</div>
@@ -112,13 +112,13 @@
 
            <div class="col-3 relative-position text-center"
 
-            v-for="(item, index) in home.gallerySeller.list"
+            v-for="(item, index) in home.gallerySeller"
             :key="`gallerySeller-${item.sellerId}`"
 
            >
 
            <template v-if="index%2 == 0">
-             <template v-if="item.commoditys && item.commoditys.length">
+             <template >
               <div class="line absolute"></div>
               <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`"  >
                   <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0] ? item.commodityPhotos[0] : ''" width="230px" height="300px"></q-img>
@@ -131,7 +131,7 @@
               </template>
            </template>
            <template v-else>
-            <template v-if="item.commoditys && item.commoditys.length">
+            <template >
               <div class="line-bottom absolute"></div>
               <div class="desc top text-right even">
                 <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
@@ -157,7 +157,7 @@
         <template v-if="home && home.latestCommodity">
 
 
-        <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity.list" :key="`artwork-${item.commodityId}`">
+        <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity" :key="`artwork-${item.commodityId}`">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
             <q-img :src="item.photos.length ? item.photos[0] : ''" width="255px" height="255px"></q-img>
@@ -169,8 +169,8 @@
             </div> -->
             <div class="new-desc text-left bg-white text-dark">
 
-              <span v-if="item.techniques.length && item.themes.length" class="ddd">{{item.categorys[0].name}}</span>
-              <span style="padding: 0 10px;">|</span>
+              <!-- <span v-if="item.techniques.length && item.themes.length" class="ddd">{{item.categorys[0].name}}</span> -->
+              <!-- <span style="padding: 0 10px;">|</span> -->
               <span class="">{{item.width}}cm X {{item.height}}cm</span>
 
             </div>
@@ -352,7 +352,7 @@
         <template v-if="home && home.hotSaleSeller">
 
 
-        <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" style="width:20%;"  v-for="item in home.hotSaleSeller.list" :key="`artist-${item.sellerId}`">
+        <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" style="width:20%;"  v-for="item in home.hotSaleSeller" :key="`artist-${item.sellerId}`">
           <img class="image" v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="180px" />
           <div class="name">{{item.firstname}} {{item.lastname}}</div>
           <div class="country">{{item.country}}-{{item.typeName}}</div>
@@ -410,8 +410,8 @@ export default {
   methods: {
     Top() {
       document.documentElement.scrollTop >= 600
-        ? this.$refs.top.classList.remove("none")
-        : this.$refs.top.classList.add("none");
+        ? this.$refs.top.clas.remove("none")
+        : this.$refs.top.clas.add("none");
     },
     toTop() {
       document.documentElement.scrollTop = 0;

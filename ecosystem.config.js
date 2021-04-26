@@ -11,6 +11,7 @@ module.exports = {
       port: '8088',
       env: {
         ORIGIN: "http://39.105.190.188:7001"
+        // ORIGIN: "http://82.156.250.70:7001"
       }
     }
   ]

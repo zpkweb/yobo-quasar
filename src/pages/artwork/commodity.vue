@@ -61,7 +61,7 @@
                   artwork.commodity &&
                   artwork.commodity.photos &&
                   artwork.commodity.photos.length
-                    ? artwork.commodity.photos[0]
+                    ? artwork.commodity.photos[0].src
                     : ''
                 "
                 width="350px"
@@ -73,9 +73,9 @@
                 {{ artwork.commodity.createdDate.substr(0, 4) }}
               </div>
               <div class="painter title-color">
-                {{ artwork.commodity.seller.firstname }}
-                {{ artwork.commodity.seller.lastname }}
-                {{ artwork.commodity.seller.country }}
+                {{ artwork.commodity.seller ? artwork.commodity.seller.firstname : '' }}
+                {{ artwork.commodity.seller ? artwork.commodity.seller.lastname : '' }}
+                {{ artwork.commodity.seller ? artwork.commodity.seller.country : '' }}
               </div>
               <div class="row">
                 <div class="col-6 item">
@@ -123,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="container2">
+        <div class="container2" v-if="artwork.commodity.seller">
           <div class="title">{{ $t("artwork.commodity.AboutAuthor") }}</div>
           <div class="row">
             <div class="col-4">
@@ -447,7 +447,7 @@
             <div class="paint">
               <q-img
                 :src="
-                  item.photos && item.photos.length ? item.photos[0] : ''
+                  item.photos && item.photos.length ? item.photos[0].src : ''
                 "
                 width="208px"
                 height="208px"
@@ -462,7 +462,7 @@
         </div>
       </div>
     </div>
-    <div class="similar-paints paints">
+    <div class="similar-paints paints" v-if="artwork.commoditySimilar && artwork.commoditySimilar.length">
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">{{ $t("artwork.commodity.SimilarWorksArt") }}</div>
@@ -476,14 +476,14 @@
           <router-link
             :to="`${item.commodityId}`"
             class="col-3"
-            v-if="artwork.commoditySimilar.length"
+
             v-for="(item, index) in artwork.commoditySimilar"
             :key="'commoditySimilar' + index"
           >
             <div class="paint">
               <q-img
                 :src="
-                  item.photos && item.photos.length ? item.photos[0] : ''
+                  item.photos && item.photos.length ? item.photos[0].src : ''
                 "
                 width="208px"
                 height="208px"
@@ -525,7 +525,7 @@
               <q-img
                 :src="
                   item && item.photos && item.photos.length
-                    ? item.photos[0]
+                    ? item.photos[0].src
                     : ''
                 "
                 width="208px"
@@ -629,10 +629,10 @@ export default {
       locale,
       artworkId,
     });
-    await store.dispatch("artwork/getArtwork", {
-      locale,
-      artworkId,
-    });
+
+  },
+  async created() {
+
   },
   async mounted() {
     let hasMyArtwork = false;

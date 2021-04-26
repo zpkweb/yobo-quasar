@@ -461,6 +461,46 @@ export default {
       this.$router.push(`/${this.$i18n.locale}`);
     },
     goPage2() {
+      if(!this.firstname){
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: "请输入姓氏",
+          color: "negative",
+        });
+        return;
+      }
+      if(!this.lastname){
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: "请输入名字",
+          color: "negative",
+        });
+        return;
+      }
+      if(this.artistEmail){
+        var verify = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
+        if (!verify.test(this.artistEmail)) {
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "请输入正确的邮箱！",
+            color: "negative",
+          });
+          return;
+        }
+
+      }else{
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: "请输入邮箱",
+          color: "negative",
+        });
+        return;
+      }
+
       this.mode = "page2";
     },
     goPage1() {
@@ -571,7 +611,7 @@ export default {
 }
 .card {
   border-radius: 0;
-  padding: 20px 50px;
+  padding: 20px 10px;
   color: rgb(21, 44, 43);
   letter-spacing: 2px;
   font-size: 12px;
@@ -682,6 +722,7 @@ export default {
 .success {
   width: 485px;
   height: 424px;
+  padding: 20px 50px;
   .quotation {
     font-size: 88px;
     font-family: "Hei";

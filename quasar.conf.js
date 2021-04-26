@@ -12,6 +12,7 @@ const { configure } = require('quasar/wrappers')
 module.exports = configure(function (ctx) {
   console.log("process.env.api", process.env.api)
   console.log("process.env.ORIGIN", process.env.ORIGIN)
+
   return {
     htmlVariables: {
       productName: "yobo",
@@ -67,7 +68,9 @@ module.exports = configure(function (ctx) {
 
       proxy: {
         '/api': {
-          target: !ctx.dev || process.env.api === 'prod' ? 'http://39.105.190.188:7001/' : 'http://localhost:7001' ,
+          // target: !ctx.dev || process.env.api === 'prod' ? 'http://39.105.190.188:7001/' : 'http://localhost:7001' ,
+          // target: !ctx.dev || process.env.api === 'prod' ? process.env.ORIGIN : 'http://localhost:7001' ,
+          target: process.env.ORIGIN,
           // target: 'http://39.105.190.188:7001/',
           changeOrigin: true
         }
@@ -77,7 +80,9 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       env: {
-        API: !ctx.dev || process.env.api === 'prod' ? 'http://39.105.190.188:7001/' : 'http://localhost:7001'
+        // API: !ctx.dev || process.env.api === 'prod' ? 'http://39.105.190.188:7001/' : 'http://localhost:7001'
+        // API: !ctx.dev || process.env.api === 'prod' ? process.env.ORIGIN : 'http://localhost:7001'
+        API: process.env.ORIGIN
       },
       devtool: 'source-map',
       vueRouterMode: 'hash', // available values: 'hash', 'history'

@@ -198,7 +198,7 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Server listening at port ${port}, env.api=${process.env.api}`)
+  console.log(`Server listening at port ${port}, env.api=${process.env.api}, env.ORIGIN=${process.env.ORIGIN}`)
 })
 
 
