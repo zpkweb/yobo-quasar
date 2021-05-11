@@ -128,9 +128,9 @@
               class="artwork-list-img"
               :src="item.photos.length ? item.photos[0] : ''"
             >
-              <p class="artwork-list-name">{{ item.name }}</p>
-            </q-img>
 
+            </q-img>
+            <p class="artwork-list-name">{{ item.name }}</p>
           </router-link>
             <!-- <div v-for="(text, j) in cell" :key="j">
               {{ text }}
@@ -867,8 +867,10 @@ $x: 4
     padding: 10px
 
     .artwork-list-item
+      position: relative
       display: inline-block
       width: 100%
+      min-height: 52px
       // padding: 4px 8px
       // box-shadow: inset 0 0 0 2px $grey-6
       border: 6px solid #152c2b
