@@ -139,6 +139,7 @@ export default {
       uploaded: "已上传",
       SecondaryWorks: "副作品",
       Followed: "已关注",
+      Follow: "关注",
       FollowArtist: "关注艺术家",
       NoData: "暂时还没有喜欢的艺术家，快去看看艺术家们的作品！",
       unsubscribe: "取消关注",

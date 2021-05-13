@@ -138,6 +138,7 @@ export default {
       uploaded: "uploaded",
       SecondaryWorks: "Secondary works",
       Followed: "Followed",
+      Follow: "Follow",
       FollowArtist: "Follow the artist",
       NoData: "No data",
       unsubscribe: "unsubscribe",

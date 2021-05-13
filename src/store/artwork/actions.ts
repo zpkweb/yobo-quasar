@@ -45,6 +45,7 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
         id: payload.id,
         commodityId: payload.commodityId,
         sellerId: payload.sellerId,
+        name: payload.name,
         price: price,
 
         categorys: payload.category ? payload.category.toString() : '',
@@ -87,6 +88,10 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
       // commit('setPagination', { total, currentPage, pageSize })
       return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async getArtwork ({ commit }, payload) {
@@ -99,6 +104,10 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
       const { data } = response.data;
       commit('setData', data)
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async getArtworkOptions({ commit }, payload) {
@@ -111,6 +120,10 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
       return response.data;
 
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async sendEmailBid({ commit }, payload) {
@@ -123,6 +136,10 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     .then(response => {
       return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   }
 

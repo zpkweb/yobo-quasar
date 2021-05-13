@@ -13,6 +13,10 @@ const actions: ActionTree<HomeStateInterface, StateInterface> = {
     }).then(response => {
       commit('setHome', response.data.data)
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
 
   },
@@ -25,6 +29,10 @@ const actions: ActionTree<HomeStateInterface, StateInterface> = {
     .then(response => {
       return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
 
@@ -36,6 +44,10 @@ const actions: ActionTree<HomeStateInterface, StateInterface> = {
     .then(response => {
       return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   }
 }

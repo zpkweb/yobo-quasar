@@ -4,7 +4,7 @@
       <q-img src="~assets/images/banner-artist.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <div class="title">{{$t('artwork.list.artwork')}}</div>
-        <div class="number">{{ artworkTotal }} {{$t('artwork.list.searchCriteria')}}</div>
+        <div class="number">{{ searchResult.total }} {{$t('artwork.list.searchCriteria')}}</div>
       </div>
     </div>
     <div class="container">
@@ -108,7 +108,7 @@
           maxCols="4"
         ></vue-waterfall-easy>
       </div> -->
-      <div class="q-pa-md" v-if="artworkList && artworkList.length">
+      <div class="q-pa-md" v-if="searchResult.list && searchResult.list.length">
         <!-- <q-btn class="q-mb-md" color="primary" label="Regenerate layout" @click="generateCells" /> -->
 
 
@@ -119,53 +119,84 @@
         <div class="flex-break"></div>
         <div class="flex-break"></div>
 
-        <div v-for="(item, i) in artworkList" :key="i" class="artwork-list" tabindex="0">
+        <div v-for="(item, i) in searchResult.list" :key="i" class="artwork-list" tabindex="0">
           <router-link
             :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
             class="artwork-list-item"
           >
-            <q-img
-              class="artwork-list-img"
-              :src="item.photos.length ? item.photos[0] : ''"
-            >
+            <q-img class="artwork-list-img" :src="item.photos.length ? item.photos[0] : ''"></q-img>
 
-            </q-img>
-            <p class="artwork-list-name">{{ item.name }}</p>
+
           </router-link>
             <!-- <div v-for="(text, j) in cell" :key="j">
               {{ text }}
             </div> -->
+
+
+            <div class="artwork-list-user">
+              <div class="artwork-list-seller" v-if="item.seller">
+                <div class="artwork-list-avatar-content">
+
+                  <q-img class="artwork-list-seller-img" v-if="item.seller.user.avatar" :src="item.seller.user.avatar"></q-img>
+                  <span class="artwork-list-seller-surname">{{item.seller.firstname}}{{item.seller.lastname}}</span>
+
+                  <div class="artwork-list-seller-pop">
+
+                    <div class="artwork-list-seller-pop-header">
+                      <q-img class="artwork-list-seller-pop-img" v-if="item.seller.user.avatar" :src="item.seller.user.avatar" width="30px" height="30px"></q-img>
+                      <div class="artwork-list-seller-pop-text">
+                        <span class="artwork-list-seller-pop-surname">{{item.seller.firstname}}{{item.seller.lastname}}</span>
+                        <span class="artwork-list-seller-pop-sellerFollowTotal">{{item.sellerFollowTotal}}位关注者</span>
+                      </div>
+
+
+
+                      <a href="javascript:;" class="artwork-list-seller-like" @click="myArtist(item)">{{ item.hasMyArtist ? $t('my.like.Followed') : '+'+$t('my.like.Follow')}}</a>
+                    </div>
+
+                    <div class="artwork-list-seller-pop-content">
+                        <ul v-if="item.seller.commoditysPhotos">
+                          <li class="artwork-list-seller-pop-commodity" v-for="item in item.seller.commoditysPhotos">
+                            <q-img class="artwork-list-seller-pop-img" :src="item.src || ''" width="80px" height="80px" ></q-img>
+                          </li>
+                        </ul>
+                    </div>
+
+
+                  </div>
+                </div>
+
+
+
+              </div>
+              <div class="artwork-list-like">
+                <q-img
+                  v-if="item.hasMyArtwork"
+                  src="~assets/images/liked.png"
+                  width="16px"
+                  height="14px"
+                  @click="myArtwork(item)"
+                />
+                <q-img
+                  v-else
+                  src="~assets/images/like.png"
+                  width="16px"
+                  height="14px"
+                  @click="myArtwork(item)"
+                />
+              </div>
+            </div>
+
+
+
         </div>
-      </div>
-
-
-        <!-- <div
-          class="column example-container"
-          :style="`height: ${Math.floor(pageSize / 4) * 300}px`"
-        >
-          <div class="flex-break hidden"></div>
-          <div class="flex-break"></div>
-          <div class="flex-break"></div>
-          <div class="flex-break"></div>
-          <router-link
-            :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
-            class="example-cell"
-            v-for="(item, index) in artworkList"
-            :key="index"
-          >
-            <q-img
-              :src="item.photos.length ? item.photos[0] : ''"
-            >
-              <p class="name">{{ item.name }}</p>
-            </q-img>
-          </router-link>
-        </div> -->
-
-
 
 
       </div>
 
+
+
+      </div>
 
       <noData
         v-else
@@ -216,6 +247,14 @@ export default {
       pageSize: parseInt(this.$route.query.pageSize) || 10,
       currentPage: parseInt(this.$route.query.currentPage) || 1,
       total: 0,
+      searchResult: {
+        list: [],
+        total: 0,
+        currentPage: 1,
+        pageSize: 10
+      },
+      myArtists: [],
+      myArtworks: []
     };
   },
   // async preFetch({ store, currentRoute, Vue }) {
@@ -229,6 +268,37 @@ export default {
     console.log("router query", this.$qs.parse(this.$route.query))
     const { query, params } = this.$route;
     const { locale } = params;
+
+    // console.log("this.$store.state.user", this.$store.state.user.info)
+    // const userInfo = this.$store.state.user.info;
+    const userInfo = this.$q.cookies.get("userInfo");
+    console.log("userInfo", userInfo)
+    if(userInfo){
+      const { userId } = userInfo;
+      const myArtist = await this.$store.dispatch("my/getMyArtist", {
+        userId,
+        locale,
+      });
+      console.log("myArtist", myArtist)
+      if (myArtist.success) {
+        // const myArtists = myArtist.data.map(item => Object.assign(item,{ hasMyArtist: true }));
+        this.myArtists = myArtist.data;
+        // this.$store.commit("my/setMyArtist", myArtists);
+      }
+
+
+      const myWishlist = await this.$store.dispatch("my/getMyWishlist", {
+        userId,
+        locale,
+      });
+      if (myWishlist.success) {
+        // this.$store.commit("my/setMyWishlist", myWishlist.data);
+        this.myWishlist = myWishlist.data;
+      }
+    }
+
+
+
 
     // 获取艺术品选项
     const getArtworkOptions = await this.$store.dispatch("artwork/getArtworkOptions", {
@@ -332,7 +402,6 @@ export default {
       this.expandOptions = 3;
     },
     nextPage() {
-      console.log("pageTotal", this.currentPage, this.pageTotal)
       if (this.currentPage < this.pageTotal) {
         this.currentPage = this.currentPage + 1;
       }
@@ -367,20 +436,44 @@ export default {
 
     },
     async changeQueryData() {
-      // const query = this.$qs.parse(this.$route.query);
-      // for (let item in query) {
-      //   console.log("item", item, this.search[item], query[item])
-      //   if (this.search[item]) {
-      //     this.search[item].value = this.$t(query[item]);
-      //   }
-      // }
-      console.log("this.$qs.parse(this.$route.query)", this.$qs.parse(this.$route.query))
+
       const artworkSearch = await this.$store.dispatch("artwork/getArtworkSearch", this.$qs.parse(this.$route.query))
-    if(artworkSearch.success){
-      const { total, currentPage, pageSize, list } = artworkSearch.data;
-      this.$store.commit('artwork/setSearchData', list)
-      this.$store.commit('artwork/setPagination', { total, currentPage, pageSize })
-    }
+      if(artworkSearch.success){
+        let { total, currentPage, pageSize, list } = artworkSearch.data;
+
+        // this.$store.commit('artwork/setSearchData', list)
+        // this.$store.commit('artwork/setPagination', { total, currentPage, pageSize })
+        console.log("changeQueryData this.myArtists", this.myArtists)
+        list = list.map((item) => {
+          item.hasMyArtist = false;
+
+          if(item.seller){
+            if(item.seller.commoditysPhotos && item.seller.commoditysPhotos.length >=3){
+              item.seller.commoditysPhotos = item.seller.commoditysPhotos.splice(0,3)
+            }
+            if(this.myArtists && this.myArtists.length){
+              for(let artist of this.myArtists) {
+                if(item.seller.sellerId == artist.sellerId){
+                  item.hasMyArtist = true;
+                }
+              }
+            }
+          }
+
+
+          item.hasMyArtwork = false;
+          if(this.myWishlist && this.myWishlist.length){
+            for(let commodity of this.myWishlist) {
+              if(item.commodityId == commodity.commodityId){
+                item.hasMyArtwork = true;
+              }
+            }
+          }
+
+          return item;
+        })
+        this.searchResult = { total, currentPage, pageSize, list }
+      }
     },
 
     async searchOption({option, index, checked}) {
@@ -388,7 +481,6 @@ export default {
       // item.checked = !item.checked;
       // this.options[option][index].checked = !checked
       await this.$store.commit("artwork/setOptinsItem", {option, index, checked})
-      console.log("this.options", this.options)
       const searchData={};
       for(let option in this.options){
         searchData[option]=[];
@@ -398,11 +490,164 @@ export default {
           }
         }
       }
-      console.log("searchData", searchData)
       const artworkSearch = Object.assign({}, this.$store.state.artwork.search, searchData);
-      console.log("artworkSearch", artworkSearch)
       this.$store.commit("artwork/setSearch", artworkSearch);
       this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(artworkSearch)}`);
+
+    },
+    async myArtwork(item) {
+      if (!this.$store.state.user.info) {
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: this.$t("layout.pleaseLoginFirst"),
+          color: "negative",
+        });
+        return;
+      }
+      if (item.hasMyArtwork) {
+        const delMyArtwork = await this.$store.dispatch("my/delMyArtwork", {
+          userId: this.$store.state.user.info.userId,
+          artworkId: item.commodityId,
+        });
+        if (delMyArtwork.success) {
+          item.hasMyArtwork = false;
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: this.$t("artwork.commodity.Unlike"),
+            color: "negative",
+          });
+        } else {
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: delMyArtwork.msg,
+            color: "negative",
+          });
+        }
+      } else {
+        const addMyArtwork = await this.$store.dispatch("my/addMyArtwork", {
+          userId: this.$store.state.user.info.userId,
+          artworkId: item.commodityId,
+        });
+        if (addMyArtwork.success) {
+          item.hasMyArtwork = true;
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: this.$t("artwork.commodity.LikeSuccess"),
+            color: "positive",
+          });
+        } else {
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: addMyArtwork.msg,
+            color: "negative",
+          });
+        }
+      }
+    },
+
+    async myArtist(item) {
+      console.log("myArtist", item)
+      if (!this.$store.state.user.info) {
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: this.$t("layout.pleaseLoginFirst"),
+          color: "negative",
+        });
+        return;
+      }
+
+      if(item.hasMyArtist) {
+        const delMyArtist = await this.$store.dispatch("my/delMyArtist", {
+          userId: this.$store.state.user.info.userId,
+          artistId: item.seller.sellerId
+        })
+        if(delMyArtist.success) {
+          // item.hasMyArtist = false;
+
+          let newMyArtists = [];
+          for(let artists of this.myArtists) {
+            console.log(artists.sellerId, item.seller.sellerId)
+            if(artists.sellerId !== item.seller.sellerId) {
+              newMyArtists.push(item);
+            }
+          }
+          this.myArtists = newMyArtists;
+          console.log(this.myArtists)
+          this.changeHasMyArtist(item.seller.sellerId, false)
+
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: this.$t('my.like.unsubscribe'),
+            color: 'negative',
+          })
+        }else{
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: data.msg,
+            color: 'negative',
+          })
+        }
+
+      }else{
+        const addMyArtist = await this.$store.dispatch("my/addMyArtist", {
+          userId: this.$store.state.user.info.userId,
+          artistId: item.seller.sellerId
+        })
+
+        if(addMyArtist.success) {
+          // item.hasMyArtist = true;
+          this.myArtists = addMyArtist.data;
+          this.changeHasMyArtist(item.seller.sellerId, true)
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: this.$t('my.like.FollowedSuccess'),
+            color: 'positive',
+          })
+        }else{
+          this.$q.notify({
+            position: 'top',
+            timeout: 1500,
+            message: data.msg,
+            color: 'negative',
+          })
+        }
+      }
+
+    },
+    changeHasMyArtist(sellerId, bool) {
+      console.log("changeHasMyArtist", sellerId, bool, this.myArtists)
+
+      const list = this.searchResult.list.map((item) => {
+        if(item.seller){
+          // item.hasMyArtist = false;
+          // if(this.myArtists && this.myArtists.length){
+          //   for(let artist of this.myArtists) {
+          //     console.log(item.seller.sellerId, sellerId, bool)
+
+
+          //   }
+          // }
+          if(item.seller.sellerId == sellerId){
+                item.hasMyArtist = bool;
+                if(bool){
+                  item.sellerFollowTotal ? item.sellerFollowTotal++ :  item.sellerFollowTotal = 1;
+                }else{
+                  item.sellerFollowTotal--;
+                }
+              }
+        }
+        return item;
+      })
+      this.searchResult = { ...this.searchResult, list  }
     }
   },
 };
@@ -773,6 +1018,102 @@ export default {
 }
 
 
+.artwork-list-user {
+  .artwork-list-seller {
+    float: left;
+    .artwork-list-seller-img {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .artwork-list-seller-surname {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+  .artwork-list-like {
+    float: right;
+    cursor: pointer;
+  }
+}
+
+.artwork-list-avatar-content {
+  float: left;
+  position: relative;
+
+  .artwork-list-seller-pop {
+    display: none;
+    position: absolute;
+    // right: -20px;
+    left: -260px;
+    bottom: 60px;
+    width: 300px;
+    padding: 10px 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px #000;
+    &::before{
+      content: "";
+      position: absolute;
+      right: 20px;
+      bottom: -20px;
+      width: 0;
+      height: 0;
+      border: 10px solid;
+      border-color: #fff transparent  transparent  transparent ;
+
+    }
+    .artwork-list-seller-pop-header {
+      overflow: hidden;
+      .artwork-list-seller-pop-img{
+        float: left;
+        border-radius: 50%;
+      }
+      .artwork-list-seller-pop-text{
+        float: left;
+        overflow: hidden;
+        margin-left: 10px;
+        .artwork-list-seller-pop-surname, .artwork-list-seller-pop-sellerFollowTotal {
+          display: block;
+          line-height: 1.5em;
+          color: #333;
+          text-align: left;
+          font-size: 12px;
+        }
+
+      }
+
+      .artwork-list-seller-like {
+        float: right;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 14px;
+        color: #fff;
+        background-color: #152c2b;
+      }
+    }
+    .artwork-list-seller-pop-content{
+      display: flex;
+      margin: 10px -10px 5px 0;
+      .artwork-list-seller-pop-commodity{
+        float: left;
+        width: 80px;
+        height: 80px;
+        overflow: hidden;
+        margin-right: 10px;
+      }
+    }
+    .artwork-list-seller-pop-img{
+      flex: 1;
+      width: 33.33%;
+      // margin: 0 10px 0 0;
+    }
+  }
+  &:hover .artwork-list-seller-pop{
+    display: block;
+  }
+}
 
 </style>
 
@@ -800,48 +1141,6 @@ export default {
 
 </style>
 
-<style lang="sass" scoped>
-// $x: 4
-// .flex-break
-//   flex: 1 0 100% !important
-//   width: 0 !important
-
-
-// @for $i from 1 through ($x - 1)
-//   .example-container > div:nth-child(#{$x}n + #{$i})
-//     order: #{$i}
-
-// .example-container > div:nth-child(#{$x}n)
-//   order: #{$x}
-
-// .example-container
-
-//   .example-cell
-//     position: relative
-//     width: 25%
-//     padding: 1px
-
-//     > div
-//       padding: 4px 8px
-//       box-shadow: inset 0 0 0 2px $grey-6
-//     .name
-//       display: none
-//       position: absolute
-//       left: 0
-//       bottom: 0
-//       width: 100%
-//       height: 40px
-//       margin: 0
-//       line-height: 40px
-//       text-align: center
-//       color: #fff
-//       background-color: rgba(0, 0, 0, .5)
-//   .example-cell:hover
-//     .name
-//       display: block
-// .my-custom-image
-//   filter: blur(1px) sepia()
-</style>
 
 
 <style lang="sass" scoped>
@@ -864,30 +1163,31 @@ $x: 4
   .artwork-list
     position: relative
     width: 25%
-    padding: 10px
-
+    margin: 10px
+    box-sizing: border-box
     .artwork-list-item
       position: relative
       display: inline-block
       width: 100%
-      min-height: 52px
+      min-height: 50px
       // padding: 4px 8px
       // box-shadow: inset 0 0 0 2px $grey-6
       border: 6px solid #152c2b
-    .artwork-list-name
-      display: none
+    .artwork-list-user
+      display: block
       position: absolute
       left: 0
       bottom: 0
       width: 100%
-      height: 40px
+      height: 50px
       margin: 0
-      line-height: 40px
+      padding: 0 16px
+      line-height: 50px
       text-align: center
       color: #fff
       background-color: rgba(0, 0, 0, .5)
   .artwork-list:hover
-    .artwork-list-name
+    .artwork-list-user
       display: block
 .my-custom-image
   filter: blur(1px) sepia()

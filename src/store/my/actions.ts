@@ -15,6 +15,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
     return await axiosInstance.get('/api/my/seller', { params: payload }).then(response => {
       return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async addMyArtist({ commit }, payload) {
@@ -25,7 +29,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       console.log("addMyArtist response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async delMyArtist({ commit }, payload) {
@@ -36,7 +43,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       console.log("delMyArtist response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async hasMyArtist({ commit }, payload) {
@@ -47,7 +57,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       console.log("hasMyArtist response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   /**
@@ -61,6 +74,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
     return await axiosInstance.get('/api/my/commodity', { params: payload }).then(response => {
       return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async addMyArtwork({ commit }, payload) {
@@ -72,7 +89,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
 
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async delMyArtwork({ commit }, payload) {
@@ -83,7 +103,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       console.log("delMyArtwork response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async hasMyArtwork({ commit }, payload) {
@@ -94,7 +117,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       console.log("hasMyArtwork response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   /**
@@ -107,6 +133,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
     return await axiosInstance.get('/api/my/browsingHistory', { params: payload }).then(response => {
       return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async addMyBrowsingHistory({ commit }, payload) {
@@ -118,7 +148,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
 
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async delMyBrowsingHistory({ commit }, payload) {
@@ -129,7 +162,10 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       console.log("delMyBrowsingHistory response", response.data)
       return response.data;
     }).catch((err) => {
-      console.log("err", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
 

@@ -37,6 +37,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   /**
@@ -66,6 +70,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
       commit('setUserInfo', response.data.data)
       // return response.data;
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
 
@@ -81,7 +89,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     .then( response => {
       return response.data;
     }).catch((err) => {
-
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   /**
@@ -96,7 +107,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     .then( response => {
       return response.data;
     }).catch((err) => {
-
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
 
@@ -106,7 +120,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     .then( response => {
       return response.data;
     }).catch((err) => {
-
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
   async codeVerify({ commit }, payload) {
@@ -115,7 +132,10 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     .then( response => {
       return response.data;
     }).catch((err) => {
-
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   }
 

@@ -8,12 +8,12 @@
           :key="'style1-' + index"
         >
           <q-img
-            class="image"
+            class="col-3 image"
             v-if="item.photos.length"
-            :src="item.photos[0]"
+            :src="item.photos[0].src"
             width="212px"
           ></q-img>
-          <div class="col-4 desc">
+          <div class="col-7 desc">
             <div class="title">{{ item.name }}</div>
             <div class="name" v-if="item.seller">
               {{ item.seller.firstname }} {{ item.seller.lastname }}
@@ -102,37 +102,38 @@ export default {
     };
   },
   async mounted() {
-    setTimeout(async () => {
       const { locale } = this.$route.params;
-      const myWishlist = await this.$store.dispatch("my/getMyWishlist", {
-        userId: this.$store.state.user.info.userId,
-        locale,
-      });
-      console.log("myWishlist", myWishlist);
-      if (myWishlist.success) {
-        this.$store.commit("my/setMyWishlist", myWishlist.data);
-
-        this.myWishlist = myWishlist.data.map((item) => {
-          item.hasMyArtwork = true;
-          return item;
-        });
-      }
-
-      const myBrowsingHistory = await this.$store.dispatch(
-        "my/getMyBrowsingHistory",
-        {
-          userId: this.$store.state.user.info.userId,
+      const userInfo = this.$q.cookies.get("userInfo");
+      if(userInfo){
+        const myWishlist = await this.$store.dispatch("my/getMyWishlist", {
+          userId: userInfo.userId,
           locale,
-          pageSize: 4,
-          currentPage: 1,
+        });
+        if (myWishlist.success) {
+          this.$store.commit("my/setMyWishlist", myWishlist.data);
+
+          this.myWishlist = myWishlist.data.map((item) => {
+            item.hasMyArtwork = true;
+            return item;
+          });
         }
-      );
-      if (myBrowsingHistory.success) {
-        this.$store.commit("my/setMyBrowsingHistory", myBrowsingHistory.data);
+
+        const myBrowsingHistory = await this.$store.dispatch(
+          "my/getMyBrowsingHistory",
+          {
+            userId: userInfo.userId,
+            locale,
+            pageSize: 4,
+            currentPage: 1,
+          }
+        );
+        if (myBrowsingHistory.success) {
+          this.$store.commit("my/setMyBrowsingHistory", myBrowsingHistory.data);
+        }
       }
+
 
       this.loading = false;
-}, 500);
   },
 
   computed: {

@@ -107,7 +107,7 @@ export default {
         //   name: this.search
         // }))}`);
 
-        const artworkSearchData = await this.artworkSearch();
+        const artworkSearchData = await this.artworkSearch(this.search);
         console.log("artworkSearchData", artworkSearchData)
         if(artworkSearchData.success) {
           this.searchResult.push(...artworkSearchData.data.list);
@@ -156,17 +156,17 @@ export default {
         }
         return sellerSearchData;
     },
-    async artworkSearch() {
+    async artworkSearch(name) {
       const artworkSearchData = await this.$store.dispatch("artwork/getArtworkSearch", {
-          name: "",
-          shape: "",
+          name: name,
+          // shape: "",
           // price: "",
           // pricemin: "",
           // pricemax: "",
-          color: "",
-          theme: "",
-          category: "",
-          technique: "",
+          // color: "",
+          // theme: "",
+          // category: "",
+          // technique: "",
           locale: this.$i18n.locale,
           currentPage: this.currentPage,
           pageSize: this.pageSize

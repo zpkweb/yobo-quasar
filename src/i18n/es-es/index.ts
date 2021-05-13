@@ -138,6 +138,7 @@ export default {
       uploaded: "subido",
       SecondaryWorks: "Obras secundarias",
       Followed: "Seguido",
+      Follow: "Seguir",
       FollowArtist: "Seguir al artista",
       NoData: "Sin datos",
       unsubscribe: "darse de baja",

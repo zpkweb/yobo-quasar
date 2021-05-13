@@ -31,7 +31,10 @@
         :key="'like1-' + index"
       >
         <!-- <div class="col-3 image"></div> -->
-        <q-img v-if="item.user && item.user.avatar" :src="item.user.avatar" class="image" width="212px"></q-img>
+        <div class="image-box">
+          <q-img v-if="item.user && item.user.avatar" :src="item.user.avatar" class="image" width="212px"></q-img>
+        </div>
+
         <div class="col-4 desc">
           <div class="title">{{item.seller.firstname}} {{item.seller.lastname}}</div>
           <div>{{$t('my.like.uploaded')}}2000{{$t('my.like.SecondaryWorks')}}</div>
@@ -69,15 +72,19 @@ export default {
   },
   async mounted() {
     const { locale } = this.$route.params;
-    const { userId } = this.$store.state.user.info;
-    const myArtist = await this.$store.dispatch("my/getMyArtist", {
-      userId,
-      locale,
-    });
-    if (myArtist.success) {
-      // this.$store.commit("my/setMyArtist", myArtist.data);
-      this.myArtists = myArtist.data.map(item => Object.assign(item,{ hasMyArtist: true }));
+    // const { userId } = this.$store.state.user.info;
+    const userInfo = this.$q.cookies.get("userInfo");
+    if(userInfo){
+      const myArtist = await this.$store.dispatch("my/getMyArtist", {
+        userId: userInfo.userId,
+        locale,
+      });
+      if (myArtist.success) {
+        // this.$store.commit("my/setMyArtist", myArtist.data);
+        this.myArtists = myArtist.data.map(item => Object.assign(item,{ hasMyArtist: true }));
+      }
     }
+
   },
 
   // computed: {
@@ -148,6 +155,10 @@ export default {
   .item {
     border-top: 1px solid rgba(21, 44, 43, 0.1);
     padding: 20px 0;
+    .image-box{
+      width: 212px;
+      margin-right: 15px;
+    }
     .image {
       margin-right: 20px;
     }

@@ -12,7 +12,10 @@ const actions: ActionTree<ArtistStateInterface, StateInterface> = {
     }).then(response => {
       return response.data;
     }).catch((err) => {
-      console.log("sellerSearch", err)
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
 
   },
@@ -22,6 +25,10 @@ const actions: ActionTree<ArtistStateInterface, StateInterface> = {
     }).then(response => {
       commit('setPortrait', response.data.data)
     }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
     })
   },
 

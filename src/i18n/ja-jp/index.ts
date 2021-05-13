@@ -138,6 +138,7 @@ export default {
       uploaded: "アップロード",
       SecondaryWorks: "二次作品",
       Followed: "フォローしました",
+      Follow: "関心を持つ",
       FollowArtist: "アーティストをフォローする",
       NoData: "データなし",
       unsubscribe: "退会",
