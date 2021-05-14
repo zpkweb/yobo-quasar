@@ -3,30 +3,42 @@
     <div class="banner relative-position">
       <q-img src="~assets/images/banner-artist.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
-        <div class="title">{{$t('artwork.list.artwork')}}</div>
-        <div class="number">{{ searchResult.total }} {{$t('artwork.list.searchCriteria')}}</div>
+        <div class="title">{{ $t("artwork.list.artwork") }}</div>
+        <div class="number">
+          {{ searchResult.total }} {{ $t("artwork.list.searchCriteria") }}
+        </div>
       </div>
     </div>
     <div class="container">
       <div class="options">
-
-        <div class="option" v-for="(option, optionIndex) in Object.keys(options)" :key="optionIndex" v-show="expandOptions ? optionIndex <= expandOptions : true">
+        <div
+          class="option"
+          v-for="(option, optionIndex) in Object.keys(options)"
+          :key="optionIndex"
+          v-show="expandOptions ? optionIndex <= expandOptions : true"
+        >
           <h3 class="option-title title">{{ $t(`artwork.list.${option}`) }}</h3>
-          <div class="option-item" @click="searchOption({option, checked: true})">{{ $t(`artwork.list.Unlimited`) }}</div>
           <div
             class="option-item"
-            :class="{active: item.checked}"
+            @click="searchOption({ option, checked: true })"
+          >
+            {{ $t(`artwork.list.Unlimited`) }}
+          </div>
+          <div
+            class="option-item"
+            :class="{ active: item.checked }"
             v-for="(item, itemIndex) in options[option]"
             :key="itemIndex"
-
-            @click="searchOption({option, index:itemIndex, checked: item.checked})"
+            @click="
+              searchOption({ option, index: itemIndex, checked: item.checked })
+            "
           >
-          <span
-            class="color-box"
-            :style="{ backgroundColor: '#' + item.value }"
-            v-if="option == 'color'"
-            >{{ item.value ? "" : $t('artwork.list.Unlimited') }}</span
-          >
+            <span
+              class="color-box"
+              :style="{ backgroundColor: '#' + item.value }"
+              v-if="option == 'color'"
+              >{{ item.value ? "" : $t("artwork.list.Unlimited") }}</span
+            >
 
             <span v-else>{{ $t(item.label) }}</span>
           </div>
@@ -34,32 +46,45 @@
       </div>
       <q-expansion-item
         dense
-        :label="`${expandOptions ? $t('artwork.list.ExpandOptions') : $t('artwork.list.CollapseOptions')}`"
-        class="text-center title2 relative-position "
+        :label="`${
+          expandOptions
+            ? $t('artwork.list.ExpandOptions')
+            : $t('artwork.list.CollapseOptions')
+        }`"
+        class="text-center title2 relative-position"
         @show="optionsShow"
         @hide="optionsHide"
       >
         <div class="text-left selected relative-position selected-item-content">
-          <div class="selected-title">{{$t('artwork.list.YouHaveSelected')}}：</div>
+          <div class="selected-title">
+            {{ $t("artwork.list.YouHaveSelected") }}：
+          </div>
           <div class="selected-tags">
-            <template v-for="(option, optionIndex) in $store.state.artwork.options">
+            <template
+              v-for="(option, optionIndex) in $store.state.artwork.options"
+            >
               <template v-for="(item, itemIndex) in option">
                 <div
-              class="tag"
-              :key="`option-active-${optionIndex}-${itemIndex}`"
-              v-if="item.checked"
-              @click="searchOption({option: item.type, index: itemIndex, checked: true })"
-            >
-              <span>{{ item.name }}</span>
-              <span  class="btn">×</span>
-            </div>
+                  class="tag"
+                  :key="`option-active-${optionIndex}-${itemIndex}`"
+                  v-if="item.checked"
+                  @click="
+                    searchOption({
+                      option: item.type,
+                      index: itemIndex,
+                      checked: true,
+                    })
+                  "
+                >
+                  <span>{{ item.name }}</span>
+                  <span class="btn">×</span>
+                </div>
               </template>
             </template>
           </div>
 
-
           <div class="selected-clear btn" @click="deleteAllTags">
-            {{$t('artwork.list.EmptyAll')}}
+            {{ $t("artwork.list.EmptyAll") }}
           </div>
         </div>
       </q-expansion-item>
@@ -75,7 +100,7 @@
             }),
           }"
           class="tabs"
-          >{{$t('artwork.list.DefaultSort')}}</router-link
+          >{{ $t("artwork.list.DefaultSort") }}</router-link
         >
         <router-link
           :to="{
@@ -86,7 +111,7 @@
           }"
           class="tabs"
           :class="{ active: hots }"
-          >{{$t('artwork.list.Hottest')}}</router-link
+          >{{ $t("artwork.list.Hottest") }}</router-link
         >
         <router-link
           :to="{
@@ -97,7 +122,7 @@
           }"
           class="tabs"
           :class="{ active: news }"
-          >{{$t('artwork.list.NewestUpload')}}</router-link
+          >{{ $t("artwork.list.NewestUpload") }}</router-link
         >
       </div>
 
@@ -111,63 +136,91 @@
       <div class="q-pa-md" v-if="searchResult.list && searchResult.list.length">
         <!-- <q-btn class="q-mb-md" color="primary" label="Regenerate layout" @click="generateCells" /> -->
 
-
-
         <div class="column example-container">
-        <div class="flex-break hidden"></div>
-        <div class="flex-break"></div>
-        <div class="flex-break"></div>
-        <div class="flex-break"></div>
+          <div class="flex-break hidden"></div>
+          <div class="flex-break"></div>
+          <div class="flex-break"></div>
+          <div class="flex-break"></div>
 
-        <div v-for="(item, i) in searchResult.list" :key="i" class="artwork-list" tabindex="0">
-          <router-link
-            :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
-            class="artwork-list-item"
+          <div
+            v-for="(item, i) in searchResult.list"
+            :key="i"
+            class="artwork-list"
+            tabindex="0"
           >
-            <q-img class="artwork-list-img" :src="item.photos.length ? item.photos[0] : ''"></q-img>
-
-
-          </router-link>
+            <router-link
+              :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
+              class="artwork-list-item"
+            >
+              <q-img
+                class="artwork-list-img"
+                :src="item.photos.length ? item.photos[0] : ''"
+              ></q-img>
+            </router-link>
             <!-- <div v-for="(text, j) in cell" :key="j">
               {{ text }}
             </div> -->
 
-
             <div class="artwork-list-user">
               <div class="artwork-list-seller" v-if="item.seller">
                 <div class="artwork-list-avatar-content">
-
-                  <q-img class="artwork-list-seller-img" v-if="item.seller.user.avatar" :src="item.seller.user.avatar"></q-img>
-                  <span class="artwork-list-seller-surname">{{item.seller.firstname}}{{item.seller.lastname}}</span>
+                  <q-img
+                    class="artwork-list-seller-img"
+                    v-if="item.seller.user.avatar"
+                    :src="item.seller.user.avatar"
+                  ></q-img>
+                  <span class="artwork-list-seller-surname"
+                    >{{ item.seller.firstname }}{{ item.seller.lastname }}</span
+                  >
 
                   <div class="artwork-list-seller-pop">
-
                     <div class="artwork-list-seller-pop-header">
-                      <q-img class="artwork-list-seller-pop-img" v-if="item.seller.user.avatar" :src="item.seller.user.avatar" width="30px" height="30px"></q-img>
+                      <q-img
+                        class="artwork-list-seller-pop-img"
+                        v-if="item.seller.user.avatar"
+                        :src="item.seller.user.avatar"
+                        width="30px"
+                        height="30px"
+                      ></q-img>
                       <div class="artwork-list-seller-pop-text">
-                        <span class="artwork-list-seller-pop-surname">{{item.seller.firstname}}{{item.seller.lastname}}</span>
-                        <span class="artwork-list-seller-pop-sellerFollowTotal">{{item.sellerFollowTotal}}位关注者</span>
+                        <span class="artwork-list-seller-pop-surname"
+                          >{{ item.seller.firstname
+                          }}{{ item.seller.lastname }}</span
+                        >
+                        <span class="artwork-list-seller-pop-sellerFollowTotal"
+                          >{{ item.sellerFollowTotal }}位关注者</span
+                        >
                       </div>
 
-
-
-                      <a href="javascript:;" class="artwork-list-seller-like" @click="myArtist(item)">{{ item.hasMyArtist ? $t('my.like.Followed') : '+'+$t('my.like.Follow')}}</a>
+                      <a
+                        href="javascript:;"
+                        class="artwork-list-seller-like"
+                        @click="myArtist(item)"
+                        >{{
+                          item.hasMyArtist
+                            ? $t("my.like.Followed")
+                            : "+" + $t("my.like.Follow")
+                        }}</a
+                      >
                     </div>
 
                     <div class="artwork-list-seller-pop-content">
-                        <ul v-if="item.seller.commoditysPhotos">
-                          <li class="artwork-list-seller-pop-commodity" v-for="item in item.seller.commoditysPhotos">
-                            <q-img class="artwork-list-seller-pop-img" :src="item.src || ''" width="80px" height="80px" ></q-img>
-                          </li>
-                        </ul>
+                      <ul v-if="item.photos">
+                        <li
+                          class="artwork-list-seller-pop-commodity"
+                          v-for="item in item.photos"
+                        >
+                          <q-img
+                            class="artwork-list-seller-pop-img"
+                            :src="item || ''"
+                            width="80px"
+                            height="80px"
+                          ></q-img>
+                        </li>
+                      </ul>
                     </div>
-
-
                   </div>
                 </div>
-
-
-
               </div>
               <div class="artwork-list-like">
                 <q-img
@@ -186,23 +239,11 @@
                 />
               </div>
             </div>
-
-
-
+          </div>
         </div>
-
-
       </div>
 
-
-
-      </div>
-
-      <noData
-        v-else
-        text="artwork.NoData"
-      />
-
+      <noData v-else text="artwork.NoData" />
 
       <div class="q-pa-lg flex flex-center" v-if="pageTotal">
         <q-pagination
@@ -213,14 +254,20 @@
           :boundary-numbers="true"
         >
         </q-pagination>
-        <div class="next btn" @click="nextPage">{{$t('pagination.NextPage')}}</div>
-        <div class="all">{{$t('pagination.Total')}}{{ pageTotal }}{{$t('pagination.page')}}</div>
-        <div>
-          {{$t('pagination.To')}}
-          <input type="text" class="input" v-model="newPage" />
-          {{$t('pagination.page')}}
+        <div class="next btn" @click="nextPage">
+          {{ $t("pagination.NextPage") }}
         </div>
-        <div class="btn button" @click="toNewPage">{{$t('pagination.determine')}}</div>
+        <div class="all">
+          {{ $t("pagination.Total") }}{{ pageTotal }}{{ $t("pagination.page") }}
+        </div>
+        <div>
+          {{ $t("pagination.To") }}
+          <input type="text" class="input" v-model="newPage" />
+          {{ $t("pagination.page") }}
+        </div>
+        <div class="btn button" @click="toNewPage">
+          {{ $t("pagination.determine") }}
+        </div>
       </div>
     </div>
   </q-page>
@@ -234,13 +281,13 @@ export default {
   },
   watch: {
     $route: "changeQueryData",
-    currentPage: function() {
-      this.changeCurrentPage(this.currentPage)
-    }
+    currentPage: function () {
+      this.changeCurrentPage(this.currentPage);
+    },
   },
   data() {
     return {
-      tags: ['artwork.list.newsPhotography', 'artwork.list.ConceptArt'],
+      tags: ["artwork.list.newsPhotography", "artwork.list.ConceptArt"],
 
       expandOptions: 3,
       newPage: "",
@@ -251,10 +298,12 @@ export default {
         list: [],
         total: 0,
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
       },
       myArtists: [],
-      myArtworks: []
+      myArtworks: [],
+      myWishlist: [],
+      options: {}
     };
   },
   // async preFetch({ store, currentRoute, Vue }) {
@@ -265,27 +314,29 @@ export default {
   // },
   async created() {
     console.log("created");
-    console.log("router query", this.$qs.parse(this.$route.query))
+    console.log("router query", this.$qs.parse(this.$route.query));
+
     const { query, params } = this.$route;
     const { locale } = params;
 
     // console.log("this.$store.state.user", this.$store.state.user.info)
     // const userInfo = this.$store.state.user.info;
     const userInfo = this.$q.cookies.get("userInfo");
-    console.log("userInfo", userInfo)
-    if(userInfo){
+    console.log("userInfo", userInfo);
+
+    if (userInfo) {
       const { userId } = userInfo;
       const myArtist = await this.$store.dispatch("my/getMyArtist", {
         userId,
         locale,
       });
-      console.log("myArtist", myArtist)
+      console.log("myArtist", myArtist);
+
       if (myArtist.success) {
         // const myArtists = myArtist.data.map(item => Object.assign(item,{ hasMyArtist: true }));
         this.myArtists = myArtist.data;
         // this.$store.commit("my/setMyArtist", myArtists);
       }
-
 
       const myWishlist = await this.$store.dispatch("my/getMyWishlist", {
         userId,
@@ -297,37 +348,19 @@ export default {
       }
     }
 
-
-
-
     // 获取艺术品选项
-    const getArtworkOptions = await this.$store.dispatch("artwork/getArtworkOptions", {
-      locale
-    });
+    const getArtworkOptions = await this.$store.dispatch(
+      "artwork/getArtworkOptions",
+      {
+        locale,
+      }
+    );
 
-    if(getArtworkOptions.success){
-
-      this.$store.commit("artwork/setOptins", getArtworkOptions.data)
-    }
-
-
-    this.changeQueryData();
-
-
-  },
-  mounted() {
-    console.log("mounted");
-
-  },
-  computed: {
-
-    search() {
-      return this.$qs.parse(this.$route.query)
-    },
-    options() {
+    if (getArtworkOptions.success) {
+      this.$store.commit("artwork/setOptins", getArtworkOptions.data);
       const searchs = this.$qs.parse(this.$route.query);
       const options = this.$store.state.artwork.options;
-      for(let option in options){
+      for (let option in options) {
         options[option].map((item) => {
           item.type = option;
           item.value = item.name;
@@ -335,35 +368,71 @@ export default {
 
           let checked = false;
           Object.keys(searchs).map((search) => {
-            if(option == search){
-              for(let i of searchs[search]){
-                if(item.id == i){
+            if (option == search) {
+              for (let i of searchs[search]) {
+                if (item.id == i) {
                   checked = true;
                 }
               }
             }
-          })
+          });
           item.checked = checked;
           return item;
         });
       }
-      console.log("options", options)
-      return options;
+      console.log("options", options);
+      this.options = options;
+    }
 
+    this.changeQueryData();
+  },
+  mounted() {
+    console.log("mounted");
+  },
+  computed: {
+    search() {
+      return this.$qs.parse(this.$route.query);
     },
+    // options() {
+    //   const searchs = this.$qs.parse(this.$route.query);
+    //   const options = this.$store.state.artwork.options;
+    //   for (let option in options) {
+    //     options[option].map((item) => {
+    //       item.type = option;
+    //       item.value = item.name;
+    //       item.label = item.name;
 
+    //       let checked = false;
+    //       Object.keys(searchs).map((search) => {
+    //         if (option == search) {
+    //           for (let i of searchs[search]) {
+    //             if (item.id == i) {
+    //               checked = true;
+    //             }
+    //           }
+    //         }
+    //       });
+    //       item.checked = checked;
+    //       return item;
+    //     });
+    //   }
+    //   console.log("options", options);
+    //   return options;
+    // },
 
     artworkList() {
       return this.$store.state.artwork.searchData;
     },
     artworkTotal() {
-      return this.$store.state.artwork.pagination.total;
+      return this.searchResult.total;
+      // return this.$store.state.artwork.pagination.total;
     },
     pageTotal() {
-      return Math.ceil(
-        this.$store.state.artwork.pagination.total /
-          this.$store.state.artwork.pagination.pageSize
-      );
+      return Math.ceil(this.searchResult.total/this.searchResult.pageSize)
+      // return Math.ceil(
+      //   this.$store.state.artwork.pagination.total /
+      //     this.$store.state.artwork.pagination.pageSize
+      // );
     },
     hots() {
       return this.$route.query.hots && this.$route.query.hots !== "false";
@@ -371,11 +440,10 @@ export default {
     news() {
       return this.$route.query.news && this.$route.query.news !== "false";
     },
-
   },
   methods: {
     unlimited(option) {
-      console.log(Object.assign({}, this.$route.query, { [option]: [] }))
+      console.log(Object.assign({}, this.$route.query, { [option]: [] }));
     },
     generateCells() {
       this.cells = generateCells();
@@ -387,12 +455,14 @@ export default {
     },
 
     deleteAllTags() {
-      const { pageSize, currentPage, ...searchData} = this.$qs.parse(this.$route.query);
-      for(let item in searchData) {
-        searchData[item] = '';
+      const { pageSize, currentPage, ...searchData } = this.$qs.parse(
+        this.$route.query
+      );
+      for (let item in searchData) {
+        searchData[item] = "";
       }
       this.$router.push({
-        query: searchData
+        query: searchData,
       });
     },
     optionsShow() {
@@ -421,7 +491,7 @@ export default {
       });
     },
     customPrice() {
-      if(this.pricemin || this.pricemax) {
+      if (this.pricemin || this.pricemax) {
         this.prices[this.prices.length - 1].price.min = this.pricemin;
         this.prices[this.prices.length - 1].price.max = this.pricemax;
 
@@ -433,67 +503,86 @@ export default {
           }),
         });
       }
-
     },
     async changeQueryData() {
-
-      const artworkSearch = await this.$store.dispatch("artwork/getArtworkSearch", this.$qs.parse(this.$route.query))
-      if(artworkSearch.success){
+      const artworkSearch = await this.$store.dispatch(
+        "artwork/getArtworkSearch",
+        this.$qs.parse({
+          ...this.$route.query,
+          pageSize: this.pageSize,
+        })
+      );
+      if (artworkSearch.success) {
         let { total, currentPage, pageSize, list } = artworkSearch.data;
 
         // this.$store.commit('artwork/setSearchData', list)
         // this.$store.commit('artwork/setPagination', { total, currentPage, pageSize })
-        console.log("changeQueryData this.myArtists", this.myArtists)
+        console.log("changeQueryData this.myArtists", this.myArtists);
         list = list.map((item) => {
           item.hasMyArtist = false;
 
-          if(item.seller){
-            if(item.seller.commoditysPhotos && item.seller.commoditysPhotos.length >=3){
-              item.seller.commoditysPhotos = item.seller.commoditysPhotos.splice(0,3)
+          if (item.seller) {
+            if (
+              item.seller.commoditysPhotos &&
+              item.seller.commoditysPhotos.length >= 3
+            ) {
+              item.seller.commoditysPhotos = item.seller.commoditysPhotos.splice(
+                0,
+                3
+              );
             }
-            if(this.myArtists && this.myArtists.length){
-              for(let artist of this.myArtists) {
-                if(item.seller.sellerId == artist.sellerId){
+            if (this.myArtists && this.myArtists.length) {
+              for (let artist of this.myArtists) {
+                if (item.seller.sellerId == artist.sellerId) {
                   item.hasMyArtist = true;
                 }
               }
             }
           }
 
-
           item.hasMyArtwork = false;
-          if(this.myWishlist && this.myWishlist.length){
-            for(let commodity of this.myWishlist) {
-              if(item.commodityId == commodity.commodityId){
+          if (this.myWishlist && this.myWishlist.length) {
+            for (let commodity of this.myWishlist) {
+              if (item.commodityId == commodity.commodityId) {
                 item.hasMyArtwork = true;
               }
             }
           }
 
           return item;
-        })
-        this.searchResult = { total, currentPage, pageSize, list }
+        });
+        this.searchResult = { total, currentPage, pageSize, list };
       }
     },
 
-    async searchOption({option, index, checked}) {
-
+    async searchOption({ option, index, checked }) {
       // item.checked = !item.checked;
       // this.options[option][index].checked = !checked
-      await this.$store.commit("artwork/setOptinsItem", {option, index, checked})
-      const searchData={};
-      for(let option in this.options){
-        searchData[option]=[];
-        for(let item of this.options[option]){
-          if(item.checked){
-            searchData[option].push(item.id);
+      await this.$store.commit("artwork/setOptinsItem", {
+        option,
+        index,
+        checked,
+      });
+      const searchData = {};
+      for (let option in this.options) {
+        searchData[option] = [];
+        for (let item of this.options[option]) {
+          if (item.checked) {
+
+            searchData[option].push(option == 'color' ? item.name : item.id);
           }
         }
       }
-      const artworkSearch = Object.assign({}, this.$store.state.artwork.search, searchData);
+      const artworkSearch = Object.assign(
+        {},
+        this.$store.state.artwork.search,
+        searchData
+      );
+      console.log("artworkSearch", artworkSearch)
       this.$store.commit("artwork/setSearch", artworkSearch);
-      this.$router.push(`/${this.$i18n.locale}/artwork?${this.$qs.stringify(artworkSearch)}`);
-
+      this.$router.push(
+        `/${this.$i18n.locale}/artwork?${this.$qs.stringify(artworkSearch)}`
+      );
     },
     async myArtwork(item) {
       if (!this.$store.state.user.info) {
@@ -551,7 +640,7 @@ export default {
     },
 
     async myArtist(item) {
-      console.log("myArtist", item)
+      console.log("myArtist", item);
       if (!this.$store.state.user.info) {
         this.$q.notify({
           position: "top",
@@ -562,93 +651,92 @@ export default {
         return;
       }
 
-      if(item.hasMyArtist) {
+      if (item.hasMyArtist) {
         const delMyArtist = await this.$store.dispatch("my/delMyArtist", {
           userId: this.$store.state.user.info.userId,
-          artistId: item.seller.sellerId
-        })
-        if(delMyArtist.success) {
+          artistId: item.seller.sellerId,
+        });
+        if (delMyArtist.success) {
           // item.hasMyArtist = false;
 
           let newMyArtists = [];
-          for(let artists of this.myArtists) {
-            console.log(artists.sellerId, item.seller.sellerId)
-            if(artists.sellerId !== item.seller.sellerId) {
+          for (let artists of this.myArtists) {
+            console.log(artists.sellerId, item.seller.sellerId);
+            if (artists.sellerId !== item.seller.sellerId) {
               newMyArtists.push(item);
             }
           }
           this.myArtists = newMyArtists;
-          console.log(this.myArtists)
-          this.changeHasMyArtist(item.seller.sellerId, false)
+          console.log(this.myArtists);
+          this.changeHasMyArtist(item.seller.sellerId, false);
 
           this.$q.notify({
-            position: 'top',
+            position: "top",
             timeout: 1500,
-            message: this.$t('my.like.unsubscribe'),
-            color: 'negative',
-          })
-        }else{
+            message: this.$t("my.like.unsubscribe"),
+            color: "negative",
+          });
+        } else {
           this.$q.notify({
-            position: 'top',
+            position: "top",
             timeout: 1500,
             message: data.msg,
-            color: 'negative',
-          })
+            color: "negative",
+          });
         }
-
-      }else{
+      } else {
         const addMyArtist = await this.$store.dispatch("my/addMyArtist", {
           userId: this.$store.state.user.info.userId,
-          artistId: item.seller.sellerId
-        })
+          artistId: item.seller.sellerId,
+        });
 
-        if(addMyArtist.success) {
+        if (addMyArtist.success) {
           // item.hasMyArtist = true;
           this.myArtists = addMyArtist.data;
-          this.changeHasMyArtist(item.seller.sellerId, true)
+          this.changeHasMyArtist(item.seller.sellerId, true);
           this.$q.notify({
-            position: 'top',
+            position: "top",
             timeout: 1500,
-            message: this.$t('my.like.FollowedSuccess'),
-            color: 'positive',
-          })
-        }else{
+            message: this.$t("my.like.FollowedSuccess"),
+            color: "positive",
+          });
+        } else {
           this.$q.notify({
-            position: 'top',
+            position: "top",
             timeout: 1500,
             message: data.msg,
-            color: 'negative',
-          })
+            color: "negative",
+          });
         }
       }
-
     },
     changeHasMyArtist(sellerId, bool) {
-      console.log("changeHasMyArtist", sellerId, bool, this.myArtists)
+      console.log("changeHasMyArtist", sellerId, bool, this.myArtists);
 
       const list = this.searchResult.list.map((item) => {
-        if(item.seller){
+        if (item.seller) {
           // item.hasMyArtist = false;
           // if(this.myArtists && this.myArtists.length){
           //   for(let artist of this.myArtists) {
           //     console.log(item.seller.sellerId, sellerId, bool)
 
-
           //   }
           // }
-          if(item.seller.sellerId == sellerId){
-                item.hasMyArtist = bool;
-                if(bool){
-                  item.sellerFollowTotal ? item.sellerFollowTotal++ :  item.sellerFollowTotal = 1;
-                }else{
-                  item.sellerFollowTotal--;
-                }
-              }
+          if (item.seller.sellerId == sellerId) {
+            item.hasMyArtist = bool;
+            if (bool) {
+              item.sellerFollowTotal
+                ? item.sellerFollowTotal++
+                : (item.sellerFollowTotal = 1);
+            } else {
+              item.sellerFollowTotal--;
+            }
+          }
         }
         return item;
-      })
-      this.searchResult = { ...this.searchResult, list  }
-    }
+      });
+      this.searchResult = { ...this.searchResult, list };
+    },
   },
 };
 </script>
@@ -689,10 +777,10 @@ export default {
       position: relative;
       overflow: hidden;
       // display: flex;
-      .price-custom{
+      .price-custom {
         margin-top: 10px;
       }
-      .text-dark{
+      .text-dark {
         position: absolute;
         top: 0;
         left: 0;
@@ -710,10 +798,10 @@ export default {
         &:hover {
           color: #152c2b;
         }
-        .options-tab{
+        .options-tab {
           flex-wrap: wrap;
         }
-        .options-link{
+        .options-link {
           display: inline-block;
           height: 48px;
           line-height: 48px;
@@ -747,7 +835,6 @@ export default {
       padding: 3px 10px;
       border: 1px solid #e8e8e8;
     }
-
   }
   .sort-by {
     padding: 10px 10px 10px 0;
@@ -756,7 +843,6 @@ export default {
       display: inline-block;
       padding-left: 20px;
       color: #333;
-
     }
     .active {
       color: #f00;
@@ -896,7 +982,7 @@ export default {
       cursor: pointer;
       margin-bottom: 10px;
       margin-left: 10px;
-      .btn{
+      .btn {
         margin-left: 8px;
       }
     }
@@ -929,37 +1015,36 @@ export default {
 }
 
 .q-pagination::v-deep {
-    .q-btn-item {
-      margin: 6px;
-      border-radius: 0;
-      box-shadow: none;
-      background-color: #e0e0e0;
-      font-size: 14px;
-      padding: 0 10px;
-      font-weight: bolder;
-    }
-    .text-teal-10 {
-      color: rgb(21, 44, 43) !important;
-    }
-    .bg-teal-10 {
-      background-color: #152c2b !important;
-    }
-    .q-btn__wrapper:before {
-      box-shadow: none;
-    }
+  .q-btn-item {
+    margin: 6px;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #e0e0e0;
+    font-size: 14px;
+    padding: 0 10px;
+    font-weight: bolder;
   }
+  .text-teal-10 {
+    color: rgb(21, 44, 43) !important;
+  }
+  .bg-teal-10 {
+    background-color: #152c2b !important;
+  }
+  .q-btn__wrapper:before {
+    box-shadow: none;
+  }
+}
 
-.customPrice{
+.customPrice {
   display: inline-block;
   cursor: pointer;
   color: #152c2b;
 }
 
-.selected-item-content{
+.selected-item-content {
   display: flex;
   margin-top: 40px;
   // padding: 0 84px 0 100px;
-
 }
 .selected-title {
   width: 110px;
@@ -971,19 +1056,16 @@ export default {
   width: 84px;
 }
 
-
-
-
-.options{
-  .option{
+.options {
+  .option {
     overflow: hidden;
-    .option-title{
+    .option-title {
       float: left;
       font-size: 16px;
       margin-right: 20px;
       color: rgb(21, 44, 43);
     }
-    .option-item{
+    .option-item {
       float: left;
       font-size: 16px;
       display: inline-block;
@@ -1000,23 +1082,22 @@ export default {
       cursor: pointer;
       color: rgb(97, 97, 97);
       .color-box {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            line-height: 32px;
-            margin-top: 10px;
-            // border: 3px solid transparent;
-            // &:hover {
-            //   border: 3px solid #152c2b;
-            // }
-          }
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        margin-top: 10px;
+        // border: 3px solid transparent;
+        // &:hover {
+        //   border: 3px solid #152c2b;
+        // }
+      }
     }
-    .option-item.active{
+    .option-item.active {
       // color: #f00;
     }
   }
 }
-
 
 .artwork-list-user {
   .artwork-list-seller {
@@ -1052,7 +1133,7 @@ export default {
     padding: 10px 15px;
     background-color: #fff;
     box-shadow: 0 0 10px #000;
-    &::before{
+    &::before {
       content: "";
       position: absolute;
       right: 20px;
@@ -1060,27 +1141,26 @@ export default {
       width: 0;
       height: 0;
       border: 10px solid;
-      border-color: #fff transparent  transparent  transparent ;
-
+      border-color: #fff transparent transparent transparent;
     }
     .artwork-list-seller-pop-header {
       overflow: hidden;
-      .artwork-list-seller-pop-img{
+      .artwork-list-seller-pop-img {
         float: left;
         border-radius: 50%;
       }
-      .artwork-list-seller-pop-text{
+      .artwork-list-seller-pop-text {
         float: left;
         overflow: hidden;
         margin-left: 10px;
-        .artwork-list-seller-pop-surname, .artwork-list-seller-pop-sellerFollowTotal {
+        .artwork-list-seller-pop-surname,
+        .artwork-list-seller-pop-sellerFollowTotal {
           display: block;
           line-height: 1.5em;
           color: #333;
           text-align: left;
           font-size: 12px;
         }
-
       }
 
       .artwork-list-seller-like {
@@ -1093,10 +1173,10 @@ export default {
         background-color: #152c2b;
       }
     }
-    .artwork-list-seller-pop-content{
+    .artwork-list-seller-pop-content {
       display: flex;
       margin: 10px -10px 5px 0;
-      .artwork-list-seller-pop-commodity{
+      .artwork-list-seller-pop-commodity {
         float: left;
         width: 80px;
         height: 80px;
@@ -1104,17 +1184,16 @@ export default {
         margin-right: 10px;
       }
     }
-    .artwork-list-seller-pop-img{
+    .artwork-list-seller-pop-img {
       flex: 1;
       width: 33.33%;
       // margin: 0 10px 0 0;
     }
   }
-  &:hover .artwork-list-seller-pop{
+  &:hover .artwork-list-seller-pop {
     display: block;
   }
 }
-
 </style>
 
 
@@ -1137,8 +1216,6 @@ export default {
   a.img-inner-box[data-v-ded6b974] {
   box-shadow: none !important;
 }
-
-
 </style>
 
 
@@ -1158,26 +1235,30 @@ $x: 4
   order: #{$x}
 
 .example-container
-  height: 1000px
+  height: 600px
 
   .artwork-list
     position: relative
     width: 25%
     margin: 10px
+
     box-sizing: border-box
+
     .artwork-list-item
       position: relative
       display: inline-block
       width: 100%
       min-height: 50px
+      max-height: 180px
       // padding: 4px 8px
       // box-shadow: inset 0 0 0 2px $grey-6
       border: 6px solid #152c2b
+      overflow: hidden
     .artwork-list-user
-      display: block
+      display: none
       position: absolute
       left: 0
-      bottom: 0
+      bottom: 6px
       width: 100%
       height: 50px
       margin: 0

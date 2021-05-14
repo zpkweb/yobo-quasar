@@ -1,7 +1,10 @@
 <template>
   <q-page>
     <div class="banner relative-position">
-      <q-img src="~assets/images/banner-artist.png" height="360px"></q-img>
+
+      <q-img v-if="portrait.banner" :src="portrait.banner" height="360px"></q-img>
+      <q-img v-else src="~assets/images/banner-artist.png" height="360px"></q-img>
+
       <div class="absolute-full text-center text">
         <template v-if="portrait">
           <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
@@ -32,7 +35,7 @@
           Karin Vermeer是一位独立艺术家，自2002年以来一直在鹿特丹生活和工作<br />
           她的作品是通过将照片和绘画进行数字组合和编辑为新的原创艺术作品而创作的<br />威猛(Vermeer)擅长于通过覆盖和融合四到五个不同种族和血统的不同面孔来创建新的不存在的人物而创建的肖像<br />打印数字图像并添加涂料以获得最终的结果，尝试使数字图像再次变得有形
         </div> -->
-        <p  v-if="portrait" class="text-left fontSize-16">{{ portrait.metadata.profile }}</p>
+        <p  v-if="portrait && portrait.metadata" class="text-left fontSize-16">{{ portrait.metadata.profile }}</p>
         <div class="resume4">
           <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
@@ -41,11 +44,32 @@
     <div id="artworks" class="artworks-container">
       <div class="artworks">
         <div class="artwork row">
-          <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 text-center" v-for="(item, index) of portrait.commoditys" :key="`artwork-${index}`">
-            <div class="image">
-              <q-img :src="item.photos[0].src" width="180px"></q-img>
+          <div class="col-3" v-for="(item, index) of portrait.commoditys">
+            <div class="image" :class="{active : item.hasMyArtwork } ">
+              <q-img
+                  v-if="item.hasMyArtwork"
+                  class="artwork-item-like"
+                  src="~assets/images/liked.png"
+                  width="16px"
+                  height="14px"
+                  @click="myArtwork(item)"
+                />
+                <q-img
+                  v-else
+                  class="artwork-item-like"
+                  src="~assets/images/like.png"
+                  width="16px"
+                  height="14px"
+                  @click="myArtwork(item)"
+                />
+              <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="artwork-item text-center"  :key="`artwork-${index}`">
+
+                <q-img class="artwork-item-img" :src="item.photos[0]" ></q-img>
+              </router-link>
+              <p class="artwork-item-name">{{item.name}}</p>
             </div>
-          </router-link>
+          </div>
+
         </div>
       </div>
     </div>
@@ -112,32 +136,83 @@ export default {
         value: "resume",
       }],
       tags: ['artist.magazineCover', 'artist.PortraitStructure', 'artist.PortraitOfPopart'],
-      hasMyArtist: false
+      hasMyArtist: false,
+      myArtworks: [],
+      portrait: {}
     };
   },
-  async preFetch({ store, currentRoute }) {
-    const { locale, artistId } = currentRoute.params;
-    await store.dispatch("artist/artist", {
-      sellerId: artistId
-    });
+  // async preFetch({ store, currentRoute }) {
+  //   const { locale, artistId } = currentRoute.params;
+  //   await store.dispatch("artist/artist", {
+  //     sellerId: artistId
+  //   });
 
-  },
+  // },
   computed: {
     hash() {
       return this.$route.hash;
     },
-    portrait() {
-      return this.$store.state.artist.portrait;
-    }
+    // portrait() {
+    //   return this.$store.state.artist.portrait;
+    // }
   },
-  async mounted() {
-    if(this.$store.state.user.info && this.$store.state.user.info.userId) {
+  async created() {
+    const { query, params } = this.$route;
+    const { locale, artistId } = params;
+
+    const userInfo = this.$q.cookies.get("userInfo");
+    if(userInfo) {
+      const { userId } = userInfo;
       const hasMyArtistData = await this.$store.dispatch("my/hasMyArtist", {
-      userId: this.$store.state.user.info.userId,
-      artistId: this.$route.params.artistId
-    });
-    this.hasMyArtist = hasMyArtistData.success;
+        userId,
+        artistId: artistId
+      });
+      this.hasMyArtist = hasMyArtistData.success;
+
+      const myArtworks = await this.$store.dispatch("my/getMyWishlist", {
+        userId,
+        locale,
+      });
+      if (myArtworks.success) {
+        this.myArtworks = myArtworks.data;
+      }
+
     }
+
+    const artist = await this.$store.dispatch("artist/artist", {
+      sellerId: artistId
+    });
+    if(artist.success) {
+      if(artist.data.commoditys && artist.data.commoditys.length){
+        artist.data.commoditys = artist.data.commoditys.map((item) => {
+          item.hasMyArtwork = false;
+          if (this.myArtworks && this.myArtworks.length) {
+            for (let commodity of this.myArtworks) {
+              if (item.commodityId == commodity.commodityId) {
+                item.hasMyArtwork = true;
+              }
+            }
+          }
+          return item;
+        });
+      }
+
+
+      this.portrait = artist.data;
+      // this.$store.commit('setPortrait', response.data.data)
+    }
+
+
+    // if(this.$store.state.user.info && this.$store.state.user.info.userId) {
+    //   const hasMyArtistData = await this.$store.dispatch("my/hasMyArtist", {
+    //   userId: this.$store.state.user.info.userId,
+    //   artistId: this.$route.params.artistId
+    // });
+    // this.hasMyArtist = hasMyArtistData.success;
+    // }
+
+
+
 
   },
   methods: {
@@ -197,7 +272,61 @@ export default {
         }
       }
 
-    }
+    },
+    async myArtwork(item) {
+      if (!this.$store.state.user.info) {
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: this.$t("layout.pleaseLoginFirst"),
+          color: "negative",
+        });
+        return;
+      }
+      if (item.hasMyArtwork) {
+        const delMyArtwork = await this.$store.dispatch("my/delMyArtwork", {
+          userId: this.$store.state.user.info.userId,
+          artworkId: item.commodityId,
+        });
+        if (delMyArtwork.success) {
+          item.hasMyArtwork = false;
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: this.$t("artwork.commodity.Unlike"),
+            color: "negative",
+          });
+        } else {
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: delMyArtwork.msg,
+            color: "negative",
+          });
+        }
+      } else {
+        const addMyArtwork = await this.$store.dispatch("my/addMyArtwork", {
+          userId: this.$store.state.user.info.userId,
+          artworkId: item.commodityId,
+        });
+        if (addMyArtwork.success) {
+          item.hasMyArtwork = true;
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: this.$t("artwork.commodity.LikeSuccess"),
+            color: "positive",
+          });
+        } else {
+          this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: addMyArtwork.msg,
+            color: "negative",
+          });
+        }
+      }
+    },
   }
 };
 </script>
@@ -282,6 +411,7 @@ export default {
   .artworks {
     width: 1100px;
     margin: 0 auto;
+
     .title {
       padding: 30px 40px;
       .tag {
@@ -294,13 +424,61 @@ export default {
       }
     }
     .image {
+      float: left;
+      position: relative;
       width: 194px;
       background-color: #152c2b;
-      padding: 6px;
+      padding: 3px;
       border: 1px solid #3f3f38;
+      margin-top: 10px;
+      .artwork-item{
+        overflow: hidden;
+        position: relative;
+
+      }
+      .artwork-item-like{
+        display: none;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        z-index: 9;
+        cursor: pointer;
+      }
+      .artwork-item-img{
+        float: left;
+      }
+      .artwork-item-name{
+        display: none;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 9;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin: 0;
+        color: #fff;
+        font-size: 12px;
+        background-color: rgba(0, 0, 0, .5);
+      }
+    }
+    .image:hover {
+      .artwork-item-like{
+        display: block;
+      }
+      .artwork-item-name{
+        display: inline-block;
+      }
+    }
+    .active {
+      .artwork-item-like{
+        display: block;
+      }
     }
   }
 }
+
 .sold {
   padding: 60px 0 80px 0;
   width: 1100px;

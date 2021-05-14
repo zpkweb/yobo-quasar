@@ -260,10 +260,16 @@
     </q-footer>
 
     <div class="to-top " >
-      <div class="onlineService">
+      <div class="onlineService" @click="onlineService = !onlineService">
         <q-img class="cs btn" src="~assets/images/cs.png" width="50px"></q-img>
         <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
+
+
+
+
+
       </div>
+
       <div class="hide" ref="top" style="width: 50px;height: 50px;" >
         <q-img
 
@@ -273,6 +279,16 @@
         @click="toTop"
       ></q-img>
       </div>
+
+
+      <!-- 客服 -->
+        <div class="onlineService-pop" v-if="onlineService">
+          <SendEmail
+
+            v-on:close-sendEmail="hideOnlineService"
+
+          ></SendEmail>
+        </div>
 
     </div>
 
@@ -324,6 +340,10 @@
     <q-dialog class="" maximized v-model="showHelp" full-height position="right" transition-hide="fade" transition-show="fade">
       <Help />
     </q-dialog>
+
+
+
+
   </q-layout>
 </template>
 
@@ -339,6 +359,9 @@ import NewPassword from "src/components/newPassword";
 import Banner from "src/components/banner";
 import Help from "src/components/help";
 
+import SendEmail from "src/components/sendEmail";
+
+
 export default {
   components: {
     Login,
@@ -347,7 +370,8 @@ export default {
     Search,
     NewPassword,
     Banner,
-    Help
+    Help,
+    SendEmail
   },
   data() {
     return {
@@ -385,7 +409,8 @@ export default {
       isNewPasswordPop: false,
       showFooterCriteria: false,
       showHelp: false,
-      footerEmail: ""
+      footerEmail: "",
+      onlineService: false,
     };
   },
   watch: {
@@ -616,6 +641,13 @@ export default {
         }
 
       }
+    },
+
+    showOnlineService() {
+      this.onlineService = true;
+    },
+    hideOnlineService() {
+      this.onlineService = false;
     }
   },
 };
@@ -1362,14 +1394,16 @@ body.desktop
   z-index: 99999;
   width: 60px;
   position: fixed;
-  top: 70%;
+  top: 68%;
   left: 50%;
   margin: -30px 0 0 640px;
   .onlineService{
-
+    cursor: pointer;
+    position: relative;
     .cs {
       margin-bottom: 10px;
       vertical-align: top;
+
     }
     .text {
       display: none;
@@ -1388,6 +1422,14 @@ body.desktop
   }
 
 
+}
+
+.onlineService-pop{
+  position: absolute;
+  top: -310px;
+  right: 70px;
+  width: 338px;
+  height: 360px;
 }
 
 </style>

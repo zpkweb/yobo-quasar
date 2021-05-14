@@ -106,30 +106,39 @@ function state(): ArtworkStateInterface {
 
       color: [
         {
+          id: 0,
           name: "ffc0cb"
         },
         {
+          id: 1,
           name: "feff00"
         },
         {
+          id: 2,
           name: "048004"
         },
         {
+          id: 3,
           name: "ffa500"
         },
         {
+          id: 4,
           name: "1601ff"
         },
         {
+          id: 5,
           name: "800180"
         },
         {
+          id: 6,
           name: "abcffc"
         },
         {
+          id: 7,
           name: "ff0102"
         },
         {
+          id: 8,
           name: "808080"
         },
 

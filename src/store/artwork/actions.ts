@@ -48,6 +48,8 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
         name: payload.name,
         price: price,
 
+        colors: payload.color ? payload.color.toString() : '',
+
         categorys: payload.category ? payload.category.toString() : '',
         classifications: payload.classification ? payload.classification.toString() : '',
         materials: payload.material ? payload.material.toString() : '',
@@ -61,6 +63,8 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
         themes: payload.theme ? payload.theme.toString() : '',
         types: payload.type ? payload.type.toString() : '',
         uses: payload.use ? payload.use.toString() : '',
+
+        news: payload.news,
 
         pageSize: payload.pageSize,
         currentPage: payload.currentPage,

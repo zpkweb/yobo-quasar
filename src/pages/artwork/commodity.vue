@@ -69,7 +69,7 @@
             </div>
             <div class="col-6 left2">
               <div class="name">{{ artwork.commodity.name }}</div>
-              <div class="year title-color">
+              <div class="year title-color" v-if="artwork.commodity.createdDate">
                 {{ artwork.commodity.createdDate.substr(0, 4) }}
               </div>
               <div class="painter title-color">

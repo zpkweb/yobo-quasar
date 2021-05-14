@@ -255,8 +255,8 @@
         </div>
       </div>
     </div>
-    <!-- 让永宝帮您找到心仪的作品 -->
-    <div class="contact-container" v-if="$store.state.isShowPay">
+    <!-- 让永宝帮您找到心仪的作品   -->
+    <div class="contact-container" v-if="$store.state.isShowPay" >
       <div class="row contact text-white">
         <div class="col relative-position">
           <div class="title">{{$t('home.LetFavoriteWork')}}</div>

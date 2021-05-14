@@ -23,7 +23,8 @@ const actions: ActionTree<ArtistStateInterface, StateInterface> = {
     return await axiosInstance.get('/api/seller', {
       params: payload
     }).then(response => {
-      commit('setPortrait', response.data.data)
+      return response.data;
+
     }).catch((err) => {
       return {
         success: false,

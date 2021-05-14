@@ -90,6 +90,7 @@ export default {
     Below: "低于",
     Higher: "高于",
     send: "发送",
+    sending: "发送中",
     sendEmailMsgPlaceholder: "您可以写下您的问题，留下微信或电话号码。我们的工作人员会很快联系您的",
     EmailAddress: "您的电子邮件地址",
     sendSuccessfully: "发送成功",
