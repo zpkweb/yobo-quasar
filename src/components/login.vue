@@ -123,7 +123,7 @@ export default {
           password: this.password,
         });
 
-        console.log("user", user);
+        // console.log("user", user);
         // let res = await ApiUser.login(this.email, this.phone, this.password);
         if (user.success) {
           // utils.setToken(res.data.data.token);
@@ -132,14 +132,14 @@ export default {
           // this.userInfo = utils.getGlobalUserInfo();
           const { token, ...userInfo } = user.data;
 
-          console.log("login token", token)
-          console.log("login userInfo", userInfo)
+          // console.log("login token", token)
+          // console.log("login userInfo", userInfo)
           this.$q.cookies.set("token", token, {
             expires: 1,
             path: '/'
           });
 
-          console.log("userInfo", userInfo)
+          // console.log("userInfo", userInfo)
           this.$q.cookies.set("userInfo", userInfo, {
             expires: 1,
             path: '/'

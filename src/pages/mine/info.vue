@@ -176,10 +176,10 @@ export default {
     };
   },
   created() {
-    console.log("mine info created")
+    // console.log("mine info created")
   },
   mounted() {
-    console.log("mine info mounted")
+    // console.log("mine info mounted")
     setTimeout(() => {
 
       if(this.$store.state.seller){
@@ -247,7 +247,7 @@ export default {
         ...this.address,
         userId: this.$store.state.user.info.userId,
       })
-      console.log("updateUserAddress", updateUserAddress)
+      // console.log("updateUserAddress", updateUserAddress)
       if(!updateUserAddress.success) {
         this.$q.notify({
           position: 'top',

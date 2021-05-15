@@ -98,7 +98,7 @@ export default {
   methods: {
     stepperNext() {
       // this.$refs.stepper.next()
-      console.log(this.step)
+      // console.log(this.step)
       switch(this.step) {
         case 1:
           this.codeSend();
@@ -115,7 +115,7 @@ export default {
       }
     },
     async codeSend() {
-      console.log("sendEmail", this.$store.state.user)
+      // console.log("sendEmail", this.$store.state.user)
       const codeSend = await this.$store.dispatch('user/codeSend', {
         email: this.email
       })

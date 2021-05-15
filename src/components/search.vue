@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     async searchSubmit() {
-      console.log("search", this.search, this.searchType)
+      // console.log("search", this.search, this.searchType)
       this.searchResult = []
       this.currentPage = 1;
       this.page = 0;
@@ -108,7 +108,7 @@ export default {
         // }))}`);
 
         const artworkSearchData = await this.artworkSearch(this.search);
-        console.log("artworkSearchData", artworkSearchData)
+        // console.log("artworkSearchData", artworkSearchData)
         if(artworkSearchData.success) {
           this.searchResult.push(...artworkSearchData.data.list);
           this.currentPage += 1;

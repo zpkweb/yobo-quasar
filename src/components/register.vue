@@ -147,7 +147,7 @@ export default {
           email: this.email,
           password: this.password,
         });
-        console.log("register", register);
+        // console.log("register", register);
         if (register.success) {
           // alert("用户已存在,请直接登录");
           this.icon2 = false;

@@ -550,7 +550,7 @@ export default {
         channel: this.channel == "如果您在网上售出过作品，是通过什么渠道呢？" ? '' : this.channel,
         medium: this.medium == "主要媒介" ? '' : this.medium,
       });
-      console.log("applyArtist", applyArtist);
+      // console.log("applyArtist", applyArtist);
       if (applyArtist && applyArtist.success) {
         // this.icon3 = false;
 

@@ -154,11 +154,17 @@
             </div>
             <div class="col-3 item">
               <div class="title">{{ $t("layout.footer.FeaturedArtist") }}</div>
-              <div class="underline">Kirstin Mccoy</div>
+              <!-- <div class="underline" v-for="item in $store.state.choiceSeller">
+                {{item.firstname}}{{item.lastname}}
+              </div> -->
+              <router-link class="underline footer-link-color" :to="`/${$i18n.locale}/artist/${item.sellerId}`" v-for="item in $store.state.choiceSeller" :key="item.sellerId">
+                {{item.firstname}}{{item.lastname}}
+              </router-link>
+              <!-- <div class="underline">Kirstin Mccoy</div>
               <div class="underline">Josep Moncada</div>
               <div class="underline">Ivan Pili</div>
               <div class="underline">Kristin Kossi</div>
-              <div class="underline">Peter Nottrott</div>
+              <div class="underline">Peter Nottrott</div> -->
             </div>
             <div class="col-3 item">
               <div class="title">{{ $t("layout.footer.FollowYongbao") }}</div>
@@ -415,7 +421,7 @@ export default {
   },
   watch: {
     lang(lang) {
-      console.log("watch lang", lang);
+      // console.log("watch lang", lang);
       this.$i18n.locale = lang.locale;
       this.$router.push({
         params: {
@@ -426,10 +432,20 @@ export default {
     },
   },
 
-  preFetch({ store, currentRoute, redirect }) {
-    console.log("layout preFetch", currentRoute.params);
+  async preFetch({ store, currentRoute, redirect }) {
+    // console.log("layout preFetch", currentRoute.params);
 
     store.commit("setLang", currentRoute.params.locale);
+
+    if(!store.state.choiceSeller) {
+      const choiceSeller = await store.dispatch('choiceSeller', {
+        news: 'true'
+      })
+      // console.log("choiceSeller", choiceSeller)
+      if(choiceSeller.success) {
+        store.commit('setChoiceSeller', choiceSeller.data)
+      }
+    }
     // if (!store.state.user.info) {
     //   redirect({ path: '/' })
     // }
@@ -456,7 +472,7 @@ export default {
   },
 
   async beforeCreate() {
-    console.log("layout created", this.$i18n.locale, this.$store.state.lang);
+    // console.log("layout created", this.$i18n.locale, this.$store.state.lang);
 
     this.$i18n.locale = this.$store.state.lang
       ? this.$store.state.lang.locale
@@ -467,7 +483,7 @@ export default {
         const getUserInfo = await this.$store.dispatch("user/getUserInfo", {
           userId: userInfo.userId,
         });
-        console.log("getUserInfo", getUserInfo);
+        // console.log("getUserInfo", getUserInfo);
         // this.$store.commit('user/setUserInfo', getUserInfo.data);
       }
     } else {
@@ -475,7 +491,7 @@ export default {
     }
   },
   mounted() {
-    console.log("layout mounted", this.$i18n.locale, this.$store.state.lang);
+    // console.log("layout mounted", this.$i18n.locale, this.$store.state.lang);
     this.$q.cookies.set(
       "test",
       { test: 111 },
@@ -496,7 +512,7 @@ export default {
   },
   methods: {
     changeLang(item) {
-      console.log("changelang", item);
+      // console.log("changelang", item);
       this.lang = item;
     },
     Top() {
@@ -752,9 +768,11 @@ body {
 
 .footer-link-color {
   color: #fff;
+  display: block;
 }
 .footer-link-color-grey{
   color: #999999;
+  display: block;
 }
 
 .q-tabs--not-scrollable .q-tabs__content {

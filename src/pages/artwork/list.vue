@@ -313,8 +313,8 @@ export default {
 
   // },
   async created() {
-    console.log("created");
-    console.log("router query", this.$qs.parse(this.$route.query));
+    // console.log("created");
+    // console.log("router query", this.$qs.parse(this.$route.query));
 
     const { query, params } = this.$route;
     const { locale } = params;
@@ -322,7 +322,7 @@ export default {
     // console.log("this.$store.state.user", this.$store.state.user.info)
     // const userInfo = this.$store.state.user.info;
     const userInfo = this.$q.cookies.get("userInfo");
-    console.log("userInfo", userInfo);
+    // console.log("userInfo", userInfo);
 
     if (userInfo) {
       const { userId } = userInfo;
@@ -330,7 +330,7 @@ export default {
         userId,
         locale,
       });
-      console.log("myArtist", myArtist);
+      // console.log("myArtist", myArtist);
 
       if (myArtist.success) {
         // const myArtists = myArtist.data.map(item => Object.assign(item,{ hasMyArtist: true }));
@@ -380,14 +380,14 @@ export default {
           return item;
         });
       }
-      console.log("options", options);
+      // console.log("options", options);
       this.options = options;
     }
 
     this.changeQueryData();
   },
   mounted() {
-    console.log("mounted");
+    // console.log("mounted");
   },
   computed: {
     search() {
@@ -443,7 +443,7 @@ export default {
   },
   methods: {
     unlimited(option) {
-      console.log(Object.assign({}, this.$route.query, { [option]: [] }));
+      // console.log(Object.assign({}, this.$route.query, { [option]: [] }));
     },
     generateCells() {
       this.cells = generateCells();
@@ -517,7 +517,7 @@ export default {
 
         // this.$store.commit('artwork/setSearchData', list)
         // this.$store.commit('artwork/setPagination', { total, currentPage, pageSize })
-        console.log("changeQueryData this.myArtists", this.myArtists);
+        // console.log("changeQueryData this.myArtists", this.myArtists);
         list = list.map((item) => {
           item.hasMyArtist = false;
 
@@ -578,7 +578,7 @@ export default {
         this.$store.state.artwork.search,
         searchData
       );
-      console.log("artworkSearch", artworkSearch)
+      // console.log("artworkSearch", artworkSearch)
       this.$store.commit("artwork/setSearch", artworkSearch);
       this.$router.push(
         `/${this.$i18n.locale}/artwork?${this.$qs.stringify(artworkSearch)}`
@@ -640,7 +640,7 @@ export default {
     },
 
     async myArtist(item) {
-      console.log("myArtist", item);
+      // console.log("myArtist", item);
       if (!this.$store.state.user.info) {
         this.$q.notify({
           position: "top",
@@ -661,13 +661,13 @@ export default {
 
           let newMyArtists = [];
           for (let artists of this.myArtists) {
-            console.log(artists.sellerId, item.seller.sellerId);
+            // console.log(artists.sellerId, item.seller.sellerId);
             if (artists.sellerId !== item.seller.sellerId) {
               newMyArtists.push(item);
             }
           }
           this.myArtists = newMyArtists;
-          console.log(this.myArtists);
+          // console.log(this.myArtists);
           this.changeHasMyArtist(item.seller.sellerId, false);
 
           this.$q.notify({
@@ -711,7 +711,7 @@ export default {
       }
     },
     changeHasMyArtist(sellerId, bool) {
-      console.log("changeHasMyArtist", sellerId, bool, this.myArtists);
+      // console.log("changeHasMyArtist", sellerId, bool, this.myArtists);
 
       const list = this.searchResult.list.map((item) => {
         if (item.seller) {

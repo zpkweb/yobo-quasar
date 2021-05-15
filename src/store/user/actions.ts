@@ -52,11 +52,11 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
    */
   async applyArtist({ commit }, payload) {
     return await axiosInstance.post('/api/user/seller/apply', payload).then(response => {
-      console.log("applyAritst then", response)
+      // console.log("applyAritst then", response)
       return response.data;
       // setAxiosHeaders(response.data.token)
     }).catch((err) => {
-      console.log("applyAritst catch", err)
+      // console.log("applyAritst catch", err)
       return {
         success: false,
         message: err.response.data.message
@@ -66,7 +66,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 
   async getUserInfo({ commit }, payload) {
     return await axiosInstance.get('/api/user/info', { params: payload }).then(response => {
-      console.log("getUserInfo", response.data.data)
+      // console.log("getUserInfo", response.data.data)
       commit('setUserInfo', response.data.data)
       // return response.data;
     }).catch((err) => {
@@ -127,7 +127,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
     })
   },
   async codeVerify({ commit }, payload) {
-    console.log("codeVerify", payload)
+    // console.log("codeVerify", payload)
     return await axiosInstance.post('/api/user/password/retrieve/code/verify', payload)
     .then( response => {
       return response.data;

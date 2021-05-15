@@ -35,7 +35,7 @@ export default {
     };
   },
   created() {
-    console.log("app created", this.loading);
+    // console.log("app created", this.loading);
     this.loading = false;
     setTimeout(()=>{
       this.loading = false;

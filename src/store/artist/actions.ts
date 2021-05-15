@@ -6,7 +6,7 @@ import { axiosInstance } from 'src/boot/axios'
 
 const actions: ActionTree<ArtistStateInterface, StateInterface> = {
   async sellerSearch ({ commit }, payload) {
-    console.log("sellerSearch", payload)
+    // console.log("sellerSearch", payload)
     return await axiosInstance.get('/api/seller/search', {
       params: payload
     }).then(response => {

@@ -636,7 +636,7 @@ export default {
   },
   async mounted() {
     let hasMyArtwork = false;
-    console.log("commodity", this.$store.state.user.info);
+    // console.log("commodity", this.$store.state.user.info);
     setTimeout(async () => {
       if (this.$store.state.user.info) {
         const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
@@ -655,7 +655,7 @@ export default {
 
     }, 500);
     this.$nextTick(()=>{
-      console.log("this.$refs.scrollDom", this.$refs.scrollDom)
+      // console.log("this.$refs.scrollDom", this.$refs.scrollDom)
       if(this.$refs.scrollDom){
         this.scrollDomTop = this.$refs.scrollDom.offsetTop;
         this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
@@ -678,10 +678,10 @@ export default {
       return this.$store.state.my.browsingHistory;
     },
     priceOptions() {
-      console.log(
-        "this.$store.state.artwork.data.commodity",
-        this.$store.state.artwork.data.commodity
-      );
+      // console.log(
+      //   "this.$store.state.artwork.data.commodity",
+      //   this.$store.state.artwork.data.commodity
+      // );
       return this.defaultPriceOptions.map((item) => {
         return Object.assign(item, {
           price: this.$store.state.artwork.data.commodity.price[item.locale],
@@ -689,9 +689,9 @@ export default {
       });
     },
     price() {
-      console.log("this.priceOptions", this.priceOptions);
+      // console.log("this.priceOptions", this.priceOptions);
       for (let item in this.priceOptions) {
-        console.log("price item", this.priceOptions[item], this.currency);
+        // console.log("price item", this.priceOptions[item], this.currency);
         if (this.priceOptions[item].label == this.currency) {
           return this.priceOptions[item].price;
         }
@@ -731,7 +731,7 @@ export default {
       this.bidPop = true;
     },
     async myArtwork() {
-      console.log("this.$store.state.user.info", this.$store.state.user.info);
+      // console.log("this.$store.state.user.info", this.$store.state.user.info);
       if (!this.$store.state.user.info) {
         this.$q.notify({
           position: "top",
@@ -806,7 +806,7 @@ export default {
         price: this.bidPrice || this.price,
         msg: this.bidMsg,
       });
-      console.log("sendEmailBid", sendEmailBid);
+      // console.log("sendEmailBid", sendEmailBid);
 
       if (sendEmailBid.success) {
         this.bidPop = false;

@@ -26,7 +26,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       sellerId: payload.artistId,
     }).then(response => {
-      console.log("addMyArtist response", response.data)
+      // console.log("addMyArtist response", response.data)
       return response.data;
     }).catch((err) => {
       return {
@@ -40,7 +40,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       sellerId: payload.artistId,
     }).then(response => {
-      console.log("delMyArtist response", response.data)
+      // console.log("delMyArtist response", response.data)
       return response.data;
     }).catch((err) => {
       return {
@@ -54,7 +54,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       sellerId: payload.artistId,
     }}).then(response => {
-      console.log("hasMyArtist response", response.data)
+      // console.log("hasMyArtist response", response.data)
       return response.data;
     }).catch((err) => {
       return {
@@ -70,7 +70,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
    * @param {*} payload
    */
   async getMyWishlist({ commit }, payload) {
-    console.log("getMyWishlist", payload)
+    // console.log("getMyWishlist", payload)
     return await axiosInstance.get('/api/my/commodity', { params: payload }).then(response => {
       return response.data;
     }).catch((err) => {
@@ -85,7 +85,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       commodityId: payload.artworkId,
     }).then(response => {
-      console.log("addMyArtwork response", response.data)
+      // console.log("addMyArtwork response", response.data)
 
       return response.data;
     }).catch((err) => {
@@ -100,7 +100,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       commodityId: payload.artworkId,
     }).then(response => {
-      console.log("delMyArtwork response", response.data)
+      // console.log("delMyArtwork response", response.data)
       return response.data;
     }).catch((err) => {
       return {
@@ -114,7 +114,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       commodityId: payload.artworkId,
     }}).then(response => {
-      console.log("hasMyArtwork response", response.data)
+      // console.log("hasMyArtwork response", response.data)
       return response.data;
     }).catch((err) => {
       return {
@@ -144,7 +144,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       commodityId: payload.artworkId,
     }).then(response => {
-      console.log("addMyBrowsingHistory response", response.data)
+      // console.log("addMyBrowsingHistory response", response.data)
 
       return response.data;
     }).catch((err) => {
@@ -159,7 +159,7 @@ const actions: ActionTree<MyStateInterface, StateInterface> = {
       userId: payload.userId,
       commodityId: payload.artworkId,
     }).then(response => {
-      console.log("delMyBrowsingHistory response", response.data)
+      // console.log("delMyBrowsingHistory response", response.data)
       return response.data;
     }).catch((err) => {
       return {

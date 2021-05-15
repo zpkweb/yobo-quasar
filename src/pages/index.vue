@@ -440,7 +440,7 @@ export default {
         email: this.email,
         msg: this.msg,
       })
-      console.log("sendEmail", sendEmail)
+      // console.log("sendEmail", sendEmail)
 
       if(sendEmail.success) {
         this.sendEmailPop = false;

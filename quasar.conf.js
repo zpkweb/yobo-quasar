@@ -10,8 +10,8 @@
 const { configure } = require('quasar/wrappers')
 
 module.exports = configure(function (ctx) {
-  console.log("process.env.api", process.env.api)
-  console.log("process.env.ORIGIN", process.env.ORIGIN)
+  // console.log("process.env.api", process.env.api)
+  // console.log("process.env.ORIGIN", process.env.ORIGIN)
 
   return {
     htmlVariables: {

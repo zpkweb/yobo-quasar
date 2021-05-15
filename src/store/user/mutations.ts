@@ -7,7 +7,7 @@ const mutation: MutationTree<UserStateInterface> = {
   },
   setUserInfoItem(state, payload) {
     for(let item in payload){
-      console.log("setUserInfoItem", item, payload[item])
+      // console.log("setUserInfoItem", item, payload[item])
       state.info[item] = payload[item];
     }
 

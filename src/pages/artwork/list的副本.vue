@@ -636,10 +636,10 @@ export default {
     }
   },
   created() {
-    console.log("created");
+    // console.log("created");
   },
   mounted() {
-    console.log("mounted");
+    // console.log("mounted");
   },
   computed: {
     categorys() {
@@ -721,7 +721,7 @@ export default {
       ];
     },
     shapes() {
-      console.log("this.$route.query.shapes", this.$route.query.shapes)
+      // console.log("this.$route.query.shapes", this.$route.query.shapes)
       return [
         {
           value: "",
@@ -869,7 +869,7 @@ export default {
     },
     deleteAllTags() {
       const { pageSize, currentPage, ...searchData} = this.$route.query;
-      console.log("searchData", searchData)
+      // console.log("searchData", searchData)
       for(let item in searchData) {
         searchData[item] = '';
       }
@@ -884,7 +884,7 @@ export default {
       this.expandOptions = false;
     },
     nextPage() {
-      console.log("pageTotal", this.currentPage, this.pageTotal)
+      // console.log("pageTotal", this.currentPage, this.pageTotal)
       if (this.currentPage < this.pageTotal) {
         this.currentPage = this.currentPage + 1;
       }

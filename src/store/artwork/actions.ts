@@ -13,7 +13,7 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
    * @return {*}
    */
   async getArtworkSearch ({ commit }, payload) {
-    console.log("getArtworkSearch", payload)
+    // console.log("getArtworkSearch", payload)
     // const {
     //   category,
     //   classification,

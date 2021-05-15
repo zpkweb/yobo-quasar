@@ -12,6 +12,8 @@ import { ArtworkStateInterface } from './artwork/state';
 import my from './my';
 import { MyStateInterface } from './my/state';
 
+import { axiosInstance } from 'src/boot/axios'
+
 export interface StateInterface {
   lang: any;
   isShowPay: Boolean;
@@ -21,6 +23,7 @@ export interface StateInterface {
   artist?: ArtistStateInterface;
   artwork?: ArtworkStateInterface;
   my?: MyStateInterface;
+  choiceSeller?: any
 }
 
 export default store(function ({ Vue }) {
@@ -48,6 +51,7 @@ export default store(function ({ Vue }) {
         locale: 'es-es'
       }
       ],
+      choiceSeller: null
     },
     mutations: {
       setLang (state, locale) {
@@ -59,7 +63,26 @@ export default store(function ({ Vue }) {
           }
         }
         state.lang = langNew
+      },
+      setChoiceSeller(state, payload) {
+        state.choiceSeller = payload;
       }
+    },
+    actions: {
+      async choiceSeller({ commit }, payload) {
+        return await axiosInstance.get('/api/seller/choice', {
+          params: {
+            news: payload.news
+          }
+        }).then(response => {
+          return response.data
+        }).catch((err) => {
+          return {
+            success: false,
+            message: err.response.data.message
+          }
+        })
+      },
     },
     modules: {
       home,

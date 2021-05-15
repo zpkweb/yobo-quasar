@@ -143,7 +143,7 @@ export default {
   },
   methods: {
     async myArtwork(item, index) {
-      console.log("item", item, index);
+      // console.log("item", item, index);
       if (!this.$store.state.user.info) {
         this.$q.notify({
           position: "top",
