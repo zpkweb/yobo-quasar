@@ -1,47 +1,79 @@
 <template>
   <q-page>
+    <!-- 顶部 -->
     <div class="banner relative-position">
 
-      <q-img v-if="portrait.banner" :src="portrait.banner" height="360px"></q-img>
+      <q-img v-if="portrait.seller && portrait.seller.banner" :src="portrait.seller.banner" height="360px"></q-img>
       <q-img v-else src="~assets/images/banner-artist.png" height="360px"></q-img>
 
       <div class="absolute-full text-center text">
-        <template v-if="portrait">
-          <div class="text-bold">{{portrait.typeName}}｜{{portrait.country}}</div>
-        <div class="title">{{portrait.firstname}} {{portrait.lastname}}</div>
+        <template v-if="portrait.seller">
+          <div class="text-bold">{{ $store.state.sellerTypes[portrait.seller.type]}}｜{{portrait.seller.country}}</div>
+        <div class="title">{{portrait.seller.firstname}} {{portrait.seller.lastname}}</div>
         <div class="number">
-          <span v-for="item in portrait.tags">{{$t(item)}}</span>
+          <span v-for="item in portrait.seller.tags">{{$t(item)}}</span>
         </div>
         </template>
       </div>
     </div>
+
+
     <div class="title2-container">
       <div class="title2">
-        <!-- <q-tabs no-caps indicator-color="transparent" active-color="white" align="left" class="text-teal"> -->
-          <router-link class="tabs" :class="{ active: (hash && hash == '#'+item.value) || (!hash && index === 0) }"  v-for="(item, index) in navs" :key="item.value" :to="{ hash: `#${item.value}` }" >{{ $t(item.label) }}</router-link>
-        <!-- </q-tabs> -->
+          <!-- <router-link class="tabs" :class="{ active: (hash && hash == '#'+item.value) || (!hash && index === 0) }"  v-for="(item, index) in navs" :key="item.value" :to="{ hash: `#${item.value}` }" >{{ $t(item.label) }}</router-link> -->
+
+          <router-link
+            class="tabs"
+            :class="{ active: (hash && hash == '#seller') || (!hash) }"
+            v-if="portrait.seller"
+           :to="{ hash: '#seller' }"
+           >{{ $t('artist.PersonalInformation') }}</router-link>
+
+           <router-link
+            class="tabs"
+            :class="{ active: (hash && hash == '#commoditys') }"
+            v-if="portrait.commoditys"
+           :to="{ hash: '#commoditys' }"
+           >{{ $t('artist.AllWorks') }}</router-link>
+
+           <router-link
+            class="tabs"
+            :class="{ active: (hash && hash == '#sold') }"
+            v-if="portrait.sold"
+           :to="{ hash: '#sold' }"
+           >{{ $t('artist.LatestSold') }}</router-link>
+
+           <router-link
+            class="tabs"
+            :class="{ active: (hash && hash == '#studio') }"
+            v-if="portrait.studio"
+           :to="{ hash: '#studio' }"
+           >{{ $t('artist.studio') }}</router-link>
+
+           <router-link
+            class="tabs"
+            :class="{ active: (hash && hash == '#resume') }"
+            v-if="portrait.resume"
+           :to="{ hash: '#resume' }"
+           >{{ $t('artist.Resume') }}</router-link>
+
+
       </div>
     </div>
-    <div id="info" class="desc row">
+    <div id="seller" class="desc row">
       <div class="col-4" v-if="portrait">
         <q-img v-if="portrait && portrait.user && portrait.user.avatar" :src="portrait.user.avatar"></q-img>
       </div>
       <div class="col-7 offset-1 text-right resume">
-        <!-- <div class="resume1">ARTIST</div>
-        <div class="resume2">
-          我结合了数字和有形，所以我将两个世界结合在一起.
-        </div>
-        <div class="resume3">
-          Karin Vermeer是一位独立艺术家，自2002年以来一直在鹿特丹生活和工作<br />
-          她的作品是通过将照片和绘画进行数字组合和编辑为新的原创艺术作品而创作的<br />威猛(Vermeer)擅长于通过覆盖和融合四到五个不同种族和血统的不同面孔来创建新的不存在的人物而创建的肖像<br />打印数字图像并添加涂料以获得最终的结果，尝试使数字图像再次变得有形
-        </div> -->
         <p  v-if="portrait && portrait.metadata" class="text-left fontSize-16">{{ portrait.metadata.profile }}</p>
         <div class="resume4">
           <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
       </div>
     </div>
-    <div id="artworks" class="artworks-container">
+
+
+    <div id="commoditys" class="artworks-container" v-if="portrait.commoditys">
       <div class="artworks">
         <div class="artwork row">
           <div class="col-3" v-for="(item, index) of portrait.commoditys">
@@ -73,6 +105,8 @@
         </div>
       </div>
     </div>
+
+
     <!-- 最新出售的艺术品 -->
     <!-- <div id="sold" class="sold">
       <div class="title text-center">{{$t('artist.LatestArtSold')}}</div>
@@ -84,32 +118,37 @@
         </div>
       </div>
     </div> -->
-    <div id="studio" class="video hide"></div>
-    <div id="resume" class="credentials ">
+
+
+    <div id="studio" class="studio" v-if="portrait.studio">
+      <q-img class="studio-banner" v-if="portrait.studio.banner" :src="portrait.studio.banner" height="400px"></q-img>
+      <div class="studio-content">
+        <h3 class="studio-content-title">{{portrait.studio.name}}</h3>
+        <video class="studio-content-video" v-if="portrait.studio.video" controls=""  name="media"><source :src="portrait.studio.video" type="video/mp4"></video>
+
+        <q-img class="studio-content-img" v-else-if="portrait.studio.photo" :src="portrait.studio.photo" ></q-img>
+        <p class="studio-content-p" v-else>
+          {{portrait.studio.introduce}}
+        </p>
+      </div>
+    </div>
+
+
+    <div id="resume" class="credentials " v-if="portrait.resume">
       <div class="title text-center ">{{$t('artist.MyResume')}}</div>
       <div class="title2 text-right">
-        <div>{{$t('artist.Awards')}}</div>
-        <div>{{$t('artist.SoloExhibition')}}</div>
-        <div>{{$t('artist.GroupExhibition')}}</div>
-        <div>{{$t('artist.Publish')}}</div>
+
+        <div v-for="item in Object.keys(portrait.resume)" @click="resumeTypeActive = item">{{$t(resumeTypes[item])}}</div>
+
       </div>
-      <div class="content row hide">
-        <div class="col-6 item">
-          <div v-for="i of 8" :key="`resume-${i}`">
-            <div class="year">2019</div>
+      <div class="content row">
+        <div class="col-6 item" v-for="item in portrait.resume[resumeTypeActive]">
+            <div class="year">{{item.year}}</div>
             <div class="name">
-              Prix de photographie (Salon d’Automne)- {{$t('artist.winner')}}- 法国
+              {{item.resume}}
             </div>
-          </div>
         </div>
-        <div class="col-6 item">
-          <div v-for="i of 8" :key="`resume2-${i}`">
-            <div class="year">2019</div>
-            <div class="name">
-              Prix de photographie (Salon d’Automne)- {{$t('artist.winner')}}- 法国
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </q-page>
@@ -138,7 +177,14 @@ export default {
       tags: ['artist.magazineCover', 'artist.PortraitStructure', 'artist.PortraitOfPopart'],
       hasMyArtist: false,
       myArtworks: [],
-      portrait: {}
+      portrait: {},
+      resumeTypeActive: 'prize',
+      resumeTypes: {
+        prize: 'artist.Awards',
+        individua: 'artist.SoloExhibition',
+        organizing: 'artist.GroupExhibition',
+        publish: 'artist.Publish'
+      }
     };
   },
   // async preFetch({ store, currentRoute }) {
@@ -520,6 +566,41 @@ export default {
     }
     .item > div {
       margin: 10px 0;
+    }
+  }
+}
+.studio{
+  position: relative;
+  height: 400px;
+  background-color: rgba(0, 0, 0, .5);
+  .studio-banner{
+
+  }
+  .studio-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -300px;
+    width: 600px;
+    height: 300px;
+    text-align: center;
+    .studio-content-title{
+      color: #fff;
+    }
+    .studio-content-video{
+      width: 100%;
+      height: 250px;
+      margin-top: 20px;
+    }
+    .studio-content-img{
+      width: 100%;
+      height: 250px;
+      margin-top: 20px;
+    }
+    .studio-content-p{
+      width: 100%;
+      height: 250px;
+      margin-top: 20px;
     }
   }
 }

@@ -23,7 +23,8 @@ export interface StateInterface {
   artist?: ArtistStateInterface;
   artwork?: ArtworkStateInterface;
   my?: MyStateInterface;
-  choiceSeller?: any
+  choiceSeller?: any;
+  sellerTypes?: any;
 }
 
 export default store(function ({ Vue }) {
@@ -51,7 +52,8 @@ export default store(function ({ Vue }) {
         locale: 'es-es'
       }
       ],
-      choiceSeller: null
+      choiceSeller: null,
+      sellerTypes: ["画家", "雕塑家"]
     },
     mutations: {
       setLang (state, locale) {
