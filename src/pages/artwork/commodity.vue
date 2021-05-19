@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="row container">
+<div class="row container">
       <div class="col-8">
         <div class="carousel relative-position">
           <div class="button absolute">
@@ -41,12 +41,26 @@
                 artwork.commodity.photos.length
               "
             >
+              <!-- <q-carousel-slide
+                v-for="(item, index) in artwork.commodity.photos"
+                :key="index"
+                :name="index"
+                :img-src="item.src"
+                height="400px"
+              /> -->
               <q-carousel-slide
                 v-for="(item, index) in artwork.commodity.photos"
                 :key="index"
                 :name="index"
                 :img-src="item.src"
-              />
+                >
+                  <q-img
+                    :src="item.src"
+                    style="max-width: 768px; height: 400px;"
+
+                    contain
+                  />
+                </q-carousel-slide>
             </q-carousel>
           </div>
         </div>
@@ -65,17 +79,18 @@
                     : ''
                 "
                 width="350px"
+
               ></q-img>
             </div>
             <div class="col-6 left2">
-              <div class="name">{{ artwork.commodity.name }}</div>
-              <div class="year title-color" v-if="artwork.commodity.createdDate">
+              <div class="name" v-if="artwork && artwork.commodity">{{ artwork.commodity.name }}</div>
+              <div class="year title-color" v-if="artwork && artwork.commodity && artwork.commodity.createdDate">
                 {{ artwork.commodity.createdDate.substr(0, 4) }}
               </div>
-              <div class="painter title-color">
-                {{ artwork.commodity.seller ? artwork.commodity.seller.firstname : '' }}
-                {{ artwork.commodity.seller ? artwork.commodity.seller.lastname : '' }}
-                {{ artwork.commodity.seller ? artwork.commodity.seller.country : '' }}
+              <div class="painter title-color" v-if="artwork && artwork.seller">
+                {{ artwork.seller ? artwork.seller.firstname : '' }}
+                {{ artwork.seller ? artwork.seller.lastname : '' }}
+                {{ artwork.seller ? artwork.seller.country : '' }}
               </div>
               <div class="row">
                 <div class="col-6 item">
@@ -84,7 +99,7 @@
                   </div>
                   <div class="content">
                     <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
-                    <div>
+                    <div v-if="artwork && artwork.commodity">
                       {{
                         artwork.commodity.categorys && artwork.commodity.categorys.length
                           ? artwork.commodity.categorys[0].name
@@ -93,7 +108,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-6 item" v-if="$store.state.isShowPay">
+                <!-- v-if="$store.state.isShowPay" -->
+                <div class="col-6 item" >
                   <div class="title2 title-color">
                     {{ $t("artwork.commodity.OtherDetails") }}
                   </div>
@@ -101,17 +117,19 @@
                     {{ $t("artwork.commodity.CanFree") }}
                   </div>
                 </div>
-                <div class="col-6 item">
+
+                <div class="col-6 item mt10">
                   <div class="title2 title-color">
                     {{ $t("artwork.commodity.size") }}
                   </div>
-                  <div class="contant">
+                  <div class="contant" v-if="artwork && artwork.commodity">
                     {{ artwork.commodity.width }}cmX{{
                       artwork.commodity.height
                     }}cm
                   </div>
                 </div>
-                <div class="col-6 item" v-if="$store.state.isShowPay">
+                <!-- <div class="col-6 item" v-if="$store.state.isShowPay"> -->
+                  <div class="col-6 item mt10">
                   <div class="title2 title-color">
                     {{ $t("artwork.commodity.Postage") }}
                   </div>
@@ -123,7 +141,7 @@
             </div>
           </div>
         </div>
-        <div class="container2" v-if="artwork.commodity.seller">
+        <div class="container2" v-if="artwork && artwork.seller">
           <div class="title">{{ $t("artwork.commodity.AboutAuthor") }}</div>
           <div class="row">
             <div class="col-4">
@@ -138,9 +156,10 @@
                 width="210px"
               ></q-img>
             </div>
+
             <div class="col-8">
               <div class="row painter">
-                <div class="col title-color">{{ artwork.commodity.name }}</div>
+                <div class="col title-color" v-if="artwork.commodity">{{ artwork.commodity.name }}</div>
                 <router-link
                   :to="`/${$i18n.locale}/artist/${artwork.seller.sellerId}`"
                   class="col-grow"
@@ -162,22 +181,22 @@
       </div>
       <div class="col-4 left">
         <div class="title-left">
-          <div>
+          <div v-if="artwork && artwork.commodity">
             {{ artwork.commodity.name }} {{ artwork.commodity.width }}cmX{{
               artwork.commodity.height
             }}cm
           </div>
-          <div>{{ artwork.commodity.techniques && artwork.commodity.techniques.length ? artwork.commodity.techniques[0].name : '' }}</div>
+          <div v-if="artwork && artwork.commodity">{{ artwork.commodity.techniques && artwork.commodity.techniques.length ? artwork.commodity.techniques[0].name : '' }}</div>
         </div>
 
         <!-- 艺术品价格 -->
         <!-- <div class="prise"><span class="symbol">¥</span><span>7，000</span></div> -->
 
         <template v-if="$store.state.isShowPay">
-          <div class="soldout" v-if="artwork.commodity.state == 2">
+          <div class="soldout" v-if="artwork.commodity && artwork.commodity.state == 2">
             {{ $t("artwork.commodity.Sold") }}
           </div>
-          <div class="off" v-else-if="artwork.commodity.state == 3">
+          <div class="off" v-else-if="artwork.commodity && artwork.commodity.state == 3">
             {{ $t("artwork.commodity.HasBeenRemoved") }}
           </div>
           <div class="prise" v-else>{{ price }}</div>
@@ -447,7 +466,7 @@
             <div class="paint">
               <q-img
                 :src="
-                  item.photos && item.photos.length ? item.photos[0].src : ''
+                  item.photos && item.photos.length ? item.photos[0] : ''
                 "
                 width="208px"
                 height="208px"
@@ -462,7 +481,8 @@
         </div>
       </div>
     </div>
-    <div class="similar-paints paints" v-if="artwork.commoditySimilar && artwork.commoditySimilar.length">
+
+    <div class="similar-paints paints" v-if="artwork && artwork.commoditySimilar && artwork.commoditySimilar.length">
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">{{ $t("artwork.commodity.SimilarWorksArt") }}</div>
@@ -497,6 +517,7 @@
         </div>
       </div>
     </div>
+
     <!-- 您最近浏览的作品 -->
     <div
       class="paints history"
@@ -624,36 +645,49 @@ export default {
   },
   async preFetch({ store, currentRoute }) {
     // getArtwork
-    const { locale, artworkId } = currentRoute.params;
-    await store.dispatch("artwork/getArtwork", {
-      locale,
-      artworkId,
-    });
+    // const { locale, artworkId } = currentRoute.params;
+    // await store.dispatch("artwork/getArtwork", {
+    //   locale,
+    //   artworkId,
+    //   userId: store.state.user.info.userId
+    // });
 
   },
   async created() {
+    const { locale, artworkId } = this.$route.params;
+
+    const userInfo = this.$q.cookies.get("userInfo");
+
+    console.log('created', userInfo)
+
+    await this.$store.dispatch("artwork/getArtwork", {
+      locale,
+      artworkId,
+      userId: userInfo ? userInfo.userId : ''
+    });
 
   },
   async mounted() {
-    let hasMyArtwork = false;
+
+    // let hasMyArtwork = false;
     // console.log("commodity", this.$store.state.user.info);
-    setTimeout(async () => {
-      if (this.$store.state.user.info) {
-        const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
-          userId: this.$store.state.user.info.userId,
-          artworkId: this.$route.params.artworkId,
-        });
-        hasMyArtwork = hasMyArtworkData.success;
+    // setTimeout(async () => {
+      // if (this.$store.state.user.info) {
+        // const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
+        //   userId: this.$store.state.user.info.userId,
+        //   artworkId: this.$route.params.artworkId,
+        // });
+        // hasMyArtwork = hasMyArtworkData.success;
 
-        await this.$store.dispatch("my/addMyBrowsingHistory", {
-          userId: this.$store.state.user.info.userId,
-          artworkId: this.$route.params.artworkId,
-        });
-      }
-      this.hasMyArtwork = hasMyArtwork;
-      this.showMyArtwork = true;
+        // await this.$store.dispatch("my/addMyBrowsingHistory", {
+        //   userId: this.$store.state.user.info.userId,
+        //   artworkId: this.$route.params.artworkId,
+        // });
+    //   }
+    //   this.hasMyArtwork = hasMyArtwork;
+    //   this.showMyArtwork = true;
 
-    }, 500);
+    // }, 500);
     this.$nextTick(()=>{
       // console.log("this.$refs.scrollDom", this.$refs.scrollDom)
       if(this.$refs.scrollDom){
@@ -683,9 +717,12 @@ export default {
       //   this.$store.state.artwork.data.commodity
       // );
       return this.defaultPriceOptions.map((item) => {
-        return Object.assign(item, {
-          price: this.$store.state.artwork.data.commodity.price[item.locale],
-        });
+        if(this.$store.state.artwork){
+          return Object.assign(item, {
+            price: this.$store.state.artwork.data.commodity.price
+          });
+        }
+
       });
     },
     price() {
@@ -857,6 +894,10 @@ export default {
   .carousel1 ::v-deep {
     .q-panel {
       margin: 0 auto;
+    }
+    .q-carousel__slide{
+      padding: 0;
+      background-image: none !important;
     }
     .q-panel-parent {
       overflow: unset;
@@ -1219,7 +1260,7 @@ export default {
   background-color: #152c2b;
   padding: 6px;
   border: 2px solid #adaf8b;
-  margin: 0 auto;
+  margin: 10px auto;
   .image {
     width: 208px;
     height: 208px;

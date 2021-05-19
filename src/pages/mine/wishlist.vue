@@ -10,7 +10,7 @@
           <q-img
             class="col-3 image"
             v-if="item.photos.length"
-            :src="item.photos[0].src"
+            :src="item.photos[0]"
             width="212px"
           ></q-img>
           <div class="col-7 desc">
@@ -19,7 +19,7 @@
               {{ item.seller.firstname }} {{ item.seller.lastname }}
             </div>
             <div class="size">
-              {{ item.commodity.width }}cmX{{ item.commodity.height }}cm in -
+              {{ item.width }}cmX{{ item.height }}cm in -
               2019
             </div>
           </div>

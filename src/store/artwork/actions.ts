@@ -99,7 +99,7 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     })
   },
   async getArtwork ({ commit }, payload) {
-    return await axiosInstance.get('/api/buy', {
+    return await axiosInstance.get('/api/BFF/commodity', {
       params: {
         locale: payload.locale,
         commodityId: payload.artworkId
@@ -115,7 +115,7 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     })
   },
   async getArtworkOptions({ commit }, payload) {
-    return await axiosInstance.get('/api/artwork/options', {
+    return await axiosInstance.get('/api/BFF/artwork/options', {
       params: {
         locale: payload.locale
       }

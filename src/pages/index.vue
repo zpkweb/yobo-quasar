@@ -120,13 +120,13 @@
            <template v-if="index%2 == 0">
              <template >
               <div class="line absolute"></div>
-              <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`"  >
-                  <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0] ? item.commodityPhotos[0] : ''" width="230px" height="300px"></q-img>
+              <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`"  >
+                  <q-img v-if="item.photos && item.photos.length" :src="item.photos.length && item.photos[0] ? item.photos[0] : ''" width="230px" height="300px"></q-img>
               </router-link>
 
                 <div class="desc bottom text-right odd">
-                  <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
-                  <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityName}}</router-link>
+                  <router-link v-if="item.seller" :to="`/${$i18n.locale}/artist/${item.seller.sellerId}`" class="place">{{item.seller.firstname}} {{item.seller.lastname}}</router-link>
+                  <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="name">{{item.name}}</router-link>
                 </div>
               </template>
            </template>
@@ -134,12 +134,12 @@
             <template >
               <div class="line-bottom absolute"></div>
               <div class="desc top text-right even">
-                <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="place">{{item.firstname}} {{item.lastname}}</router-link>
-                <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`" class="name">{{item.commodityName}}</router-link>
+                <router-link v-if="item.seller" :to="`/${$i18n.locale}/artist/${item.seller.sellerId}`" class="place">{{item.seller.firstname}} {{item.seller.lastname}}</router-link>
+                <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="name">{{item.name}}</router-link>
               </div>
 
-              <router-link :to="`/${$i18n.locale}/artwork/${item.commoditys[0].commodityId}`">
-                <q-img :src="item.commodityPhotos.length && item.commodityPhotos[0] ? item.commodityPhotos[0] : ''" width="230px" height="300px"></q-img>
+              <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`">
+                <q-img v-if="item.photos && item.photos.length" :src="item.photos.length && item.photos[0] ? item.photos[0] : ''" width="230px" height="300px"></q-img>
              </router-link>
              </template>
            </template>

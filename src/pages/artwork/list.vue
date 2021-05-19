@@ -154,6 +154,7 @@
             >
               <q-img
                 class="artwork-list-img"
+                v-if="item.photos && item.photos.length"
                 :src="item.photos.length ? item.photos[0] : ''"
               ></q-img>
             </router-link>
@@ -208,7 +209,9 @@
                       <ul v-if="item.photos">
                         <li
                           class="artwork-list-seller-pop-commodity"
-                          v-for="item in item.photos"
+                          v-for="(item, index) in item.photos"
+                          :key="index"
+                          v-if="index < 3"
                         >
                           <q-img
                             class="artwork-list-seller-pop-img"
@@ -1169,8 +1172,12 @@ export default {
         height: 30px;
         line-height: 30px;
         font-size: 14px;
+        color: #ccc;
+        background-color: #252c2b;
+      }
+      .artwork-list-seller-like:hover {
         color: #fff;
-        background-color: #152c2b;
+        background-color: #252c2b;
       }
     }
     .artwork-list-seller-pop-content {
@@ -1188,6 +1195,11 @@ export default {
       flex: 1;
       width: 33.33%;
       // margin: 0 10px 0 0;
+      transition: all 0.4s;
+    }
+
+    .artwork-list-seller-pop-img:hover{
+      transform: scale(1.4);
     }
   }
   &:hover .artwork-list-seller-pop {
@@ -1235,7 +1247,7 @@ $x: 4
   order: #{$x}
 
 .example-container
-  height: 600px
+  height: 660px
 
   .artwork-list
     position: relative
@@ -1259,6 +1271,7 @@ $x: 4
       position: absolute
       left: 0
       bottom: 6px
+      z-index: 9
       width: 100%
       height: 50px
       margin: 0

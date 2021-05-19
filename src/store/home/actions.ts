@@ -6,7 +6,7 @@ import { axiosInstance } from 'src/boot/axios'
 
 const actions: ActionTree<HomeStateInterface, StateInterface> = {
   async setHome ({ commit }, payload) {
-    await axiosInstance.get('/api/home', {
+    await axiosInstance.get('/api/BFF/home', {
       params: {
         locale: payload.locale
       }
