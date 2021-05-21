@@ -1189,18 +1189,21 @@ export default {
         height: 80px;
         overflow: hidden;
         margin-right: 10px;
+        .artwork-list-seller-pop-img {
+          transition: all 0.4s;
+        }
+
+        .artwork-list-seller-pop-img:hover{
+          transform: scale(1.4);
+        }
       }
     }
     .artwork-list-seller-pop-img {
       flex: 1;
       width: 33.33%;
       // margin: 0 10px 0 0;
-      transition: all 0.4s;
     }
 
-    .artwork-list-seller-pop-img:hover{
-      transform: scale(1.4);
-    }
   }
   &:hover .artwork-list-seller-pop {
     display: block;

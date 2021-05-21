@@ -124,7 +124,11 @@
       <q-img class="studio-banner" v-if="portrait.studio.banner" :src="portrait.studio.banner" height="400px"></q-img>
       <div class="studio-content">
         <h3 class="studio-content-title">{{portrait.studio.name}}</h3>
-        <video class="studio-content-video" v-if="portrait.studio.video" controls=""  name="media"><source :src="portrait.studio.video" type="video/mp4"></video>
+        <iframe v-if="portrait.studio.ccId" :src="`http://video.zbgedu.com/example?isShowConfig=false&ccId=${portrait.studio.ccId}&siteId=${portrait.studio.siteId}&img_path=${portrait.studio.videoPhoto}`" class="studio-content-iframe" scrolling="no" frameBorder="0"></iframe>
+
+        <video class="studio-content-video" v-else-if="portrait.studio.video" controls=""  name="media"><source :src="portrait.studio.video" type="video/mp4"></video>
+
+
 
         <q-img class="studio-content-img" v-else-if="portrait.studio.photo" :src="portrait.studio.photo" ></q-img>
         <p class="studio-content-p" v-else>
@@ -586,6 +590,11 @@ export default {
     text-align: center;
     .studio-content-title{
       color: #fff;
+    }
+    .studio-content-iframe {
+      width: 100%;
+      height: 250px;
+      margin-top: 20px;
     }
     .studio-content-video{
       width: 100%;

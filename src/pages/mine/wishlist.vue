@@ -12,6 +12,9 @@
             v-if="item.photos.length"
             :src="item.photos[0]"
             width="212px"
+            height="110px"
+            style="max-width: 212px; "
+            contain
           ></q-img>
           <div class="col-7 desc">
             <div class="title">{{ item.name }}</div>

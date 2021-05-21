@@ -113,7 +113,7 @@
            <div class="col-3 relative-position text-center"
 
             v-for="(item, index) in home.gallerySeller"
-            :key="`gallerySeller-${item.sellerId}`"
+            :key="`gallerySeller-${item.commodityId}`"
 
            >
 

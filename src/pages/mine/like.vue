@@ -32,7 +32,13 @@
       >
         <!-- <div class="col-3 image"></div> -->
         <div class="image-box">
-          <q-img v-if="item.user && item.user.avatar" :src="item.user.avatar" class="image" width="212px"></q-img>
+          <q-img
+          v-if="item.seller && item.seller.user && item.seller.user.avatar"
+          :src="item.seller.user.avatar"
+          class="image"
+          width="160px"
+          height="160px"
+          contain></q-img>
         </div>
 
         <div class="col-4 desc">

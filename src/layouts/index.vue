@@ -1409,12 +1409,13 @@ body.desktop
 
 
 .to-top {
-  z-index: 99999;
+  z-index: 5000;
   width: 60px;
   position: fixed;
   top: 68%;
-  left: 50%;
-  margin: -30px 0 0 640px;
+  // left: 50%;
+  // margin: -30px 0 0 640px;
+  right: 20px;
   .onlineService{
     cursor: pointer;
     position: relative;

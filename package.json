@@ -8,9 +8,11 @@
   "license": "ISC",
   "scripts": {
     "dev": "ORIGIN=http://localhost:7001 quasar dev -m ssr",
-    "server": "ORIGIN=http://39.105.190.188:7001 quasar dev -m ssr",
-    "build": "ORIGIN=http://39.105.190.188:7001 quasar build -m ssr",
+
+    "server": "ORIGIN=http://www.yoboart.com quasar dev -m ssr",
+    "build": "ORIGIN=http://www.yoboart.com quasar build -m ssr",
     "build:dev": "ORIGIN=http://82.156.250.70:7001 quasar build -m ssr",
+
     "push": "bash ./commit-push.sh",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
