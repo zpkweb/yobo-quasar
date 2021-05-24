@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="banner relative-position">
-      <q-img src="~assets/images/banner-artists.png" height="360px"></q-img>
+      <q-img src="~assets/img/banner-artists.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <div class="title">{{$t('artists.painter')}}</div>
         <div class="number">{{artistTotal}}{{$t('artists.PaintersCriteria')}}</div>
@@ -105,7 +105,7 @@
             ></q-img>
           </div>
           <div class=" text-left">{{ item.firstname }} {{ item.lastname }}</div>
-          <div class="text-left">{{ item.country }} {{ item.typeName }}</div>
+          <div class="text-left">{{ item.country }} {{ item.country && $store.state.sellerTypes[item.type] ? '-' : ''}} {{ $store.state.sellerTypes[item.type] }}</div>
           </router-link>
 
 

@@ -16,7 +16,7 @@
           >
         </div>
         <div class="msg" ref="registerMsg1">
-          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/img/exclamation.png" width="14px"></q-img>
           {{ registerMsg1 }}
         </div>
         <input
@@ -26,7 +26,7 @@
           v-model="name"
         />
         <div class="msg" ref="registerMsg2">
-          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/img/exclamation.png" width="14px"></q-img>
           {{ registerMsg2 }}
         </div>
         <input
@@ -36,7 +36,7 @@
           v-model="email"
         />
         <div class="msg" ref="registerMsg3">
-          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/img/exclamation.png" width="14px"></q-img>
           {{ registerMsg3 }}
         </div>
         <input
@@ -64,13 +64,13 @@
           <!-- <div class="text-center">
             <div class="title2">第三方账号登录</div>
             <div>
-              <q-img src="~assets/images/logo-qq.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/img/logo-qq.png" width="26px" class="img"></q-img>
               <q-img
-                src="~assets/images/logo-wechat.png"
+                src="~assets/img/logo-wechat.png"
                 width="26px"
                 class="img"
               ></q-img>
-              <q-img src="~assets/images/logo-zfb.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/img/logo-zfb.png" width="26px" class="img"></q-img>
             </div>
           </div> -->
       </q-card-section>
@@ -271,7 +271,7 @@ export default {
 .success {
   width: 485px;
   height: 374px;
-  background: url("~assets/images/login-success-bg.png") center center no-repeat;
+  background: url("~assets/img/login-success-bg.png") center center no-repeat;
   .quotation {
     font-size: 88px;
     font-family: "Hei";

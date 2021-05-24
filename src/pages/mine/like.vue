@@ -43,7 +43,7 @@
 
         <div class="col-4 desc">
           <div class="title">{{item.seller.firstname}} {{item.seller.lastname}}</div>
-          <div>{{$t('my.like.uploaded')}}2000{{$t('my.like.SecondaryWorks')}}</div>
+          <div>{{$t('my.like.uploaded')}}{{item.commodityCount}}{{$t('my.like.SecondaryWorks')}}</div>
           <div>{{item.seller.country}}</div>
         </div>
 

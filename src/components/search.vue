@@ -306,7 +306,7 @@ export default {
     left: 0;
   }
   .image {
-    background: url("~assets/images/search.png") no-repeat;
+    background: url("~assets/img/search.png") no-repeat;
     width: 21px;
     height: 21px;
     vertical-align: middle;

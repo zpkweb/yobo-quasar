@@ -107,12 +107,12 @@ export default {
   .item {
     border-bottom: 1px solid rgba(21, 44, 43, 0.1);
     .image {
-      background: url("~assets/images/commodity.png") center center no-repeat;
+      background: url("~assets/img/commodity.png") center center no-repeat;
       width: 200px;
       height: 200px;
     }
     .image2 {
-      background: url("~assets/images/commodity.png") center center no-repeat;
+      background: url("~assets/img/commodity.png") center center no-repeat;
     }
     .painter.desc {
       font-size: 14px;

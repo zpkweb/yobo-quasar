@@ -5,7 +5,7 @@
       <div class="header row text-black relative-position">
         <div class="col">
           <q-img
-            src="images/logo.png"
+            src="~assets/img/logo.png"
             class="logo btn"
             width="170px"
             @click="goIndex"
@@ -81,14 +81,14 @@
 
           <div class="search btn text-center" @click="isSearch = true">
             <q-img
-              src="~assets/images/search.png"
+              src="~assets/img/search.png"
               class="image"
               width="21px"
             ></q-img>
           </div>
 
           <!-- <div class="cart btn text-center">
-            <q-img src="~assets/images/cart.png" class="image" width="17px"></q-img>
+            <q-img src="~assets/img/cart.png" class="image" width="17px"></q-img>
             <div class="num absolute btn text-white text-center">2</div>
           </div> -->
 
@@ -190,7 +190,7 @@
               </div>
               <div class="col-grow row " @click="footerEmailSubmit">
                 <q-img
-                  src="~assets/images/arrow-right.png"
+                  src="~assets/img/arrow-right.png"
                   width="21px"
                   class="getmail cursor-pointer"
 
@@ -203,19 +203,19 @@
             </div>
             <div class="row pay1">
               <div class="col-3">
-                <q-img src="~assets/images/zfb.png" width="60px"></q-img>
+                <q-img src="~assets/img/zfb.png" width="60px"></q-img>
               </div>
 
               <div class="col-3" v-if="$store.state.isShowPay">
-                <q-img src="~assets/images/visa.png" width="60px"></q-img>
+                <q-img src="~assets/img/visa.png" width="60px"></q-img>
               </div>
               <div class="col-3" v-if="$store.state.isShowPay">
-                <q-img src="~assets/images/paypal.png" width="60px"></q-img>
+                <q-img src="~assets/img/paypal.png" width="60px"></q-img>
               </div>
             </div>
             <q-img
               v-if="$store.state.isShowPay"
-              src="~assets/images/mastercard.png"
+              src="~assets/img/mastercard.png"
               width="140px"
               contain
             ></q-img>
@@ -238,7 +238,7 @@
                 href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010202009337"
                 class="footer-link-color-grey"
                 ><q-img
-                  src="~assets/images/police.png"
+                  src="~assets/img/police.png"
                   width="12px"
                   class="img"
                   style="margin-right: 5px;vertical-align: -2px;"
@@ -254,7 +254,7 @@
       <div class="footer-criteria" v-if="!showFooterCriteria && !isApplyArtist">
         <Banner class="criteria-module-footer">
           <template v-slot:bgImg>
-            <q-img class="banner-bg-img" src="~assets/images/criteria-footer-ar-bg.png" height="100%" />
+            <q-img class="banner-bg-img" src="~assets/img/criteria-footer-ar-bg.png" height="100%" />
           </template>
           <q-btn icon="close" class="banner-close icon-close" flat round dense v-close-popup @click="showFooterCriteria = true" />
           <h3 class="banner-title title text-bold">您是艺术家么？</h3>
@@ -267,7 +267,7 @@
 
     <div class="to-top " >
       <div class="onlineService" @click="onlineService = !onlineService">
-        <q-img class="cs btn" src="~assets/images/cs.png" width="50px"></q-img>
+        <q-img class="cs btn" src="~assets/img/cs.png" width="50px"></q-img>
         <div class="text text-white text-center">{{$t('home.onlineService')}}</div>
 
 
@@ -280,7 +280,7 @@
         <q-img
 
         class="top btn "
-        src="~assets/images/top.png"
+        src="~assets/img/top.png"
         width="50px"
         @click="toTop"
       ></q-img>
@@ -1272,14 +1272,14 @@ body.desktop
           background-color: #d6d7c5;
         }
         .image {
-          background: url("~assets/images/cart1.png") center center no-repeat;
+          background: url("~assets/img/cart1.png") center center no-repeat;
           background-size: contain;
           width: 40px;
           height: 40px;
           margin: 25px 30px;
         }
         .image2 {
-          background-image: url("~assets/images/cart1.png");
+          background-image: url("~assets/img/cart1.png");
         }
       }
       .desc {
@@ -1327,7 +1327,7 @@ body.desktop
     font-size: 18px;
   }
   .image {
-    background: url("~assets/images/search.png") no-repeat;
+    background: url("~assets/img/search.png") no-repeat;
     width: 21px;
     height: 21px;
     vertical-align: middle;
@@ -1370,7 +1370,7 @@ body.desktop
 .success {
   width: 485px;
   height: 374px;
-  background: url("~assets/images/login-success-bg.png") center center no-repeat;
+  background: url("~assets/img/login-success-bg.png") center center no-repeat;
   .quotation {
     font-size: 88px;
     font-family: "Hei";

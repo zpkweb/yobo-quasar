@@ -3,7 +3,7 @@
   <q-page>
     <Banner class="about-module1">
       <template v-slot:bgImg>
-        <q-img class="banner-bg-img" src="~assets/images/banner-about.png" />
+        <q-img class="banner-bg-img" src="~assets/img/banner-about.png" />
       </template>
       <h3 class="banner-title title text-bold"><span>从心出发</span> <sapn class="q-ml-xl">奔赴热爱</sapn></h3>
       <p class="banner-desc q-mt-md">关于我们</p>
@@ -23,15 +23,15 @@
         <h3 class="banner-title title text-bold">我们的核心价值</h3>
         <div class="banner-desc content-width text-center q-mt-xl row">
           <div class="col-4">
-            <q-img src="~assets/images/guojihua.png" width="50px" />
+            <q-img src="~assets/img/guojihua.png" width="50px" />
             <p class="q-mt-lg">国际化</p>
           </div>
           <div class="col-4">
-            <q-img src="~assets/images/gaopinzhi.png" width="50px" />
+            <q-img src="~assets/img/gaopinzhi.png" width="50px" />
             <p class="q-mt-lg">高品质</p>
           </div>
           <div class="col-4">
-            <q-img src="~assets/images/duoyangxing.png" width="50px" />
+            <q-img src="~assets/img/duoyangxing.png" width="50px" />
             <p class="q-mt-lg">多样性</p>
           </div>
         </div>
@@ -42,7 +42,7 @@
         <h3 class="banner-title title text-bold">我们的团队</h3>
         <div class="banner-desc content-width text-center q-mt-lg row">
           <div class="col-4">
-            <q-img src="~assets/images/about-team-11.png" width="132px" />
+            <q-img src="~assets/img/about-team-11.png" width="132px" />
             <p class="q-mt-md">
               Oscar-Claude Monet
               <br/>
@@ -53,7 +53,7 @@
             </p>
           </div>
           <div class="col-4">
-            <q-img src="~assets/images/about-team-22.png" width="132px" />
+            <q-img src="~assets/img/about-team-22.png" width="132px" />
             <p class="q-mt-md">
               Frida Kahlo
               <br/>
@@ -64,7 +64,7 @@
             </p>
           </div>
           <div class="col-4">
-            <q-img src="~assets/images/about-team-33.png" width="132px" />
+            <q-img src="~assets/img/about-team-33.png" width="132px" />
             <p class="q-mt-md">
               Vincent Willem van Gogh
               <br/>
@@ -81,12 +81,12 @@
 
     <!-- <Banner class="about-module5">
         <h3 class="banner-title title text-bold">媒体报告</h3>
-        <q-img class="banner-desc q-mt-lg content-width" src="~assets/images/about-ad.png" />
+        <q-img class="banner-desc q-mt-lg content-width" src="~assets/img/about-ad.png" />
      </Banner> -->
 
      <Banner class="about-module6">
       <template v-slot:bgImg>
-        <q-img class="banner-bg-img" src="~assets/images/banner-about-footer.png" />
+        <q-img class="banner-bg-img" src="~assets/img/banner-about-footer.png" />
       </template>
         <div class="banner-desc content-width row">
           <div class="col-2 offset-2">

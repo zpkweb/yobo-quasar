@@ -24,6 +24,7 @@ const actions: ActionTree<HomeStateInterface, StateInterface> = {
   async sendEmail({ commit }, payload) {
     return await axiosInstance.post('/api/email/send', {
       email: payload.email,
+      href: payload.href,
       msg: payload.msg,
     })
     .then(response => {

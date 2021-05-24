@@ -16,7 +16,7 @@
           >
         </div>
         <div class="msg" ref="msg2">
-          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/img/exclamation.png" width="14px"></q-img>
           {{ msg2 }}
         </div>
         <input
@@ -27,7 +27,7 @@
           ref="loginName"
         />
         <div class="msg" ref="msg3">
-          <q-img src="~assets/images/exclamation.png" width="14px"></q-img>
+          <q-img src="~assets/img/exclamation.png" width="14px"></q-img>
           {{ msg3 }}
         </div>
         <input
@@ -59,13 +59,13 @@
         <!-- <div class="text-center">
             <div class="title2">第三方账号登录</div>
             <div>
-              <q-img src="~assets/images/logo-qq.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/img/logo-qq.png" width="26px" class="img"></q-img>
               <q-img
-                src="~assets/images/logo-wechat.png"
+                src="~assets/img/logo-wechat.png"
                 width="26px"
                 class="img"
               ></q-img>
-              <q-img src="~assets/images/logo-zfb.png" width="26px" class="img"></q-img>
+              <q-img src="~assets/img/logo-zfb.png" width="26px" class="img"></q-img>
             </div>
           </div> -->
       </q-card-section>

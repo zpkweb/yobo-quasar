@@ -4,7 +4,7 @@
       <div class="title">评价订单</div>
       <div class="row">
         <div class="col-3">
-          <q-img width="186px" src="~assets/images/commodity.png" class="image"></q-img>
+          <q-img width="186px" src="~assets/img/commodity.png" class="image"></q-img>
           <div class="detail">浅绿色树脂光泽版</div>
           <div class="size">130cmx180cm油画帆布</div>
           <div class="prise">¥7，900</div>

@@ -295,7 +295,8 @@ export default {
 .container2 {
   width: 1100px;
   margin: 0 auto;
-  padding: 20px 90px 0 90px;
+  // padding: 20px 90px 0 90px;
+  padding: 20px 90px 0 40px;
   .title2 {
     font-size: 20px;
   }

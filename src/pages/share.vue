@@ -26,7 +26,7 @@
 
 <style lang="scss" scoped>
 .container {
-  background: url("~assets/images/banner-artist.png") top center no-repeat;
+  background: url("~assets/img/banner-artist.png") top center no-repeat;
   background-size: auto 375px;
   color: #d6d7c5;
   font-weight: bolder;

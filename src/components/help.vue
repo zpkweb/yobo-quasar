@@ -16,7 +16,7 @@
         <q-page-container>
           <q-page padding class="help-page">
             <div class="help-page-search">
-              <q-img class="help-page-search-icon" src="~assets/images/search.png" width="16px" height="15px" />
+              <q-img class="help-page-search-icon" src="~assets/img/search.png" width="16px" height="15px" />
               <input class="help-page-search-input" type="text" placeholder="如何私人定制" />
             </div>
             <div class="help-page-content">

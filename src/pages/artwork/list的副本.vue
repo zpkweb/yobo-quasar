@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="banner relative-position">
-      <q-img src="~assets/images/banner-artist.png" height="360px"></q-img>
+      <q-img src="~assets/img/banner-artist.png" height="360px"></q-img>
       <div class="absolute-full text-center text">
         <div class="title">{{$t('artwork.list.artwork')}}</div>
         <div class="number">{{ artworkTotal }} {{$t('artwork.list.searchCriteria')}}</div>

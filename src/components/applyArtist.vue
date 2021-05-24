@@ -68,7 +68,7 @@
             v-model="country"
             :options="countryOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
         <!-- <select
@@ -94,7 +94,7 @@
             v-model="language"
             :options="languageOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
         <!-- <select
@@ -118,7 +118,7 @@
             v-model="findUs"
             :options="findUsOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
 
@@ -139,7 +139,7 @@
         <div class="row">
           <div class="col">已有4555，6783位艺术家入驻</div>
           <div class="col-grow back" @click="goPage1">
-            <q-img src="img:images/back.png" width="14px"></q-img>
+            <q-img src="img:img/back.png" width="14px"></q-img>
             上一步
           </div>
         </div>
@@ -162,7 +162,7 @@
             v-model="isFullTime"
             :options="isFullTimeOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
         <!-- <select
@@ -186,7 +186,7 @@
             v-model="onlineSell"
             :options="onlineSellOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
         <!-- <select
@@ -211,7 +211,7 @@
             v-model="sold"
             :options="soldOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
         <!-- <select
@@ -236,7 +236,7 @@
             v-model="channel"
             :options="channelOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
         <!-- <input
@@ -282,7 +282,7 @@
             v-model="medium"
             :options="mediumOptions"
             color="brand"
-            dropdown-icon="img:images/arrow-down.png"
+            dropdown-icon="img:img/arrow-down.png"
           />
         </div>
         <!-- <textarea
@@ -364,7 +364,7 @@
       </q-card-section>
 
       <div class="text-center">
-        <q-img src="img:images/success-filling.png" width="80px" />
+        <q-img src="img:img/success-filling.png" width="80px" />
       </div>
       <div class="text-center title">恭喜您！成为永宝第<br/>460，693位艺术家</div>
       <div class="text-center content">

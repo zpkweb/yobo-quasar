@@ -4,7 +4,7 @@
     <div class="banner relative-position">
 
       <q-img v-if="portrait.seller && portrait.seller.banner" :src="portrait.seller.banner" height="360px"></q-img>
-      <q-img v-else src="~assets/images/banner-artist.png" height="360px"></q-img>
+      <q-img v-else src="~assets/img/banner-artist.png" height="360px"></q-img>
 
       <div class="absolute-full text-center text">
         <template v-if="portrait.seller">
@@ -81,7 +81,7 @@
               <q-img
                   v-if="item.hasMyArtwork"
                   class="artwork-item-like"
-                  src="~assets/images/liked.png"
+                  src="~assets/img/liked.png"
                   width="16px"
                   height="14px"
                   @click="myArtwork(item)"
@@ -89,7 +89,7 @@
                 <q-img
                   v-else
                   class="artwork-item-like"
-                  src="~assets/images/like.png"
+                  src="~assets/img/like.png"
                   width="16px"
                   height="14px"
                   @click="myArtwork(item)"
@@ -124,7 +124,7 @@
       <q-img class="studio-banner" v-if="portrait.studio.banner" :src="portrait.studio.banner" height="400px"></q-img>
       <div class="studio-content">
         <h3 class="studio-content-title">{{portrait.studio.name}}</h3>
-        <iframe v-if="portrait.studio.ccId" :src="`http://video.zbgedu.com/example?isShowConfig=false&ccId=${portrait.studio.ccId}&siteId=${portrait.studio.siteId}&img_path=${portrait.studio.videoPhoto}`" class="studio-content-iframe" scrolling="no" frameBorder="0"></iframe>
+        <iframe v-if="portrait.studio.ccId" :src="`http://www.yoboart.com/video?isShowConfig=false&ccId=${portrait.studio.ccId}&siteId=${portrait.studio.siteId}&img_path=${portrait.studio.videoPhoto}`" class="studio-content-iframe" scrolling="no" frameBorder="0"></iframe>
 
         <video class="studio-content-video" v-else-if="portrait.studio.video" controls=""  name="media"><source :src="portrait.studio.video" type="video/mp4"></video>
 

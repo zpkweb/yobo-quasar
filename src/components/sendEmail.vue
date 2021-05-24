@@ -1,7 +1,7 @@
 <template>
   <div class="offer relative-position absolute" ref="offerPage">
     <q-img
-      src="~assets/images/close.png"
+      src="~assets/img/close.png"
       width="20px"
       class="offer-close absolute btn icon-close"
       @click="$emit('close-sendEmail')"
@@ -22,10 +22,11 @@
       ></textarea>
     </div>
     <q-btn
-      color="black"
-      class="full-width"
+
+      class="full-width send-btn"
       :disable="sending"
       @click="sendEmail"
+      :class="{'bg-active': isSend}"
     >
     {{ sending ? $t('home.sending') : $t('home.send')}}
     </q-btn>
@@ -38,8 +39,17 @@ export default {
     return {
       email: this.$store.state.user.info ? this.$store.state.user.info.email : '',
       msg: "",
-      sending: false
+      sending: false,
     };
+  },
+  computed: {
+    isSend(){
+      let disable = false;
+      if(this.email || this.msg){
+        disable = true;
+      }
+      return disable;
+    }
   },
   methods: {
     async sendEmail() {
@@ -89,6 +99,7 @@ export default {
       this.sending = true;
       const sendEmail = await this.$store.dispatch("home/sendEmail", {
         email: this.email,
+        href: window.location.href,
         msg: this.msg,
 
       })
@@ -123,7 +134,7 @@ export default {
 
   .offer-close {
     left: 290px;
-    top: 28px;
+    top: 15px;
   }
   .offer-title {
     font-size: 24px;
@@ -187,4 +198,12 @@ export default {
 .sending{
 
 }
+.send-btn{
+  color: #fff;
+  background-color: #526463;
+}
+.bg-active {
+
+    background-color: #152c2b !important;
+  }
 </style>

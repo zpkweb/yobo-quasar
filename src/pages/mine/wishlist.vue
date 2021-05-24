@@ -245,11 +245,11 @@ export default {
       margin: 7px auto 0 auto;
     }
     .image1 {
-      background: url("~assets/images/liked.png") no-repeat;
+      background: url("~assets/img/liked.png") no-repeat;
       background-size: 100%;
     }
     .image2 {
-      background: url("~assets/images/like.png") no-repeat;
+      background: url("~assets/img/like.png") no-repeat;
       background-size: 100%;
     }
 

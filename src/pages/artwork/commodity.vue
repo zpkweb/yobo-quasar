@@ -5,20 +5,20 @@
         <div class="carousel relative-position">
           <div class="button absolute">
             <!-- <div class="share cursor-pointer">
-              <q-img v-if="hasMyArtwork" src="~assets/images/share.png" width="16px" height="14px" />
-              <q-img v-else src="~assets/images/shared.png" width="16px" height="14px" />
+              <q-img v-if="hasMyArtwork" src="~assets/img/share.png" width="16px" height="14px" />
+              <q-img v-else src="~assets/img/shared.png" width="16px" height="14px" />
             </div> -->
             <div class="heart cursor-pointer q-ml-md" v-if="showMyArtwork">
               <q-img
                 v-if="hasMyArtwork"
-                src="~assets/images/liked.png"
+                src="~assets/img/liked.png"
                 width="16px"
                 height="14px"
                 @click="myArtwork"
               />
               <q-img
                 v-else
-                src="~assets/images/like.png"
+                src="~assets/img/like.png"
                 width="16px"
                 height="14px"
                 @click="myArtwork"
@@ -222,7 +222,7 @@
               :key="index"
             >
               <q-img
-                :src="`~assets/images/photoFrame/photoFrame-${index + 1}.png`"
+                :src="`~assets/img/photoFrame/photoFrame-${index + 1}.png`"
                 class="frame"
                 :class="{ active: photoFrame == index }"
                 @click="photoFrame = index"
@@ -264,7 +264,7 @@
           <div class="row text-center items-end advantages">
             <div class="col-4 item2">
               <q-img
-                src="~assets/images/ship.png"
+                src="~assets/img/ship.png"
                 width="30px"
                 class="image"
               ></q-img>
@@ -272,7 +272,7 @@
             </div>
             <div class="col-4 item2">
               <q-img
-                src="~assets/images/freereturn.png"
+                src="~assets/img/freereturn.png"
                 width="35px"
                 class="image"
               ></q-img>
@@ -280,7 +280,7 @@
             </div>
             <div class="col-4 item2">
               <q-img
-                src="~assets/images/pay.png"
+                src="~assets/img/pay.png"
                 width="30px"
                 class="image"
               ></q-img>
@@ -295,7 +295,7 @@
             </div>
             <div class="row contactus">
               <div class="contact col-grow btn">
-                <q-img src="~assets/images/contact.png" width="20px"></q-img>
+                <q-img src="~assets/img/contact.png" width="20px"></q-img>
               </div>
               <div class="askquestion col text-left btn">
                 <div>对于购买此画有任何疑问？</div>
@@ -307,7 +307,7 @@
               ref="offerPage"
             >
               <q-img
-                src="~assets/images/close.png"
+                src="~assets/img/close.png"
                 width="20px"
                 class="offer-close absolute btn icon-close"
                 @click="closeOfferPage"
@@ -361,7 +361,7 @@
               </div>
               <div class="row contactus">
                 <div class="contact col-grow btn">
-                  <q-img src="~assets/images/contact.png" width="20px"></q-img>
+                  <q-img src="~assets/img/contact.png" width="20px"></q-img>
                 </div>
                 <div class="askquestion col text-left btn">
                   <div>{{ $t("artwork.commodity.HavePainting") }}</div>
@@ -374,7 +374,7 @@
                 v-show="bidPop"
               >
                 <q-img
-                  src="~assets/images/close.png"
+                  src="~assets/img/close.png"
                   width="20px"
                   class="offer-close absolute btn icon-close"
                   @click="closeOfferPage"
@@ -414,14 +414,14 @@
 
             <div class="follow relative-position" ref="follow">
               <q-img
-                src="~assets/images/close.png"
+                src="~assets/img/close.png"
                 width="20px"
                 class="close absolute btn icon-close"
                 @click="close"
               ></q-img>
               <div class="row">
                 <div class="erweima">
-                  <q-img src="~assets/images/ERCode.png" width="55px"></q-img>
+                  <q-img src="~assets/img/ERCode.png" width="55px"></q-img>
                 </div>
                 <div class="follow-us col-grow">
                   <div>{{ $t("artwork.commodity.ScanAPP") }}</div>
@@ -1024,7 +1024,7 @@ export default {
         width: 100px;
         height: 36px;
         margin: 10px 0 0 0;
-        background-image: url("~assets/images/frame.png");
+        background-image: url("~assets/img/frame.png");
         background-size: cover;
         &:hover {
           outline: 2px solid rgb(173, 175, 139);
@@ -1034,7 +1034,7 @@ export default {
         outline: 2px solid rgb(173, 175, 139);
       }
       .custom {
-        background-image: url("~assets/images/custom.png");
+        background-image: url("~assets/img/custom.png");
       }
       .color {
         width: 100px;
@@ -1111,7 +1111,7 @@ export default {
       left: 0;
       .offer-close {
         left: 290px;
-        top: 28px;
+        top: 15px;
       }
       .offer-title {
         font-size: 24px;

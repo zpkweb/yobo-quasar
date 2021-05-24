@@ -65,7 +65,7 @@
       <div class="row items-end">
         <div class="col-3">
           <q-img
-            src="~assets/images/artist.png"
+            src="~assets/img/artist.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -74,7 +74,7 @@
         </div>
         <div class="col-3">
           <q-img
-            src="~assets/images/ship.png"
+            src="~assets/img/ship.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -83,7 +83,7 @@
         </div>
         <div class="col-3">
           <q-img
-            src="~assets/images/freereturn.png"
+            src="~assets/img/freereturn.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -92,7 +92,7 @@
         </div>
         <div class="col-3">
           <q-img
-            src="~assets/images/pay.png"
+            src="~assets/img/pay.png"
             class="advantage-img"
             width="55px"
           ></q-img>
@@ -209,7 +209,7 @@
               >
                 <div class="tab absolute-bottom text-center">
                   <div>{{item.name}}</div>
-                  <q-img src="~assets/images/next.png" width="20px"></q-img>
+                  <q-img src="~assets/img/next.png" width="20px"></q-img>
                 </div>
                 <div class="absolute-full bg"></div>
               </q-img>
@@ -267,13 +267,13 @@
             {{$t('home.OurFree')}}
           </div>
           <div class="mail text-center text-dark btn" @click="openOfferPage">
-            <q-img src="~assets/images/mail.png" width="14px"></q-img>
+            <q-img src="~assets/img/mail.png" width="14px"></q-img>
             {{$t('home.contactDirectly')}}
           </div>
 
           <div class="offer relative-position absolute" ref="offerPage" v-show="sendEmailPop">
             <q-img
-              src="~assets/images/close.png"
+              src="~assets/img/close.png"
               width="20px"
               class="offer-close absolute btn icon-close"
               @click="closeOfferPage"
@@ -321,7 +321,7 @@
               <div class="col-6">
                 <div class="row star">
                   <div class="col-2" v-for="i of item.star" :key="`star-${i}`">
-                    <q-img src="~assets/images/star.png" width="20px"></q-img>
+                    <q-img src="~assets/img/star.png" width="20px"></q-img>
                   </div>
                 </div>
                 <div class="col-12 buyer">{{item.title}}</div>
@@ -340,7 +340,7 @@
       <div class="title">{{$t('home.OurBestSellers')}}</div>
       <div @click="goArtists()" class="more absolute row btn">
         <div class="col-grow text">{{$t('home.More')}}</div>
-        <q-img src="~assets/images/more.png" class="col" width="22px"></q-img>
+        <q-img src="~assets/img/more.png" class="col" width="22px"></q-img>
       </div>
 
       <div class="row hot-artist">
@@ -355,7 +355,7 @@
         <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" style="width:20%;"  v-for="item in home.hotSaleSeller" :key="`artist-${item.sellerId}`">
           <img class="image" v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="180px" />
           <div class="name">{{item.firstname}} {{item.lastname}}</div>
-          <div class="country">{{item.country}}-{{item.typeName}}</div>
+          <div class="country">{{item.country}}{{ item.country && $store.state.sellerTypes[item.type] ? '-' : ''}} {{ $store.state.sellerTypes[item.type] }}</div>
         </router-link>
         </template>
       </div>
@@ -438,6 +438,7 @@ export default {
     async sendEmail() {
       const sendEmail = await this.$store.dispatch('home/sendEmail', {
         email: this.email,
+        href: window.location.href,
         msg: this.msg,
       })
       // console.log("sendEmail", sendEmail)
@@ -854,7 +855,7 @@ export default {
       left: 0;
       .offer-close {
         left: 290px;
-        top: 28px;
+        top: 15px;
       }
       .offer-title {
         font-size: 24px;

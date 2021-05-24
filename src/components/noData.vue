@@ -1,7 +1,7 @@
 <template>
   <div class="noData">
       <q-img
-        src="~assets/images/exclamatory.png"
+        src="~assets/img/exclamatory.png"
         width="52px"
         class="noData-img"
       ></q-img>
