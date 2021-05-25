@@ -10,6 +10,7 @@
             width="170px"
             @click="goIndex"
           ></q-img>
+
           <div class="choose-language-container">
             <q-btn
               size="xs"

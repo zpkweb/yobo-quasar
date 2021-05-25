@@ -1,10 +1,10 @@
 <template>
   <div>
+
     <q-carousel
       height="510px"
       :arrows="carouselArrows"
-      prev-icon="img:images/carousel-prev.png"
-      next-icon="img:images/carousel-next.png"
+      control-color="white"
       animated
       v-model="slide"
       infinite
@@ -27,6 +27,9 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
+
+
+
 
     <div class="text-white slide">
       <span class="number">{{ slide }}</span>
