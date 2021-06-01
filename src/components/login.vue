@@ -103,6 +103,7 @@ export default {
       //   this.msg = "用户名不能为空";
       //   this.$refs.msg.classList.add("block");
       // }
+
       if (this.name === "") {
         this.msg2 = "用户名/邮箱/手机不能为空";
         this.$refs.msg2.classList.add("opacity");
@@ -134,16 +135,18 @@ export default {
 
           // console.log("login token", token)
           // console.log("login userInfo", userInfo)
-          this.$q.cookies.set("token", token, {
-            expires: 1,
-            path: '/'
-          });
+          if(this.checkbox1){
+            this.$q.cookies.set("token", token, {
+              expires: 1,
+              path: '/'
+            });
 
-          // console.log("userInfo", userInfo)
-          this.$q.cookies.set("userInfo", userInfo, {
-            expires: 1,
-            path: '/'
-          })
+            this.$q.cookies.set("userInfo", userInfo, {
+              expires: 1,
+              path: '/'
+            })
+          }
+
 
           await this.$store.commit("user/setUserInfo", user.data);
           if(userInfo && userInfo.seller){

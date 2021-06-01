@@ -4,7 +4,7 @@
       <q-card-section class="row items-center q-pb-none section1">
         <div class="title relative-position">
           <!-- <div class="image absolute"></div> -->
-          <q-select class="search-type-select"  dense borderless v-model="searchType" :options="searchTypeOptions"  />
+          <q-select class="search-type-select"  dense borderless v-model="searchType" :options="searchTypeOptions" />
           <input type="text" :placeholder="`请输入您要搜索${searchType}名称`" class="input2" v-model="search" />
           <div class="btn search2 text-white" @click="searchSubmit">搜索</div>
         </div>
@@ -18,14 +18,29 @@
           v-close-popup
         />
       </q-card-section>
-      <div v-show="searchResult.length" ref="scrollTargetRef" class="q-pa-md" style="max-height: 250px; overflow: auto;">
-      <q-infinite-scroll @load="searchLoad" :offset="250" :scroll-target="$refs.scrollTargetRef">
-        <div v-for="(item, index) in searchResult" :key="index" class="caption">
+      <div v-if="searchResult.length" ref="scrollTargetRef" class="q-pa-md" style="max-height: 350px; overflow: auto;">
+      <q-infinite-scroll @load="searchLoad" :offset="350" :scroll-target="$refs.scrollTargetRef">
+        <div  v-for="(item, index) in searchResult" :key="index" class="caption">
           <router-link class="caption-item" :to="`/${$i18n.locale}/artist/${ item.sellerId }`" v-if="searchType == '艺术家'" >
 
-            <q-img v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="120px" height="120px" class="caption-img" />
+
+            <!-- <div class="avatar-content">
+              <q-img v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="120px" height="120px" class="caption-img" />
+              <q-img class="avatar" v-else src="~assets/img/default/avatar.png" />
+            </div> -->
+            <div class="caption-avatar">
+              <Avatar
+                :src="item && item.user && item.user.avatar"
+                width="120px"
+                height="120px"
+                radius
+              />
+            </div>
+
             <div class="caption-content">
-              <p class="caption-name">{{item.firstname}} {{item.lastname}}</p>
+              <p class="caption-content-item caption-name">{{item.firstname}} {{item.lastname}}</p>
+              <p class="caption-content-item">性别：{{item.gender}}</p>
+              <p class="caption-content-item">国家：{{item.country}}</p>
             </div>
           </router-link>
           <router-link class="caption-item" :to="`/${$i18n.locale}/artwork/${ item.commodityId }`" v-else-if="searchType == '艺术品'" >
@@ -34,7 +49,9 @@
             </div>
 
             <div class="caption-content">
-              <p class="caption-name">{{item.name}}</p>
+              <p class="caption-content-item caption-name">{{item.name}}</p>
+              <p class="caption-content-item">售价：{{item.price}}</p>
+              <p class="caption-content-item">尺寸：{{item.width}}cmX{{item.height}}cm</p>
             </div>
           </router-link>
         </div>
@@ -46,7 +63,7 @@
       </q-infinite-scroll>
     </div>
 
-
+    <div class="hots-search">
       <q-card-section v-show="!searchResult.length">
         <div>
           <div class="tag tag1">热门搜索</div>
@@ -58,11 +75,19 @@
           <div class="tag underline btn">艺术大家</div>
         </div>
       </q-card-section>
+    </div>
+
     </q-card>
   </div>
 </template>
 <script>
+import noData from "src/components/noData";
+import Avatar from 'src/components/avatar.vue';
 export default {
+  components: {
+    noData,
+    Avatar
+  },
   data() {
     return {
       searchResult: [],
@@ -73,6 +98,12 @@ export default {
       currentPage: 1,
       page: 0,
       total: 0,
+    }
+  },
+  watch: {
+    searchType: function() {
+      console.log(this.searchType)
+      this.searchResult = []
     }
   },
   methods: {
@@ -181,6 +212,10 @@ export default {
 
         }
         return artworkSearchData;
+    },
+    changeSearchType(item) {
+      console.log(item)
+      this.searchResult = []
     }
 
   },
@@ -188,9 +223,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .searchPop {
+
   max-width: none;
 }
 .card {
+  height: 500px;
   border-radius: 0;
   padding: 20px 10px;
   color: rgb(21, 44, 43);
@@ -333,7 +370,7 @@ export default {
     top: -16px;
   }
   .section1 {
-    margin-bottom: 40px;
+    // margin-bottom: 40px;
   }
   .tag {
     font-size: 16px;
@@ -345,21 +382,33 @@ export default {
   }
 }
 .caption {
+  margin: 20px 0;
   .caption-item {
     display: block;
     width: 100%;
-    margin: 10px 0;
+
     overflow: hidden;
+    .caption-avatar{
+      float: left;
+    }
     .caption-img {
       float: left;
     }
     .caption-content {
       float: left;
-      margin-left: 10px;
+      margin-left: 20px;
+      color: #333;
+      .caption-content-item{
+        margin: 0 0 10px 0;
+      }
       .caption-name {
-        color: #333;
+        font-weight: bold;
+        font-size: 18px;
       }
     }
   }
+}
+.hots-search{
+  margin-top: 40px;
 }
 </style>

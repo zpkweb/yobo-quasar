@@ -31,18 +31,26 @@
         :key="'like1-' + index"
       >
         <!-- <div class="col-3 image"></div> -->
-        <div class="image-box">
-          <q-img
-          v-if="item.seller && item.seller.user && item.seller.user.avatar"
-          :src="item.seller.user.avatar"
-          class="image"
-          width="160px"
-          height="160px"
-          contain></q-img>
-        </div>
+        <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="image-box">
+          <!-- <q-img
+            v-if="item.seller && item.seller.user && item.seller.user.avatar"
+            :src="item.seller.user.avatar"
+            class="image"
+            width="160px"
+            height="160px"
+            contain
+          /> -->
+          <Avatar
+            type="photo"
+            :src="item.seller && item.seller.user && item.seller.user.avatar"
+            width="160px"
+            height="160px"
+
+          />
+        </router-link>
 
         <div class="col-4 desc">
-          <div class="title">{{item.seller.firstname}} {{item.seller.lastname}}</div>
+          <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" class="title">{{item.seller.firstname}} {{item.seller.lastname}}</router-link>
           <div>{{$t('my.like.uploaded')}}{{item.commodityCount}}{{$t('my.like.SecondaryWorks')}}</div>
           <div>{{item.seller.country}}</div>
         </div>
@@ -67,9 +75,11 @@
 
 <script>
 import noData from "src/components/noData";
+import Avatar from 'src/components/avatar.vue';
 export default {
   components: {
     noData,
+    Avatar
   },
   data() {
     return {
@@ -186,6 +196,7 @@ export default {
     .desc {
       .title {
         font-size: 18px;
+        color: #333;
       }
     }
     .prise {

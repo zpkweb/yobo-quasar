@@ -2,6 +2,7 @@
   <q-page>
     <div class="banner relative-position">
       <q-img src="~assets/img/banner-artists.png" height="360px"></q-img>
+
       <div class="absolute-full text-center text">
         <div class="title">{{$t('artists.painter')}}</div>
         <div class="number">{{artistTotal}}{{$t('artists.PaintersCriteria')}}</div>
@@ -95,15 +96,33 @@
           :key="index"
         >
           <router-link class="artist-router-link" :to="`artist/${item.sellerId}`">
-            <div class="image">
+            <!-- <div class="image">
+              <q-img
+                v-if="item && item.user && item.user.avatar"
+                :src="item.user.avatar"
+                width="231px"
+                height="231px"
+                class="artist-avatar"
+              />
+
+          </div> -->
+          <!-- <div class="avatar-content">
             <q-img
-              v-if="item && item.user && item.user.avatar"
-              :src="item.user.avatar"
-              width="231px"
-              height="231px"
-              class="artist-avatar"
-            ></q-img>
-          </div>
+                v-if="item && item.user && item.user.avatar"
+                :src="item.user.avatar"
+                width="231px"
+                height="231px"
+                class="avatar"
+              />
+            <q-img class="avatar" v-else src="~assets/img/default/avatar.png" />
+          </div> -->
+          <Avatar
+            :src="item && item.user && item.user.avatar"
+            width="231px"
+            height="231px"
+            type="photo"
+          />
+
           <div class=" text-left">{{ item.firstname }} {{ item.lastname }}</div>
           <div class="text-left">{{ item.country }} {{ item.country && $store.state.sellerTypes[item.type] ? '-' : ''}} {{ $store.state.sellerTypes[item.type] }}</div>
           </router-link>
@@ -143,9 +162,11 @@
 
 <script>
 import noData from "src/components/noData";
+import Avatar from 'src/components/avatar.vue';
 export default {
   components: {
     noData,
+    Avatar
   },
   data() {
     return {
@@ -240,7 +261,7 @@ export default {
       // hots: false,
       // news: false,
       newPage: "",
-      pageSize: parseInt(this.$route.query.pageSize) || 10,
+      pageSize: parseInt(this.$route.query.pageSize) || 12,
       currentPage: parseInt(this.$route.query.currentPage) || 1,
       total: 0
     };
@@ -256,7 +277,7 @@ export default {
       ...serach,
       locale,
       currentPage: parseInt(currentPage) || 1,
-      pageSize: parseInt(pageSize) || 10,
+      pageSize: parseInt(pageSize) || 12,
     });
     if(sellerSearch.success){
       const { total, currentPage, pageSize, list } = sellerSearch.data;
@@ -323,6 +344,7 @@ export default {
 .banner {
   width: 100%;
   color: #d6d7c5;
+
   .text {
     padding-top: 80px;
     .title {
@@ -413,21 +435,13 @@ export default {
       float: left;
       margin: 20px 0;
     }
-    .image {
+    .image, .avatar-content {
       width: 100%;
       height: 231px;
       position: relative;
       margin: 10px 0 10px 0;
       border: 6px solid #152c2b;
       overflow: hidden;
-    }
-
-    .artist-avatar{
-
-      transition: all 0.4s;
-    }
-    .artist-avatar:hover{
-      transform: scale(1.2);
     }
 
   }

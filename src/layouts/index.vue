@@ -719,6 +719,8 @@ body {
   border: 1px solid rgb(21, 44, 43) !important;
 }
 
+
+
 .icon-close {
   transition: transform 0.5s;
   -moz-transition: -moz-transform 0.5s;

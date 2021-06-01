@@ -4,13 +4,13 @@
       <div class="title2">{{$t('my.info.shippingAddress')}}</div>
       <!-- <input class="item" :dense="true" square outlined v-model="address.name" :placeholder="$t('my.info.name')" /> -->
       <div class="name">
-        <input class="firstname" type="input" v-model="address.firstname" :placeholder="$t('my.info.LastName')" />
-        <input class="lastname" type="input" v-model="address.lastname" :placeholder="$t('my.info.name')" />
+        <input class="firstname" :class="{'input-active': address.firstname}" type="input" v-model="address.firstname" :placeholder="$t('my.info.LastName')" />
+        <input class="lastname" :class="{'input-active': address.lastname}" type="input" v-model="address.lastname" :placeholder="$t('my.info.name')" />
       </div>
-      <input class="item" :dense="true" square outlined standout v-model="address.phone" :placeholder="$t('my.info.phone')" />
-      <input class="item" :dense="true" square outlined v-model="address.country" :placeholder="$t('my.info.country')" />
-      <input class="item" :dense="true" square outlined v-model="address.city" :placeholder="$t('my.info.province')" />
-      <input class="item" :dense="true" square outlined v-model="address.detail" :placeholder="$t('my.info.detailedAddress')" />
+      <input class="item" :class="{'input-active': address.phone}" :dense="true" square outlined standout v-model="address.phone" :placeholder="$t('my.info.phone')" />
+      <input class="item" :class="{'input-active': address.country}" :dense="true" square outlined v-model="address.country" :placeholder="$t('my.info.country')" />
+      <input class="item" :class="{'input-active': address.city}" :dense="true" square outlined v-model="address.city" :placeholder="$t('my.info.province')" />
+      <input class="item" :class="{'input-active': address.detail}" :dense="true" square outlined v-model="address.detail" :placeholder="$t('my.info.detailedAddress')" />
 
         <!-- <select
           class="item item-select"
@@ -37,12 +37,14 @@
           v-model="user.email"
           :placeholder="$t('my.info.emailAddress')"
           class="item"
+          :class="{'input-active': user.email}"
         />
         <input
           type="text"
           v-model="user.phone"
           :placeholder="$t('my.info.contactPhoneNumber')"
           class="item"
+          :class="{'input-active': user.phone}"
         />
         <!-- <div class="title2">您是否需要开具发票？</div>
         <div class="invoice">
@@ -322,6 +324,10 @@ input {
     border: 1px solid #152c2b;
     color: #152c2b;
   }
+}
+.input-active{
+  border: 1px solid #152c2b;
+  color: #152c2b;
 }
 .item::v-deep {
   .el-cascader {

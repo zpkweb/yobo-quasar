@@ -5,7 +5,7 @@
 
       <q-img v-if="portrait.seller && portrait.seller.banner" :src="portrait.seller.banner" height="360px"></q-img>
       <q-img v-else src="~assets/img/banner-artist.png" height="360px"></q-img>
-
+      <div class="banner-shadow"></div>
       <div class="absolute-full text-center text">
         <template v-if="portrait.seller">
           <div class="text-bold">{{ $store.state.sellerTypes[portrait.seller.type]}}｜{{portrait.seller.country}}</div>
@@ -62,10 +62,18 @@
     </div>
     <div id="seller" class="desc row">
       <div class="col-4" v-if="portrait">
-        <q-img v-if="portrait && portrait.user && portrait.user.avatar" :src="portrait.user.avatar"></q-img>
+
+        <!-- <div class="avatar-content">
+          <q-img v-if="portrait && portrait.user && portrait.user.avatar" :src="portrait.user.avatar"></q-img>
+          <q-img class="avatar" v-else src="~assets/img/default/avatar.png" />
+        </div> -->
+        <Avatar
+          :src="portrait && portrait.user && portrait.user.avatar"
+          type="photo"
+        />
       </div>
       <div class="col-7 offset-1 text-right resume">
-        <p  v-if="portrait && portrait.metadata" class="text-left fontSize-16">{{ portrait.metadata.profile }}</p>
+        <div  v-if="portrait && portrait.metadata" class="text-left fontSize-16" v-html="portrait.metadata.profile"></div>
         <div class="resume4">
           <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
@@ -142,7 +150,7 @@
       <div class="title text-center ">{{$t('artist.MyResume')}}</div>
       <div class="title2 text-right">
 
-        <div v-for="item in Object.keys(portrait.resume)" @click="resumeTypeActive = item">{{$t(resumeTypes[item])}}</div>
+        <div style="cursor: pointer;" v-for="item in Object.keys(portrait.resume)" v-if="portrait.resume[item].length" @click="resumeTypeActive = item">{{$t(resumeTypes[item])}}</div>
 
       </div>
       <div class="content row">
@@ -159,7 +167,13 @@
 </template>
 
 <script>
+import noData from "src/components/noData";
+import Avatar from 'src/components/avatar.vue';
 export default {
+  components: {
+    noData,
+    Avatar
+  },
   data() {
     return {
       navs: [{
@@ -385,6 +399,13 @@ export default {
 .banner {
   width: 100%;
   color: #d6d7c5;
+  .banner-shadow{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 50px #000 inset;
+  }
   .text {
     padding-top: 80px;
     .title {
@@ -484,7 +505,9 @@ export default {
       .artwork-item{
         overflow: hidden;
         position: relative;
-
+        width: 186px;
+        height: 248px;
+        display: flex;
       }
       .artwork-item-like{
         display: none;

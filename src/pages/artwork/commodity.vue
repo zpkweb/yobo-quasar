@@ -145,7 +145,7 @@
           <div class="title">{{ $t("artwork.commodity.AboutAuthor") }}</div>
           <div class="row">
             <div class="col-4">
-              <q-img
+              <!-- <q-img
                 v-if="
                   artwork &&
                   artwork.seller &&
@@ -154,7 +154,16 @@
                 "
                 :src="artwork.seller.user.avatar"
                 width="210px"
-              ></q-img>
+              ></q-img> -->
+              <Avatar
+                :src="
+                  artwork &&
+                  artwork.seller &&
+                  artwork.seller.user &&
+                  artwork.seller.user.avatar
+                "
+                width="210px"
+              />
             </div>
 
             <div class="col-8">
@@ -543,7 +552,7 @@
             :key="'browsingHistory' + index"
           >
             <div class="paint">
-              <q-img
+              <Avatar
                 :src="
                   item && item.photos && item.photos.length
                     ? item.photos[0].src
@@ -565,7 +574,13 @@
 </template>
 
 <script>
+import noData from "src/components/noData";
+import Avatar from 'src/components/avatar.vue';
 export default {
+  components: {
+    noData,
+    Avatar
+  },
   data() {
     return {
       slide: 0,

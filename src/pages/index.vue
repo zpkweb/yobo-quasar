@@ -336,14 +336,14 @@
     </div>
 
 
-    <div class="hot-artists text-center relative-position">
+    <div class="hot-artists text-center ">
       <div class="title">{{$t('home.OurBestSellers')}}</div>
       <div @click="goArtists()" class="more absolute row btn">
         <div class="col-grow text">{{$t('home.More')}}</div>
         <q-img src="~assets/img/more.png" class="col" width="22px"></q-img>
       </div>
 
-      <div class="row hot-artist">
+      <div class=" hot-artist">
         <!-- <div class="col-2" v-for="i in [1, 2, 3, 4, 5]" :key="i">
           <div class="image"></div>
           <div class="name">JEFF FERST</div>
@@ -352,8 +352,17 @@
         <template v-if="home && home.hotSaleSeller">
 
 
-        <router-link :to="`/${$i18n.locale}/artist/${item.sellerId}`" style="width:20%;"  v-for="item in home.hotSaleSeller" :key="`artist-${item.sellerId}`">
-          <img class="image" v-if="item && item.user && item.user.avatar" :src="item.user.avatar" width="180px" />
+        <router-link class="hot-artist-item" :to="`/${$i18n.locale}/artist/${item.sellerId}`" style="width:20%;"  v-for="item in home.hotSaleSeller" :key="`artist-${item.sellerId}`">
+          <!-- <div class="image">
+            <q-img class="avatar" v-if="item && item.user && item.user.avatar" :src="item.user.avatar" height="180px" />
+            <q-img class="avatar" v-else src="~assets/img/default/avatar.png" />
+          </div> -->
+          <Avatar
+            :src="item && item.user && item.user.avatar"
+            width="180px"
+            height="180px"
+            radius
+          />
           <div class="name">{{item.firstname}} {{item.lastname}}</div>
           <div class="country">{{item.country}}{{ item.country && $store.state.sellerTypes[item.type] ? '-' : ''}} {{ $store.state.sellerTypes[item.type] }}</div>
         </router-link>
@@ -366,9 +375,12 @@
 
 <script>
 import Carousel from 'src/components/carousel.vue';
+import Avatar from 'src/components/avatar.vue';
+
 export default {
   components:{
-    Carousel
+    Carousel,
+    Avatar
   },
   data() {
     return {
@@ -832,18 +844,36 @@ export default {
   .name {
     font-size: 18px;
     color: #333;
+    margin-top: 20px;
   }
   .country{
     font-size: 12px;
     font-family: "Heiti SC";
     color: #333;
   }
-  .image {
-    margin-bottom: 30px;
-    border-radius: 50%;
-    width: 180px;
-    height: 180px;
+  .hot-artist{
+    overflow: hidden;
   }
+  .hot-artist-item {
+    text-align: center;
+    float: left;
+
+    .image {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto;
+      border-radius: 50%;
+      overflow: hidden;
+      .avatar{
+        transition: all 0.4s;
+      }
+      .avatar:hover{
+        transform: scale(1.2);
+      }
+    }
+  }
+
+
 }
 
 

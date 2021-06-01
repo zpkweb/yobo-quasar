@@ -165,11 +165,13 @@
             <div class="artwork-list-user">
               <div class="artwork-list-seller" v-if="item.seller">
                 <div class="artwork-list-avatar-content">
-                  <q-img
-                    class="artwork-list-seller-img"
-                    v-if="item.seller.user.avatar"
+
+                  <Avatar
                     :src="item.seller.user.avatar"
-                  ></q-img>
+                    width="25px"
+                    height="25px"
+                    radius
+                  />
                   <span class="artwork-list-seller-surname"
                     >{{ item.seller.firstname }}{{ item.seller.lastname }}</span
                   >
@@ -278,9 +280,11 @@
 
 <script>
 import noData from "src/components/noData";
+import Avatar from 'src/components/avatar.vue';
 export default {
   components: {
     noData,
+    Avatar
   },
   watch: {
     $route: "changeQueryData",
