@@ -1,12 +1,12 @@
 <template>
   <div class="avatar-content" :class="{'avatar-radius': typeof radius != 'undefined' }" :style="{width:width,  height: height }">
-    <q-img class="avatar" v-if="src" :src="src"  />
-    <q-img class="avatar" v-else :src="type ? img[type] : img.avatar"  />
+    <q-img :class="{'avatar': typeof scale != 'undefined'}" v-if="src" :src="src"  />
+    <q-img :class="{'avatar': typeof scale != 'undefined'}" v-else :src="type ? img[type] : img.avatar"  />
   </div>
 </template>
 <script>
 export default{
-  props: ['src', 'width', 'height', 'radius', 'type'],
+  props: ['src', 'width', 'height', 'radius', 'type', 'scale'],
   data() {
     return {
       img: {

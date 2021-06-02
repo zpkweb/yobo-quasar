@@ -121,6 +121,7 @@
             width="231px"
             height="231px"
             type="photo"
+            scale
           />
 
           <div class=" text-left">{{ item.firstname }} {{ item.lastname }}</div>

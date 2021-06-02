@@ -59,7 +59,7 @@
           <!-- <div class="btn follow follow2 text-white text-center">
             +关注艺术家
           </div> -->
-          <div class="btn follow follow2 text-white text-center" @click="myArtist(item)">{{ item.hasMyArtist ? $t('my.like.Followed') : '+'+$t('my.like.FollowArtist')}}</div>
+          <div class="btn follow  text-white text-center" :class="{'follow-active': item.hasMyArtist}" @click="myArtist(item)">{{ item.hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
       </div>
     </template>
@@ -68,7 +68,7 @@
     <noData
       v-else
       text="my.like.NoData"
-      :routerLink="`/${$i18n.locale}/artists`"
+      :routerLink="`/${$i18n.locale}/artists?type=&country=&surname=&other=`"
     />
   </div>
 </template>
@@ -180,14 +180,14 @@ export default {
     }
 
     .follow {
-      background-color: #152c2b;
-      padding: 5px 0;
-      font-size: 18px;
-      font-weight: bolder;
       width: 160px;
-    }
-    .follow2 {
       background-color: #adaf8b;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: bolder;
+    }
+    .follow-active {
+      background-color: #152c2b;
     }
     .desc,
     .prise {

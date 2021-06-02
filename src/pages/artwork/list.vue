@@ -133,7 +133,7 @@
           maxCols="4"
         ></vue-waterfall-easy>
       </div> -->
-      <div class="q-pa-md" v-if="searchResult.list && searchResult.list.length">
+      <div  v-if="searchResult.list && searchResult.list.length">
         <!-- <q-btn class="q-mb-md" color="primary" label="Regenerate layout" @click="generateCells" /> -->
 
         <div class="column example-container">
@@ -152,11 +152,17 @@
               :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
               class="artwork-list-item"
             >
-              <q-img
+              <!-- <q-img
                 class="artwork-list-img"
                 v-if="item.photos && item.photos.length"
                 :src="item.photos.length ? item.photos[0] : ''"
-              ></q-img>
+              ></q-img> -->
+              <Avatar
+                :src="item.photos && item.photos.length ? item.photos[0] : ''"
+                width="218px"
+                type="photo"
+                scale
+              />
             </router-link>
             <!-- <div v-for="(text, j) in cell" :key="j">
               {{ text }}
@@ -167,6 +173,7 @@
                 <div class="artwork-list-avatar-content">
 
                   <Avatar
+                    class="artwork-list-avatar"
                     :src="item.seller.user.avatar"
                     width="25px"
                     height="25px"
@@ -178,13 +185,20 @@
 
                   <div class="artwork-list-seller-pop">
                     <div class="artwork-list-seller-pop-header">
-                      <q-img
+                      <!-- <q-img
                         class="artwork-list-seller-pop-img"
                         v-if="item.seller.user.avatar"
                         :src="item.seller.user.avatar"
                         width="30px"
                         height="30px"
-                      ></q-img>
+                      ></q-img> -->
+                      <Avatar
+                        class="artwork-list-seller-pop-img"
+                        :src="item.seller.user.avatar"
+                        width="30px"
+                        height="30px"
+                        radius
+                      />
                       <div class="artwork-list-seller-pop-text">
                         <span class="artwork-list-seller-pop-surname"
                           >{{ item.seller.firstname
@@ -1129,7 +1143,10 @@ export default {
 .artwork-list-avatar-content {
   float: left;
   position: relative;
-
+  .artwork-list-avatar{
+    float: left;
+    margin-top: 13px;
+  }
   .artwork-list-seller-pop {
     display: none;
     position: absolute;
@@ -1259,7 +1276,7 @@ $x: 4
   .artwork-list
     position: relative
     width: 25%
-    margin: 10px
+    padding: 10px
 
     box-sizing: border-box
 
@@ -1279,9 +1296,9 @@ $x: 4
       left: 0
       bottom: 6px
       z-index: 9
-      width: 100%
+      width: 230px
       height: 50px
-      margin: 0
+      margin: 10px
       padding: 0 16px
       line-height: 50px
       text-align: center

@@ -31,11 +31,11 @@
             <div class="num">{{ item.price[$i18n.locale] }}</div>
           </div>
           <div class="col-2 row items-center">
-            <div class="btn buy text-white text-center">
+            <div class="btn wishlist-like buy text-white text-center" :class="{'wishlist-like-active': item.hasMyArtwork}" @click="myArtwork(item, index)">
               <div
                 class="btn heart"
                 :class="item.hasMyArtwork ? 'image1' : 'image2'"
-                @click="myArtwork(item, index)"
+
               >
                 <!-- {{hasMyArtwork ? '已喜欢' : '喜欢'}} -->
               </div>
@@ -253,13 +253,7 @@ export default {
       background-size: 100%;
     }
 
-    .buy {
-      background-color: #152c2b;
-      padding: 5px 0;
-      font-size: 18px;
-      font-weight: bolder;
-      width: 160px;
-    }
+
     .desc,
     .prise {
       padding: 30px 0;
@@ -304,6 +298,17 @@ export default {
   .text {
     color: #adaf8b;
   }
+}
+.wishlist-like{
+  width: 160px;
+  padding: 5px 0;
+  font-size: 18px;
+  font-weight: bolder;
+  // background-color: #adaf8b;
+  background-color: #152c2b;
+}
+.wishlist-like-active{
+  background-color: #152c2b;
 }
 </style>
 

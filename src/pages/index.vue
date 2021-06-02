@@ -362,6 +362,7 @@
             width="180px"
             height="180px"
             radius
+            scale
           />
           <div class="name">{{item.firstname}} {{item.lastname}}</div>
           <div class="country">{{item.country}}{{ item.country && $store.state.sellerTypes[item.type] ? '-' : ''}} {{ $store.state.sellerTypes[item.type] }}</div>

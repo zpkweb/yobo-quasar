@@ -104,7 +104,14 @@
                 />
               <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="artwork-item text-center"  :key="`artwork-${index}`">
 
-                <q-img class="artwork-item-img" :src="item.photos[0]" ></q-img>
+                <!-- <q-img class="artwork-item-img" :src="item.photos[0]" ></q-img> -->
+                <Avatar
+                  class="artwork-item-img"
+                  :src="item.photos[0]"
+                  type="photo"
+                  width="186px"
+                  scale
+                />
               </router-link>
               <p class="artwork-item-name">{{item.name}}</p>
             </div>
@@ -466,6 +473,8 @@ export default {
       }
       .btn {
         display: inline-block;
+        width: 140px;
+        text-align: center;
         background-color: #152c2b;
         padding: 8px 20px;
         letter-spacing: 2px;
