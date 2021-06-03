@@ -1,6 +1,6 @@
 <template>
   <q-page>
-<div class="row container">
+    <div class="row container">
       <div class="col-8">
         <div class="carousel relative-position">
           <div class="button absolute">
@@ -25,7 +25,7 @@
               />
             </div>
           </div>
-          <div class="q-pa-md carousel1">
+          <!-- <div class="q-pa-md carousel1">
             <q-carousel
               swipeable
               animated
@@ -41,28 +41,28 @@
                 artwork.commodity.photos.length
               "
             >
-              <!-- <q-carousel-slide
-                v-for="(item, index) in artwork.commodity.photos"
-                :key="index"
-                :name="index"
-                :img-src="item.src"
-                height="400px"
-              /> -->
               <q-carousel-slide
                 v-for="(item, index) in artwork.commodity.photos"
                 :key="index"
                 :name="index"
                 :img-src="item.src"
-                >
-                  <q-img
-                    :src="item.src"
-                    style="max-width: 768px; height: 400px;"
-
-                    contain
-                  />
-                </q-carousel-slide>
+              >
+                <q-img
+                  :src="item.src"
+                  style="max-width: 768px; height: 400px"
+                  contain
+                />
+              </q-carousel-slide>
             </q-carousel>
-          </div>
+          </div> -->
+
+          <ShowCommodity
+            v-if="artwork && artwork.commodity"
+            :commoditys="[...artwork.commodity.videos, ...artwork.commodity.photos]"
+
+          >
+
+          </ShowCommodity>
         </div>
         <div class="top"></div>
         <div class="container2">
@@ -79,18 +79,24 @@
                     : ''
                 "
                 width="350px"
-
               ></q-img>
             </div>
             <div class="col-6 left2">
-              <div class="name" v-if="artwork && artwork.commodity">{{ artwork.commodity.name }}</div>
-              <div class="year title-color" v-if="artwork && artwork.commodity && artwork.commodity.createdDate">
+              <div class="name" v-if="artwork && artwork.commodity">
+                {{ artwork.commodity.name }}
+              </div>
+              <div
+                class="year title-color"
+                v-if="
+                  artwork && artwork.commodity && artwork.commodity.createdDate
+                "
+              >
                 {{ artwork.commodity.createdDate.substr(0, 4) }}
               </div>
               <div class="painter title-color" v-if="artwork && artwork.seller">
-                {{ artwork.seller ? artwork.seller.firstname : '' }}
-                {{ artwork.seller ? artwork.seller.lastname : '' }}
-                {{ artwork.seller ? artwork.seller.country : '' }}
+                {{ artwork.seller ? artwork.seller.firstname : "" }}
+                {{ artwork.seller ? artwork.seller.lastname : "" }}
+                {{ artwork.seller ? artwork.seller.country : "" }}
               </div>
               <div class="row">
                 <div class="col-6 item">
@@ -101,7 +107,8 @@
                     <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
                     <div v-if="artwork && artwork.commodity">
                       {{
-                        artwork.commodity.categorys && artwork.commodity.categorys.length
+                        artwork.commodity.categorys &&
+                        artwork.commodity.categorys.length
                           ? artwork.commodity.categorys[0].name
                           : ""
                       }}
@@ -109,12 +116,13 @@
                   </div>
                 </div>
                 <!-- v-if="$store.state.isShowPay" -->
-                <div class="col-6 item" >
+                <div class="col-6 item">
                   <div class="title2 title-color">
                     {{ $t("artwork.commodity.OtherDetails") }}
                   </div>
-                  <div class="contant">
-                    {{ $t("artwork.commodity.CanFree") }}
+                  <div class="contant" v-if="artwork && artwork.commodity">
+                    <!-- {{ $t("artwork.commodity.CanFree") }} -->
+                    {{ artwork.commodity.details || $t("layout.no") }}
                   </div>
                 </div>
 
@@ -129,12 +137,15 @@
                   </div>
                 </div>
                 <!-- <div class="col-6 item" v-if="$store.state.isShowPay"> -->
-                  <div class="col-6 item mt10">
+                <div class="col-6 item mt10">
                   <div class="title2 title-color">
                     {{ $t("artwork.commodity.Postage") }}
                   </div>
-                  <div class="contant">
-                    {{ $t("artwork.commodity.FreeWeeks") }}
+                  <div class="contant" v-if="artwork && artwork.commodity">
+                    {{
+                      artwork.commodity.postage ||
+                      $t("artwork.commodity.FreeWeeks")
+                    }}
                   </div>
                 </div>
               </div>
@@ -168,7 +179,9 @@
 
             <div class="col-8">
               <div class="row painter">
-                <div class="col title-color" v-if="artwork.commodity">{{ artwork.commodity.name }}</div>
+                <div class="col title-color" v-if="artwork.commodity">
+                  {{ artwork.commodity.name }}
+                </div>
                 <router-link
                   :to="`/${$i18n.locale}/artist/${artwork.seller.sellerId}`"
                   class="col-grow"
@@ -195,17 +208,30 @@
               artwork.commodity.height
             }}cm
           </div>
-          <div v-if="artwork && artwork.commodity">{{ artwork.commodity.techniques && artwork.commodity.techniques.length ? artwork.commodity.techniques[0].name : '' }}</div>
+          <div v-if="artwork && artwork.commodity">
+            {{
+              artwork.commodity.techniques &&
+              artwork.commodity.techniques.length
+                ? artwork.commodity.techniques[0].name
+                : ""
+            }}
+          </div>
         </div>
 
         <!-- 艺术品价格 -->
         <!-- <div class="prise"><span class="symbol">¥</span><span>7，000</span></div> -->
 
         <template v-if="$store.state.isShowPay">
-          <div class="soldout" v-if="artwork.commodity && artwork.commodity.state == 2">
+          <div
+            class="soldout"
+            v-if="artwork.commodity && artwork.commodity.state == 2"
+          >
             {{ $t("artwork.commodity.Sold") }}
           </div>
-          <div class="off" v-else-if="artwork.commodity && artwork.commodity.state == 3">
+          <div
+            class="off"
+            v-else-if="artwork.commodity && artwork.commodity.state == 3"
+          >
             {{ $t("artwork.commodity.HasBeenRemoved") }}
           </div>
           <div class="prise" v-else>{{ price }}</div>
@@ -474,16 +500,20 @@
           >
             <div class="paint">
               <q-img
-                :src="
-                  item.photos && item.photos.length ? item.photos[0] : ''
-                "
+                :src="item.photos && item.photos.length ? item.photos[0] : ''"
                 width="208px"
                 height="208px"
               />
             </div>
             <div class="text text-left">
               <!-- <div>丙烯酸 • 亚麻</div> -->
-              <div>{{ item.category && item.category.legnth ? item.category[0].name : "" }}</div>
+              <div>
+                {{
+                  item.category && item.category.legnth
+                    ? item.category[0].name
+                    : ""
+                }}
+              </div>
               <div>{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </router-link>
@@ -491,7 +521,12 @@
       </div>
     </div>
 
-    <div class="similar-paints paints" v-if="artwork && artwork.commoditySimilar && artwork.commoditySimilar.length">
+    <div
+      class="similar-paints paints"
+      v-if="
+        artwork && artwork.commoditySimilar && artwork.commoditySimilar.length
+      "
+    >
       <div class="container text-center">
         <div class="relative-position">
           <div class="title">{{ $t("artwork.commodity.SimilarWorksArt") }}</div>
@@ -505,7 +540,6 @@
           <router-link
             :to="`${item.commodityId}`"
             class="col-3"
-
             v-for="(item, index) in artwork.commoditySimilar"
             :key="'commoditySimilar' + index"
           >
@@ -519,7 +553,13 @@
               />
             </div>
             <div class="text text-left">
-              <div>{{ item.categorys && item.categorys.length ? item.categorys[0].name : "" }}</div>
+              <div>
+                {{
+                  item.categorys && item.categorys.length
+                    ? item.categorys[0].name
+                    : ""
+                }}
+              </div>
               <div>{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </router-link>
@@ -563,7 +603,13 @@
               />
             </div>
             <div class="text text-left">
-              <div>{{ item.categorys && item.categorys.length ? item.categorys[0].name : "" }}</div>
+              <div>
+                {{
+                  item.categorys && item.categorys.length
+                    ? item.categorys[0].name
+                    : ""
+                }}
+              </div>
               <div>{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </div>
@@ -575,12 +621,32 @@
 
 <script>
 import noData from "src/components/noData";
-import Avatar from 'src/components/avatar.vue';
+import Avatar from "src/components/avatar.vue";
+import ShowCommodity from "src/components/showCommodity.vue"
 export default {
   components: {
     noData,
-    Avatar
+    Avatar,
+    ShowCommodity,
   },
+  watch: {
+    async $route(to, from) {
+      // 对路由变化作出响应...
+      // console.log(to, from)
+      const { locale, artworkId } = this.$route.params;
+
+      const userInfo = this.$q.cookies.get("userInfo");
+
+      console.log("created", userInfo);
+
+      await this.$store.dispatch("artwork/getArtwork", {
+        locale,
+        artworkId,
+        userId: userInfo ? userInfo.userId : "",
+      });
+    },
+  },
+
   data() {
     return {
       slide: 0,
@@ -666,54 +732,50 @@ export default {
     //   artworkId,
     //   userId: store.state.user.info.userId
     // });
-
   },
   async created() {
     const { locale, artworkId } = this.$route.params;
 
     const userInfo = this.$q.cookies.get("userInfo");
 
-    console.log('created', userInfo)
+    console.log("created", userInfo);
 
     await this.$store.dispatch("artwork/getArtwork", {
       locale,
       artworkId,
-      userId: userInfo ? userInfo.userId : ''
+      userId: userInfo ? userInfo.userId : "",
     });
-
   },
   async mounted() {
-
     // let hasMyArtwork = false;
     // console.log("commodity", this.$store.state.user.info);
     // setTimeout(async () => {
-      // if (this.$store.state.user.info) {
-        // const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
-        //   userId: this.$store.state.user.info.userId,
-        //   artworkId: this.$route.params.artworkId,
-        // });
-        // hasMyArtwork = hasMyArtworkData.success;
+    // if (this.$store.state.user.info) {
+    // const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
+    //   userId: this.$store.state.user.info.userId,
+    //   artworkId: this.$route.params.artworkId,
+    // });
+    // hasMyArtwork = hasMyArtworkData.success;
 
-        // await this.$store.dispatch("my/addMyBrowsingHistory", {
-        //   userId: this.$store.state.user.info.userId,
-        //   artworkId: this.$route.params.artworkId,
-        // });
+    // await this.$store.dispatch("my/addMyBrowsingHistory", {
+    //   userId: this.$store.state.user.info.userId,
+    //   artworkId: this.$route.params.artworkId,
+    // });
     //   }
     //   this.hasMyArtwork = hasMyArtwork;
-    //   this.showMyArtwork = true;
+      this.showMyArtwork = true;
 
     // }, 500);
-    this.$nextTick(()=>{
+    this.$nextTick(() => {
       // console.log("this.$refs.scrollDom", this.$refs.scrollDom)
-      if(this.$refs.scrollDom){
+      if (this.$refs.scrollDom) {
         this.scrollDomTop = this.$refs.scrollDom.offsetTop;
         this.scrollDomLeft = this.$refs.scrollDom.offsetLeft;
       }
 
       // 监听页面滚动
       window.addEventListener("scroll", this.handleScroll);
-    })
-
+    });
   },
   destroyed() {
     // 销毁页面滚动
@@ -732,12 +794,11 @@ export default {
       //   this.$store.state.artwork.data.commodity
       // );
       return this.defaultPriceOptions.map((item) => {
-        if(this.$store.state.artwork){
+        if (this.$store.state.artwork) {
           return Object.assign(item, {
-            price: this.$store.state.artwork.data.commodity.price
+            price: this.$store.state.artwork.data.commodity.price,
           });
         }
-
       });
     },
     price() {
@@ -910,7 +971,7 @@ export default {
     .q-panel {
       margin: 0 auto;
     }
-    .q-carousel__slide{
+    .q-carousel__slide {
       padding: 0;
       background-image: none !important;
     }

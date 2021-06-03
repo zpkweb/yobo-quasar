@@ -38,7 +38,8 @@ export default {
       ICPNo: "北京ICPNo。2021007113",
       PublicNetworkSecurityNo: "北京パブリックネットワークセキュリティNo.11010202009337"
     },
-    pleaseLoginFirst: "最初にログインしてください"
+    pleaseLoginFirst: "最初にログインしてください",
+    no: "无"
   },
   pagination: {
     NextPage: "次のページ",

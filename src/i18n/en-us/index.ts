@@ -38,7 +38,8 @@ export default {
       ICPNo: "Beijing ICP No. 2021007113",
       PublicNetworkSecurityNo: "Beijing Public Network Security No. 11010202009337"
     },
-    pleaseLoginFirst: "please log in first"
+    pleaseLoginFirst: "please log in first",
+    no: "no"
   },
   pagination: {
     NextPage: "Next page",

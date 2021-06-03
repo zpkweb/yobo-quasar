@@ -1,5 +1,6 @@
 export default {
   layout: {
+
     header: {
       BecomeAnArtist: "成为艺术家",
       login: "登录",
@@ -38,7 +39,8 @@ export default {
       ICPNo: "京ICP备2021007113号",
       PublicNetworkSecurityNo: "京公网安备 11010202009337号"
     },
-    pleaseLoginFirst: "请先登录"
+    pleaseLoginFirst: "请先登录",
+    no: "暂无"
   },
   pagination: {
     NextPage: "下一页",

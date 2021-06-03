@@ -106,6 +106,7 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
       }
     }).then(response => {
       const { data } = response.data;
+      // console.log("/api/BFF/commodity data", data)
       commit('setData', data)
     }).catch((err) => {
       return {
