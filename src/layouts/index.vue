@@ -128,7 +128,7 @@
           <div class="col-9 row">
             <div class="col-3 item">
               <div class="title">{{ $t("layout.footer.customerService") }}</div>
-              <div class="underline">{{ $t("layout.footer.contactUs") }}</div>
+              <!-- <div class="underline">{{ $t("layout.footer.contactUs") }}</div> -->
               <div class="underline">{{ $t("layout.footer.LegalNotices") }}</div>
               <div class="underline">{{ $t("layout.footer.GeneralRegulations") }}</div>
               <div class="underline" v-if="$store.state.isShowPay">
@@ -174,6 +174,7 @@
               <div class="underline">Facebook</div>
               <div class="underline">Instagram</div>
               <div class="underline">Pinterest</div>
+              <div class="underline">小红书</div>
             </div>
           </div>
 
@@ -206,6 +207,7 @@
               <div class="col-3">
                 <q-img src="~assets/img/zfb.png" width="60px"></q-img>
               </div>
+
 
               <div class="col-3" v-if="$store.state.isShowPay">
                 <q-img src="~assets/img/visa.png" width="60px"></q-img>
@@ -290,11 +292,16 @@
 
       <!-- 客服 -->
         <div class="onlineService-pop" v-if="onlineService">
-          <SendEmail
+          <!-- <SendEmail
 
-            v-on:close-sendEmail="hideOnlineService"
+            v-on:close="hideOnlineService"
 
-          ></SendEmail>
+          ></SendEmail> -->
+          <SendMessage
+
+            v-on:close="hideOnlineService"
+
+          ></SendMessage>
         </div>
 
     </div>
@@ -367,7 +374,7 @@ import Banner from "src/components/banner";
 import Help from "src/components/help";
 
 import SendEmail from "src/components/sendEmail";
-
+import SendMessage from "src/components/sendMessage";
 
 export default {
   components: {
@@ -378,12 +385,12 @@ export default {
     NewPassword,
     Banner,
     Help,
-    SendEmail
+    SendEmail,
+    SendMessage
   },
   data() {
     return {
       lang: this.$store.state.lang,
-      // userInfo: utils.getGlobalUserInfo(),
 
       step: 1,
       right: false,

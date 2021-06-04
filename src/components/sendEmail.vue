@@ -4,7 +4,7 @@
       src="~assets/img/close.png"
       width="20px"
       class="offer-close absolute btn icon-close"
-      @click="$emit('close-sendEmail')"
+      @click="$emit('close')"
     ></q-img>
     <div class="email-outer bg-white">
       <input

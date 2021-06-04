@@ -115,7 +115,6 @@ export default {
       }
     },
     async codeSend() {
-      // console.log("sendEmail", this.$store.state.user)
       const codeSend = await this.$store.dispatch('user/codeSend', {
         email: this.email
       })

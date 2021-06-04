@@ -37,6 +37,25 @@ const actions: ActionTree<HomeStateInterface, StateInterface> = {
     })
   },
 
+  async sendMessage({ commit }, payload) {
+    return await axiosInstance.post('/api/message', {
+      type: payload.type,
+      title: payload.title,
+      href: payload.href,
+      content: payload.content,
+      contentHtml: payload.contentHtml,
+      owner: payload.owner
+    })
+    .then(response => {
+      return response.data;
+    }).catch((err) => {
+      return {
+        success: false,
+        message: err.response.data.message
+      }
+    })
+  },
+
   async subscriber({ commit }, payload) {
     return await axiosInstance.post('/api/subscriber', {
       email: payload.email,
