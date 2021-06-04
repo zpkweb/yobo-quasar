@@ -73,7 +73,7 @@
         />
       </div>
       <div class="col-7 offset-1 text-right resume">
-        <div  v-if="portrait && portrait.metadata" class="text-left fontSize-16" v-html="portrait.metadata.profile"></div>
+        <div  v-if="profile" class="text-left fontSize-16" v-html="profile"></div>
         <div class="resume4">
           <div class="btn text-white" @click="myArtist(hasMyArtist)">{{ hasMyArtist ? $t('artist.Followed') : $t('artist.FollowArtist')}}</div>
         </div>
@@ -162,9 +162,11 @@
       </div>
       <div class="content row">
         <div class="col-6 item" v-for="item in portrait.resume[resumeTypeActive]">
-            <div class="year">{{item.year}}</div>
+            <div class="year">
+              {{ resumeLocale(item, 'year') }}
+            </div>
             <div class="name">
-              {{item.resume}}
+              {{ resumeLocale(item, 'resume')}}
             </div>
         </div>
 
@@ -223,6 +225,27 @@ export default {
     hash() {
       return this.$route.hash;
     },
+    profile() {
+      let profile = '';
+      if(this.portrait && this.portrait.metadata){
+        switch(this.$route.params.locale) {
+          case  'en-us':
+            profile = this.portrait.metadata.profileEnus;
+            break;
+          case 'ja-jp':
+            profile = this.portrait.metadata.profileJajp;
+            break;
+          case 'es-es':
+            profile = this.portrait.metadata.profileEses;
+            break;
+          case 'zh-cn':
+          default:
+            profile = this.portrait.metadata.profileZhcn;
+            break;
+        }
+      }
+      return profile;
+    }
     // portrait() {
     //   return this.$store.state.artist.portrait;
     // }
@@ -287,6 +310,25 @@ export default {
 
   },
   methods: {
+    resumeLocale(item, type) {
+      let resumeType = '';
+      switch(this.$route.params.locale) {
+        case  'en-us':
+          resumeType = item.enus[type];
+          break;
+        case 'ja-jp':
+          resumeType = item.jajp[type];
+          break;
+        case 'es-es':
+          resumeType = item.eses[type];
+          break;
+        case 'zh-cn':
+        default:
+          resumeType = item.zhcn[type];
+          break;
+      }
+      return resumeType;
+    },
     async myArtist(has) {
       if(!this.$store.state.user.info){
         this.$q.notify({
