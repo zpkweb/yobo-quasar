@@ -828,6 +828,7 @@ export default {
   }
 }
 .hot-artists {
+  position: relative;
   padding: 60px 0;
   width: 1220px;
   margin: 0 auto;

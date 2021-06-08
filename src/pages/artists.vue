@@ -272,10 +272,11 @@ export default {
     currentRoute,
   }) {
     const { locale } = currentRoute.params;
-    const {  currentPage, pageSize, ...serach } = currentRoute.query;
-    store.commit("artist/setSearch", serach);
+    const {  currentPage, pageSize, surname, ...search } = currentRoute.query;
+    store.commit("artist/setSearch", search);
     const sellerSearch = await store.dispatch("artist/sellerSearch", {
-      ...serach,
+      ...search,
+      searchName: surname,
       locale,
       currentPage: parseInt(currentPage) || 1,
       pageSize: parseInt(pageSize) || 12,
