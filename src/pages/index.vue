@@ -101,6 +101,7 @@
         </div>
       </div>
     </div>
+    <!-- 您的线上画廊 -->
     <div class="gallary-container" v-if="home && home.gallerySeller && home.gallerySeller && home.gallerySeller.length">
       <div class="gallary">
         <div class="gallary-title text-center title">{{$t('home.YourOnlineGallery')}}</div>
@@ -149,6 +150,7 @@
         </div>
       </div>
     </div>
+    <!-- 最新上线的艺术作品 -->
     <div class="new text-center">
       <div class="new-title text-dark title">{{$t('home.LatestOnlineArtworks')}}</div>
       <div class="row new-items">
@@ -160,7 +162,13 @@
         <router-link :to="`/${$i18n.locale}/artwork/${item.commodityId}`" class="col-3 relative-position" v-for="(item,index) in home.latestCommodity" :key="`artwork-${item.commodityId}`">
           <div class="bg absolute"></div>
           <div class="new-item relative-position">
-            <q-img :src="item.photos.length ? item.photos[0] : ''" width="255px" height="255px"></q-img>
+            <!-- <q-img :src="item.images ? item.images : ''" width="255px" height="255px"></q-img> -->
+            <Avatar
+              :src="item.images ? item.images : ''"
+              width="255px"
+              height="255px"
+              type="photo"
+            />
             <!-- <div class="new-desc text-left bg-white">
               <q-breadcrumbs separator="|" gutter="sm">
                 <q-breadcrumbs-el v-if="item.techniques.length && item.themes.length" :label="`${item.categorys[0].name}`" class="text-dark ddd" />

@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="row container">
+    <div class="row container shadow">
       <div class="col-8">
         <div class="carousel relative-position">
           <div class="button absolute">
@@ -65,11 +65,12 @@
           </ShowCommodity>
         </div>
         <div class="top"></div>
+        <!-- 作品简介 -->
         <div class="container2">
           <div class="title">{{ $t("artwork.commodity.introduction") }}</div>
           <div class="row">
             <div class="col-6">
-              <q-img
+              <!-- <q-img
                 :src="
                   artwork &&
                   artwork.commodity &&
@@ -79,7 +80,16 @@
                     : ''
                 "
                 width="350px"
-              ></q-img>
+              ></q-img> -->
+              <Avatar
+                :src="artwork &&
+                  artwork.commodity &&
+                  artwork.commodity.images
+                    ? artwork.commodity.images
+                    : ''"
+                width="350px"
+                type="photo"
+              />
             </div>
             <div class="col-6 left2">
               <div class="name" v-if="artwork && artwork.commodity">
@@ -107,9 +117,9 @@
                     <!-- 丙烯酸, 拼贴, 树脂 油墨, 颜料 • 帆布 -->
                     <div v-if="artwork && artwork.commodity">
                       {{
-                        artwork.commodity.categorys &&
-                        artwork.commodity.categorys.length
-                          ? artwork.commodity.categorys[0].name
+                        artwork.commodity.techniques &&
+                        artwork.commodity.techniques.length
+                          ? artwork.commodity.techniques.toString()
                           : ""
                       }}
                     </div>
@@ -190,12 +200,8 @@
                   }}{{ $t("artwork.commodity.Homepage") }}</router-link
                 >
               </div>
-              <div class="content2">
-                {{
-                  artwork && artwork.seller && artwork.seller.metadata
-                    ? artwork.seller.metadata.profile
-                    : ""
-                }}
+              <div class="content2" v-html="sellerProfile">
+
               </div>
             </div>
           </div>
@@ -507,20 +513,23 @@
             </div>
             <div class="text text-left">
               <!-- <div>丙烯酸 • 亚麻</div> -->
-              <div>
+              <!-- <div>
                 {{
                   item.category && item.category.legnth
                     ? item.category[0].name
                     : ""
                 }}
+              </div> -->
+              <div>
+                {{ item.name }}
               </div>
-              <div>{{ item.width }}x{{ item.height }}cm</div>
+              <div style="margin-top: 10px;">{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </router-link>
         </div>
       </div>
     </div>
-
+    <!-- 类似艺术作品 -->
     <div
       class="similar-paints paints"
       v-if="
@@ -544,23 +553,21 @@
             :key="'commoditySimilar' + index"
           >
             <div class="paint">
-              <q-img
-                :src="
-                  item.photos && item.photos.length ? item.photos[0].src : ''
-                "
+
+              <Avatar
+                :src="item.images ? item.images : ''"
                 width="208px"
                 height="208px"
+                type="photo"
               />
             </div>
             <div class="text text-left">
               <div>
                 {{
-                  item.categorys && item.categorys.length
-                    ? item.categorys[0].name
-                    : ""
+                  item.name
                 }}
               </div>
-              <div>{{ item.width }}x{{ item.height }}cm</div>
+              <div style="margin-top: 10px;">{{ item.width }}x{{ item.height }}cm</div>
             </div>
           </router-link>
         </div>
@@ -570,7 +577,7 @@
     <!-- 您最近浏览的作品 -->
     <div
       class="paints history"
-      v-if="browsingHistory && browsingHistory.length"
+      v-if="artwork && artwork.browsingHistory && artwork.browsingHistory.length"
     >
       <div class="container text-center">
         <div class="relative-position">
@@ -586,33 +593,33 @@
           >
         </div>
         <div class="row">
-          <div
+          <router-link
+            :to="`${item.commodityId}`"
             class="col-3"
-            v-for="(item, index) in browsingHistory"
+            v-for="(item, index) in artwork.browsingHistory"
             :key="'browsingHistory' + index"
           >
             <div class="paint">
               <Avatar
                 :src="
-                  item && item.photos && item.photos.length
-                    ? item.photos[0].src
+                  item && item.commodity && item.commodity.photos && item.commodity.photos.length
+                    ? item.commodity.photos[0]
                     : ''
                 "
                 width="208px"
                 height="208px"
+                type="photo"
               />
             </div>
             <div class="text text-left">
               <div>
                 {{
-                  item.categorys && item.categorys.length
-                    ? item.categorys[0].name
-                    : ""
+                  item.commodity.name
                 }}
               </div>
-              <div>{{ item.width }}x{{ item.height }}cm</div>
+              <div>{{ item.commodity.width }}x{{ item.commodity.height }}cm</div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -637,7 +644,7 @@ export default {
 
       const userInfo = this.$q.cookies.get("userInfo");
 
-      console.log("created", userInfo);
+      // console.log("created", userInfo);
 
       await this.$store.dispatch("artwork/getArtwork", {
         locale,
@@ -738,7 +745,7 @@ export default {
 
     const userInfo = this.$q.cookies.get("userInfo");
 
-    console.log("created", userInfo);
+    // console.log("created", userInfo);
 
     await this.$store.dispatch("artwork/getArtwork", {
       locale,
@@ -800,6 +807,7 @@ export default {
           });
         }
       });
+
     },
     price() {
       // console.log("this.priceOptions", this.priceOptions);
@@ -810,6 +818,26 @@ export default {
         }
       }
     },
+    sellerProfile() {
+      if(this.artwork && this.artwork.seller && this.artwork.seller.metadata){
+        switch(this.$i18n.locale) {
+          case 'en-us':
+            return this.artwork.seller.metadata.profileEnus
+            break;
+          case 'es-es':
+            return this.artwork.seller.metadata.profileEses
+            break;
+          case 'ja-jp':
+            return this.artwork.seller.metadata.profileJajp
+            break;
+          case 'zh-cn':
+          default:
+            return this.artwork.seller.metadata.profileZhcn
+            break;
+        }
+      }
+
+    }
   },
   methods: {
     handleScroll() {
@@ -943,6 +971,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.shadow {
+  box-shadow: inset 0px 20px 20px -25px #000;
+}
 .container {
   width: 1200px;
   margin: 0 auto;

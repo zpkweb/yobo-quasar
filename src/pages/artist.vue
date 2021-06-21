@@ -5,7 +5,7 @@
 
       <q-img v-if="portrait.seller && portrait.seller.banner" :src="portrait.seller.banner" height="360px"></q-img>
       <q-img v-else src="~assets/img/banner-artist.png" height="360px"></q-img>
-      <div class="banner-shadow"></div>
+      <div class="shadow"></div>
       <div class="absolute-full text-center text">
         <template v-if="portrait.seller">
           <div class="text-bold">{{ $store.state.sellerTypes[portrait.seller.type]}}｜{{portrait.seller.country}}</div>
@@ -137,6 +137,7 @@
 
     <div id="studio" class="studio" v-if="portrait.studio">
       <q-img class="studio-banner" v-if="portrait.studio.banner" :src="portrait.studio.banner" height="400px"></q-img>
+      <div class="shadow" v-if="portrait.studio.banner"></div>
       <div class="studio-content">
         <h3 class="studio-content-title">{{portrait.studio.name}}</h3>
         <iframe v-if="portrait.studio.ccId" :src="`http://www.yoboart.com/video?isShowConfig=false&ccId=${portrait.studio.ccId}&siteId=${portrait.studio.siteId}&img_path=${portrait.studio.videoPhoto}`" class="studio-content-iframe" scrolling="no" frameBorder="0"></iframe>
@@ -448,13 +449,7 @@ export default {
 .banner {
   width: 100%;
   color: #d6d7c5;
-  .banner-shadow{
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 50px #000 inset;
-  }
+
   .text {
     padding-top: 80px;
     .title {
@@ -469,6 +464,13 @@ export default {
     }
   }
 }
+.shadow{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 50px #000 inset;
+  }
 .title2-container {
   border-bottom: 1px solid rgba(21, 44, 43, 0.2);
   .title2 {

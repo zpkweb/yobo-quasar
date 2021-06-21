@@ -102,7 +102,8 @@ const actions: ActionTree<ArtworkStateInterface, StateInterface> = {
     return await axiosInstance.get('/api/BFF/commodity', {
       params: {
         locale: payload.locale,
-        commodityId: payload.artworkId
+        commodityId: payload.artworkId,
+        userId: payload.userId
       }
     }).then(response => {
       const { data } = response.data;

@@ -124,7 +124,7 @@
             scale
           />
 
-          <div class=" text-left">{{ item.firstname }} {{ item.lastname }}</div>
+          <div class="artist-name text-left">{{ item.firstname }} {{ item.lastname }}</div>
           <div class="text-left">{{ item.country }} {{ item.country && $store.state.sellerTypes[item.type] ? '-' : ''}} {{ $store.state.sellerTypes[item.type] }}</div>
           </router-link>
 
@@ -444,6 +444,11 @@ export default {
       margin: 10px 0 10px 0;
       border: 6px solid #152c2b;
       overflow: hidden;
+    }
+    .artist-name{
+      white-space:nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
   }

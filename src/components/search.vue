@@ -45,7 +45,13 @@
           </router-link>
           <router-link class="caption-item" :to="`/${$i18n.locale}/artwork/${ item.commodityId }`" v-else-if="searchType == '艺术品'" >
             <div style="width:120px;height:80px;float:left;">
-              <q-img v-if="item && item.photos && item.photos.length" :src="item.photos[0]" width="120px" height="80px" class="caption-img" />
+              <!-- <q-img v-if="item && item.photos && item.photos.length" :src="item.photos[0]" width="120px" height="80px" class="caption-img" /> -->
+              <Avatar
+                :src="item.photos[0]"
+                width="120px"
+                height="80px"
+                type="photo"
+              />
             </div>
 
             <div class="caption-content">
@@ -102,7 +108,7 @@ export default {
   },
   watch: {
     searchType: function() {
-      console.log(this.searchType)
+      // console.log(this.searchType)
       this.searchResult = []
     }
   },
@@ -214,7 +220,7 @@ export default {
         return artworkSearchData;
     },
     changeSearchType(item) {
-      console.log(item)
+      // console.log(item)
       this.searchResult = []
     }
 

@@ -37,7 +37,6 @@
                 :class="item.hasMyArtwork ? 'image1' : 'image2'"
 
               >
-                <!-- {{hasMyArtwork ? '已喜欢' : '喜欢'}} -->
               </div>
             </div>
           </div>
@@ -63,7 +62,6 @@
         <div class="text-center title">
           {{ $t("my.wishlist.YourRecentlyViewedArtworks") }}
         </div>
-        <!-- <div class="text-right more absolute">更多</div> -->
         <div class="row">
           <router-link
             :to="`/${$i18n.locale}/artwork/${item.commodity.commodityId}`"
@@ -73,12 +71,17 @@
             :key="'style3-' + index"
           >
             <div class="image">
-              <q-img
-                v-if="item.photos.length"
+              <!-- <q-img
+                v-if="item.photos && item.photos.length"
                 :src="item.photos[0]"
                 width="198px"
                 height="300px"
-              ></q-img>
+              ></q-img> -->
+              <Avatar
+                :src="item.commodity && item.commodity.images ? item.commodity.images : ''"
+                width="198px"
+                type="photo"
+              />
             </div>
             <div class="text text-left">
               {{ item.categorys ? item.categorys[0].name : "" }}
@@ -90,28 +93,37 @@
         </div>
       </div>
     </div>
+
+
   </div>
 </template>
 <script>
 import noData from "src/components/noData";
+import Avatar from "src/components/avatar"
 export default {
   components: {
     noData,
+    Avatar
   },
   data() {
     return {
       myWishlist: [],
+      myBrowsingHistory: [],
       loading: true
     };
   },
   async mounted() {
       const { locale } = this.$route.params;
       const userInfo = this.$q.cookies.get("userInfo");
+      // console.log("userInfo", userInfo)
+
       if(userInfo){
         const myWishlist = await this.$store.dispatch("my/getMyWishlist", {
           userId: userInfo.userId,
           locale,
         });
+        // console.log("myWishlist", myWishlist)
+
         if (myWishlist.success) {
           this.$store.commit("my/setMyWishlist", myWishlist.data);
 
@@ -130,8 +142,10 @@ export default {
             currentPage: 1,
           }
         );
+        console.log("myBrowsingHistory", myBrowsingHistory)
         if (myBrowsingHistory.success) {
-          this.$store.commit("my/setMyBrowsingHistory", myBrowsingHistory.data);
+          // this.$store.commit("my/setMyBrowsingHistory", myBrowsingHistory.data);
+          this.myBrowsingHistory = myBrowsingHistory.data.list;
         }
       }
 
@@ -140,9 +154,9 @@ export default {
   },
 
   computed: {
-    myBrowsingHistory() {
-      return this.$store.state.my.browsingHistory.list;
-    },
+    // myBrowsingHistory() {
+    //   return this.$store.state.my.browsingHistory.list;
+    // },
   },
   methods: {
     async myArtwork(item, index) {
