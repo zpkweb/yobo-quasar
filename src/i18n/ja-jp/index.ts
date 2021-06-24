@@ -79,6 +79,7 @@ export default {
     LatestOnlineArtworks: "最新のオンラインアートワーク",
     SeePaintings: "絵画を通して世界を見る",
     BrowsePrice: "価格で閲覧",
+    ArtInformation: "アート情報",
     LetFavoriteWork: "ヨンバオがあなたの好きな作品を見つけるのを手伝ってあげましょう",
     DoConsultants: "あなたはプロのコンサルタントを探していますか？",
     OrWork: "または、作業をカスタマイズしたいですか？",

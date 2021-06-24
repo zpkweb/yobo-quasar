@@ -119,7 +119,7 @@
     </div>
     </q-header>
     <q-page-container class=".rv">
-      <router-view></router-view>
+      <router-view v-on:show-login="showLogin"></router-view>
     </q-page-container>
 
     <q-footer >

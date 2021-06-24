@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <div class="row container shadow">
+  <q-page class="shadow">
+    <div class="row container ">
       <div class="col-8">
         <div class="carousel relative-position">
           <div class="button absolute">

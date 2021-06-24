@@ -47,6 +47,7 @@ const routes: RouteConfig[] = [
       { path: 'about', name: 'about', component: () => import('pages/about.vue') },
       { path: 'criteria', name: 'criteria', component: () => import('pages/criteria.vue') },
       { path: 'test', name: 'test', component: () => import('pages/test.vue') },
+      { path: 'artInformation', name: 'artInformation', component: () => import('pages/artInformation/index.vue') }
     ]
   },
 

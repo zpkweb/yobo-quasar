@@ -188,8 +188,9 @@
         </template>
       </div>
     </div>
-    <!-- 通过画作看世界 -->
+
     <div class="sort-container">
+      <!-- 通过画作看世界 -->
       <div class="row sort">
         <div class="col-grow left">
           <div class="title relative-position">
@@ -225,7 +226,8 @@
 
           </div>
         </div>
-          <!-- 按价格浏览 -->
+
+        <!-- 按价格浏览 -->
         <div class="col right" v-if="$store.state.isShowPay">
           <div class="title">{{$t('home.BrowsePrice')}}</div>
           <div class="row text-center text-white">
@@ -258,9 +260,37 @@
               })">{{$t('home.Higher')}}¥<span>40,000</span></div>
             </div>
           </div>
-
-
         </div>
+
+        <!-- 艺术咨询 -->
+        <div class="col right">
+          <div class="title">{{$t('home.ArtInformation')}}</div>
+          <div class="row  art-information">
+            <div class="art-information-show">
+              <iframe :src="`http://www.yoboart.com/video?isShowConfig=false&ccId=61AA76B5334118229C33DC5901307461&siteId=E5DD260925A6084B&img_path=`" class="art-information-iframe" scrolling="no" frameBorder="0"></iframe>
+            </div>
+
+
+            <ul class="art-information-list">
+              <li class="art-information-li" v-for="item in 5" key="item" >
+                <router-link :to="`/${$i18n.locale}/artInformation`" class="art-information-a" title="· BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》">
+                  · BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
+                </router-link>
+
+                </li>
+            </ul>
+
+            <div class="art-information-footer">
+              <div class="art-information-arrow">
+              <a href="javascript:;" class="art-information-prev">&#8592;</a>
+                <a href="javascript:;" class="art-information-next">&#8594;</a>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
     <!-- 让永宝帮您找到心仪的作品   -->
@@ -956,4 +986,70 @@ export default {
   background-color: #f00;
 }
 
+
+.art-information{
+  .art-information-show{
+    width: 100%;
+    height: 280px;
+    .art-information-iframe{
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .art-information-list {
+    width: 100%;
+    list-style: none;
+    margin-top: 20px;
+    .art-information-li {
+      width: 100%;
+      color: #333;
+      font-size: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      .art-information-a{
+        color: #333;
+      }
+      .art-information-a:hover {
+      color: #000;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    }
+
+
+  }
+  .art-information-footer{
+    width: 100%;
+    .art-information-arrow{
+      float: right;
+      width: 80px;
+      height: 19px;
+      font-size: 24px;
+
+      overflow: hidden;
+      .art-information-prev{
+        float: left;
+        color: #ccc;
+        height: 20px;
+
+      }
+      .art-information-prev:hover{
+        color: #000;
+      }
+      .art-information-next{
+        float: right;
+        color: #ccc;
+        height: 20px;
+      }
+      .art-information-next:hover{
+        color: #000;
+      }
+    }
+
+
+  }
+}
 </style>

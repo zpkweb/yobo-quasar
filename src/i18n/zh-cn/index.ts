@@ -80,6 +80,7 @@ export default {
     LatestOnlineArtworks: "最新上线的艺术作品",
     SeePaintings: "通过画作看世界",
     BrowsePrice: "按价格浏览",
+    ArtInformation: "艺术资讯",
     LetFavoriteWork: "让永宝帮您找到心仪的作品",
     DoConsultants: "您是否寻求专业的顾问？",
     OrWork: "或是想要定制作品？",
