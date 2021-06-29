@@ -152,17 +152,18 @@
               :to="`/${$i18n.locale}/artwork/${item.commodityId}`"
               class="artwork-list-item"
             >
-              <!-- <q-img
+              <q-img
                 class="artwork-list-img"
                 v-if="item.photos && item.photos.length"
                 :src="item.photos.length ? item.photos[0] : ''"
-              ></q-img> -->
-              <Avatar
+                contain
+              ></q-img>
+              <!-- <Avatar
                 :src="item.photos && item.photos.length ? item.photos[0] : ''"
                 width="218px"
                 type="photo"
                 scale
-              />
+              /> -->
             </router-link>
             <!-- <div v-for="(text, j) in cell" :key="j">
               {{ text }}
@@ -866,7 +867,7 @@ export default {
       color: #333;
     }
     .active {
-      color: #f00;
+      // color: #f00;
     }
   }
   .none {
@@ -1290,6 +1291,8 @@ $x: 4
       // box-shadow: inset 0 0 0 2px $grey-6
       border: 6px solid #152c2b
       overflow: hidden
+      .artwork-list-img
+        margin-top: -25%
     .artwork-list-user
       display: none
       position: absolute

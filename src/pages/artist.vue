@@ -154,7 +154,7 @@
     </div>
 
 
-    <div id="resume" class="credentials " v-if="portrait.resume">
+    <div id="resume" class="credentials " v-if="hasResume">
       <div class="title text-center ">{{$t('artist.MyResume')}}</div>
       <div class="title2 text-right">
 
@@ -246,6 +246,21 @@ export default {
         }
       }
       return profile;
+    },
+    hasResume() {
+      let hasResume = false;
+      console.log(this.portrait.resume)
+      if(this.portrait.resume){
+        if(this.portrait.resume.prize.length
+      || this.portrait.resume.individua.length
+      || this.portrait.resume.organizing.length
+      || this.portrait.resume.publish.length
+      ){
+        hasResume = true;
+      }
+      }
+  console.log(hasResume)
+      return hasResume;
     }
     // portrait() {
     //   return this.$store.state.artist.portrait;
@@ -469,7 +484,8 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 50px #000 inset;
+    // box-shadow: 0 0 50px #000 inset;
+    background-color: rgba(0, 0, 0, .4);
   }
 .title2-container {
   border-bottom: 1px solid rgba(21, 44, 43, 0.2);

@@ -262,7 +262,7 @@
           </div>
         </div>
 
-        <!-- 艺术咨询 -->
+        <!-- 艺术资讯 v-if="$store.state.isShowPay" -->
         <div class="col right">
           <div class="title">{{$t('home.ArtInformation')}}</div>
           <div class="row  art-information">

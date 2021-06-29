@@ -7,23 +7,25 @@
           v-for="(item, index) in myWishlist"
           :key="'style1-' + index"
         >
-          <q-img
+          <div class="wishlist-image">
+            <q-img
             class="col-3 image"
-            v-if="item.photos.length"
+            v-if="item.photos && item.photos.length"
             :src="item.photos[0]"
             width="212px"
             height="110px"
             style="max-width: 212px; "
             contain
           ></q-img>
+          </div>
+
           <div class="col-7 desc">
             <div class="title">{{ item.name }}</div>
             <div class="name" v-if="item.seller">
               {{ item.seller.firstname }} {{ item.seller.lastname }}
             </div>
             <div class="size">
-              {{ item.width }}cmX{{ item.height }}cm in -
-              2019
+              {{ item.width }}cmX{{ item.height }}cm in - 2019
             </div>
           </div>
           <div class="col-3 prise" v-if="$store.state.isShowPay">
@@ -32,12 +34,13 @@
           </div>
           <div class="col-2 row items-center">
             <div class="btn wishlist-like buy text-white text-center" :class="{'wishlist-like-active': item.hasMyArtwork}" @click="myArtwork(item, index)">
-              <div
+              <!-- <div
                 class="btn heart"
                 :class="item.hasMyArtwork ? 'image1' : 'image2'"
 
               >
-              </div>
+              </div> -->
+              {{ item.hasMyArtwork ? "喜欢" : "不喜欢"}}
             </div>
           </div>
         </div>
@@ -192,7 +195,7 @@ export default {
           this.$q.notify({
             position: "top",
             timeout: 1500,
-            message: delMyArtwork.msg,
+            message: delMyArtwork.message,
             color: "negative",
           });
         }
@@ -248,11 +251,16 @@ export default {
   width: 1200px;
   margin: 0 auto;
   padding: 0 100px;
+  .wishlist-image{
+    width: 212px;
+    height: 110px;
+    margin-right: 20px;
+  }
   .item {
     padding: 20px 0;
-    .image {
-      margin-right: 20px;
-    }
+    // .image {
+    //   margin-right: 20px;
+    // }
     .heart {
       width: 16px;
       height: 16px;
