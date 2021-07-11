@@ -172,8 +172,8 @@ export default {
     Studio: "スタジオ"
   },
   artist: {
-    Followed: "フォローしました",
-    FollowArtist: "+アーティストをフォローする",
+    Followed: "注目しました",
+    FollowArtist: "+注目していません",
     LatestArtSold: "最新のアートを販売",
     MyResume: "私の履歴書",
     Awards: "賞",

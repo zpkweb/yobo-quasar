@@ -10,7 +10,7 @@ const mutation: MutationTree<HomeStateInterface> = {
     state.hotSaleSeller = payload['hotSaleSeller']
     state.latestCommodity = payload['latestCommodity']
     state.lookWorld = payload['lookWorld']
-
+    state.information = payload['information']
   }
 }
 

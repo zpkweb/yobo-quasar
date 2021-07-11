@@ -180,7 +180,7 @@ export default {
     }
 
     .follow {
-      width: 160px;
+      width: 170px;
       background-color: #adaf8b;
       padding: 8px 20px;
       font-size: 14px;

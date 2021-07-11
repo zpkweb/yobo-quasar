@@ -5,6 +5,7 @@ export interface HomeStateInterface {
   hotSaleSeller: any;
   latestCommodity: any;
   lookWorld: any;
+  information: any;
 }
 
 function state (): HomeStateInterface {
@@ -15,6 +16,7 @@ function state (): HomeStateInterface {
     hotSaleSeller: null,
     latestCommodity: null,
     lookWorld: null,
+    information: null,
   }
 }
 

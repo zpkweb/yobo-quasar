@@ -263,7 +263,7 @@
         </div>
 
         <!-- 艺术资讯 v-if="$store.state.isShowPay" -->
-        <div class="col right">
+        <div class="col right" v-if="home && home.information">
           <div class="title">{{$t('home.ArtInformation')}}</div>
           <div class="row  art-information">
             <div class="art-information-show">
@@ -272,9 +272,9 @@
 
 
             <ul class="art-information-list">
-              <li class="art-information-li" v-for="item in 5" key="item" >
-                <router-link :to="`/${$i18n.locale}/artInformation`" class="art-information-a" title="· BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》">
-                  · BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
+              <li class="art-information-li" v-for="item in home.information.list" key="item" >
+                <router-link :to="`/${$i18n.locale}/information/${item.informationId}`" class="art-information-a" :title="`· ${item.name}`">
+                  · {{item.name}}
                 </router-link>
 
                 </li>

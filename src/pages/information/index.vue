@@ -57,7 +57,7 @@
 
 
             </div>
-
+            {{newEditor}}
             <div class="art-information-comment">
               <h3 class="comment-title">全部影评</h3>
               <div class="comment-list">
@@ -158,6 +158,31 @@ export default {
       editor: '',
       showEditor: false
     }
+  },
+  computed: {
+    newEditor() {
+      console.log("computed newEditor", this.editor)
+      return this.editor;
+    }
+  },
+  watch: {
+    newEditor() {
+      console.log("watch newEditor", this.newEditor)
+    }
+  },
+  async created() {
+    const { locale, artworkId } = this.$route.params;
+
+    const userInfo = this.$q.cookies.get("userInfo");
+
+    // console.log("created", userInfo);
+
+    // await this.$store.dispatch("artwork/getArtwork", {
+    //   locale,
+    //   artworkId,
+    //   userId: userInfo ? userInfo.userId : "",
+    // });
+
   },
   methods: {
 
