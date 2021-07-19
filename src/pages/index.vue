@@ -267,7 +267,7 @@
           <div class="title">{{$t('home.ArtInformation')}}</div>
           <div class="row  art-information">
             <div class="art-information-show">
-              <iframe :src="`http://www.yoboart.com/video?isShowConfig=false&ccId=61AA76B5334118229C33DC5901307461&siteId=E5DD260925A6084B&img_path=`" class="art-information-iframe" scrolling="no" frameBorder="0"></iframe>
+              <iframe :src="`http://www.yoboart.com/video?isShowConfig=false&ccId=${home.information.list[0].videos[0].ccId}&siteId=${home.information.list[0].videos[0].siteId}&img_path=${home.information.list[0].videos[0].videoPhoto}`" class="art-information-iframe" scrolling="no" frameBorder="0"></iframe>
             </div>
 
 

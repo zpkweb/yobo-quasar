@@ -143,8 +143,8 @@ function state(): ArtworkStateInterface {
         },
 
       ],
-      category: [],
       classification: [],
+      category: [],
       material: [],
       model: [],
       place: [],

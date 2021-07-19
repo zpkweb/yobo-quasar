@@ -5,25 +5,26 @@
       <div class="art-information-header">
         <div class="art-information-video content-width">
           <div class="art-information-video-content">
-            <div class="art-information-video-iframe">
-              <iframe :src="`http://www.yoboart.com/video?isShowConfig=false&ccId=61AA76B5334118229C33DC5901307461&siteId=E5DD260925A6084B&img_path=`" width="100%" height="100%" scrolling="no" frameBorder="0"></iframe>
+            <div class="art-information-video-iframe" >
+              <iframe :src="`http://www.yoboart.com/video?isShowConfig=false&ccId=${videoListActive.ccId}&siteId=${videoListActive.siteId}&img_path=${videoListActive.videoPhoto}`" width="100%" height="100%" scrolling="no" frameBorder="0"></iframe>
             </div>
             <div class="art-information-video-total">
-              最近在看 25 人 累计观看 2999 人
+              <!-- 最近在看 25 人 -->
+               累计观看 {{videoListActive.watchs}} 人
             </div>
           </div>
           <div class="art-information-video-list">
             <h3 class="art-information-video-list-title">播放列表</h3>
-            <ul class="art-information-video-list-ul">
-              <li class="art-information-video-list-li" v-for="item in 6" :key="item">
+            <ul class="art-information-video-list-ul" v-if="information.videos && information.videos.length">
+              <li class="art-information-video-list-li" v-for="(item, index) in information.videos" :key="item.videoId" @click="changeVideo(item)">
                 <Avatar
-                  :src="''"
+                  :src="item.videoPhoto"
                   width="210px"
                   height="105px"
                   type="photo"
                 />
                 <p class="art-information-video-list-p">
-                  {{item}} BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
+                  {{item.title}}
                 </p>
               </li>
             </ul>
@@ -36,7 +37,9 @@
         <div class="art-information-main-box content-width">
           <div class="art-information-main-nav">
             <a href="javascript:;" class="art-information-main-nav-a " :class="{active: mainNavActive == 0}" @click="mainNavActive = 0">详情</a>
-            <a href="javascript:;" class="art-information-main-nav-a" :class="{active: mainNavActive == 1}" @click="mainNavActive = 1">评论（234）</a>
+            <a href="javascript:;" class="art-information-main-nav-a" :class="{active: mainNavActive == 1}" @click="mainNavActive = 1">
+              评论 {{ pagination.total ? `(${pagination.total})` : '' }}
+            </a>
           </div>
           <div class="art-information-main-content art-information-main-content-comment" v-if="mainNavActive">
             <div class="art-information-reply">
@@ -50,19 +53,24 @@
               </div>
 
               <div class="art-information-reply-content art-information-reply-disabled">
-                <span class="art-information-login" >登录</span>后可以交流发言，写出观后感。
-                <q-editor v-model="editor" min-height="5rem" placeholder="请输入回复内容。" :toolbar="[]" />
-                <q-btn color="white q-mt-sm" text-color="black" label="回复" />
+                <template v-if="!userInfo">
+                  <span class="art-information-login" >登录</span>后可以交流发言，写出观后感。
+                </template>
+
+                <template v-else>
+                  <q-editor v-model="commentContent" min-height="5rem" placeholder="请输入回复内容。" :toolbar="[]" />
+                  <q-btn color="white q-mt-sm" text-color="black" label="回复" @click="submitVideoComment" />
+                </template>
+
               </div>
 
 
             </div>
-            {{newEditor}}
             <div class="art-information-comment">
               <h3 class="comment-title">全部影评</h3>
               <div class="comment-list">
                 <ul class="comment-list-ul">
-                  <li class="comment-list-li ">
+                  <li class="comment-list-li " v-for="(commentItem, commentIndex) in comment">
                     <div class="comment-list-avatar">
                       <Avatar
                         :src="''"
@@ -73,71 +81,85 @@
                     </div>
                     <div class="comment-item">
                       <div class="comment-item-header">
-                      名称 2020/03/22 17:33:00
+                      {{commentItem.userName}} {{ commentItem.createdDate }}
                       </div>
-                      <div class="comment-item-main">
-                        内容
+                      <div class="comment-item-main" v-html="commentItem.content">
                       </div>
                       <div class="comment-item-footer">
-                        <div class="comment-item-footer-btn" >
-                          <q-img src="~assets/img/fabulous.png" width="14px" /> 赞 1
+                        <div class="comment-item-footer-btn" @click="likes('comment', commentItem.commentId, commentItem)">
+                          <q-img src="~assets/img/fabulous.png" width="14px" /> 赞 {{commentItem.likes}}
                         </div>
-                        <div class="comment-item-footer-btn" @click="showEditor = !showEditor">
-                          <q-img class="q-ml-md" src="~assets/img/comment.png" width="14px" /> 回复 1
+                        <div class="comment-item-footer-btn" @click="commentItem.edit = !commentItem.edit">
+                          <q-img class="q-ml-md" src="~assets/img/comment.png" width="14px" /> 回复 {{commentItem.reply && commentItem.reply.length ? commentItem.reply.length : 0}}
                         </div>
+
+
                       </div>
+                      <div class="comment-item-reply" v-if="commentItem.edit">
+                          <q-editor v-model="commentItem.replyContent" min-height="5rem" placeholder="请输入回复内容。" :toolbar="[]" />
+                          <q-btn-group push>
+                            <q-btn color="white q-mt-sm" text-color="black" label="取消" @click="commentItem.edit = false" />
+                            <q-btn color="white q-mt-sm" text-color="black" label="回复" @click="submitCommentReply(commentItem, commentIndex)" />
+                          </q-btn-group>
+                        </div>
+
+
+                      <ul class="comment-list-ul" v-if="commentItem.reply && commentItem.reply.length">
+                        <li class="comment-list-li " v-for="(replyItem, replyIndex) in commentItem.reply">
+                          <div class="comment-list-avatar">
+                            <Avatar
+                              :src="''"
+                              width="55px"
+                              height="55px"
+                              radius
+                            />
+                          </div>
+                          <div class="comment-item">
+                            <div class="comment-item-header">
+                            {{replyItem.userName}} 回复 {{ replyItem.replyUserName }} {{ replyItem.createdDate }}
+                            </div>
+                            <div class="comment-item-main" v-html="replyItem.content">
+                            </div>
+                            <div class="comment-item-footer">
+                              <div class="comment-item-footer-btn" @click="likes('reply', replyItem.replyId, replyItem)">
+                                <q-img src="/src/assets/img/fabulous.png" width="14px"  /> 赞 {{replyItem.likes}}
+                              </div>
+                              <div class="comment-item-footer-btn" @click="replyItem.edit = !replyItem.edit">
+                                <q-img class="q-ml-md" src="/src/assets/img/comment.png" width="14px" /> 回复 {{ replyItem.replyNums }}
+                              </div>
+
+
+                            </div>
+                            <div class="comment-item-reply" v-if="replyItem.edit">
+                                <q-editor v-model="replyItem.replyContent" min-height="5rem" placeholder="请输入回复内容。" :toolbar="[]" />
+                                <q-btn-group push>
+                                  <q-btn color="white q-mt-sm" text-color="black" label="取消" @click="replyItem.edit = false" />
+                                  <q-btn color="white q-mt-sm" text-color="black" label="回复" @click="submitReplyReply(replyItem, commentIndex)" />
+                                </q-btn-group>
+                              </div>
+                          </div>
+                        </li>
+                      </ul>
+
+
+
+
                     </div>
+
                   </li>
 
-                  <li class="comment-list-li ">
-                    <div class="comment-list-avatar">
-                      <Avatar
-                        :src="''"
-                        width="55px"
-                        height="55px"
-                        radius
-                      />
-                    </div>
-                    <div class="comment-item">
-                      <div class="comment-item-header">
-                      名称 2020/03/22 17:33:00
-                      </div>
-                      <div class="comment-item-main">
-                        内容
-                      </div>
-                      <div class="comment-item-footer">
-                        <div class="comment-item-footer-btn" >
-                          <q-img src="~assets/img/fabulous.png" width="14px" /> 赞 1
-                        </div>
-                        <div class="comment-item-footer-btn" @click="showEditor = !showEditor">
-                          <q-img class="q-ml-md" src="~assets/img/comment.png" width="14px" /> 回复 1
-                        </div>
-                      </div>
-                      <div class="comment-item-reply" v-if="showEditor">
-                        <q-editor v-model="editor" min-height="5rem" placeholder="请输入回复内容。" :toolbar="[]" />
-                        <q-btn-group push>
-                          <q-btn color="white q-mt-sm" text-color="black" label="取消" />
-                          <q-btn color="white q-mt-sm" text-color="black" label="回复" />
-                        </q-btn-group>
-                      </div>
-                    </div>
-                  </li>
+
                 </ul>
               </div>
               <div class="comment-more">
-                <a href="javascript:;" class="comment-more-a">更多评论 || 没有更多评论了</a>
+                <a href="javascript:;" class="comment-more-a" @click="addComment"> {{ isNextPage ? "更多评论" : "没有更多评论了" }} </a>
               </div>
 
             </div>
 
           </div>
-          <div class="art-information-main-content art-information-main-content-detail" v-else>
-              BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
-              BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
-              BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
-              BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
-              BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》BBC 记录片《是淋淋是放假放假就放假》
-          </div>
+          <!-- 资讯-视频详情  -->
+          <div class="art-information-main-content art-information-main-content-detail" v-else v-html="videoListActive.detail || '暂无内容'"></div>
         </div>
       </div>
     </div>
@@ -147,6 +169,9 @@
 <script>
 import Avatar from '../../components/avatar.vue';
 import Login from '../../components/login.vue'
+import { axiosInstance } from 'src/boot/axios'
+import { date } from 'quasar'
+
 export default {
   components: {
     Avatar,
@@ -154,37 +179,279 @@ export default {
   },
   data() {
     return {
+      information: {
+        videos: [{
+          videoId: '',
+          ccId: '',
+          siteId: '',
+          videoPhoto: ''
+        }]
+      },
+      videoListActive: {
+        ccId: "",
+        detail: "",
+        siteId: "",
+        title: "",
+        videoId: "",
+        videoPhoto: "",
+        videoSrc: "",
+        watchs: 0
+      },
       mainNavActive: 0,
-      editor: '',
-      showEditor: false
+      commentContent: '',
+      comment: [],
+      pagination: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 0,
+      },
     }
   },
-  computed: {
-    newEditor() {
-      console.log("computed newEditor", this.editor)
-      return this.editor;
-    }
-  },
-  watch: {
-    newEditor() {
-      console.log("watch newEditor", this.newEditor)
-    }
-  },
+
   async created() {
-    const { locale, artworkId } = this.$route.params;
+    const { locale, informationId } = this.$route.params;
 
-    const userInfo = this.$q.cookies.get("userInfo");
+    const informationDetail = await axiosInstance.get('/api/BFF/informationDetail', {
+      params: {
+        informationId
+      }
+    }).then(response => {
+      return response.data;
+    })
+    if(informationDetail.success) {
 
-    // console.log("created", userInfo);
+      this.information = informationDetail.data.information;
 
-    // await this.$store.dispatch("artwork/getArtwork", {
-    //   locale,
-    //   artworkId,
-    //   userId: userInfo ? userInfo.userId : "",
-    // });
+      if(informationDetail.data.information.videos && informationDetail.data.information.videos.length) {
+        this.videoListActive = informationDetail.data.information.videos[0];
+        const commentData = await this.getVideoComment({
+          videoId: informationDetail.data.information.videos[0].videoId,
+          currentPage: this.pagination.currentPage,
+          pageSize: this.pagination.pageSize
+        });
+        this.comment = commentData.list;
+      }
+
+    }
+
 
   },
+
+  computed: {
+    userInfo() {
+      return this.$store.state.user.info ? this.$store.state.user.info : '';
+    },
+    isNextPage() {
+      return this.pagination.total > this.pagination.currentPage * this.pagination.pageSize
+    }
+  },
+
   methods: {
+    async getVideoComment({videoId, currentPage, pageSize}) {
+      // 添加视频观看数
+      axiosInstance.post('/api/information/video/watchs', {
+        videoId
+      })
+
+      const comment = await axiosInstance.get('/api/information/video/comment', {
+        params: {
+          videoId,
+          currentPage,
+          pageSize
+        }
+      }).then(response => {
+        return response.data;
+      })
+      if(comment.success) {
+        this.pagination = {
+          currentPage: comment.data.currentPage,
+          pageSize: comment.data.pageSize,
+          total: comment.data.total
+        }
+        comment.data.list.map((item) => {
+          item.edit = false;
+          item.replyContent = '';
+          item.createdDate = date.formatDate(item.createdDate, 'YYYY-MM-DD HH:mm:ss')
+          if(item.reply && item.reply.length) {
+            item.reply.map((item) => {
+              item.edit = false;
+              item.replyContent = '';
+              item.createdDate = date.formatDate(item.createdDate, 'YYYY-MM-DD HH:mm:ss')
+              return item;
+            })
+          }
+          return item;
+        })
+        return comment.data;
+      }else{
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: comment.message,
+          color: "negative",
+        });
+        return ;
+      }
+    },
+    async addComment() {
+      if(!this.isNextPage) {
+        return;
+      }
+      const currentPageNex = this.pagination.currentPage + 1;
+      const commentData = await this.getVideoComment({
+        videoId: this.videoListActive.videoId,
+        currentPage: currentPageNex,
+        pageSize: this.pagination.pageSize
+      });
+
+      this.comment = [...this.comment, ...commentData.list];
+    },
+    async changeVideo(item) {
+      this.videoListActive = item;
+
+      const commentData = await this.getVideoComment({
+        videoId: item.videoId,
+        currentPage: 1,
+        pageSize: this.pagination.pageSize
+      })
+
+      this.comment = commentData.list;
+    },
+    async submitVideoComment() {
+      if(!this.userInfo) {
+        this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "请登录！",
+            color: "negative",
+          });
+          return ;
+      }
+
+      const comment = await axiosInstance.post('/api/information/video/comment', {
+        userId: this.userInfo.userId,
+        userName: this.userInfo.name,
+        videoId: this.videoListActive.videoId,
+        content: this.commentContent,
+      }).then(response => {
+        return response.data;
+      })
+      if(comment.success) {
+        this.commentContent = '';
+        comment.data.edit = false;
+        comment.data.reply = [];
+        comment.data.replyContent = '';
+        comment.data.createdDate = date.formatDate(comment.data.createdDate, 'YYYY-MM-DD HH:mm:ss')
+        this.comment.push(comment.data)
+      }
+    },
+    async submitCommentReply(item, index) {
+      if(!this.userInfo) {
+        this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "请登录！",
+            color: "negative",
+          });
+          return ;
+      }
+
+      const comment = await axiosInstance.post('/api/information/video/comment/reply', {
+        userId: this.userInfo.userId,
+        userName: this.userInfo.name,
+        replyUserId: item.userId,
+        replyUserName: item.userName,
+        commentId: item.commentId,
+        content: item.replyContent,
+
+      }).then(response => {
+        return response.data;
+      })
+      if(comment.success) {
+        item.replyContent = '';
+        item.edit = false;
+        comment.data.edit = false;
+        comment.data.reply = [];
+        comment.data.replyContent = '';
+        comment.data.createdDate = date.formatDate(comment.data.createdDate, 'YYYY-MM-DD HH:mm:ss')
+        this.comment[index].reply.push(comment.data)
+      }
+    },
+    async submitReplyReply(item, index) {
+      if(!this.userInfo) {
+        this.$q.notify({
+            position: "top",
+            timeout: 1500,
+            message: "请登录！",
+            color: "negative",
+          });
+          return ;
+      }
+
+      const comment = await axiosInstance.post('/api/information/video/comment/reply/reply', {
+        userId: this.userInfo.userId,
+        userName: this.userInfo.name,
+        replyUserId: item.userId,
+        replyUserName: item.userName,
+        commentId: item.commentId,
+        content: item.replyContent,
+        replyId: item.replyId
+      }).then(response => {
+        return response.data;
+      })
+      if(comment.success) {
+        item.replyNums  += 1;
+        item.replyContent = '';
+        item.edit = false;
+
+        comment.data.edit = false;
+        comment.data.reply = [];
+        comment.data.replyContent = '';
+        comment.data.createdDate = date.formatDate(comment.data.createdDate, 'YYYY-MM-DD HH:mm:ss')
+
+
+        this.comment[index].reply.push(comment.data)
+      }
+    },
+    async likes(type, typeId, item) {
+      let result;
+      switch(type) {
+        case "comment":
+          result = await this.likesFetch({
+            userId: this.userInfo.userId,
+            userName: this.userInfo.name,
+            typeId,
+            type
+          });
+          break;
+        case "likes":
+        default:
+          result = await this.likesFetch({
+            userId: this.userInfo.userId,
+            userName: this.userInfo.name,
+            typeId,
+            type
+          });
+          break;
+      }
+      if(result.success) {
+        item.likes += 1;
+      }else{
+        this.$q.notify({
+          position: "top",
+          timeout: 1500,
+          message: result.message,
+          color: "negative",
+        });
+        return;
+      }
+    },
+    async likesFetch(payload) {
+      return await axiosInstance.post('/api/information/video/comment/likes', payload).then(response => {
+        return response.data;
+      })
+
+    },
 
   },
 }
@@ -237,7 +504,7 @@ export default {
         margin-top: 20px;
         list-style: none;
         .art-information-video-list-li{
-
+          cursor: pointer;
           .art-information-video-list-p{
             margin-top: 10px;
           }
@@ -301,6 +568,7 @@ export default {
             .comment-list-li{
               display: flex;
               margin-top: 20px;
+
               .comment-list-avatar{
                 width: 85px;
               }

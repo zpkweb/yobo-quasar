@@ -223,10 +223,10 @@
                     </div>
 
                     <div class="artwork-list-seller-pop-content">
-                      <ul v-if="item.photos">
+                      <ul v-if="item.commoditysPhotos">
                         <li
                           class="artwork-list-seller-pop-commodity"
-                          v-for="(item, index) in item.photos"
+                          v-for="(item, index) in item.commoditysPhotos"
                           :key="index"
                           v-if="index < 3"
                         >
@@ -403,7 +403,8 @@ export default {
         });
       }
       // console.log("options", options);
-      this.options = options;
+      this.options = options
+
     }
 
     this.changeQueryData();
@@ -1095,7 +1096,7 @@ export default {
       line-height: 48px;
       border-radius: 5px;
       margin-left: 0;
-      padding: 0 16px;
+      padding: 0 26px 0 15px;
       min-height: 48px;
       text-transform: uppercase;
       white-space: nowrap;
@@ -1124,6 +1125,8 @@ export default {
 .artwork-list-user {
   .artwork-list-seller {
     float: left;
+    width: 100%;
+
     .artwork-list-seller-img {
       width: 25px;
       height: 25px;
@@ -1132,11 +1135,17 @@ export default {
     }
     .artwork-list-seller-surname {
       display: inline-block;
-      margin-left: 10px;
+      width: 100%;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
   .artwork-list-like {
-    float: right;
+    position: absolute;
+    top: -2px;
+    right: 11px;
     cursor: pointer;
   }
 }
@@ -1144,9 +1153,12 @@ export default {
 .artwork-list-avatar-content {
   float: left;
   position: relative;
+  width: 100%;
+  padding-left: 30px;
   .artwork-list-avatar{
-    float: left;
     margin-top: 13px;
+    position: absolute;
+    left: 0;
   }
   .artwork-list-seller-pop {
     display: none;
@@ -1302,7 +1314,7 @@ $x: 4
       width: 230px
       height: 50px
       margin: 10px
-      padding: 0 16px
+      padding: 0 31px 0 11px
       line-height: 50px
       text-align: center
       color: #fff

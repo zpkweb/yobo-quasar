@@ -773,7 +773,15 @@ export default {
       this.showMyArtwork = true;
 
     // }, 500);
-    this.$nextTick(() => {
+    this.$nextTick(async () => {
+      if (this.$store.state.user.info) {
+        const hasMyArtworkData = await this.$store.dispatch("my/hasMyArtwork", {
+          userId: this.$store.state.user.info.userId,
+          artworkId: this.$route.params.artworkId,
+        });
+        this.hasMyArtwork = hasMyArtworkData.success;
+      }
+
       // console.log("this.$refs.scrollDom", this.$refs.scrollDom)
       if (this.$refs.scrollDom) {
         this.scrollDomTop = this.$refs.scrollDom.offsetTop;
@@ -920,7 +928,7 @@ export default {
           this.$q.notify({
             position: "top",
             timeout: 1500,
-            message: addMyArtwork.msg,
+            message: addMyArtwork.message,
             color: "negative",
           });
         }
